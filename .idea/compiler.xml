@@ -11,9 +11,5 @@
         <module name="admin.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="admin" target="11" />
-      <module name="service" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>
