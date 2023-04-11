@@ -26,8 +26,8 @@ public abstract class AuditingFields {
 
 	// TODO: null 값 설정에 대한 재고 필요, length 설정 고려
 
-	@Column(nullable = false, columnDefinition = "varchar(1) default 'N'")
-	protected String deletedYn;
+	@Column(nullable = false)
+	protected String deletedYn = "N";
 
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	@CreatedDate
