@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.petkpetk.service.domain.shopping.dto.request.ItemRequest;
-import com.petkpetk.service.domain.shopping.dto.response.ItemResponse;
+import com.petkpetk.service.domain.shopping.dto.item.request.ItemRequest;
+import com.petkpetk.service.domain.shopping.dto.item.response.ItemResponse;
 import com.petkpetk.service.domain.shopping.service.ItemService;
 
 import lombok.RequiredArgsConstructor;

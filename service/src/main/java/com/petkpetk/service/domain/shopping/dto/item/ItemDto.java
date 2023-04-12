@@ -1,4 +1,4 @@
-package com.petkpetk.service.domain.shopping.dto.security;
+package com.petkpetk.service.domain.shopping.dto.item;
 
 import java.time.LocalDateTime;
 

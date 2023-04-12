@@ -1,4 +1,4 @@
-package com.petkpetk.service.domain.shopping.dto.response;
+package com.petkpetk.service.domain.shopping.dto.item.response;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -8,14 +8,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.petkpetk.service.domain.shopping.constant.ItemStatus;
-import com.petkpetk.service.domain.shopping.dto.security.ItemImageDto;
+import com.petkpetk.service.domain.shopping.dto.item.ItemImageDto;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data()
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ItemResponse {

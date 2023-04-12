@@ -8,8 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.petkpetk.service.domain.shopping.dto.security.ItemSearchDto;
-import com.petkpetk.service.domain.shopping.dto.security.MainItemDto;
+import com.petkpetk.service.domain.shopping.dto.item.ItemSearchDto;
+import com.petkpetk.service.domain.shopping.dto.item.MainItemDto;
 import com.petkpetk.service.domain.shopping.service.ItemService;
 
 import lombok.RequiredArgsConstructor;

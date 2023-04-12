@@ -1,10 +1,10 @@
-package com.petkpetk.service.domain.shopping.dto.request;
+package com.petkpetk.service.domain.shopping.dto.item.request;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.petkpetk.service.domain.shopping.constant.ItemStatus;
-import com.petkpetk.service.domain.shopping.dto.security.ItemImageDto;
+import com.petkpetk.service.domain.shopping.dto.item.ItemImageDto;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 
 import lombok.AllArgsConstructor;
