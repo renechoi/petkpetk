@@ -35,18 +35,15 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
 
 
-    // security
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    // util
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.modelmapper:modelmapper:2.4.4'
 
 
     //security
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
-
-
-    // validation
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 
     // thymeleaf
@@ -57,6 +54,7 @@ dependencies {
     // db
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'com.h2database:h2'
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.7'
 
 
@@ -66,7 +64,7 @@ dependencies {
 
 
     // rest
-	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'org.springframework.data:spring-data-rest-hal-explorer'
 
 
@@ -75,13 +73,14 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.mockito:mockito-core'
+
 }
 
 
 tasks.named('test') {
     useJUnitPlatform()
 }
-
 
 
 //querydsl q파일 생성 세팅
@@ -94,7 +93,7 @@ querydsl {
 sourceSets {
     main.java.srcDir querydslDir
 }
-compileQuerydsl{
+compileQuerydsl {
     options.annotationProcessorPath = configurations.querydsl
 }
 configurations {
