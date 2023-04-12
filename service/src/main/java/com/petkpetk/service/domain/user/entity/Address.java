@@ -3,15 +3,15 @@ package com.petkpetk.service.domain.user.entity;
 import javax.persistence.Embeddable;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Embeddable
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class Address {
 
 	private String zipCode;
@@ -22,10 +22,8 @@ public class Address {
 
 	private String addressEtc;
 
-	private String addressTotal;
-
-	public static Address of(String zipCode, String address1, String address2, String addressEtc, String addressTotal){
-		return new Address(zipCode, address1, address2, addressEtc, addressTotal);
+	public static Address of(String zipCode, String address1, String address2, String addressEtc){
+		return new Address(zipCode, address1, address2, addressEtc);
 	}
 
 }
