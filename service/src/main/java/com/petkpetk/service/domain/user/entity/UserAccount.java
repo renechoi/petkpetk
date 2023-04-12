@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,9 +21,9 @@ import javax.validation.constraints.Size;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.petkpetk.service.common.AuditingFields;
+import com.petkpetk.service.common.converter.RoleTypeConverter;
 import com.petkpetk.service.domain.user.constant.RoleType;
 import com.petkpetk.service.domain.user.constant.SignUpProvider;
-import com.petkpetk.service.common.converter.RoleTypeConverter;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +33,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true)
-@NoArgsConstructor()
+@NoArgsConstructor
 @Table(
 	indexes = {
 		@Index(columnList = "email"),
@@ -56,7 +57,8 @@ public class UserAccount extends AuditingFields implements Serializable {
 
 	private String nickname;
 
-	private String address;
+	@Embedded
+	private Address address;
 
 	@Column(length = 512)
 	@Size(max = 512)
@@ -69,8 +71,8 @@ public class UserAccount extends AuditingFields implements Serializable {
 	@Convert(converter = RoleTypeConverter.class)
 	private Set<RoleType> roles = new LinkedHashSet<>();
 
-
-	public UserAccount(String email, String password, String name, String nickname, String address, String profileImage,
+	public UserAccount(String email, String password, String name, String nickname, Address address,
+		String profileImage,
 		SignUpProvider signUpProvider, Set<RoleType> roles) {
 		this.email = email;
 		this.password = password;
@@ -82,7 +84,8 @@ public class UserAccount extends AuditingFields implements Serializable {
 		this.roles = roles;
 	}
 
-	public static UserAccount of(String email, String password, String name, String nickname, String address, String profileImage,
+	public static UserAccount of(String email, String password, String name, String nickname, Address address,
+		String profileImage,
 		SignUpProvider signUpProvider, Set<RoleType> roles) {
 		return new UserAccount(email, password, name, nickname, address, profileImage, signUpProvider, roles);
 	}
