@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+</head>
+<body>
+<h1>회원가입</h1>
+<form th:action="@{/user/sign-up}" th:object="${userAccountRequest}" method="post">
+    <div>
+        <label for="email">이메일</label>
+        <input type="email" id="email" name="email" th:field="*{email}" required>
+        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+    </div>
+    <div>
+        <label for="password">비밀번호</label>
+        <input type="password" id="password" name="password" th:field="*{password}" required>
+        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+    </div>
+    <div>
+        <label for="name">이름</label>
+        <input type="text" id="name" name="name" th:field="*{name}" required>
+        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    </div>
+    <div>
+        <label for="nickname">닉네임</label>
+        <input type="text" id="nickname" name="nickname" th:field="*{nickname}" required>
+        <span th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}"></span>
+    </div>
+
+    <div>
+        <label for="profileImage">프로필 사진</label>
+        <input type="text" id="profileImage" name="profileImage" th:field="*{profileImage}" required>
+        <span th:if="${#fields.hasErrors('profileImage')}" th:errors="*{profileImage}"></span>
+    </div>
+
+    <div class="title">우편번호</div>
+    <input type="text" id="postCode" placeholder="우편번호" name="address.zipCode" th:field="*{address.zipCode}" readonly>
+    <input id="zipCode" type="button" onclick="getAddressWithDaumApi()" value="우편번호 찾기">
+
+    <div class="title">주소</div>
+    <input type="text" id="address1" placeholder="주소" name="address.address1" th:field="*{address.address1}" readonly>
+
+    <div class="title">상세주소</div>
+    <input type="text" id="address2" placeholder="상세주소" name="address.address2" th:field="*{address.address2}"
+           autocomplete="off">
+
+    <div class="title">참고항목</div>
+    <input type="text" id="addressEtc" placeholder="참고항목" name="address.addressEtc" th:field="*{address.addressEtc}"
+           readonly>
+
+    <br>
+    <input type="submit" value="가입하기">
+    <br>
+
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        function getAddressWithDaumApi() {
+            const postcode = new daum.Postcode({
+                oncomplete: function (data) {
+                    const address1 = getAddress1(data);
+                    const addressEtc = getAddressEtc(data);
+                    setFormValues(data.zonecode, address1, addressEtc);
+                }
+            }).open();
+        }
+
+        function getAddress1(data) {
+            return data.userSelectedType === 'R' ? data.roadAddress : data.jibunAddress;
+        }
+
+        function getAddressEtc(data) {
+            const addressEtc = [
+                data.bname?.match(/[동|로|가]$/) && data.bname,
+                data.buildingName && data.apartment === 'Y' && data.buildingName
+            ].filter(Boolean).join(', ');
+
+            return addressEtc ? ` (${addressEtc})` : '';
+        }
+
+        function setFormValues(postcode, address1, addressEtc) {
+            document.getElementById('postCode').value = postcode;
+            document.getElementById('address1').value = address1;
+            document.getElementById('addressEtc').value = addressEtc;
+            document.getElementById('address2').focus();
+        }
+    </script>
+</form>
+</body>
+</html>
+
+
+
