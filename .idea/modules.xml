@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/admin.main.iml" filepath="$PROJECT_DIR$/.idea/modules/admin.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.petkpetk.admin.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.petkpetk.admin.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.petkpetk.service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.petkpetk.service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/petkpetk.iml" filepath="$PROJECT_DIR$/.idea/petkpetk.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/service.main.iml" />
     </modules>

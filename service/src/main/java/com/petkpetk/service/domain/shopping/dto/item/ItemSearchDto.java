@@ -1,4 +1,4 @@
-package com.petkpetk.service.domain.shopping.dto.security;
+package com.petkpetk.service.domain.shopping.dto.item;
 import com.petkpetk.service.domain.shopping.constant.ItemStatus;
 import lombok.Data;
 

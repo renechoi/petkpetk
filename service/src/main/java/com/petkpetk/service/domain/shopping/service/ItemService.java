@@ -10,22 +10,23 @@ import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
-import com.petkpetk.service.domain.shopping.dto.request.ItemRequest;
-import com.petkpetk.service.domain.shopping.dto.response.ItemResponse;
-import com.petkpetk.service.domain.shopping.dto.security.ItemImageDto;
-import com.petkpetk.service.domain.shopping.dto.security.ItemSearchDto;
-import com.petkpetk.service.domain.shopping.dto.security.MainItemDto;
+
+import com.petkpetk.service.domain.shopping.dto.item.ItemImageDto;
+import com.petkpetk.service.domain.shopping.dto.item.ItemSearchDto;
+import com.petkpetk.service.domain.shopping.dto.item.MainItemDto;
+import com.petkpetk.service.domain.shopping.dto.item.request.ItemRequest;
+import com.petkpetk.service.domain.shopping.dto.item.response.ItemResponse;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.shopping.entity.item.ItemImage;
-import com.petkpetk.service.domain.shopping.dto.security.ItemImageRepository;
+import com.petkpetk.service.domain.shopping.dto.item.ItemImageRepository;
 import com.petkpetk.service.domain.shopping.repository.ItemRepository;
+
 
 import lombok.RequiredArgsConstructor;
 

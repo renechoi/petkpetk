@@ -1,7 +1,5 @@
 package com.petkpetk.service.domain.shopping.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,10 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.petkpetk.service.domain.shopping.constant.ItemStatus;
-import com.petkpetk.service.domain.shopping.dto.response.ItemResponse;
+import com.petkpetk.service.domain.shopping.dto.item.response.ItemResponse;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
-
-import lombok.RequiredArgsConstructor;
 
 @Transactional
 @SpringBootTest

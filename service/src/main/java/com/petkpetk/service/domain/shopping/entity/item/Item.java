@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 import com.petkpetk.service.domain.shopping.entity.AuditingFields;
 import com.petkpetk.service.domain.shopping.constant.ItemStatus;
-import com.petkpetk.service.domain.shopping.dto.response.ItemResponse;
+import com.petkpetk.service.domain.shopping.dto.item.response.ItemResponse;
 import com.petkpetk.service.domain.shopping.exception.OutOfStockException;
 
 import lombok.Getter;

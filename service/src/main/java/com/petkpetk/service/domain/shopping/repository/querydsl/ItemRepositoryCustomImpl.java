@@ -1,6 +1,7 @@
 package com.petkpetk.service.domain.shopping.repository.querydsl;
 
 
+
 import static com.petkpetk.service.domain.shopping.entity.item.QItemImage.*;
 
 import java.time.LocalDateTime;
@@ -14,9 +15,9 @@ import org.springframework.data.domain.Pageable;
 import org.thymeleaf.util.StringUtils;
 
 import com.petkpetk.service.domain.shopping.constant.ItemStatus;
-import com.petkpetk.service.domain.shopping.dto.security.ItemSearchDto;
-import com.petkpetk.service.domain.shopping.dto.security.MainItemDto;
-import com.petkpetk.service.domain.shopping.dto.security.QMainItemDto;
+import com.petkpetk.service.domain.shopping.dto.item.ItemSearchDto;
+import com.petkpetk.service.domain.shopping.dto.item.MainItemDto;
+import com.petkpetk.service.domain.shopping.dto.item.QMainItemDto;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.shopping.entity.item.QItem;
 import com.petkpetk.service.domain.shopping.entity.item.QItemImage;
