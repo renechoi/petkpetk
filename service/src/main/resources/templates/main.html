@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<link rel="stylesheet" href="../static/css/main.css">
+<div id="mainZone" class="mainZone" layout:fragment="content">
+    <input type="hidden" name="searchQuery" th:value="${itemSearchDto.searchQuery}">
+    <div class="flexBox">
+        <div th:if="${not #strings.isEmpty(itemSearchDto.searchQuery)}" class="searchResultString">
+            <p class="h3 font-weight-bold" th:text="'\' '+${itemSearchDto.searchQuery} + ' \''"></p>
+        </div>
+    </div>
+    <div th:if="${!items.isEmpty()}" class="mainContainer">
+
+        <th:block th:each="item, status: ${items.getContent()}">
+            <a th:href="'/item/'+ ${item.id}">
+                <div class="productOneBlock">
+                    <ul>
+                        <li class="productPicture">
+                            <img class="productImg" th:src="${item.imageUrl}" th:alt="${item.itemName}">
+                        </li>
+                        <!-- 제목은 2줄 이하로 되도록 글씨 길이 정해두기 -->
+                        <li class="productName_Status">
+                            <span class="productStatus" th:if="${item.itemStatus eq T(com.petkpetk.service.domain.shopping.constant.ItemStatus).SOLD_OUT}">품절</span>
+                            <span class="productName" th:text="${item.itemName}" th:title="${item.itemName}">제목</span>
+                        </li>
+                        <li class="productDetail" th:text="${item.itemDetail}" title="상품 내용">내용</li>
+                        <li class="productStar">
+                            <img class="star" th:src="@{/images/star4_5.png}">
+                            <span class="reviewCount">(2)</span>
+                        </li>
+                        <li class="productPriceDetail"><span class="originalPrice">60000</span>
+                            <span class="productPrice">[[${item.price}]]</span><span class="won">원</span>
+                        </li>
+                    </ul>
+                </div>
+            </a>
+        </th:block>
+
+    </div>
+
+    <div th:if="${items.isEmpty()}" class="nonProduct">
+        해당 상품 검색 결과가 없습니다.
+    </div>
+
+    <div class="moreBtnZone">
+        <input id="moreBtn" type="button" value="더보기">
+    </div>
+</div>
