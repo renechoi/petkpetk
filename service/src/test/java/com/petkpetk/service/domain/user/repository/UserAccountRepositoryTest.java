@@ -30,7 +30,7 @@ public class UserAccountRepositoryTest {
 	@BeforeEach
 	void setUp() {
 		userAccount = UserAccount.of("lee@email.com", "password", "이순신", "닉네임",
-			Address.of("34589", "서울특별시 광진구", "자바동", "기타", "통합"), "profileUrl",
+			Address.of("34589", "서울특별시 광진구", "자바동", "기타"), "profileUrl",
 			SignUpProvider.NAVER, Set.of(RoleType.USER));
 	}
 

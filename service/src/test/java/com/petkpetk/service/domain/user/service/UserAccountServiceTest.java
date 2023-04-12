@@ -43,7 +43,7 @@ public class UserAccountServiceTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
-		userAccountDto = UserAccountDto.of(1L, "email@email.com", "password", "홍길동", "길동", Address.of("34589","서울특별시 광진구","자바동","기타","통합"), "profileUrl",
+		userAccountDto = UserAccountDto.of(1L, "email@email.com", "password", "홍길동", "길동", Address.of("34589","서울특별시 광진구","자바동","기타"), "profileUrl",
 			SignUpProvider.NAVER, Set.of(RoleType.USER));
 		userAccount = userAccountDto.toEntity();
 
