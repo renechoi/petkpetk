@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ItemImageDto {
 
-	private Long id;
+	private Long id;  
 
 	private  String imageName;
 
