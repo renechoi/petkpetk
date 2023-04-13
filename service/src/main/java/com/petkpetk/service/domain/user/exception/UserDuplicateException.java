@@ -1,20 +1,21 @@
 package com.petkpetk.service.domain.user.exception;
 
-public class UserDuplicateException extends RuntimeException{
+import com.petkpetk.service.common.StatusCode;
+import com.petkpetk.service.config.exception.PetkpetkServerException;
 
-    private static final String message = "이미 가입된 회원입니다";
+public class UserDuplicateException extends PetkpetkServerException {
+
+    private static final StatusCode statusCode = StatusCode.USER_DUPLICATE;
+
     public UserDuplicateException() {
-        super(message);
+        super(statusCode);
     }
 
-    public UserDuplicateException(String content) {
-        super(message);
+    public UserDuplicateException(StatusCode statusCode) {
+        super(statusCode);
     }
 
-    public UserDuplicateException(Long content) {
-        super(message);
+    public UserDuplicateException(StatusCode statusCode, String detailMessage) {
+        super(statusCode, detailMessage);
     }
-
-    
-
 }

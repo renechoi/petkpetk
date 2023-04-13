@@ -2,9 +2,9 @@ package com.petkpetk.service.domain.user.dto;
 
 import java.util.Set;
 
-import com.petkpetk.service.common.converter.EntityAndDtoConverter;
-import com.petkpetk.service.domain.user.constant.RoleType;
-import com.petkpetk.service.domain.user.constant.SignUpProvider;
+import com.petkpetk.service.config.converter.EntityAndDtoConverter;
+import com.petkpetk.service.common.RoleType;
+import com.petkpetk.service.common.SignUpProvider;
 import com.petkpetk.service.domain.user.entity.Address;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 

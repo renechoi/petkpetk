@@ -24,9 +24,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.petkpetk.service.common.AuditingFields;
-import com.petkpetk.service.common.converter.RoleTypeConverter;
-import com.petkpetk.service.domain.user.constant.RoleType;
-import com.petkpetk.service.domain.user.constant.SignUpProvider;
+import com.petkpetk.service.config.converter.RoleTypeConverter;
+import com.petkpetk.service.common.RoleType;
+import com.petkpetk.service.common.SignUpProvider;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
 
 import lombok.Getter;

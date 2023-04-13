@@ -2,8 +2,8 @@ package com.petkpetk.service.domain.user.dto.response;
 
 import java.util.Set;
 
-import com.petkpetk.service.domain.user.constant.RoleType;
-import com.petkpetk.service.domain.user.constant.SignUpProvider;
+import com.petkpetk.service.common.RoleType;
+import com.petkpetk.service.common.SignUpProvider;
 import com.petkpetk.service.domain.user.dto.SellerAccountDto;
 import com.petkpetk.service.domain.user.entity.Address;
 

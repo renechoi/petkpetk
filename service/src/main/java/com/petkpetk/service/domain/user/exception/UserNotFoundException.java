@@ -1,20 +1,21 @@
 package com.petkpetk.service.domain.user.exception;
 
-public class UserNotFoundException extends RuntimeException{
+import com.petkpetk.service.common.StatusCode;
+import com.petkpetk.service.config.exception.PetkpetkServerException;
 
-    private static final String message = "해당하는 유저를 찾을 수 없습니다";
-    public UserNotFoundException() {
-        super(message);
+public class UserNotFoundException extends PetkpetkServerException {
+
+    private static final StatusCode statusCode = StatusCode.USER_NOT_FOUND;
+
+    public UserNotFoundException(){
+        super(statusCode);
     }
 
-    public UserNotFoundException(String content) {
-        super(message);
+    public UserNotFoundException(StatusCode statusCode) {
+        super(statusCode);
     }
 
-    public UserNotFoundException(Long content) {
-        super(message);
+    public UserNotFoundException(StatusCode statusCode, String detailMessage) {
+        super(statusCode, detailMessage);
     }
-
-    
-
 }
