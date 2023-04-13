@@ -14,18 +14,20 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.petkpetk.service.config.security.PasswordEncoderConfig;
 import com.petkpetk.service.domain.user.constant.RoleType;
 import com.petkpetk.service.domain.user.constant.SignUpProvider;
 
+@Transactional
+@ActiveProfiles("test")
 @DisplayName("UserAccount 테스트")
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ExtendWith(MockitoExtension.class)
 @Import(PasswordEncoderConfig.class)
 class UserAccountTest {
@@ -43,8 +45,8 @@ class UserAccountTest {
 
 	@BeforeEach
 	void setUp() {
-		userAccount = UserAccount.of("lee@email.com", password, "이순신", "닉네임", Address.of("34589","서울특별시 광진구","자바동","기타"), "profileUrl",
-			SignUpProvider.NAVER, Set.of(RoleType.USER));
+		userAccount = UserAccount.of("lee@email.com", password, "이순신", "닉네임",
+			Address.of("34589", "서울특별시 광진구", "자바동", "기타"), "profileUrl", SignUpProvider.NAVER, Set.of(RoleType.USER));
 	}
 
 	@DisplayName("비밀번호 인코딩을 테스트 한다")
@@ -94,5 +96,4 @@ class UserAccountTest {
 		// then
 		Assertions.assertTrue(result);
 	}
-
 }
