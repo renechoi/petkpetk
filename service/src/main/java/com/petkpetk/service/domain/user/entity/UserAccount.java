@@ -15,15 +15,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.petkpetk.service.common.AuditingFields;
 import com.petkpetk.service.common.converter.RoleTypeConverter;
 import com.petkpetk.service.domain.user.constant.RoleType;
 import com.petkpetk.service.domain.user.constant.SignUpProvider;
+import com.petkpetk.service.domain.user.dto.UserAccountDto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,11 +38,7 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true)
 @NoArgsConstructor
-@Table(
-	indexes = {
-		@Index(columnList = "email"),
-		@Index(columnList = "createdAt"),
-		@Index(columnList = "createdBy")})
+@Table(indexes = {@Index(columnList = "email"), @Index(columnList = "createdAt"), @Index(columnList = "createdBy")})
 @Entity
 public class UserAccount extends AuditingFields implements Serializable {
 
@@ -72,8 +72,7 @@ public class UserAccount extends AuditingFields implements Serializable {
 	private Set<RoleType> roles = new LinkedHashSet<>();
 
 	public UserAccount(String email, String password, String name, String nickname, Address address,
-		String profileImage,
-		SignUpProvider signUpProvider, Set<RoleType> roles) {
+		String profileImage, SignUpProvider signUpProvider, Set<RoleType> roles) {
 		this.email = email;
 		this.password = password;
 		this.name = name;
@@ -85,8 +84,7 @@ public class UserAccount extends AuditingFields implements Serializable {
 	}
 
 	public static UserAccount of(String email, String password, String name, String nickname, Address address,
-		String profileImage,
-		SignUpProvider signUpProvider, Set<RoleType> roles) {
+		String profileImage, SignUpProvider signUpProvider, Set<RoleType> roles) {
 		return new UserAccount(email, password, name, nickname, address, profileImage, signUpProvider, roles);
 	}
 
@@ -97,6 +95,25 @@ public class UserAccount extends AuditingFields implements Serializable {
 
 	public boolean checkPassword(String thatPassword, PasswordEncoder passwordEncoder) {
 		return passwordEncoder.matches(thatPassword, this.password);
+	}
+
+	public void update(UserAccountDto userAccountDto) {
+		this.email = userAccountDto.getEmail();
+		this.password = userAccountDto.getPassword();
+		this.name = userAccountDto.getName();
+		this.nickname = userAccountDto.getNickname();
+		this.address = userAccountDto.getAddress();
+		this.profileImage = userAccountDto.getProfileImage();
+		this.roles = userAccountDto.getRoles();
+	}
+
+	@PrePersist
+	public void anonymousSetup() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null && "anonymousUser".equals(authentication.getName())) {
+			this.createdBy = this.getName();
+			this.modifiedBy = this.getName();
+		}
 	}
 
 	@Override
@@ -114,5 +131,6 @@ public class UserAccount extends AuditingFields implements Serializable {
 	public int hashCode() {
 		return Objects.hash(this.getId());
 	}
+
 }
 
