@@ -21,8 +21,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.petkpetk.service.config.security.PasswordEncoderConfig;
-import com.petkpetk.service.domain.user.constant.RoleType;
-import com.petkpetk.service.domain.user.constant.SignUpProvider;
+import com.petkpetk.service.common.RoleType;
+import com.petkpetk.service.common.SignUpProvider;
 
 @Transactional
 @ActiveProfiles("test")

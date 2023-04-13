@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.event.annotation.BeforeTestMethod;
 
 import com.petkpetk.service.config.security.SecurityConfig;
-import com.petkpetk.service.domain.user.constant.RoleType;
-import com.petkpetk.service.domain.user.constant.SignUpProvider;
+import com.petkpetk.service.common.RoleType;
+import com.petkpetk.service.common.SignUpProvider;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.entity.Address;
 import com.petkpetk.service.domain.user.entity.UserAccount;

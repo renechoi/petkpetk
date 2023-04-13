@@ -17,12 +17,12 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.petkpetk.service.domain.user.constant.RoleType;
-import com.petkpetk.service.domain.user.constant.SignUpProvider;
+import com.petkpetk.service.common.RoleType;
+import com.petkpetk.service.common.SignUpProvider;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.entity.Address;
 import com.petkpetk.service.domain.user.entity.UserAccount;
-import com.petkpetk.service.domain.user.exception.UserAccountDuplicateException;
+import com.petkpetk.service.domain.user.exception.UserDuplicateException;
 import com.petkpetk.service.domain.user.repository.UserAccountRepository;
 
 @Transactional
@@ -59,7 +59,7 @@ public class UserAccountServiceTest {
 		when(userAccountRepository.findByEmail(any(String.class))).thenReturn(Optional.of(new UserAccount()));
 
 		// when, then
-		assertThrows(UserAccountDuplicateException.class, () -> userAccountService.save(userAccountDto));
+		assertThrows(UserDuplicateException.class, () -> userAccountService.save(userAccountDto));
 
 		verify(userAccountRepository, times(1)).findByEmail(any(String.class));
 		verifyNoMoreInteractions(userAccountRepository);

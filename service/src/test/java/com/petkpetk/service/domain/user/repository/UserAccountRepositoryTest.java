@@ -15,8 +15,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.petkpetk.service.domain.user.constant.RoleType;
-import com.petkpetk.service.domain.user.constant.SignUpProvider;
+import com.petkpetk.service.common.RoleType;
+import com.petkpetk.service.common.SignUpProvider;
 import com.petkpetk.service.domain.user.entity.Address;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 

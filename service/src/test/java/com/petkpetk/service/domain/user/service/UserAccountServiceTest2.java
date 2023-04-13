@@ -14,12 +14,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.petkpetk.service.domain.user.constant.RoleType;
-import com.petkpetk.service.domain.user.constant.SignUpProvider;
+import com.petkpetk.service.common.RoleType;
+import com.petkpetk.service.common.SignUpProvider;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.entity.Address;
 import com.petkpetk.service.domain.user.entity.UserAccount;
-import com.petkpetk.service.domain.user.exception.UserAccountDuplicateException;
+import com.petkpetk.service.domain.user.exception.UserDuplicateException;
 import com.petkpetk.service.domain.user.repository.UserAccountRepository;
 
 @ActiveProfiles("test")
@@ -101,7 +101,7 @@ class UserAccountServiceTest2 {
 			new Address("12345", "강남", "2", "etc"), "profile.jpg", SignUpProvider.NAVER, Set.of(RoleType.USER));
 
 		// when & then
-		assertThrows(UserAccountDuplicateException.class, () -> userAccountService.save(newUserAccountDto));
+		assertThrows(UserDuplicateException.class, () -> userAccountService.save(newUserAccountDto));
 	}
 
 	@DisplayName("실제 db 테스트 - 기존 사용자 계정 업데이트 한다")
