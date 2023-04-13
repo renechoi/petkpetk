@@ -7,8 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.entity.UserAccount;
-import com.petkpetk.service.domain.user.exception.UserAccountDuplicateException;
-import com.petkpetk.service.domain.user.exception.UserAccountNotFoundException;
+import com.petkpetk.service.domain.user.exception.UserDuplicateException;
+import com.petkpetk.service.domain.user.exception.UserNotFoundException;
 import com.petkpetk.service.domain.user.repository.UserAccountRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class UserAccountService {
 	public void save(UserAccountDto userAccountDto) {
 
 		if (isDuplicate(userAccountDto.getEmail())) {
-			throw new UserAccountDuplicateException();
+			throw new UserDuplicateException();
 		}
 
 		UserAccount userAccount = userAccountDto.toEntity();
@@ -32,12 +32,12 @@ public class UserAccountService {
 	}
 
 	public void update(UserAccountDto userAccountDto) {
-		UserAccount userAccount = findByEmail(userAccountDto).orElseThrow(UserAccountNotFoundException::new);
+		UserAccount userAccount = findByEmail(userAccountDto).orElseThrow(UserNotFoundException::new);
 		userAccount.update(userAccountDto);
 	}
 
 	public void delete(UserAccountDto userAccountDto) {
-		UserAccount userAccount = findByEmail(userAccountDto).orElseThrow(UserAccountNotFoundException::new);
+		UserAccount userAccount = findByEmail(userAccountDto).orElseThrow(UserNotFoundException::new);
 		userAccount.setDeletedYn("Y");
 	}
 
