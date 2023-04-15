@@ -24,7 +24,8 @@ public class Payment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long payId;
+	@Column(name = "payment_id")
+	private Long id;
 	@Column(unique = true)
 	private Long orderId;
 	@Column(unique = true)
