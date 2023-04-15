@@ -1,15 +1,14 @@
 package com.petkpetk.service.domain.shopping.entity.cart;
 
-import java.util.List;
-import java.util.Objects;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-import com.petkpetk.service.domain.shopping.dto.order.OrderItemDto;
+import com.petkpetk.service.domain.shopping.entity.item.Item;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,44 +22,30 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "cart_item")
 public class CartItem {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long cartId;
 
-	@Column(unique = true)
-	private Long userId;
+	@ManyToOne
+	@JoinColumn(name = "cart_id")
+	private Cart cart;
 
-	private List<OrderItemDto> orderItemList;
+	@ManyToOne
+	@JoinColumn(name = "item_id")
+	private Item item;
+
+	private Long itemCount;
+
+	// private List<OrderItemDto> orderItemList = new ArrayList<>();
+	//
 
 	private Long totalPrice;
 
 
-	public CartItem(Long cartId, Long userId, Long totalPrice) {
-		this.cartId = cartId;
-		this.userId = userId;
-		this.totalPrice = totalPrice;
-	}
-
-	public static CartItem of(Long cartId, Long userId, Long totalPrice) {
-		return new CartItem(cartId, userId, totalPrice);
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		CartItem cartItem = (CartItem)o;
-		return Objects.equals(cartId, cartItem.cartId) && Objects.equals(userId, cartItem.userId)
-			&& Objects.equals(orderItemList, cartItem.orderItemList) && Objects.equals(totalPrice,
-			cartItem.totalPrice);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(cartId, userId, orderItemList, totalPrice);
-	}
 }
+
+
+
