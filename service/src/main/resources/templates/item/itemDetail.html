@@ -109,15 +109,16 @@
 </th:block>
 
 
-<div layout:fragment="content" >
+<div layout:fragment="content">
 
     <div id="itemDetailContainer">
         <input type="hidden" id="itemId" th:value="${item.id}">
 
         <div id="BuyBox" class="d-flex">
-            <div class="repImgDiv">
-                <img id="itemDetailMainImg" th:src="${item.itemImageDtos[0].imageUrl}" class="rounded repImg "
-                     th:alt="${item.itemName}">
+            <div class="repImgDiv" >
+                <img th:each="itemImg : ${item.itemImageDtos}" th:if="${itemImg.representativeImageYn.equals('Y')}" id="itemDetailMainImg" th:src="${itemImg.imageUrl}"
+                     class="rounded repImg "
+                     th:alt="${itemImg.imageName}">
             </div>
             <div class="wd50">
                 <div class="SellStatus_ItemName">
@@ -139,18 +140,21 @@
                 <div class="chooseProduct">
                     <div class="h4 text-danger text-left cost">
                         <input type="hidden" th:value="${item.price}" id="price" name="price">
-                        <span class="OriginalCost">888원</span><span id="cost" th:text="${item.price}"></span>원
+                        <span class="OriginalCost">888원</span><span id="cost"
+                                                                    th:text="${item.price}"></span>원
                     </div>
                     <div class="input-group w-50 ChooseAmountBox">
                         <div class="totalflexBox">
                             <span class="chong">총</span>
-                            <div id="totalPrice" class="input-group-prepend " th:text="${item.price}">
+                            <div id="totalPrice" class="input-group-prepend "
+                                 th:text="${item.price}">
                             </div>
                             <span class="totalWon"> 원</span>
                         </div>
                         <div class="addBtn">
                             <input type="button" id="minusAmount" value="◀" onclick="minusCount()">
-                            <input type="text" name="orderCount" id="orderCount" class="form-control" value="1" min="1"
+                            <input type="text" name="orderCount" id="orderCount"
+                                   class="form-control" value="1" min="1"
                                    readonly>
                             <input type="button" id="plusAmount" value="▶" onclick="plusCount()">
                         </div>
@@ -166,7 +170,9 @@
                             onclick="addCart()">
                         장바구니 담기
                     </button>
-                    <button type="button" class="btn btn-primary btn-lg getOrder" onclick="order()">주문하기</button>
+                    <button type="button" class="btn btn-primary btn-lg getOrder" onclick="order()">
+                        주문하기
+                    </button>
                 </div>
 
                 <div th:unless="${item.itemStatus eq T(com.petkpetk.service.domain.shopping.constant.ItemStatus).SELL}"
@@ -175,7 +181,9 @@
                             disabled="disabled">
                         장바구니 담기
                     </button>
-                    <button type="button" class="btn btn-primary btn-lg getOrder" disabled="disabled">주문하기</button>
+                    <button type="button" class="btn btn-primary btn-lg getOrder"
+                            disabled="disabled">주문하기
+                    </button>
                 </div>
             </div>
 
@@ -184,14 +192,21 @@
         <div class="jumbotron jumbotron-fluid mgt-30">
             <div class="EXDiv">
                 <div class="explainDiv">상품 상세</div>
-                <div class="lead" th:text="${item.itemDetail}"></div>
+                <div class="lead">
+                    <div th:text="${item.itemDetail}" style="margin-bottom: 40px"></div>
+                    <div th:each="itemImg : ${item.itemImageDtos}" class="text-center imgCenter">
+                        <img th:if="${itemImg.representativeImageYn.equals('Y')}"
+                             th:src="${itemImg.imageUrl}" class="rounded mgb-15"
+                             width="800">
+                        <img th:if="${!itemImg.representativeImageYn.equals('Y')}"
+                             th:src="${itemImg.imageUrl}" class="rounded mgb-15"
+                             width="800">
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div th:each="itemImg : ${item.itemImageDtos}" class="text-center imgCenter">
-            <img th:if="${not #strings.isEmpty(itemImg.imageUrl)}" th:src="${itemImg.imageUrl}" class="rounded mgb-15"
-                 width="800">
-        </div>
+
     </div>
 </div>
 
