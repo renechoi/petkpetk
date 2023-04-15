@@ -2,6 +2,7 @@ package com.petkpetk.service.domain.shopping.entity.order;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,11 +24,12 @@ public class OrderItem {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long orderItemId;
+	@Column(name = "order_item_id")
+	private Long id;
 	private Long payId;
 	private Long orderId;
 	private Long userId;
-	private Long productId;
+	private Long itemId;
 	private OrderStatus orderStatus;
 	private LocalDateTime startTime;
 	private LocalDateTime cancelTime;
