@@ -24,6 +24,9 @@ import lombok.ToString;
 @MappedSuperclass
 public abstract class AuditingFields {
 
+	@Column(nullable = false, length = 1,  columnDefinition = "CHAR(1) DEFAULT 'N'")
+	protected String deletedYn ="N";
+
 	@DateTimeFormat(iso=DateTimeFormat.ISO.DATE_TIME)
 	@CreatedDate
 	@Column(nullable = true, updatable = false)
