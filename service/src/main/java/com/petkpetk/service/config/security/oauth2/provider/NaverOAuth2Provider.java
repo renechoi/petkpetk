@@ -39,6 +39,7 @@ public class NaverOAuth2Provider extends OAuth2Provider {
 			.clientAuthenticationMethod(ClientAuthenticationMethod.POST)
 			.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
 			.redirectUri(naverRedirectUri)
+			.scope("name", "email", "profile_image")
 			.authorizationUri(naverAuthorizationUri)
 			.tokenUri(naverTokenUri)
 			.userInfoUri(naverUserInfoUri)
