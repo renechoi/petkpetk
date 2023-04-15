@@ -7,9 +7,7 @@ import com.petkpetk.service.domain.shopping.dto.order.OrderItemDto;
 import com.petkpetk.service.domain.shopping.entity.cart.Cart;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -23,6 +21,7 @@ public class CartDto {
 	private Long userId;
 	private List<OrderItemDto> orderItemList;
 	private Long totalPrice;
+
 
 	public Cart toCart() {
 		return EntityAndDtoConverter.convertToEntity(this, Cart.class);
