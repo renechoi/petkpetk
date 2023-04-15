@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layout/layout">
+
+<div layout:fragment="content">
+    <a th:href="@{/}">
+        <img class="logo-img" th:src="@{/images/PetkPetk-logo_Kor.png}" title="메인으로 가기">
+    </a>
+
+    <br>
+    <form role="form" method="post" action="">
+        <p th:if="${loginErrorMsg}" id="error" class="error" th:text="${loginErrorMsg}"></p>
+        <input name="email" type="text" placeholder="Type your email" autocomplete="off">
+        <br>
+        <input name="password" type="text" placeholder="Type your password" autocomplete="off">
+        <br>
+        <input id="loginBtn" type="submit" value="로그인">
+    </form>
+    <input type="button" value="카카오톡 로그인">
+    <br>
+    <a>비밀번호 찾기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="/members/new">회원가입</a>
+</div>
+</html>
