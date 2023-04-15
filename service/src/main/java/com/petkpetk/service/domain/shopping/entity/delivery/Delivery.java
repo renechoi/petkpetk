@@ -1,5 +1,6 @@
 package com.petkpetk.service.domain.shopping.entity.delivery;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +21,8 @@ import lombok.ToString;
 public class Delivery {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long deliveryId;
+	@Column(name = "delivery_id")
+	private Long id;
 
 	private Long payId;
 	private Long userId;
