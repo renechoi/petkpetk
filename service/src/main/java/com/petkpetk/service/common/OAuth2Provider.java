@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum SignUpProvider {
+public enum OAuth2Provider {
 
 	GOOGLE("구글"),
 	NAVER("네이버"),
