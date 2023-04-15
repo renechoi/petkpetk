@@ -1,4 +1,4 @@
-package com.petkpetk.service.domain.shopping.repository;
+package com.petkpetk.service.domain.shopping.repository.item;
 
 import java.util.List;
 
@@ -6,13 +6,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import com.petkpetk.service.domain.shopping.entity.item.Item;
-import com.petkpetk.service.domain.shopping.repository.querydsl.ItemRepositoryCustom;
+import com.petkpetk.service.domain.shopping.repository.querydsl.item.ItemRepositoryCustom;
 
 public interface ItemRepository extends JpaRepository<Item, Long>, QuerydslPredicateExecutor<Item>,
 	ItemRepositoryCustom {
 
 	List<Item> findByItemName(String itemName);
 
+	void deleteById(Long itemId);
+
 	List<Item> findByItemNameOrItemDetail(String itemName, String itemDetail);
+
 
 }
