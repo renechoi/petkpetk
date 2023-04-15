@@ -24,13 +24,18 @@ public class FileService {
 		return savedFileName;
 	}
 
+	public void deleteFile(String filePath, String originalImageName) throws Exception {
+		if (originalImageName.equals("") || originalImageName == null) {
 
-	public void deleteFile(String filePath) throws Exception {
-		File deleteFile = new File(filePath);
-
-		if (deleteFile.exists()) {
-			deleteFile.delete();
-			log.info("파일 삭제 완료");
+		} else {
+			File deleteFile = new File(filePath + "/" + originalImageName);
+			System.out.println("filePath = " + filePath + "/" + originalImageName);
+			if (deleteFile.exists()) {
+				deleteFile.delete();
+				log.info("○○○○○○○○○○○○○○○○ 파일 삭제 완료");
+			} else {
+				log.info("○○○○○○○○○○○○○○○○ 파일 삭제 실패");
+			}
 		}
 	}
 }
