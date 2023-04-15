@@ -11,4 +11,11 @@ import lombok.RequiredArgsConstructor;
 public class OrderService {
 
 	private final OrderRepository repository;
+/*
+	private final ItemRepository itemRepository;
+	private final UserAccountRepository userAccountRepository;
+	private final ItemImageRepository itemImageRepository;
+*/
+
+
 }
