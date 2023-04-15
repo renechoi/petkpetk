@@ -7,18 +7,17 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.petkpetk.service.domain.shopping.dto.item.request.ItemRequest;
 import com.petkpetk.service.domain.shopping.dto.item.response.ItemResponse;
-import com.petkpetk.service.domain.shopping.service.ItemService;
+import com.petkpetk.service.domain.shopping.entity.item.ItemImage;
+import com.petkpetk.service.domain.shopping.dto.item.request.ItemRequest;
+import com.petkpetk.service.domain.shopping.service.item.ItemService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +29,8 @@ import lombok.extern.slf4j.Slf4j;
 public class ItemController {
 
 	private final ItemService itemService;
+
+
 
 	@GetMapping("/my-page")
 	public String myPageView(){
@@ -48,17 +49,12 @@ public class ItemController {
 	@PostMapping("/new")
 	public String addItem(Model model,
 		@Valid ItemResponse itemResponse,
-		BindingResult bindingResult,
 		@RequestParam("itemImgFile") List<MultipartFile> itemImageFiles) {
 
-		if (bindingResult.hasErrors()) {
-			log.info("errors = {}", bindingResult);
-			return "redirect:item/temApply";
-		}
 
-		if (itemImageFiles.get(0).isEmpty() && itemResponse.getId() == null) {
+		if (itemImageFiles.get(0).isEmpty()) {
 			model.addAttribute("errorMessage", "대표 이미지를 정해주세요.");
-			return "redirect:item/itemApply";
+			return "item/itemApply";
 		}
 
 		try {
@@ -69,7 +65,7 @@ public class ItemController {
 		} catch (Exception e) {
 			log.info("errors = {}", itemResponse, e);
 			model.addAttribute("errorMessage", "에러가 발생했습니다");
-			return "redirect:item/itemApply";
+			return "redirect:/seller/item-manage";
 		}
 
 		log.info("◎◎◎◎◎◎◎◎ 상품 등록 완료 ◎◎◎◎◎◎◎◎");
@@ -105,22 +101,28 @@ public class ItemController {
 
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", "에러가 발생했습니다");
-			return "my-page/sellerItemList";
+			return "my-page/seller/sellerItemList";
 
 		}
 
-		return "my-page/sellerItemModify";
+		return "item/itemApply";
 	}
 
 	// 상품 수정
-	@PutMapping("/{itemId}")
-	public String modifyItem(@PathVariable("itemId") Long itemId, @Valid ItemResponse itemResponse,
+	@PostMapping("/modify/{itemId}")
+	public String modifyItem(@PathVariable("itemId") Long itemId, ItemResponse itemResponse,
 		Model model, BindingResult bindingResult,
-		@RequestParam("itemImgFile") List<MultipartFile> itemImageFiles) {
+		@RequestParam("itemImgFile") List<MultipartFile> itemImageFiles,
+		@RequestParam("imageNames")List<String> imageNames) {
+
+		System.out.println("▣▣▣▣▣▣▣▣▣▣▣▣▣▣ itemId = " + itemId);
+		System.out.println("▣▣▣▣▣▣▣▣▣▣▣▣▣▣ itemResponse = " + itemResponse);
+		System.out.println("▣▣▣▣▣▣▣▣▣▣▣▣▣▣ itemImageFiles = " + itemImageFiles);
+		System.out.println("▣▣▣▣▣▣▣▣▣▣▣▣▣▣ imageNames = " + itemImageFiles);
 
 		if (bindingResult.hasErrors()) {
 			log.info("errors = {}", bindingResult);
-			return "redirect:my-page/sellerItemList";
+			return "redirect:/seller/item-manage";
 		}
 
 		if (itemImageFiles.get(0).isEmpty() && itemResponse.getId() == null) {
@@ -129,41 +131,34 @@ public class ItemController {
 		}
 
 		try {
-			itemService.updateItem(itemResponse, itemImageFiles);
-			model.addAttribute("ItemResponse", itemResponse);
+
+			ItemRequest itemRequest = itemService.updateItem(itemResponse, itemImageFiles, itemId, imageNames);
+			model.addAttribute("item", itemRequest);
 
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", "에러가 발생했습니다");
-			return "redirect:my-page/sellerItemList";
+			return "redirect:/seller/item-manage";
 		}
-		return "item/itemDetail";
+		return "redirect:/item/"+itemId;
 	}
 
-	
-	// 상품 삭제
-	@DeleteMapping("/{itemId}")
-	public String deleteItem(@PathVariable("itemId") Long itemId, Model model,
-		@Valid ItemResponse itemResponse, BindingResult bindingResult) {
 
-		if (bindingResult.hasErrors()) {
-			log.info("errors = {}", bindingResult);
-			return "redirect:my-page/sellerItemDetail";
-		}
+	// 상품 삭제
+	@GetMapping("/delete/{itemId}")
+	public String deleteItem(@PathVariable("itemId") Long itemId, Model model) {
+
+		System.out.println("=============== itemId = " + itemId);
 
 		try {
-			int num = itemService.deleteItem(itemId);
-			if (num != 1) {
-				log.info("상품 삭제를 실패하였습니다.");
-				model.addAttribute("errorMessage", "에러가 발생했습니다");
-				return "redirect:my-page/sellerItemDetail";
-			}
+			List<ItemImage> itemImages = itemService.deleteItem(itemId);
+			itemService.deletePathImage(itemImages);
 
 		} catch (Exception e) {
-			return "redirect:/my-page/sellerItemDetail";
+			return "redirect:/seller/item-manage";
 
 		}
 
-		return "my-page/sellerItemList";
+		return "redirect:/seller/item-manage";
 	}
 
 }

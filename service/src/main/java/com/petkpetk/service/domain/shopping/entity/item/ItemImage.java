@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import com.petkpetk.service.domain.shopping.entity.AuditingFields;
 
 import lombok.Getter;
@@ -23,6 +25,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @Entity
+@DynamicUpdate
 public class ItemImage extends AuditingFields {
 
 	@Id
@@ -54,8 +57,8 @@ public class ItemImage extends AuditingFields {
 		this.representativeImageYn = representativeImageYn;
 	}
 
-	public static ItemImage of(Item item, int index) {
-		return new ItemImage(item, index == 0 ? "Y" : "N");
+	public static ItemImage of(Item item, int num) {
+		return new ItemImage(item, num == 0 ? "Y" : "N");
 	}
 
 

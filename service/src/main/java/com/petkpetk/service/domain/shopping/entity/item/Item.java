@@ -11,9 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.petkpetk.service.domain.shopping.entity.AuditingFields;
+import org.hibernate.annotations.DynamicUpdate;
+
 import com.petkpetk.service.domain.shopping.constant.ItemStatus;
 import com.petkpetk.service.domain.shopping.dto.item.response.ItemResponse;
+import com.petkpetk.service.domain.shopping.entity.AuditingFields;
 import com.petkpetk.service.domain.shopping.exception.OutOfStockException;
 
 import lombok.Getter;
@@ -27,6 +29,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @Entity
+@DynamicUpdate
 public class Item extends AuditingFields {
 
 	@Id
@@ -77,7 +80,7 @@ public class Item extends AuditingFields {
 		this.itemStatus = itemResponse.getItemStatus();
 	}
 
-	public void removeItem(Long stockAmount) {
+	public void selledItem(Long stockAmount) {
 		System.out.println("stockAmount = " + stockAmount);
 		System.out.println("this.stockAmount = " + this.itemAmount);
 
