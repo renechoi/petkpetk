@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.petkpetk.service.domain.shopping.dto.item.ItemSearchDto;
 import com.petkpetk.service.domain.shopping.dto.item.MainItemDto;
-import com.petkpetk.service.domain.shopping.service.ItemService;
+import com.petkpetk.service.domain.shopping.service.item.ItemService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,11 +27,12 @@ public class MainController {
 
     @GetMapping("/")
     public String main(ItemSearchDto itemSearchDto, Optional<Integer> page, Model model){
+
         PageRequest pageRequest = PageRequest.of(page.orElse(0), 10);
         Page<MainItemDto> items = itemService.getMainItemPage(itemSearchDto, pageRequest);
 
-        System.out.println("pageRequest = " + pageRequest);
-        System.out.println("items = " + items);
+        System.out.println("◆◆◆◆◆◆◆◆◆◆◆◆◆◆ pageRequest = " + pageRequest);
+        System.out.println("◆◆◆◆◆◆◆◆◆◆◆◆◆◆ items = " + items);
         items.stream().forEach(System.out::println);
 
         System.out.println("itemSearchDto = " + itemSearchDto);
