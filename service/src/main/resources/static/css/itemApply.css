@@ -126,21 +126,22 @@ input[type="number"]::placeholder {
     border: 1px solid #ff6879;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
-    width: calc(100% - 88.05px);
+    width: calc(100% - 120.05px);
     color: #ffb7bf;
 }
 .itemFilesLable {
+    width: 88.05px;
     padding: 5px 10px;
     margin-bottom: 5px;
     line-height: 22px;
     color: #fff;
-    vertical-align: middle;
     background-color: #ff6879;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     cursor: pointer;
     height: 30px;
-    font-size: 14px;
+    text-align: center;
+    font-size: 13px;
 }
 
 .itemFilesLable:hover {
@@ -179,6 +180,40 @@ input[type="file"] {
     animation-iteration-count: 4;
     animation-direction: alternate;
 }
+
+.modifyItemDetail {
+    width: 150px;
+    height: 40px;
+    background-color: #ff6879;
+    border: 1px solid #ff6879;
+    border-radius: 5px;
+    color: white;
+    font-size: 18px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+input.removeImage {
+    cursor: pointer;
+    text-align: center;
+    height: 30px;
+    width: 32px;
+    margin-left: 5px;
+    border-radius: 5px;
+    border: 1px solid #ff6879;
+    background-color: white;
+    color: #FF6859;
+    font-size: 13px;
+}
+
+input.removeImage:hover {
+    border: 1px solid #ff5e71;
+    background-color: #fff0f0;
+    color: #ff5f4f;
+}
+
+
+
 
 @keyframes saveBtn {
     from {
