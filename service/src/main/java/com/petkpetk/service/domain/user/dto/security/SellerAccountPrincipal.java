@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.petkpetk.service.common.AuditingFields;
 import com.petkpetk.service.common.RoleType;
-import com.petkpetk.service.common.SignUpProvider;
+import com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo;
 import com.petkpetk.service.domain.user.dto.SellerAccountDto;
 import com.petkpetk.service.domain.user.entity.Address;
 
@@ -36,7 +36,7 @@ public class SellerAccountPrincipal extends AuditingFields implements UserDetail
 
 	private String profileImage;
 
-	private SignUpProvider signUpProvider;
+	private OAuth2ProviderInfo OAuth2ProviderInfo;
 
 	private Collection<? extends GrantedAuthority> roles;
 
@@ -47,7 +47,7 @@ public class SellerAccountPrincipal extends AuditingFields implements UserDetail
 	private String businessNumber;
 
 	public SellerAccountPrincipal(Long id, String email, String password, String name, String nickname, Address address,
-		String profileImage, SignUpProvider signUpProvider, Collection<? extends GrantedAuthority> roles,
+		String profileImage, OAuth2ProviderInfo OAuth2ProviderInfo, Collection<? extends GrantedAuthority> roles,
 		String phoneNumber, String businessName, String businessNumber) {
 		this.id = id;
 		this.email = email;
@@ -56,7 +56,7 @@ public class SellerAccountPrincipal extends AuditingFields implements UserDetail
 		this.nickname = nickname;
 		this.address = address;
 		this.profileImage = profileImage;
-		this.signUpProvider = signUpProvider;
+		this.OAuth2ProviderInfo = OAuth2ProviderInfo;
 		this.roles = roles;
 		this.phoneNumber = phoneNumber;
 		this.businessName = businessName;
@@ -64,9 +64,10 @@ public class SellerAccountPrincipal extends AuditingFields implements UserDetail
 	}
 
 	public static SellerAccountPrincipal of(Long id, String email, String password, String name, String nickname,
-		Address address, String profileImage, SignUpProvider signUpProvider, Set<RoleType> roles, String phoneNumber,
+		Address address, String profileImage, OAuth2ProviderInfo OAuth2ProviderInfo, Set<RoleType> roles, String phoneNumber,
 		String businessName, String businessNumber) {
-		return new SellerAccountPrincipal(id, email, password, name, nickname, address, profileImage, signUpProvider,
+		return new SellerAccountPrincipal(id, email, password, name, nickname, address, profileImage,
+			OAuth2ProviderInfo,
 			roles.stream()
 				.map(RoleType::getRoleName)
 				.map(SimpleGrantedAuthority::new)
@@ -75,13 +76,13 @@ public class SellerAccountPrincipal extends AuditingFields implements UserDetail
 
 	public static SellerAccountPrincipal from(SellerAccountDto dto) {
 		return SellerAccountPrincipal.of(dto.getId(), dto.getEmail(), dto.getPassword(), dto.getName(),
-			dto.getNickname(), dto.getAddress(), dto.getProfileImage(), dto.getSignUpProvider(), dto.getRoles(),
+			dto.getNickname(), dto.getAddress(), dto.getProfileImage(), dto.getOAuth2ProviderInfo(), dto.getRoles(),
 			dto.getPhoneNumber(), dto.getBusinessName(), dto.getBusinessNumber());
 	}
 
 	public SellerAccountDto toDto() {
 
-		return SellerAccountDto.of(id, email, password, name, nickname, address, profileImage, signUpProvider,
+		return SellerAccountDto.of(id, email, password, name, nickname, address, profileImage, OAuth2ProviderInfo,
 			roles.stream()
 				.map(grantedAuthority -> RoleType.valueOf(grantedAuthority.getAuthority().substring(5)))
 				.collect(Collectors.toUnmodifiableSet()), phoneNumber, businessName, businessNumber);

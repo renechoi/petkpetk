@@ -26,7 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.petkpetk.service.common.AuditingFields;
 import com.petkpetk.service.config.converter.RoleTypeConverter;
 import com.petkpetk.service.common.RoleType;
-import com.petkpetk.service.common.SignUpProvider;
+import com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
 
 import lombok.Getter;
@@ -64,28 +64,29 @@ public class UserAccount extends AuditingFields implements Serializable {
 	@Size(max = 512)
 	private String profileImage;
 
+	@Column(name="oauth2_provider_info")
 	@Enumerated(EnumType.STRING)
-	private SignUpProvider signUpProvider;
+	private OAuth2ProviderInfo OAuth2ProviderInfo;
 
 	@Column(nullable = false)
 	@Convert(converter = RoleTypeConverter.class)
 	private Set<RoleType> roles = new LinkedHashSet<>();
 
 	public UserAccount(String email, String password, String name, String nickname, Address address,
-		String profileImage, SignUpProvider signUpProvider, Set<RoleType> roles) {
+		String profileImage, OAuth2ProviderInfo OAuth2ProviderInfo, Set<RoleType> roles) {
 		this.email = email;
 		this.password = password;
 		this.name = name;
 		this.nickname = nickname;
 		this.address = address;
 		this.profileImage = profileImage;
-		this.signUpProvider = signUpProvider;
+		this.OAuth2ProviderInfo = OAuth2ProviderInfo;
 		this.roles = roles;
 	}
 
 	public static UserAccount of(String email, String password, String name, String nickname, Address address,
-		String profileImage, SignUpProvider signUpProvider, Set<RoleType> roles) {
-		return new UserAccount(email, password, name, nickname, address, profileImage, signUpProvider, roles);
+		String profileImage, OAuth2ProviderInfo OAuth2ProviderInfo, Set<RoleType> roles) {
+		return new UserAccount(email, password, name, nickname, address, profileImage, OAuth2ProviderInfo, roles);
 	}
 
 	public UserAccount encodePassword(PasswordEncoder passwordEncoder) {

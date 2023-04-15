@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.petkpetk.service.common.AuditingFields;
 import com.petkpetk.service.common.RoleType;
-import com.petkpetk.service.common.SignUpProvider;
+import com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.entity.Address;
 
@@ -36,12 +36,12 @@ public class UserAccountPrincipal extends AuditingFields implements UserDetails 
 
 	private String profileImage;
 
-	private SignUpProvider signUpProvider;
+	private OAuth2ProviderInfo OAuth2ProviderInfo;
 
 	private Collection<? extends GrantedAuthority> roles;
 
 	public UserAccountPrincipal(Long id, String email, String password, String name, String nickname, Address address,
-		String profileImage, SignUpProvider signUpProvider, Collection<? extends GrantedAuthority> roles) {
+		String profileImage, OAuth2ProviderInfo OAuth2ProviderInfo, Collection<? extends GrantedAuthority> roles) {
 		this.id = id;
 		this.email = email;
 		this.password = password;
@@ -49,13 +49,13 @@ public class UserAccountPrincipal extends AuditingFields implements UserDetails 
 		this.nickname = nickname;
 		this.address = address;
 		this.profileImage = profileImage;
-		this.signUpProvider = signUpProvider;
+		this.OAuth2ProviderInfo = OAuth2ProviderInfo;
 		this.roles = roles;
 	}
 
 	public static UserAccountPrincipal of(Long id, String email, String password, String name, String nickname,
-		Address address, String profileImage, SignUpProvider signUpProvider, Set<RoleType> roles) {
-		return new UserAccountPrincipal(id, email, password, name, nickname, address, profileImage, signUpProvider,
+		Address address, String profileImage, OAuth2ProviderInfo OAuth2ProviderInfo, Set<RoleType> roles) {
+		return new UserAccountPrincipal(id, email, password, name, nickname, address, profileImage, OAuth2ProviderInfo,
 			roles.stream()
 				.map(RoleType::getRoleName)
 				.map(SimpleGrantedAuthority::new)
@@ -64,12 +64,12 @@ public class UserAccountPrincipal extends AuditingFields implements UserDetails 
 
 	public static UserAccountPrincipal from(UserAccountDto dto) {
 		return UserAccountPrincipal.of(dto.getId(), dto.getEmail(), dto.getPassword(), dto.getName(), dto.getNickname(),
-			dto.getAddress(), dto.getProfileImage(), dto.getSignUpProvider(), dto.getRoles());
+			dto.getAddress(), dto.getProfileImage(), dto.getOAuth2ProviderInfo(), dto.getRoles());
 	}
 
 	public UserAccountDto toDto() {
 
-		return UserAccountDto.of(id, email, password, name, nickname, address, profileImage, signUpProvider,
+		return UserAccountDto.of(id, email, password, name, nickname, address, profileImage, OAuth2ProviderInfo,
 			roles.stream()
 				.map(grantedAuthority -> RoleType.valueOf(grantedAuthority.getAuthority().substring(5)))
 				.collect(Collectors.toUnmodifiableSet()));

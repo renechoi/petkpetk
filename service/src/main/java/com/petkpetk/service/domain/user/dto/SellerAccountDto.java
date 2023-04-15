@@ -4,7 +4,7 @@ import java.util.Set;
 
 import com.petkpetk.service.config.converter.EntityAndDtoConverter;
 import com.petkpetk.service.common.RoleType;
-import com.petkpetk.service.common.SignUpProvider;
+import com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo;
 import com.petkpetk.service.domain.user.entity.Address;
 import com.petkpetk.service.domain.user.entity.SellerAccount;
 
@@ -25,7 +25,7 @@ public class SellerAccountDto {
 	private String nickname;
 	private Address address;
 	private String profileImage;
-	private SignUpProvider signUpProvider;
+	private OAuth2ProviderInfo OAuth2ProviderInfo;
 	private Set<RoleType> roles;
 
 	private String phoneNumber;
@@ -43,9 +43,9 @@ public class SellerAccountDto {
 	}
 
 	public static SellerAccountDto of(Long id, String email, String password, String name, String nickname,
-		Address address, String profileImage, SignUpProvider signUpProvider, Set<RoleType> roles, String phoneNumber,
+		Address address, String profileImage, OAuth2ProviderInfo OAuth2ProviderInfo, Set<RoleType> roles, String phoneNumber,
 		String businessName, String businessNumber) {
-		return new SellerAccountDto(id, email, password, name, nickname, address, profileImage, signUpProvider, roles,
+		return new SellerAccountDto(id, email, password, name, nickname, address, profileImage, OAuth2ProviderInfo, roles,
 			phoneNumber, businessName, businessNumber);
 	}
 
