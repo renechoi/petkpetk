@@ -14,14 +14,17 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.petkpetk.service.domain.shopping.constant.ItemStatus;
 import com.petkpetk.service.domain.shopping.dto.item.response.ItemResponse;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
+import com.petkpetk.service.domain.shopping.service.item.ItemService;
 
 @Transactional
 @SpringBootTest
 class ItemServiceTest {
 
-	 @Autowired ItemService itemService;
+	 @Autowired
+	 ItemService itemService;
 
 	public MultipartFile createMultipartFile(String filePath) throws IOException {
 		// 파일 객체를 생성함
@@ -58,9 +61,8 @@ class ItemServiceTest {
 
 	@Test
 	void deleteItem() {
-		int complete = itemService.deleteItem(1L);
+		itemService.deleteItem(1L);
 
-		System.out.println("complete = " + complete);
 	}
 
 
