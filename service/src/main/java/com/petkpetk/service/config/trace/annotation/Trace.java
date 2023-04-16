@@ -1,4 +1,4 @@
-package com.petkpetk.service.config.annotation;
+package com.petkpetk.service.config.trace.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,4 +1,4 @@
-package com.petkpetk.service.config.aop;
+package com.petkpetk.service.config.trace;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -16,12 +16,12 @@ import lombok.extern.slf4j.Slf4j;
 @Aspect
 @Component
 @RequiredArgsConstructor
-public class TraceAspect {
+public class GlobalTraceHandler {
 
 	private final LogTrace logTrace;
 
 	// @Around("@annotation(com.petkpetk.service.config.annotation.Trace)")
-	@Around("com.petkpetk.service.config.aop.TraceAspect.all()")
+	@Around("com.petkpetk.service.config.trace.GlobalTraceHandler.all()")
 	public Object execute(ProceedingJoinPoint joinPoint) throws Throwable {
 		TraceStatus status = null;
 		Object result = null;

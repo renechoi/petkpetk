@@ -1,4 +1,4 @@
-package com.petkpetk.service.common.converter;
+package com.petkpetk.service.config.converter;
 
 import org.modelmapper.ModelMapper;
 
