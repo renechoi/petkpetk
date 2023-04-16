@@ -1,6 +1,12 @@
 package com.petkpetk.service.domain.user.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +47,17 @@ public class UserAccountController {
 	}
 
 
+	@GetMapping("/logout")
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		if (authentication != null) {
+			new SecurityContextLogoutHandler().logout(request, response, authentication);
+		}
+
+		return "redirect:/";
+	}
+
 	@GetMapping("/my-page/update")
 	public String update(@AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal, Model model) {
 		UserAccountDto userAccountDto = userAccountService.searchUserDto(userAccountPrincipal.toDto()).orElseThrow(
@@ -62,4 +79,8 @@ public class UserAccountController {
 		return "redirect:/";
 	}
 
+
 }
+
+
+

@@ -59,8 +59,9 @@ public class SocialAccountService implements OAuth2UserService<OAuth2UserRequest
 	public void save(String name, String email) {
 		boolean exists = userAccountRepository.existsByEmail(email);
 
+		System.out.println("영속화 !!! name = " + name);
+
 		if (!exists) {
-			System.out.println("영속화 필요 name = " + name);
 			// todo : db 영속화
 		}
 	}
