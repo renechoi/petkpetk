@@ -12,7 +12,7 @@
         <link th:href="@{/css/userJoin.css}" rel="stylesheet">
     </th:block>
 
-    <form th:action="@{/user/sign-up}" role="form" method="post" th:object="${userAccount}">
+    <form th:action="@{/seller/sign-up}" role="form" method="post" th:object="${sellerAccount}">
 
         <div class="container">
             <div id="img">
@@ -46,6 +46,16 @@
 
             <div class="title">프로필 사진<span>Profile image</span></div>
             <input th:field="*{profileImage}" name="profileImage" id="profileImage" type="text" placeholder="Type your nickname" autocomplete="off"required>
+
+
+            <div class="title">상호명<span>BUSINESS NAME</span></div>
+            <input th:field="*{businessName}" id="business" type="text" placeholder="Type your business name" autocomplete="off">
+
+            <div class="title">사업자 번호<span>BUSINESS NUMBER</span></div>
+            <input th:field="*{businessNumber}" id="businessNumber" type="text" placeholder="Type your business number" autocomplete="off">
+
+            <div class="title">전화번호<span>PHONE NUMBER</span></div>
+            <input th:field="*{phoneNumber}" id="phoneNumber" type="number" placeholder="Type your phone number" autocomplete="off">
 
             <div class="title">우편번호<span>ADDRESS</span></div>
             <input th:field="*{address.zipCode}" type="text" id="sample6_postcode" placeholder="우편번호" name="zipcode" readonly required>
