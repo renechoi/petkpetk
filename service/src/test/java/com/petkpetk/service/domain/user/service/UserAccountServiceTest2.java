@@ -15,7 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.petkpetk.service.common.RoleType;
-import com.petkpetk.service.common.SignUpProvider;
+import com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.entity.Address;
 import com.petkpetk.service.domain.user.entity.UserAccount;
@@ -71,7 +71,7 @@ class UserAccountServiceTest2 {
 	void save_createsNewUserAccount() {
 		// given
 		UserAccountDto newUserAccountDto = new UserAccountDto(null, "newuser@user.com", "password", "새로운 유저", "newuser",
-			new Address("12345", "강남", "2", "etc"), "profile.jpg", SignUpProvider.NAVER, Set.of(RoleType.USER));
+			new Address("12345", "강남", "2", "etc"), "profile.jpg", OAuth2ProviderInfo.NAVER, Set.of(RoleType.USER));
 
 		// when
 		userAccountService.save(newUserAccountDto);
@@ -89,7 +89,7 @@ class UserAccountServiceTest2 {
 		assertEquals("2", userAccountDto.getAddress().getAddress2());
 		assertEquals("etc", userAccountDto.getAddress().getAddressEtc());
 		assertEquals("profile.jpg", userAccountDto.getProfileImage());
-		assertEquals(SignUpProvider.NAVER, userAccountDto.getSignUpProvider());
+		assertEquals(OAuth2ProviderInfo.NAVER, userAccountDto.getOAuth2ProviderInfo());
 		assertEquals(Set.of(RoleType.USER), userAccountDto.getRoles());
 	}
 
@@ -98,7 +98,7 @@ class UserAccountServiceTest2 {
 	void saveTest_userAccountDuplicateException() {
 		// given
 		UserAccountDto newUserAccountDto = new UserAccountDto(null, "user@user.com", "password", "새로운 유저", "newuser",
-			new Address("12345", "강남", "2", "etc"), "profile.jpg", SignUpProvider.NAVER, Set.of(RoleType.USER));
+			new Address("12345", "강남", "2", "etc"), "profile.jpg", OAuth2ProviderInfo.NAVER, Set.of(RoleType.USER));
 
 		// when & then
 		assertThrows(UserDuplicateException.class, () -> userAccountService.save(newUserAccountDto));
@@ -111,7 +111,7 @@ class UserAccountServiceTest2 {
 		// given
 		String email = "user@user.com";
 		UserAccountDto updatedUserAccountDto = new UserAccountDto(null, "user@user.com", "new_password", "새로운 유저",
-			"newuser", new Address("54321", "강서", "3", "etc"), "new_profile.jpg", SignUpProvider.GOOGLE,
+			"newuser", new Address("54321", "강서", "3", "etc"), "new_profile.jpg", OAuth2ProviderInfo.GOOGLE,
 			Set.of(RoleType.ADMIN));
 
 		// when

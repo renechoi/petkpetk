@@ -14,7 +14,7 @@ import org.modelmapper.ModelMapper;
 
 import com.petkpetk.service.config.converter.EntityAndDtoConverter;
 import com.petkpetk.service.common.RoleType;
-import com.petkpetk.service.common.SignUpProvider;
+import com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.entity.Address;
 import com.petkpetk.service.domain.user.entity.UserAccount;
@@ -31,7 +31,7 @@ public class EntityAndDtoConverterTest {
 
 	UserAccount userAccount = UserAccount.of("lee@email.com", "password", "이순신", "닉네임",
 		Address.of("30302", "서울특별시 광진구", "자바동", "기타"), "profileUrl",
-		SignUpProvider.NAVER, Set.of(RoleType.USER));
+		OAuth2ProviderInfo.NAVER, Set.of(RoleType.USER));
 
 	@DisplayName("Dto -> Entity 정상 변환을 테스트 한다")
 	@Test
@@ -79,7 +79,7 @@ public class EntityAndDtoConverterTest {
 		assertEquals(userAccount.getProfileImage(), convertedUserAccount.getProfileImage());
 		assertEquals(userAccount.getRoles(), convertedUserAccount.getRoles());
 		assertEquals(userAccount.getName(), convertedUserAccount.getName());
-		assertEquals(userAccount.getSignUpProvider(), convertedUserAccount.getSignUpProvider());
+		assertEquals(userAccount.getOAuth2ProviderInfo(), convertedUserAccount.getOAuth2ProviderInfo());
 		assertEquals(userAccount.getId(), convertedUserAccount.getId());
 		assertEquals(userAccountDto.getEmail(), convertedUserAccount.getEmail());
 		assertEquals(userAccountDto.getNickname(), convertedUserAccount.getNickname());
@@ -106,7 +106,7 @@ public class EntityAndDtoConverterTest {
 			() -> assertEquals(userAccount.getNickname(), userAccountDto.getNickname()),
 			() -> assertEquals(userAccount.getAddress(), userAccountDto.getAddress()), // address가 변경되어도 매핑이 잘 이루어지는지 확인
 			() -> assertEquals(userAccount.getProfileImage(), userAccountDto.getProfileImage()),
-			() -> assertEquals(userAccount.getSignUpProvider(), userAccountDto.getSignUpProvider()),
+			() -> assertEquals(userAccount.getOAuth2ProviderInfo(), userAccountDto.getOAuth2ProviderInfo()),
 			() -> assertEquals(userAccount.getRoles(), userAccountDto.getRoles()) // roles가 변경되어도 매핑이 잘 이루어지는지 확인
 		);
 	}

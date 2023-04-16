@@ -18,7 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.petkpetk.service.common.RoleType;
-import com.petkpetk.service.common.SignUpProvider;
+import com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.entity.Address;
 import com.petkpetk.service.domain.user.entity.UserAccount;
@@ -46,7 +46,7 @@ public class UserAccountServiceTest {
 		MockitoAnnotations.initMocks(this);
 
 		userAccountDto = UserAccountDto.of(1L, "email@email.com", "password", "홍길동", "길동",
-			Address.of("34589", "서울특별시 광진구", "자바동", "기타"), "profileUrl", SignUpProvider.NAVER, Set.of(RoleType.USER));
+			Address.of("34589", "서울특별시 광진구", "자바동", "기타"), "profileUrl", OAuth2ProviderInfo.NAVER, Set.of(RoleType.USER));
 		userAccount = userAccountDto.toEntity();
 
 		when(userAccountRepository.save(userAccount)).thenReturn(userAccount);
