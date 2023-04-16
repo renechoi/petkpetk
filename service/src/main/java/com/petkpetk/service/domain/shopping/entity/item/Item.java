@@ -13,9 +13,10 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.petkpetk.service.common.AuditingFields;
+import com.petkpetk.service.common.StatusCode;
 import com.petkpetk.service.domain.shopping.constant.ItemStatus;
 import com.petkpetk.service.domain.shopping.dto.item.response.ItemResponse;
-import com.petkpetk.service.domain.shopping.entity.AuditingFields;
 import com.petkpetk.service.domain.shopping.exception.OutOfStockException;
 
 import lombok.Getter;
@@ -85,7 +86,7 @@ public class Item extends AuditingFields {
 		System.out.println("this.stockAmount = " + this.itemAmount);
 
 		if (this.itemAmount < stockAmount) {
-			throw new OutOfStockException("상품 재고가 부족합니다 (현재 재고 수량 : " + this.itemAmount + ")");
+			throw new OutOfStockException(StatusCode.OUT_OF_STOCK,"(현재 재고 수량 : " + this.itemAmount + ")");
 		}
 		this.itemAmount -= stockAmount;
 	}

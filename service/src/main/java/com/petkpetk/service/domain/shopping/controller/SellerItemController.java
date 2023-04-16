@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/seller")
-public class SellerAccountController {
+public class SellerItemController {
 
 	private final ItemService itemService;
 

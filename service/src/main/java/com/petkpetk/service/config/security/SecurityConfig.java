@@ -29,7 +29,7 @@ public class SecurityConfig {
 		return http.authorizeHttpRequests(
 				auth -> auth.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
 					.permitAll()
-					.mvcMatchers("/", "/user/**", "/error/**", "/login", "seller/sign-up")
+					.mvcMatchers("/", "/user/**", "/error/**", "/login", "/seller/sign-up", "/seller/**", "/admin/**", "/test/**")
 					.permitAll()
 					.anyRequest()
 					.authenticated())

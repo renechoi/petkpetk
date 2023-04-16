@@ -1,10 +1,23 @@
 package com.petkpetk.service.domain.shopping.exception;
 
-public class OutOfStockException extends  RuntimeException{
+import com.petkpetk.service.common.StatusCode;
+import com.petkpetk.service.config.exception.PetkpetkServerException;
 
-	public OutOfStockException(String message) {
-		super(message);
-		System.out.println("message = " + message);
+public class OutOfStockException extends  PetkpetkServerException{
 
+	private static final StatusCode statusCode = StatusCode.OUT_OF_STOCK;
+
+	public OutOfStockException(){
+		super(statusCode);
 	}
+
+	public OutOfStockException(StatusCode statusCode) {
+		super(statusCode);
+	}
+
+	public OutOfStockException(StatusCode statusCode, String detailMessage) {
+		super(statusCode, detailMessage);
+	}
+
+
 }

@@ -1,13 +1,10 @@
 package com.petkpetk.service.domain.shopping.dto.cart;
 
-import com.petkpetk.service.common.converter.EntityAndDtoConverter;
+import com.petkpetk.service.config.converter.EntityAndDtoConverter;
 import com.petkpetk.service.domain.shopping.entity.cart.Cart;
-import com.petkpetk.service.domain.shopping.entity.item.Item;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Data

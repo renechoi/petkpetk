@@ -2,7 +2,7 @@ package com.petkpetk.service.domain.shopping.dto.cart;
 
 import java.util.List;
 
-import com.petkpetk.service.common.converter.EntityAndDtoConverter;
+import com.petkpetk.service.config.converter.EntityAndDtoConverter;
 import com.petkpetk.service.domain.shopping.dto.order.OrderItemDto;
 import com.petkpetk.service.domain.shopping.entity.cart.Cart;
 

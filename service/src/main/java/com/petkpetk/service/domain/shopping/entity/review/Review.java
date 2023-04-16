@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.petkpetk.service.domain.shopping.entity.AuditingFields;
+import com.petkpetk.service.common.AuditingFields;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 
 import lombok.Getter;
