@@ -50,4 +50,20 @@ public class ArticleDto {
 		img
 		);
 	}
+
+	public static ArticleDto toArticleDto(Article article) {
+		ArticleDto articleDto = new ArticleDto();
+		articleDto.setArticleId(article.getArticleId());
+		articleDto.setUserId(article.getUserId());
+		articleDto.setTitle(article.getTitle());
+		articleDto.setContent(article.getContent());
+		articleDto.setHit(article.getHit());
+		articleDto.setLike(article.getLike());
+		articleDto.setCreatedAt(article.getCreatedAt());
+		articleDto.setModifiedAt(article.getModifiedAt());
+		articleDto.setDeletedAt(article.getDeletedAt());
+		articleDto.setDeleteYn(article.getDeleteYn());
+		return articleDto;
+	}
+
 }
