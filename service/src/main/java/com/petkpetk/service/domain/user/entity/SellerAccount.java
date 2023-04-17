@@ -46,7 +46,7 @@ public class SellerAccount extends AuditingFields implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "seller_id")
+	@Column(name = "seller_account_id")
 	private Long id;
 
 	@Column(unique = true)

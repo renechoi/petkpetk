@@ -26,10 +26,19 @@ public class UserAccountService {
 			throw new UserDuplicateException();
 		}
 
-		UserAccount userAccount = userAccountDto.toEntity();
-
-		userAccountRepository.save(userAccount);
+		userAccountRepository.save(userAccountDto.toEntity());
 	}
+
+	public void saveSocialUser(UserAccountDto userAccountDto) {
+
+		if (isDuplicate(userAccountDto.getEmail())) {
+			return;
+		}
+
+		userAccountRepository.save(userAccountDto.toEntity());
+	}
+
+
 
 	public void update(UserAccountDto userAccountDto) {
 		UserAccount userAccount = findByEmail(userAccountDto).orElseThrow(UserNotFoundException::new);
@@ -39,6 +48,7 @@ public class UserAccountService {
 	public void delete(UserAccountDto userAccountDto) {
 		UserAccount userAccount = findByEmail(userAccountDto).orElseThrow(UserNotFoundException::new);
 		userAccount.setDeletedYn("Y");
+		// TODO: 유저 삭제시 타 관련 정보들 전부 삭제 필요
 	}
 
 	public Optional<UserAccountDto> searchUserDto(String email) {
