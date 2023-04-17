@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.petkpetk.service.domain.board.dto.ArticleDto;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -88,4 +90,37 @@ public class Article {
 		return Objects.hash(articleId, userId, title, content, hit, like, createdAt, modifiedAt,
 			deletedAt, deleteYn, img);
 	}
+
+	public static Article toSaveEntity(ArticleDto articleDto) {
+		Article article = new Article();
+		article.setUserId(articleDto.getUserId());
+		article.setTitle(articleDto.getTitle());
+		article.setContent(articleDto.getContent());
+		article.setHit(0l);
+		article.setLike(articleDto.getLike());
+		article.setCreatedAt(articleDto.getCreatedAt());
+		article.setModifiedAt(articleDto.getModifiedAt());
+		article.setDeletedAt(articleDto.getDeletedAt());
+		article.setDeleteYn(articleDto.getDeleteYn());
+		article.setImg(articleDto.getImg());
+		return article;
+	}
+
+	public static Article toUpdateEntity(ArticleDto articleDto) {
+		Article article = new Article();
+		article.setArticleId(articleDto.getArticleId());
+		article.setUserId(articleDto.getUserId());
+		article.setTitle(articleDto.getTitle());
+		article.setContent(articleDto.getContent());
+		article.setHit(articleDto.getHit());
+		article.setLike(articleDto.getLike());
+		article.setCreatedAt(articleDto.getCreatedAt());
+		article.setModifiedAt(articleDto.getModifiedAt());
+		article.setDeletedAt(articleDto.getDeletedAt());
+		article.setDeleteYn(articleDto.getDeleteYn());
+		article.setImg(articleDto.getImg());
+		return article;
+	}
+
+
 }
