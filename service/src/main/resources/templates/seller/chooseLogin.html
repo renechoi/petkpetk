@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layout/layout">
+
+<div layout:fragment="content">
+    <th:block layout:fragment="script">
+        <script th:inline="javascript" th:src="@{/js/chooseLogin.js}"></script>
+    </th:block>
+    <th:block layout:fragment="css">
+        <link th:href="@{/css/chooseLogin.css}" rel="stylesheet">
+    </th:block>
+
+
+    <a><div><button>일반회원</button></div></a>
+    <a><div><button>사업자 회원</button></div></a>
+</div>
+</html>
