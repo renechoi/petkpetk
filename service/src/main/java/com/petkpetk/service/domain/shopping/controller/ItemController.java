@@ -34,7 +34,7 @@ public class ItemController {
 
 	@GetMapping("/my-page")
 	public String myPageView(){
-		return "my-page/sellerMyPage";
+		return "my-page/seller/sellerMyPage";
 	}
 
 
