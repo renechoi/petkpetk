@@ -2,7 +2,7 @@ package com.petkpetk.service.domain.board.dto;
 
 import java.time.LocalDate;
 
-import com.petkpetk.service.common.converter.EntityAndDtoConverter;
+import com.petkpetk.service.config.converter.EntityAndDtoConverter;
 import com.petkpetk.service.domain.board.entity.Comment;
 
 import lombok.AllArgsConstructor;
