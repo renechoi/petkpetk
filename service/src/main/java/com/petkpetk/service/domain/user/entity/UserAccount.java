@@ -46,6 +46,7 @@ public class UserAccount extends AuditingFields implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_account_id")
 	private Long id;
 
 	@Column(unique = true)
@@ -64,7 +65,7 @@ public class UserAccount extends AuditingFields implements Serializable {
 	@Size(max = 512)
 	private String profileImage;
 
-	@Column(name="oauth2_provider_info")
+	@Column(name = "oauth2_provider_info")
 	@Enumerated(EnumType.STRING)
 	private OAuth2ProviderInfo OAuth2ProviderInfo;
 
@@ -111,7 +112,8 @@ public class UserAccount extends AuditingFields implements Serializable {
 	@PrePersist
 	public void anonymousSetup() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication != null && "anonymousUser".equals(authentication.getName())) {
+		if (authentication == null || "anonymousUser".equals(authentication.getName())
+		) {
 			this.createdBy = this.getName();
 			this.modifiedBy = this.getName();
 		}
