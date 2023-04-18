@@ -4,7 +4,12 @@
       layout:decorate="/layout/layout">
 
 
+<th:block layout:fragment="css">
+    <link th:href="@{/css/itemDetail.css}" rel="stylesheet">
+</th:block>
+
 <th:block layout:fragment="script">
+    <script th:inline="javascript" th:src="@{/js/itemDetail.js}"></script>
 
     <script th:inline="javascript">
         $(document).ready(function () {
@@ -111,7 +116,7 @@
 
 <div layout:fragment="content">
 
-    <div id="itemDetailContainer">
+    <div id="itemDetailContainer" class="itemDetailContainer">
         <input type="hidden" id="itemId" th:value="${item.id}">
 
         <div id="BuyBox" class="d-flex">
@@ -141,7 +146,7 @@
                     <div class="h4 text-danger text-left cost">
                         <input type="hidden" th:value="${item.price}" id="price" name="price">
                         <span class="OriginalCost">888원</span><span id="cost"
-                                                                    th:text="${item.price}"></span>원
+                                                                    th:text="${item.price}"></span>
                     </div>
                     <div class="input-group w-50 ChooseAmountBox">
                         <div class="totalflexBox">
