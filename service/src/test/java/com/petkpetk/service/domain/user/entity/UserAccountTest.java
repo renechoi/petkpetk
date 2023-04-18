@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.petkpetk.service.config.security.PasswordEncoderConfig;
 import com.petkpetk.service.common.RoleType;
 import com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo;
+import com.petkpetk.service.domain.user.entity.embedded.Address;
 
 @Transactional
 @ActiveProfiles("test")
