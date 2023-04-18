@@ -39,7 +39,7 @@ spring:
   data:
     rest:
       base-path: /api
-      detection-strategy: annotated
+      detection-strategy: all
 
   security:
     oauth2:
