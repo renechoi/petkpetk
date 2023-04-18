@@ -11,7 +11,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.petkpetk.service.domain.user.dto.security.UserAccountPrincipal;
-import com.petkpetk.service.domain.user.service.SocialAccountService;
+import com.petkpetk.service.domain.user.service.OidcUserAccountService;
+import com.petkpetk.service.domain.user.service.OAuth2UserAccountService;
 import com.petkpetk.service.domain.user.service.UserAccountService;
 
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,9 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 
 	private final OAuth2Config oAuth2Config;
-	private final SocialAccountService SocialAccountService;
+	private final OAuth2UserAccountService OAuth2UserAccountService;
+
+	private final OidcUserAccountService oidcUserAccountService;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -29,8 +32,7 @@ public class SecurityConfig {
 		return http.authorizeHttpRequests(
 				auth -> auth.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
 					.permitAll()
-					.mvcMatchers("/", "/user/**", "/error/**", "/login", "/seller/sign-up", "/seller/**", "/admin/**", "/test/**")
-					.permitAll()
+					.mvcMatchers("/", "/user/**", "/error/**", "/login", "/seller/sign-up", "/seller/**", "/admin/**", "/test/**", "item/**").permitAll()
 					.anyRequest()
 					.authenticated())
 
@@ -45,8 +47,8 @@ public class SecurityConfig {
 			.oauth2Login(oauth2 -> oauth2.clientRegistrationRepository(oAuth2Config.clientRegistrationRepository())
 				.authorizedClientService(oAuth2Config.oAuth2AuthorizedClientService())
 				.userInfoEndpoint(
-					user -> user
-						.userService(SocialAccountService)
+					user -> user.oidcUserService(oidcUserAccountService)
+						.userService(OAuth2UserAccountService)
 				)
 			)
 
