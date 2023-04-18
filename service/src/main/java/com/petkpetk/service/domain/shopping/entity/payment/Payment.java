@@ -6,7 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.petkpetk.service.common.AuditingFields;
+import com.petkpetk.service.domain.shopping.constant.OrderStatus;
 import com.petkpetk.service.domain.shopping.entity.cart.Cart;
+import com.petkpetk.service.domain.shopping.entity.order.OrderItem;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,7 +23,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Payment {
+public class Payment extends AuditingFields {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,9 +36,21 @@ public class Payment {
 	@Column(unique = true)
 	private Long productId;
 	private Long totalCost;
-	private String payToken; // *****
-	private String payApp; // *****
+	private String payToken; // ***** 결제토큰
+	private String payApp; // ***** 결제 방식
 
+	public Payment(Long orderId, Long userId, Long productId, Long totalCost, String payToken, String payApp) {
+		this.orderId = orderId;
+		this.userId = userId;
+		this.productId = productId;
+		this.totalCost = totalCost;
+		this.payToken = payToken;
+		this.payApp = payApp;
+	}
+
+	public static Payment of(Long orderId, Long userId, Long productId, Long totalCost, String payToken, String payApp) {
+		return new Payment(orderId, userId, productId, totalCost,payToken,payApp);
+	}
 
 
 }
