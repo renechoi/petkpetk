@@ -3,18 +3,13 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layout/layout">
 
+<th:block layout:fragment="css">
+    <link th:href="@{/css/itemApply.css}" rel="stylesheet">
+</th:block>
+
 <th:block layout:fragment="script">
-
+    <script th:inline="javascript" th:src="@{/js/itemApply.js}"></script>
     <script th:inline="javascript">
-        $(document).ready(function () {
-            var errorMessage = [[${errorMessage}]];
-            if (errorMessage != null) {
-                alert(errorMessage);
-            }
-
-            bindDomEvent();
-
-        });
 
         function bindDomEvent() {
             $(".custom-file-input").on("change", function () {
@@ -30,9 +25,6 @@
                 $(this).siblings(".custom-file-label").html(fileName);
             });
         }
-
-
-
     </script>
 
 </th:block>
@@ -58,8 +50,6 @@
                 <input id="addItemName" type="text" th:field="*{itemName}" class="form-control addItemName"
                        placeholder="상품명을 입력해주세요" autocomplete="off">
             </div>
-            <p th:if="${#fields.hasErrors('itemName')}" th:errors="*{itemName}" class="fieldError">
-                Incorrect data</p>
 
             <div class="input-group">
                 <div class="input-group-prepend">
@@ -68,8 +58,6 @@
                 <input id="itemPrice" type="number" th:field="*{price}" class="form-control"
                        placeholder="가격" autocomplete="off"> 원
             </div>
-            <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="fieldError">
-                Incorrect data</p>
 
             <div class="input-group">
                 <div class="input-group-prepend">
@@ -78,8 +66,6 @@
                 <input id="itemAmount" type="number" th:field="*{itemAmount}" class="form-control itemAmount"
                        placeholder="재고" autocomplete="off"> 개
             </div>
-            <p th:if="${#fields.hasErrors('itemAmount')}" th:errors="*{itemAmount}"
-               class="fieldError">Incorrect data</p>
 
             <div class="input-group">
                 <div class="input-group-prepend">
@@ -88,8 +74,6 @@
                 <pre><textarea id="itemDetail" class="form-control addItemDetail" aria-label="With textarea"
                                th:field="*{itemDetail}"></textarea></pre>
             </div>
-            <p th:if="${#fields.hasErrors('itemDetail')}" th:errors="*{itemDetail}"
-               class="fieldError">Incorrect data</p>
 
             <div th:if="${#lists.isEmpty(ItemResponse.itemImageDtos)}">
                 <div class="form-group" th:each="num: ${#numbers.sequence(1,5)}">
@@ -137,7 +121,7 @@
                 </button>
             </div>
             <div th:unless="${#strings.isEmpty(ItemResponse.id)}" style="text-align: center">
-                <button th:formaction="@{'/item/modify/' + ${ItemResponse.id}}" type="submit"
+                <button th:formaction="${'/item/modify/' + ${ItemResponse.id}}" type="submit"
                         class="btn btn-primary modifyItemDetail">수정
                 </button>
             </div>
@@ -146,4 +130,5 @@
         </form>
     </div>
 </div>
+
 </html>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.petkpetk.service.domain.shopping.dto.item.request.ItemRequest;
 import com.petkpetk.service.domain.shopping.dto.item.response.ItemResponse;
 import com.petkpetk.service.domain.shopping.entity.item.ItemImage;
-import com.petkpetk.service.domain.shopping.dto.item.request.ItemRequest;
 import com.petkpetk.service.domain.shopping.service.item.ItemService;
+import com.petkpetk.service.domain.user.entity.SellerAccount;
+import com.petkpetk.service.domain.user.service.SellerAccountService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,12 +32,13 @@ import lombok.extern.slf4j.Slf4j;
 public class ItemController {
 
 	private final ItemService itemService;
+	private final SellerAccountService sellerAccountService;
 
 
 
 	@GetMapping("/my-page")
 	public String myPageView(){
-		return "my-page/sellerMyPage";
+		return "my-page/seller/sellerMyPage";
 	}
 
 
@@ -49,13 +53,12 @@ public class ItemController {
 	@PostMapping("/new")
 	public String addItem(Model model,
 		@Valid ItemResponse itemResponse,
-		@RequestParam("itemImgFile") List<MultipartFile> itemImageFiles) {
+		@RequestParam("itemImgFile") List<MultipartFile> itemImageFiles,
+		Authentication authentication) {
 
-
-		if (itemImageFiles.get(0).isEmpty()) {
-			model.addAttribute("errorMessage", "대표 이미지를 정해주세요.");
-			return "item/itemApply";
-		}
+		String email = authentication.getName();
+		SellerAccount sellerAccount = sellerAccountService.searchSeller(email).get();
+		itemResponse.setSellerAccount(sellerAccount);
 
 		try {
 			Long id = itemService.saveItem(itemResponse, itemImageFiles);

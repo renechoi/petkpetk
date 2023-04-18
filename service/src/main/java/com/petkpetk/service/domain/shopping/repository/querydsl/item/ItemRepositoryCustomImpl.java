@@ -123,6 +123,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 					item.itemName,
 					item.itemDetail,
 					item.itemStatus,
+					item.sellerAccount.businessName,
 					itemImage.imageUrl,
 					item.price
 				)

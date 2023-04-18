@@ -36,8 +36,7 @@ public class ReviewImage {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "review_id")
-	@ToString.Exclude
-	private com.petkpetk.service.domain.shopping.entity.review.Review review;
+	private Review review;
 
 
 	public void updateReviewImage(String imageName, String originalImageName, String imageUrl) {

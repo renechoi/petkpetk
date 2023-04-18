@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import com.petkpetk.service.domain.shopping.constant.ItemStatus;
 import com.petkpetk.service.domain.shopping.dto.item.ItemImageDto;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
+import com.petkpetk.service.domain.user.entity.SellerAccount;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemResponse {
+public class ItemResponse{
 	private Long id;
 
 	@NotBlank(message = "상품명을 입력해주세요.")
@@ -35,6 +36,8 @@ public class ItemResponse {
 
 	private ItemStatus itemStatus;
 
+	private SellerAccount sellerAccount;
+
 	private List<ItemImageDto> itemImageDtos = new ArrayList<>();
 
 	private List<Long> itemImageIds = new ArrayList<>();
@@ -46,28 +49,30 @@ public class ItemResponse {
 			this.itemAmount,
 			this.itemDetail,
 			this.itemStatus,
+			this.sellerAccount,
 			LocalDateTime.now(),
 			LocalDateTime.now()
 		);
 	}
 
 	public ItemResponse(String itemName, Long price, Long itemAmount, String itemDetail,
-		ItemStatus itemStatus) {
+		ItemStatus itemStatus, SellerAccount sellerAccount) {
 		this.itemName = itemName;
 		this.price = price;
 		this.itemAmount = itemAmount;
 		this.itemDetail = itemDetail;
 		this.itemStatus = itemStatus;
+		this.sellerAccount = sellerAccount;
 	}
 
 	public static ItemResponse of(String itemName, Long price, Long itemAmount, String itemDetail,
-		ItemStatus itemStatus) {
-		return new ItemResponse(itemName, price, itemAmount, itemDetail, itemStatus);
+		ItemStatus itemStatus, SellerAccount sellerAccount) {
+		return new ItemResponse(itemName, price, itemAmount, itemDetail, itemStatus, sellerAccount);
 	}
 
 	public static ItemResponse of(Item item) {
 		return ItemResponse.of(item.getItemName(), item.getPrice(), item.getItemAmount(),
-			item.getItemDetail(), item.getItemStatus());
+			item.getItemDetail(), item.getItemStatus(), item.getSellerAccount());
 	}
 
 	public static ItemResponse of(Item itemEntity, List<ItemImageDto> itemImageDtos,
@@ -79,6 +84,7 @@ public class ItemResponse {
 			itemEntity.getItemAmount(),
 			itemEntity.getItemDetail(),
 			itemEntity.getItemStatus(),
+			itemEntity.getSellerAccount(),
 			itemImageDtos,
 			itemImageIds);
 	}

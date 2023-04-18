@@ -6,9 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
@@ -18,6 +21,7 @@ import com.petkpetk.service.common.StatusCode;
 import com.petkpetk.service.domain.shopping.constant.ItemStatus;
 import com.petkpetk.service.domain.shopping.dto.item.response.ItemResponse;
 import com.petkpetk.service.domain.shopping.exception.OutOfStockException;
+import com.petkpetk.service.domain.user.entity.SellerAccount;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -53,23 +57,29 @@ public class Item extends AuditingFields {
 	@Enumerated(EnumType.STRING)
 	private ItemStatus itemStatus;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "email")
+	@ToString.Exclude
+	private SellerAccount sellerAccount;
+
 	private LocalDateTime registeredAt;
 
 	private LocalDateTime updatedAt;
 
 	private Item(String itemName, Long price, Long itemAmount, String itemDetail,
-		ItemStatus itemStatus, LocalDateTime registeredAt, LocalDateTime updatedAt) {
+		ItemStatus itemStatus,SellerAccount sellerAccount, LocalDateTime registeredAt, LocalDateTime updatedAt) {
 		this.itemName = itemName;
 		this.price = price;
 		this.itemAmount = itemAmount;
 		this.itemDetail = itemDetail;
 		this.itemStatus = itemStatus;
+		this.sellerAccount = sellerAccount;
 		this.registeredAt = registeredAt;
 		this.updatedAt = updatedAt;
 	}
 
-	public static Item of(String itemName, Long price, Long itemAmount, String itemDetail, ItemStatus itemStatus, LocalDateTime registeredAt, LocalDateTime updatedAt) {
-		return new Item(itemName, price, itemAmount, itemDetail, itemStatus, registeredAt, updatedAt);
+	public static Item of(String itemName, Long price, Long itemAmount, String itemDetail, ItemStatus itemStatus,SellerAccount sellerAccount, LocalDateTime registeredAt, LocalDateTime updatedAt) {
+		return new Item(itemName, price, itemAmount, itemDetail, itemStatus, sellerAccount, registeredAt, updatedAt);
 	}
 
 
@@ -79,6 +89,7 @@ public class Item extends AuditingFields {
 		this.itemAmount = itemResponse.getItemAmount();
 		this.itemDetail = itemResponse.getItemDetail();
 		this.itemStatus = itemResponse.getItemStatus();
+		this.sellerAccount = itemResponse.getSellerAccount();
 	}
 
 	public void selledItem(Long stockAmount) {

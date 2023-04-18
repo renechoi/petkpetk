@@ -6,6 +6,7 @@ import java.util.List;
 import com.petkpetk.service.domain.shopping.constant.ItemStatus;
 import com.petkpetk.service.domain.shopping.dto.item.ItemImageDto;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
+import com.petkpetk.service.domain.user.entity.SellerAccount;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,6 +29,8 @@ public class ItemRequest {
 
 	private ItemStatus itemStatus;
 
+	private SellerAccount sellerAccount;
+
 	private List<ItemImageDto> itemImageDtos = new ArrayList<>();
 
 	private List<Long> itemImageIds = new ArrayList<>();
@@ -41,6 +44,7 @@ public class ItemRequest {
 			entity.getItemAmount(),
 			entity.getItemDetail(),
 			entity.getItemStatus(),
+			entity.getSellerAccount(),
 			itemImageDtos,
 			itemImageIds
 		);

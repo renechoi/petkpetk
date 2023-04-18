@@ -4,7 +4,6 @@ var addItemContainer = document.getElementById("addItemContainer");
 var itemMngContainer = document.getElementById("itemMngContainer");
 
 
-
 $(".menubar").on("click", function () {
 
     if(!mainZone){
