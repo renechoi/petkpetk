@@ -28,6 +28,7 @@ import com.petkpetk.service.config.converter.RoleTypeConverter;
 import com.petkpetk.service.common.RoleType;
 import com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo;
 import com.petkpetk.service.domain.user.dto.SellerAccountDto;
+import com.petkpetk.service.domain.user.entity.embedded.Address;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -5,7 +5,7 @@ import java.util.Set;
 import com.petkpetk.service.config.converter.EntityAndDtoConverter;
 import com.petkpetk.service.common.RoleType;
 import com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo;
-import com.petkpetk.service.domain.user.entity.Address;
+import com.petkpetk.service.domain.user.entity.embedded.Address;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 
 import lombok.AllArgsConstructor;

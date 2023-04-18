@@ -1,12 +1,10 @@
-package com.petkpetk.service.domain.user.entity;
+package com.petkpetk.service.domain.user.entity.embedded;
 
 import javax.persistence.Embeddable;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Embeddable
 @Data

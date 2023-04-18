@@ -2,6 +2,7 @@ package com.petkpetk.service.domain.user.service;
 
 import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,14 +20,17 @@ import lombok.RequiredArgsConstructor;
 public class UserAccountService {
 
 	private final UserAccountRepository userAccountRepository;
+	private final PasswordEncoder passwordEncoder;
 
 	public void save(UserAccountDto userAccountDto) {
 
 		if (isDuplicate(userAccountDto.getEmail())) {
 			throw new UserDuplicateException();
 		}
-
-		userAccountRepository.save(userAccountDto.toEntity());
+		// TODO :
+		UserAccount userAccount = userAccountDto.toEntity();
+		userAccount.encodePassword(passwordEncoder);
+		userAccountRepository.save(userAccount);
 	}
 
 	public void saveSocialUser(UserAccountDto userAccountDto) {

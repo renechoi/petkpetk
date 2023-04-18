@@ -1,7 +1,5 @@
 package com.petkpetk.service.domain.user.service;
 
-import static com.petkpetk.service.common.StatusCode.*;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -17,11 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.petkpetk.service.common.RoleType;
-import com.petkpetk.service.config.exception.PetkpetkServerException;
 import com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo;
 import com.petkpetk.service.config.security.oauth2.OAuth2UserAccount;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
-import com.petkpetk.service.domain.user.entity.Address;
+import com.petkpetk.service.domain.user.entity.embedded.Address;
 
 import lombok.extern.slf4j.Slf4j;
 
