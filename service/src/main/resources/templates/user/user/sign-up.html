@@ -1,65 +1,71 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="/layout/layout">
+      layout:decorate="/layout/login-signUpLayout">
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript" th:src="@{/js/userJoin.js}"></script>
+</th:block>
+<th:block layout:fragment="css">
+    <link th:href="@{/css/userJoin.css}" rel="stylesheet">
+</th:block>
 
 <div layout:fragment="content">
 
-    <th:block layout:fragment="script">
-        <script th:inline="javascript" th:src="@{/js/userJoin.js}"></script>
-    </th:block>
-    <th:block layout:fragment="css">
-        <link th:href="@{/css/userJoin.css}" rel="stylesheet">
-    </th:block>
 
-    <form action="" role="form" method="post" th:object="${userAccountRequest}">
+    <form id="JoinForm" th:action="@{/user/sign-up}" role="form" method="post" th:object="${userAccount}">
 
         <div class="container">
             <div id="img">
-                <a th:href="@{/static}" title="메인으로 가기"><img id="logo-img" th:src="@{/images/PetkPetk-logo_Kor.png}"></a>
+                <a th:href="@{/}" title="메인으로 가기"><img id="logo-img" th:src="@{/images/PetkPetk-logo_Kor.png}"></a>
             </div>
-            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError">Incorrect data</p>
-            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError">Incorrect data</p>
-            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError">Incorrect data</p>
-            <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="fieldError">Incorrect data</p>
-            <p th:if="${#fields.hasErrors('address')}" th:errors="*{nickname}" class="fieldError">Incorrect data</p>
-            <p th:if="${#fields.hasErrors('address')}" th:errors="*{profileImage}" class="fieldError">Incorrect data</p>
 
-            <div class="title">아이디<span>EMAIL ID</span></div>
-            <input th:field="*{email}" id="email" type="email" placeholder="Type email" autocomplete="off" required>
+            <p id="errorMessage"></p>
+            <div class="title">이메일<span>EMAIL ID</span></div>
+            <input th:field="*{email}" id="email" type="email" placeholder="Type email" autocomplete="off" >
             <input id="findEmail" type="button" value="중복검사">
 
             <div class="title">이름<span>NAME</span></div>
-            <input th:field="*{name}" id="name" type="text" placeholder="Type your name" autocomplete="off" required>
+            <input th:field="*{name}" id="name" type="text" placeholder="Type your name" autocomplete="off" maxlength="11">
+
+            <div class="title">닉네임<span>NICK NAME</span></div>
+            <input th:field="*{nickname}" name="nickName" id="nickName" type="text" placeholder="Type your nickname" autocomplete="off" maxlength="8">
+            <input id="findNickName" type="button" value="중복 검사">
+
+
+            <div class="title">프로필 사진<span>Profile image</span></div>
+            <div class="file_box">
+                <div>
+                    <label for="file" id="findImg">파일찾기</label>
+                    <input th:field="*{profileImage}" type="file" id="file">
+                </div>
+                <div class="profileImg">
+                    <img id="sign-upProfileImg" class="sign-upProfileImg" src="" style="display: none">
+                </div>
+            </div>
 
             <div class="title">비밀번호<span>PASSWORD</span></div>
-            <input th:field="*{password}" id="password" type="password" placeholder="Type password" autocomplete="off" required>
+            <input th:field="*{password}" id="password" type="password" placeholder="Type password" autocomplete="off" minlength="8" maxlength="16">
+
 
             <div class="title">비밀번호 재확인<span>RETYPE PASSWORD</span></div>
             <input name="re-password" id="re-password" type="password" placeholder="Retype password" autocomplete="off"
                    onkeyup="checkSameWithPass()" required>
             <div id="check-password"></div>
 
-            <div class="title">닉네임<span>NICK NAME</span></div>
-            <input th:field="*{nickname}" name="nickName" id="nickName" type="text" placeholder="Type your nickname" autocomplete="off"required>
-            <input id="findNickName" type="button" value="중복 검사">
-
-            <div class="title">프로필 사진<span>Profile image</span></div>
-            <input th:field="*{profileImage}" name="profileImage" id="profileImage" type="text" placeholder="Type your nickname" autocomplete="off"required>
-            <input id="findNickName" type="button" value="중복 검사">
 
             <div class="title">우편번호<span>ADDRESS</span></div>
-            <input th:field="*{address.zipCode}" type="text" id="sample6_postcode" placeholder="우편번호" name="zipcode" readonly required>
+            <input th:field="*{address.zipCode}" type="text" id="zipCode" placeholder="우편번호" name="zipcode" readonly >
             <input id="findZipcode" type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
 
             <div class="title">주소</div>
-            <input th:field="*{address.address1}" type="text" id="sample6_address" placeholder="주소" name="addr" readonly required>
+            <input th:field="*{address.address1}" type="text" id="addr" placeholder="주소" name="addr" readonly >
 
             <div class="title">상세주소<span>DETAIL ADDRESS</span></div>
-            <input th:field="*{address.address2}" type="text" id="sample6_detailAddress" placeholder="상세주소" name="addrdetail" autocomplete="off" required>
+            <input th:field="*{address.address2}" type="text" id="detailAddress" placeholder="상세주소" name="addrdetail" autocomplete="off" >
 
             <div class="title">참고항목</div>
-            <input th:field="*{address.addressEtc}" type="text" id="sample6_extraAddress" placeholder="참고항목" name="addretc" readonly >
+            <input th:field="*{address.addressEtc}" type="text" id="addrEtc" placeholder="참고항목" name="addretc"  >
 
             <br>
             <input type="submit" value="가입하기">
@@ -107,17 +113,17 @@
                                 extraAddr = ' (' + extraAddr + ')';
                             }
                             // 조합된 참고항목을 해당 필드에 넣는다.
-                            document.getElementById("sample6_extraAddress").value = extraAddr;
+                            document.getElementById("addrEtc").value = extraAddr;
 
                         } else {
-                            document.getElementById("sample6_extraAddress").value = '';
+                            document.getElementById("addrEtc").value = '';
                         }
 
                         // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                        document.getElementById('sample6_postcode').value = data.zonecode;
-                        document.getElementById("sample6_address").value = addr;
+                        document.getElementById('zipCode').value = data.zonecode;
+                        document.getElementById("addr").value = addr;
                         // 커서를 상세주소 필드로 이동한다.
-                        document.getElementById("sample6_detailAddress").focus();
+                        document.getElementById("detailAddress").focus();
                     }
                 }).open();
             }

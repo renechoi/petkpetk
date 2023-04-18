@@ -56,6 +56,9 @@ JoinForm.addEventListener("submit", function (event) {
     var email = document.getElementById("email");
     var name = document.getElementById("name");
     var nickName = document.getElementById("nickName");
+    var businessName = document.getElementById("businessName");
+    var businessNumber = document.getElementById("businessNumber");
+    var phoneNumber = document.getElementById("phoneNumber");
     var password = document.getElementById("password");
     var re_password = document.getElementById("re-password");
     var zipCode = document.getElementById("zipCode");
@@ -64,22 +67,20 @@ JoinForm.addEventListener("submit", function (event) {
     checkSpace(email, "이메일", event);
     checkSpace(name, "이름", event);
     checkSpace(nickName, "닉네임", event);
+    checkSpace(businessName, "상호명", event);
+    checkSpace(businessNumber, "사업코드", event);
+    checkSpace(phoneNumber, "전화번호", event);
     checkSpace(password, "비밀번호", event);
 
     checkNull(name,"이름", event);
     checkNull(nickName,"닉네임", event);
+    checkNull(businessName,"상호명", event);
+    checkNull(businessNumber,"사업코드", event);
+    checkNull(phoneNumber,"전화번호", event);
     checkNull(password,"비밀번호", event);
     checkNull(re_password,"비밀번호 확인란", event);
     checkNull(zipCode,"주소", event);
     checkNull(detailAddress,"상세 주소", event);
-
-    if (password.value.length < 8 || password.value.length > 16) {
-        errorMessage.innerHTML = "비밀번호는 8자 이상 16자 이하입니다.";
-        errorMessage.scrollIntoView({behavior: "smooth", block: "start"});
-        password.focus();
-        event.preventDefault();
-        return false;
-    }
 
 
 });
