@@ -2,6 +2,7 @@ package com.petkpetk.service.domain.user.service;
 
 import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class SellerAccountService {
 
 	private final SellerAccountRepository sellerAccountRepository;
+	private final PasswordEncoder passwordEncoder;
 
 	public void save(SellerAccountDto sellerAccountDto) {
 
@@ -27,6 +29,7 @@ public class SellerAccountService {
 		}
 
 		SellerAccount sellerAccount = sellerAccountDto.toEntity();
+		sellerAccount.encodePassword(passwordEncoder);
 
 		sellerAccountRepository.save(sellerAccount);
 	}
