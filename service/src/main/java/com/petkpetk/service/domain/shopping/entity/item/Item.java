@@ -92,7 +92,7 @@ public class Item extends AuditingFields {
 		this.sellerAccount = itemResponse.getSellerAccount();
 	}
 
-	public void selledItem(Long stockAmount) {
+	public void removeStock(Long stockAmount) {
 		System.out.println("stockAmount = " + stockAmount);
 		System.out.println("this.stockAmount = " + this.itemAmount);
 
