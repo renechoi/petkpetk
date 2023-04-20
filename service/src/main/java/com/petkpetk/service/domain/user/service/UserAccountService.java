@@ -2,10 +2,12 @@ package com.petkpetk.service.domain.user.service;
 
 import java.util.Optional;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.petkpetk.service.config.exception.PetkpetkServerException;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 import com.petkpetk.service.domain.user.exception.UserDuplicateException;
@@ -71,6 +73,11 @@ public class UserAccountService {
 		return findByEmail(userAccountDto);
 	}
 
+
+	public UserAccount getCurrentPrincipal(Authentication authentication) {
+		return searchUser(authentication.getName())
+			.orElseThrow(PetkpetkServerException::new);
+	}
 	private boolean isDuplicate(String email) {
 		return userAccountRepository.findByEmail(email).isPresent();
 	}
