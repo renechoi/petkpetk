@@ -1,4 +1,4 @@
-// package com.petkpetk.service.domain.user.entity;
+package com.petkpetk.service.domain.user.entity;// package com.petkpetk.service.domain.user.entity;
 //
 // import java.io.Serializable;
 // import java.util.LinkedHashSet;

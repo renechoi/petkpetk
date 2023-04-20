@@ -1,4 +1,4 @@
-// package com.petkpetk.service.domain.user.controller;
+package com.petkpetk.service.domain.user.controller;// package com.petkpetk.service.domain.user.controller;
 //
 // import org.springframework.security.core.annotation.AuthenticationPrincipal;
 // import org.springframework.stereotype.Controller;
