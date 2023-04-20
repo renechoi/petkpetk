@@ -74,6 +74,12 @@ public class UserAccount extends AuditingFields implements Serializable {
 	@Convert(converter = RoleTypeConverter.class)
 	private Set<RoleType> roles = new LinkedHashSet<>();
 
+	private String phoneNumber;
+
+	private String businessName;
+
+	private String businessNumber;
+
 	public UserAccount(String email, String password, String name, String nickname, Address address,
 		String profileImage, OAuth2ProviderInfo OAuth2ProviderInfo, Set<RoleType> roles) {
 		this.email = email;

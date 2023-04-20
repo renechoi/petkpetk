@@ -22,11 +22,6 @@ import com.petkpetk.service.domain.user.entity.embedded.Address;
 
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * OAuth@UserService 클래스명을 spring security 이미 사용하고 있어서
- * SocialUserService 명명
- */
-
 @Slf4j
 @Service
 @Transactional
@@ -69,7 +64,10 @@ public class OAuth2UserAccountService implements OAuth2UserService<OAuth2UserReq
 			new Address(),
 			properties.get("profile_image").toString(),
 			OAuth2ProviderInfo.KAKAO,
-			Set.of(RoleType.USER)
+			Set.of(RoleType.USER),
+			null,
+			null,
+			null
 		);
 
 		userAccountService.saveSocialUser(userAccountDto);
@@ -89,7 +87,10 @@ public class OAuth2UserAccountService implements OAuth2UserService<OAuth2UserReq
 			new Address(),
 			attributes.get("profile_image").toString(),
 			OAuth2ProviderInfo.NAVER,
-			Set.of(RoleType.USER)
+			Set.of(RoleType.USER),
+			null,
+			null,
+			null
 		);
 
 		userAccountService.saveSocialUser(userAccountDto);

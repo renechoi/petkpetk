@@ -27,15 +27,23 @@ public class UserAccountResponse {
 	private String profileImage;
 	private OAuth2ProviderInfo OAuth2ProviderInfo;
 	private Set<RoleType> roles;
+	private String phoneNumber;
+
+	private String businessName;
+
+	private String businessNumber;
 
 	public static UserAccountResponse from(UserAccountDto dto) {
 		return new UserAccountResponse(dto.getId(), dto.getEmail(), dto.getPassword(), dto.getName(), dto.getNickname(),
-			dto.getAddress(), dto.getProfileImage(), dto.getOAuth2ProviderInfo(), dto.getRoles());
+			dto.getAddress(), dto.getProfileImage(), dto.getOAuth2ProviderInfo(), dto.getRoles(), dto.getPhoneNumber(),
+			dto.getBusinessName(), dto.getBusinessNumber());
 	}
 
 	public UserAccountDto toDto() {
 		return UserAccountDto.of(null, this.email, this.password, this.name, this.nickname, this.address,
-			this.profileImage, this.OAuth2ProviderInfo, Set.of(RoleType.USER));
+			this.profileImage, this.OAuth2ProviderInfo, Set.of(RoleType.USER),this.getPhoneNumber(),
+			this.businessName,
+			this.businessNumber);
 	}
 
 }

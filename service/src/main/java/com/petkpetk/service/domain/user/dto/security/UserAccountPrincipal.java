@@ -40,8 +40,14 @@ public class UserAccountPrincipal extends AuditingFields implements UserDetails 
 
 	private Collection<? extends GrantedAuthority> roles;
 
+	private String phoneNumber;
+
+	private String businessName;
+
+	private String businessNumber;
+
 	public UserAccountPrincipal(Long id, String email, String password, String name, String nickname, Address address,
-		String profileImage, OAuth2ProviderInfo OAuth2ProviderInfo, Collection<? extends GrantedAuthority> roles) {
+		String profileImage, OAuth2ProviderInfo OAuth2ProviderInfo, Collection<? extends GrantedAuthority> roles, String phoneNumber, String businessName, String businessNumber) {
 		this.id = id;
 		this.email = email;
 		this.password = password;
@@ -51,20 +57,27 @@ public class UserAccountPrincipal extends AuditingFields implements UserDetails 
 		this.profileImage = profileImage;
 		this.OAuth2ProviderInfo = OAuth2ProviderInfo;
 		this.roles = roles;
+		this.phoneNumber = phoneNumber;
+		this.businessName = businessName;
+		this.businessNumber = businessNumber;
 	}
 
 	public static UserAccountPrincipal of(Long id, String email, String password, String name, String nickname,
-		Address address, String profileImage, OAuth2ProviderInfo OAuth2ProviderInfo, Set<RoleType> roles) {
+		Address address, String profileImage, OAuth2ProviderInfo OAuth2ProviderInfo, Set<RoleType> roles, String phoneNumber, String businessName, String businessNumber) {
 		return new UserAccountPrincipal(id, email, password, name, nickname, address, profileImage, OAuth2ProviderInfo,
 			roles.stream()
 				.map(RoleType::getRoleName)
 				.map(SimpleGrantedAuthority::new)
-				.collect(Collectors.toUnmodifiableSet()));
+				.collect(Collectors.toUnmodifiableSet()),
+			phoneNumber,
+			businessName,
+			businessNumber);
 	}
 
 	public static UserAccountPrincipal from(UserAccountDto dto) {
 		return UserAccountPrincipal.of(dto.getId(), dto.getEmail(), dto.getPassword(), dto.getName(), dto.getNickname(),
-			dto.getAddress(), dto.getProfileImage(), dto.getOAuth2ProviderInfo(), dto.getRoles());
+			dto.getAddress(), dto.getProfileImage(), dto.getOAuth2ProviderInfo(), dto.getRoles(), dto.getPhoneNumber(),
+			dto.getBusinessName(), dto.getBusinessNumber());
 	}
 
 	public UserAccountDto toDto() {
@@ -72,7 +85,11 @@ public class UserAccountPrincipal extends AuditingFields implements UserDetails 
 		return UserAccountDto.of(id, email, password, name, nickname, address, profileImage, OAuth2ProviderInfo,
 			roles.stream()
 				.map(grantedAuthority -> RoleType.valueOf(grantedAuthority.getAuthority().substring(5)))
-				.collect(Collectors.toUnmodifiableSet()));
+				.collect(Collectors.toUnmodifiableSet()),
+			phoneNumber,
+			businessName,
+			businessNumber
+			);
 
 	}
 

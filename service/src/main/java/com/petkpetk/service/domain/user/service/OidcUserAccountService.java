@@ -38,7 +38,10 @@ public class OidcUserAccountService implements OAuth2UserService<OidcUserRequest
 			new Address(),
 			oidcUser.getAttributes().get("picture").toString(),
 			OAuth2ProviderInfo.GOOGLE,
-			Set.of(RoleType.USER)
+			Set.of(RoleType.USER),
+			null,
+			null,
+			null
 		);
 
 		userAccountService.saveSocialUser(userAccountDto);

@@ -44,10 +44,15 @@ public class UserAccountRequest {
 	private String profileImage;
 	private OAuth2ProviderInfo OAuth2ProviderInfo;
 	private Set<RoleType> roles;
+	private String phoneNumber;
+
+	private String businessName;
+
+	private String businessNumber;
 
 	public UserAccountDto toDto() {
 		return UserAccountDto.of(null, this.email, this.password, this.name, this.nickname, this.address,
-			this.profileImage, this.OAuth2ProviderInfo, Set.of(RoleType.USER));
+			this.profileImage, this.OAuth2ProviderInfo, Set.of(RoleType.USER),this.phoneNumber,this.businessName,this.businessNumber);
 	}
 
 }

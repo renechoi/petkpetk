@@ -28,6 +28,12 @@ public class UserAccountDto {
 	private OAuth2ProviderInfo OAuth2ProviderInfo;
 	private Set<RoleType> roles;
 
+	private String phoneNumber;
+
+	private String businessName;
+
+	private String businessNumber;
+
 	public UserAccount toEntity() {
 		return EntityAndDtoConverter.convertToEntity(this, UserAccount.class);
 	}
@@ -37,8 +43,8 @@ public class UserAccountDto {
 	}
 
 	public static UserAccountDto of(Long id, String email, String password, String name, String nickname,
-		Address address, String profileImage, OAuth2ProviderInfo OAuth2ProviderInfo, Set<RoleType> roles) {
-		return new UserAccountDto(id, email, password, name, nickname, address, profileImage, OAuth2ProviderInfo, roles);
+		Address address, String profileImage, OAuth2ProviderInfo OAuth2ProviderInfo, Set<RoleType> roles, String phoneNumber, String businessName, String businessNumber) {
+		return new UserAccountDto(id, email, password, name, nickname, address, profileImage, OAuth2ProviderInfo, roles,phoneNumber,businessName,businessNumber);
 	}
 
 	// TODO : update 수행을 dto가 아닌 entity에서 직접 담당하게 하는 것이 맞는 것으로 판단. 이점에 대한 추후 재고 필요.
