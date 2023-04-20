@@ -41,14 +41,6 @@ insert into user_account (deleted_yn, created_at, modified_at, created_by, modif
 
 
 
-INSERT INTO seller_account
-(created_at,created_by,modified_at,modified_by,deleted_yn,email, password, name, nickname, zip_code, address1, address2, address_etc, profile_image, oauth2_provider_info, roles)
-VALUES
-    (now(),'seller', now(),'seller','N','seller@seller.com', '{noop}1234', '이', '345', '3456', 'Gangnam', 'South Korea', '345', 'profile.jpg', null, 'SELLER'),
-    (now(),'admin', now(),'user','N','admin@admin.com', '{noop}1234', '최', '567', '6574', 'Gangnam', 'South Korea', '4356', 'profile.jpg', null, 'ADMIN');
-
-
-
 #
 #
 #
