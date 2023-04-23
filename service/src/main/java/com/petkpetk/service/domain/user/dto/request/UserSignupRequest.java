@@ -8,10 +8,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.petkpetk.service.common.RoleType;
+import com.petkpetk.service.config.converter.EntityAndDtoConverter;
 import com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo;
-import com.petkpetk.service.domain.user.dto.UserAccountDto;
+import com.petkpetk.service.domain.user.entity.ProfileImage;
+import com.petkpetk.service.domain.user.entity.UserAccount;
 import com.petkpetk.service.domain.user.entity.embedded.Address;
 
 import lombok.AllArgsConstructor;
@@ -21,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserAccountRequest {
+public class UserSignupRequest {
 
 	private Long id;
 
@@ -37,22 +40,30 @@ public class UserAccountRequest {
 	@NotBlank(message = "닉네임을 입력해주세요.")
 	private String nickname;
 
+	private MultipartFile profileImage;
 	@Valid
 	@NotNull
 	@NotBlank(message = "주소를 입력해주세요.")
 	private Address address;
-	private String profileImage;
 	private OAuth2ProviderInfo OAuth2ProviderInfo;
 	private Set<RoleType> roles;
+
+
 	private String phoneNumber;
 
 	private String businessName;
 
 	private String businessNumber;
 
-	public UserAccountDto toDto() {
-		return UserAccountDto.of(null, this.email, this.password, this.name, this.nickname, this.address,
-			this.profileImage, this.OAuth2ProviderInfo, Set.of(RoleType.USER),this.phoneNumber,this.businessName,this.businessNumber);
+	public UserAccount toEntity() {
+		return EntityAndDtoConverter.convertToEntity(this, UserAccount.class);
 	}
+
+	public UserAccount toEntity(ProfileImage profileImage) {
+		UserAccount userAccount = EntityAndDtoConverter.convertToEntity(this, UserAccount.class);
+		userAccount.addImage(profileImage);
+		return userAccount;
+	}
+
 
 }
