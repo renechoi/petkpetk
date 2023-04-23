@@ -13,7 +13,7 @@
 <div layout:fragment="content">
 
 
-    <form id="JoinForm" th:action="@{/user/sign-up}" role="form" method="post" th:object="${userAccount}">
+    <form id="JoinForm" th:action="@{/user/sign-up}" role="form" method="post" enctype="multipart/form-data" th:object="${userAccount}">
 
         <div class="container">
             <div id="img">
@@ -40,7 +40,7 @@
                     <input th:field="*{profileImage}" type="file" id="file">
                 </div>
                 <div class="profileImg">
-                    <img id="sign-upProfileImg" class="sign-upProfileImg" src="" style="display: none">
+                    <img id="signupProfileImg" class="signupProfileImg" src="" style="display: none">
                 </div>
             </div>
 
@@ -66,6 +66,9 @@
 
             <div class="title">참고항목</div>
             <input th:field="*{address.addressEtc}" type="text" id="addrEtc" placeholder="참고항목" name="addretc"  >
+
+            <input type="hidden" th:value="${T(com.petkpetk.service.common.RoleType).USER}" name="roles">
+
 
             <br>
             <input type="submit" value="가입하기">
