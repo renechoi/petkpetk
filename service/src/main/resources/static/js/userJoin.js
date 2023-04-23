@@ -93,14 +93,14 @@ $("#file").on('change',function(e){
         var reader = new FileReader();
 
         reader.onload = function (z) {
-            $("#sign-upProfileImg").attr("src", z.target.result);
+            $("#signupProfileImg").attr("src", z.target.result);
         };
 
         reader.readAsDataURL(a);
 
     });
 
-    var sign_upProfileImg = document.getElementById("sign-upProfileImg");
+    var sign_upProfileImg = document.getElementById("signupProfileImg");
     sign_upProfileImg.style.display = "block";
 
 });
