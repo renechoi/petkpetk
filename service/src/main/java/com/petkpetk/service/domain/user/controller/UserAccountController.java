@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.petkpetk.service.domain.user.dto.UserAccountDto;
-import com.petkpetk.service.domain.user.dto.request.UserAccountRequest;
-import com.petkpetk.service.domain.user.dto.response.UserAccountResponse;
+import com.petkpetk.service.domain.user.dto.request.UserSignupRequest;
+import com.petkpetk.service.domain.user.dto.request.UserUpdateRequest;
 import com.petkpetk.service.domain.user.dto.security.UserAccountPrincipal;
-import com.petkpetk.service.domain.user.exception.UserNotFoundException;
 import com.petkpetk.service.domain.user.service.UserAccountService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,28 +23,25 @@ public class UserAccountController {
 
 	@GetMapping("/sign-up")
 	public String signUp(Model model) {
-		model.addAttribute("userAccount", new UserAccountRequest());
+		model.addAttribute("userAccount", new UserSignupRequest());
 		return "user/user/sign-up";
 	}
 
 	@PostMapping("/sign-up")
-	public String signUp(UserAccountRequest userAccountRequest) {
-		userAccountService.save(userAccountRequest.toDto());
+	public String signUp(UserSignupRequest userSignupRequest) {
+		userAccountService.save(userSignupRequest);
 		return "/login";
 	}
 
-	@GetMapping("/my-page/update")
+	@GetMapping("/update")
 	public String update(@AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal, Model model) {
-		UserAccountDto userAccountDto = userAccountService.searchUserDto(userAccountPrincipal.toDto()).orElseThrow(
-			UserNotFoundException::new);
-		UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountDto);
-		model.addAttribute("userAccount", userAccountResponse);
-		return "user/my-page";
+		model.addAttribute("userAccount", userAccountService.getUserUpdateRequestView(userAccountPrincipal));
+		return "user/user/update";
 	}
 
-	@PostMapping("/my-page/update")
-	public String update(UserAccountRequest userAccountRequest) {
-		userAccountService.update(userAccountRequest.toDto());
+	@PostMapping("/update")
+	public String update(UserUpdateRequest userUpdateRequest) {
+		userAccountService.update(userUpdateRequest);
 		return "redirect:/";
 	}
 
@@ -55,9 +50,5 @@ public class UserAccountController {
 		userAccountService.delete(userAccountPrincipal.toDto());
 		return "redirect:/";
 	}
-
-
 }
-
-
 
