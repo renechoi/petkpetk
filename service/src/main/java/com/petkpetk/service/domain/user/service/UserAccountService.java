@@ -92,8 +92,7 @@ public class UserAccountService {
 
 		Optional.ofNullable(previousImage)
 			.filter(image -> !image.equals(profileImage))
-			.map(ProfileImage::getUniqueName)
-			.ifPresent(getUniqueName -> {
+			.ifPresent(image -> {
 				imageLocalRepository.delete(previousImage);
 				imageLocalRepository.save(profileImage, userUpdateRequest.getProfileImage());
 			});
