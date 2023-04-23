@@ -18,7 +18,6 @@ import com.petkpetk.service.common.StatusCode;
 import com.petkpetk.service.config.exception.PetkpetkServerException;
 import com.petkpetk.service.config.properties.LocalProperty;
 import com.petkpetk.service.config.properties.ServerProperty;
-import com.petkpetk.service.domain.shopping.exception.ImageUploadFailureException;
 
 @Repository
 public class ImageLocalRepository<T extends PetkpetkImage> {
