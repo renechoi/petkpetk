@@ -19,6 +19,8 @@ public enum StatusCode {
 
 	IMAGE_UPLOAD_FAILURE("이미지 업로드 중 오류 발생"),
 
+	LOCAL_IMAGE_CONVERTING_FAILURE("로컬 이미지 변환 작업 중 오류 발생"),
+
 
 	// 상품
 
