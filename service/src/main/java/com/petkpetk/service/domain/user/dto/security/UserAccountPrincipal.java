@@ -1,5 +1,6 @@
 package com.petkpetk.service.domain.user.dto.security;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -12,7 +13,9 @@ import com.petkpetk.service.common.AuditingFields;
 import com.petkpetk.service.common.RoleType;
 import com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
+import com.petkpetk.service.domain.user.entity.ProfileImage;
 import com.petkpetk.service.domain.user.entity.embedded.Address;
+import com.petkpetk.service.domain.user.entity.embedded.AddressClaim;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,7 +24,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-public class UserAccountPrincipal extends AuditingFields implements UserDetails {
+public class UserAccountPrincipal extends AuditingFields implements UserDetails, Serializable {
 
 	private Long id;
 
@@ -32,9 +35,8 @@ public class UserAccountPrincipal extends AuditingFields implements UserDetails 
 
 	private String nickname;
 
-	private Address address;
-
-	private String profileImage;
+	private ProfileImage profileImage;
+	private AddressClaim address;
 
 	private OAuth2ProviderInfo OAuth2ProviderInfo;
 
@@ -46,15 +48,16 @@ public class UserAccountPrincipal extends AuditingFields implements UserDetails 
 
 	private String businessNumber;
 
-	public UserAccountPrincipal(Long id, String email, String password, String name, String nickname, Address address,
-		String profileImage, OAuth2ProviderInfo OAuth2ProviderInfo, Collection<? extends GrantedAuthority> roles, String phoneNumber, String businessName, String businessNumber) {
+	public UserAccountPrincipal(Long id, String email, String password, String name, String nickname,
+		ProfileImage profileImage, AddressClaim address, OAuth2ProviderInfo OAuth2ProviderInfo,
+		Collection<? extends GrantedAuthority> roles, String phoneNumber, String businessName, String businessNumber) {
 		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.name = name;
 		this.nickname = nickname;
-		this.address = address;
 		this.profileImage = profileImage;
+		this.address = address;
 		this.OAuth2ProviderInfo = OAuth2ProviderInfo;
 		this.roles = roles;
 		this.phoneNumber = phoneNumber;
@@ -63,34 +66,27 @@ public class UserAccountPrincipal extends AuditingFields implements UserDetails 
 	}
 
 	public static UserAccountPrincipal of(Long id, String email, String password, String name, String nickname,
-		Address address, String profileImage, OAuth2ProviderInfo OAuth2ProviderInfo, Set<RoleType> roles, String phoneNumber, String businessName, String businessNumber) {
-		return new UserAccountPrincipal(id, email, password, name, nickname, address, profileImage, OAuth2ProviderInfo,
+		ProfileImage profileImage, AddressClaim address, OAuth2ProviderInfo OAuth2ProviderInfo, Set<RoleType> roles,
+		String phoneNumber, String businessName, String businessNumber) {
+		return new UserAccountPrincipal(id, email, password, name, nickname, profileImage, address, OAuth2ProviderInfo,
 			roles.stream()
 				.map(RoleType::getRoleName)
 				.map(SimpleGrantedAuthority::new)
-				.collect(Collectors.toUnmodifiableSet()),
-			phoneNumber,
-			businessName,
-			businessNumber);
+				.collect(Collectors.toUnmodifiableSet()), phoneNumber, businessName, businessNumber);
 	}
 
 	public static UserAccountPrincipal from(UserAccountDto dto) {
 		return UserAccountPrincipal.of(dto.getId(), dto.getEmail(), dto.getPassword(), dto.getName(), dto.getNickname(),
-			dto.getAddress(), dto.getProfileImage(), dto.getOAuth2ProviderInfo(), dto.getRoles(), dto.getPhoneNumber(),
+			dto.getProfileImage(), new AddressClaim(dto.getAddress()), dto.getOAuth2ProviderInfo(), dto.getRoles(), dto.getPhoneNumber(),
 			dto.getBusinessName(), dto.getBusinessNumber());
 	}
 
+	// TODO : RoleType 설정 추후 변경
 	public UserAccountDto toDto() {
-
-		return UserAccountDto.of(id, email, password, name, nickname, address, profileImage, OAuth2ProviderInfo,
+		return UserAccountDto.of(id, email, password, name, nickname, profileImage, address.getAddress(), OAuth2ProviderInfo,
 			roles.stream()
 				.map(grantedAuthority -> RoleType.valueOf(grantedAuthority.getAuthority().substring(5)))
-				.collect(Collectors.toUnmodifiableSet()),
-			phoneNumber,
-			businessName,
-			businessNumber
-			);
-
+				.collect(Collectors.toUnmodifiableSet()), phoneNumber, businessName, businessNumber);
 	}
 
 	@Override
