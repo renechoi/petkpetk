@@ -1,16 +1,17 @@
 package com.petkpetk.service.domain.shopping.dto.item.response;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.petkpetk.service.config.converter.EntityAndDtoConverter;
 import com.petkpetk.service.domain.shopping.constant.ItemStatus;
 import com.petkpetk.service.domain.shopping.dto.item.ItemImageDto;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
-import com.petkpetk.service.domain.user.entity.SellerAccount;
+import com.petkpetk.service.domain.user.entity.UserAccount;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemResponse{
+public class ItemResponse {
 	private Long id;
 
 	@NotBlank(message = "상품명을 입력해주세요.")
@@ -30,17 +31,15 @@ public class ItemResponse{
 
 	@NotNull(message = "재고량을 입력해주세요.")
 	private Long itemAmount;
-	
+
 	@NotBlank(message = "상품 정보를 입력해주세요.")
 	private String itemDetail;
 
 	private ItemStatus itemStatus;
 
-	private SellerAccount sellerAccount;
+	private UserAccount userAccount;
 
 	private List<ItemImageDto> itemImageDtos = new ArrayList<>();
-
-	private List<Long> itemImageIds = new ArrayList<>();
 
 	public Item toEntity() {
 		return Item.of(
@@ -49,34 +48,33 @@ public class ItemResponse{
 			this.itemAmount,
 			this.itemDetail,
 			this.itemStatus,
-			this.sellerAccount,
-			LocalDateTime.now(),
-			LocalDateTime.now()
+			null, // TODO : null 처리
+			this.userAccount
 		);
 	}
 
 	public ItemResponse(String itemName, Long price, Long itemAmount, String itemDetail,
-		ItemStatus itemStatus, SellerAccount sellerAccount) {
+		ItemStatus itemStatus, UserAccount userAccount) {
 		this.itemName = itemName;
 		this.price = price;
 		this.itemAmount = itemAmount;
 		this.itemDetail = itemDetail;
 		this.itemStatus = itemStatus;
-		this.sellerAccount = sellerAccount;
+		this.userAccount = userAccount;
 	}
 
 	public static ItemResponse of(String itemName, Long price, Long itemAmount, String itemDetail,
-		ItemStatus itemStatus, SellerAccount sellerAccount) {
-		return new ItemResponse(itemName, price, itemAmount, itemDetail, itemStatus, sellerAccount);
+		ItemStatus itemStatus, UserAccount userAccount) {
+		return new ItemResponse(itemName, price, itemAmount, itemDetail, itemStatus, userAccount);
 	}
 
-	public static ItemResponse of(Item item) {
-		return ItemResponse.of(item.getItemName(), item.getPrice(), item.getItemAmount(),
-			item.getItemDetail(), item.getItemStatus(), item.getSellerAccount());
+	public static ItemResponse from(Item item) {
+		ItemResponse itemResponse = EntityAndDtoConverter.convertToDto(item, ItemResponse.class);
+		itemResponse.setItemImageDtos(item.getImages().stream().map(ItemImageDto::from).collect(Collectors.toList()));
+		return itemResponse;
 	}
 
-	public static ItemResponse of(Item itemEntity, List<ItemImageDto> itemImageDtos,
-		List<Long> itemImageIds) {
+	public static ItemResponse of(Item itemEntity, List<ItemImageDto> itemImageDtos) {
 		return new ItemResponse(
 			itemEntity.getId(),
 			itemEntity.getItemName(),
@@ -84,9 +82,9 @@ public class ItemResponse{
 			itemEntity.getItemAmount(),
 			itemEntity.getItemDetail(),
 			itemEntity.getItemStatus(),
-			itemEntity.getSellerAccount(),
-			itemImageDtos,
-			itemImageIds);
+			itemEntity.getUserAccount(),
+			itemImageDtos
+		);
 	}
 
 }

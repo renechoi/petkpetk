@@ -10,6 +10,7 @@ import com.petkpetk.service.domain.shopping.entity.item.ItemImage;
 public interface ItemImageRepository extends JpaRepository<ItemImage, Long>,
 	QuerydslPredicateExecutor<ItemImage> {
 	List<ItemImage> findByItemIdOrderByIdAsc(Long itemId);
-
+	List<ItemImage> findByOriginalName(String originalName);
+	ItemImage findByUniqueName(String originalName);
 
 }

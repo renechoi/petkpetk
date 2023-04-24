@@ -56,7 +56,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 			dateTime = dateTime.minusMonths(6);
 		}
 
-		return QItem.item.registeredAt.after(dateTime);
+		return QItem.item.createdAt.after(dateTime);
 	}
 
 	private BooleanExpression searchByLike(String searchBy, String searchQuery) {
@@ -123,7 +123,6 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 					item.itemName,
 					item.itemDetail,
 					item.itemStatus,
-					item.sellerAccount.businessName,
 					itemImage.imageUrl,
 					item.price
 				)
@@ -151,7 +150,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 	}
 
 	@Override
-	public Page<ManageItemDto> getManageList(ItemSearchDto itemSearchDto, Pageable pageable) {
+	public Page<ManageItemDto> getManageList(ItemSearchDto itemSearchDto, Pageable pageable, String email) {
 		QItem item = QItem.item;
 		QItemImage itemImg = itemImage;
 
@@ -162,15 +161,17 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 					item.itemName,
 					item.itemDetail,
 					item.itemStatus,
+					item.userAccount.email,
 					itemImage.imageUrl,
 					item.price,
 					item.createdBy,
-					item.registeredAt
+					item.createdAt
 				)
 			)
 			.from(itemImg)
 			.join(itemImg.item, item)
 			.where(itemImg.representativeImageYn.eq("Y"))
+			.where(item.userAccount.email.eq(email))
 			.where(
 				regDtsAfter(itemSearchDto.getSearchDateType())
 				, searchSellStatusEq(itemSearchDto.getSearchItemStatus())

@@ -1,3 +1,12 @@
+var width = window.innerWidth;
+var NoticeSearchZone = document.getElementById("NoticeSearchZone");
+
+
+if (width < 880) {
+    NoticeSearchZone.style.display = "block";
+}
+
+
 function showMenu() {
     var menu = document.getElementById("topHoverMenu");
     menu.style.display = "block";
@@ -14,7 +23,7 @@ function menuToggle() {
     var topDog = document.getElementById("topDog");
 
 
-    if (displayAttr == "none") {
+    if (displayAttr == "none" || displayAttr =="") {
         midiMenu.style.display = "block";
         topDog.style.display = "none";
     } else {

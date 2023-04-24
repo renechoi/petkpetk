@@ -13,6 +13,7 @@ public class ManageItemDto {
 	private String itemName;
 	private String itemDetail;
 	private ItemStatus itemStatus;
+	private String email;
 	private String imageUrl;
 	private Long price;
 	private String createdBy;
@@ -20,11 +21,12 @@ public class ManageItemDto {
 
 	@QueryProjection
 	public ManageItemDto(Long id, String itemName, String itemDetail, ItemStatus itemStatus,
-		String imageUrl, Long price, String createdBy, LocalDateTime registeredAt) {
+		String email, String imageUrl, Long price, String createdBy, LocalDateTime registeredAt) {
 		this.id = id;
 		this.itemName = itemName;
 		this.itemDetail = itemDetail;
 		this.itemStatus = itemStatus;
+		this.email = email;
 		this.imageUrl = imageUrl;
 		this.price = price;
 		this.createdBy = createdBy;

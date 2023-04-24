@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.constraints.NotBlank;
 
 import com.petkpetk.service.domain.shopping.dto.review.ReviewImageDto;
+import com.petkpetk.service.domain.shopping.dto.review.request.ReviewRequest;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.shopping.entity.review.Review;
 import com.petkpetk.service.domain.user.entity.UserAccount;
@@ -41,6 +42,14 @@ public class ReviewResponse {
 		this.userAccount = userAccount;
 	}
 
+	public ReviewResponse(Long id, String content, Long likes, Item item, UserAccount userAccount) {
+		this.id = id;
+		this.content = content;
+		this.likes = likes;
+		this.item = item;
+		this.userAccount = userAccount;
+	}
+
 	public ReviewResponse(String content, Long likes, Item item, UserAccount userAccount,
 		List<ReviewImageDto> reviewImageDtos, List<Long> itemImageIds) {
 		this.content = content;
@@ -60,18 +69,23 @@ public class ReviewResponse {
 		);
 	}
 
-	public static ReviewResponse of(String content, Long likes, Item item, UserAccount userAccount) {
-		return ReviewResponse.of(content, likes, item, userAccount);
+	public static ReviewResponse of(Long id,String content, Long likes, Item item, UserAccount userAccount) {
+		return new ReviewResponse(id,content, likes, item, userAccount);
 	}
 
 	public static ReviewResponse of(Review review) {
-		return ReviewResponse.of(review.getContent(), review.getLikes(), review.getItem(),
+		return ReviewResponse.of(review.getId(),review.getContent(), review.getLikes(), review.getItem(),
 			review.getUserAccount());
+	}
+	public static ReviewResponse of(ReviewRequest reviewRequest) {
+		return ReviewResponse.of(reviewRequest.getId(),reviewRequest.getContent(), reviewRequest.getLikes(), reviewRequest.getItem(),
+			reviewRequest.getUserAccount());
 	}
 
 	public static ReviewResponse of(Review review, List<ReviewImageDto> reviewImageDtos,
 		List<Long> reviewImageIds) {
 		return new ReviewResponse(
+			review.getId(),
 			review.getContent(),
 			review.getLikes(),
 			review.getItem(),
