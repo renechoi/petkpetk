@@ -1,7 +1,8 @@
 package com.petkpetk.service.domain.shopping.entity.item;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,16 +13,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.petkpetk.service.common.AuditingFields;
-import com.petkpetk.service.common.StatusCode;
 import com.petkpetk.service.domain.shopping.constant.ItemStatus;
-import com.petkpetk.service.domain.shopping.dto.item.response.ItemResponse;
-import com.petkpetk.service.domain.shopping.exception.OutOfStockException;
-import com.petkpetk.service.domain.user.entity.SellerAccount;
+import com.petkpetk.service.domain.user.entity.UserAccount;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,7 +42,7 @@ public class Item extends AuditingFields {
 	private Long id;
 
 	@Column(nullable = false, length = 50)
-	private  String itemName;
+	private String itemName;
 
 	@Column(name = "price", nullable = false)
 	private Long price;
@@ -58,54 +57,50 @@ public class Item extends AuditingFields {
 	private ItemStatus itemStatus;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "email")
+	@JoinColumn(name = "user_account_id")
 	@ToString.Exclude
-	private SellerAccount sellerAccount;
+	private UserAccount userAccount;
 
-	private LocalDateTime registeredAt;
+	@OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+	// @OneToMany(mappedBy = "item")
+	@ToString.Exclude
+	private List<ItemImage> images;
 
-	private LocalDateTime updatedAt;
+	private List<ItemImage> addImages(List<ItemImage> images) {
+		images.forEach(image -> image.mapWith(this));
+		return images;
+	}
+
+	public void mapImages(List<ItemImage> images) {
+		images.forEach(image -> image.mapWith(this));
+	}
+
+
+
+	public void addImage(ItemImage image){
+		image.mapWith(this);
+		this.images.add(image);
+	}
 
 	private Item(String itemName, Long price, Long itemAmount, String itemDetail,
-		ItemStatus itemStatus,SellerAccount sellerAccount, LocalDateTime registeredAt, LocalDateTime updatedAt) {
+		ItemStatus itemStatus, List<ItemImage> images, UserAccount userAccount) {
 		this.itemName = itemName;
 		this.price = price;
 		this.itemAmount = itemAmount;
 		this.itemDetail = itemDetail;
 		this.itemStatus = itemStatus;
-		this.sellerAccount = sellerAccount;
-		this.registeredAt = registeredAt;
-		this.updatedAt = updatedAt;
+		this.images = addImages(setRepresentativeImage(images));
+		this.userAccount = userAccount;
 	}
 
-	public static Item of(String itemName, Long price, Long itemAmount, String itemDetail, ItemStatus itemStatus,SellerAccount sellerAccount, LocalDateTime registeredAt, LocalDateTime updatedAt) {
-		return new Item(itemName, price, itemAmount, itemDetail, itemStatus, sellerAccount, registeredAt, updatedAt);
+	public static Item of(String itemName, Long price, Long itemAmount, String itemDetail, ItemStatus itemStatus,
+		List<ItemImage> images, UserAccount userAccount) {
+		return new Item(itemName, price, itemAmount, itemDetail, itemStatus, images, userAccount);
 	}
 
-
-	public void updateItem(ItemResponse itemResponse){
-		this.itemName = itemResponse.getItemName();
-		this.price = itemResponse.getPrice();
-		this.itemAmount = itemResponse.getItemAmount();
-		this.itemDetail = itemResponse.getItemDetail();
-		this.itemStatus = itemResponse.getItemStatus();
-		this.sellerAccount = itemResponse.getSellerAccount();
+	private List<ItemImage> setRepresentativeImage(List<ItemImage> images) {
+		images.get(0).setRepresentativeImageYn("Y");
+		return images;
 	}
-
-	public void removeStock(Long stockAmount) {
-		System.out.println("stockAmount = " + stockAmount);
-		System.out.println("this.stockAmount = " + this.itemAmount);
-
-		if (this.itemAmount < stockAmount) {
-			throw new OutOfStockException(StatusCode.OUT_OF_STOCK,"(현재 재고 수량 : " + this.itemAmount + ")");
-		}
-		this.itemAmount -= stockAmount;
-	}
-
-	public void addItem(Long stockAmount){
-		this.itemAmount += stockAmount;
-	}
-
-
 
 }

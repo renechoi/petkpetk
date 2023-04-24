@@ -1,5 +1,8 @@
 package com.petkpetk.service.domain.shopping.entity.item;
 
+import java.util.Objects;
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,11 +11,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.petkpetk.service.common.AuditingFields;
+import com.petkpetk.service.common.PetkpetkImage;
+import com.petkpetk.service.domain.user.dto.security.UserAccountPrincipal;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,41 +37,79 @@ import lombok.ToString;
 @NoArgsConstructor
 @Entity
 @DynamicUpdate
-public class ItemImage extends AuditingFields {
+public class ItemImage extends AuditingFields implements PetkpetkImage {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "item_image_id")
 	private Long id;
 
-	private  String imageName;
+	private String uniqueName;
 
-	private String originalImageName;
+	private String originalName;
 
 	private String imageUrl;
 
-	private String representativeImageYn;
+	private String representativeImageYn = "N";
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "item_id")
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@ToString.Exclude
 	private Item item;
 
-	public void updateItemImage(String imageName, String originalImageName, String imageUrl) {
-		this.imageName = imageName;
-		this.originalImageName = originalImageName;
-		this.imageUrl = imageUrl;
+	public ItemImage(String originalName, String uniqueName) {
+		this.originalName = originalName;
+		this.uniqueName = uniqueName;
+		this.imageUrl = createImageUrl();
 	}
 
-	public ItemImage(Item item, String representativeImageYn) {
-		this.item = item;
-		this.representativeImageYn = representativeImageYn;
+	public void mapWith(Item item) {
+		if (this.item == null) {
+			this.item = item;
+		}
 	}
 
-	public static ItemImage of(Item item, int num) {
-		return new ItemImage(item, num == 0 ? "Y" : "N");
+	public static ItemImage from(MultipartFile rawImage) {
+		return new ItemImage(
+			rawImage.getOriginalFilename(),
+			createUniqueName(rawImage)
+		);
 	}
 
+	private String createImageUrl() {
+		return "/images/item/" + uniqueName;
+	}
 
+	private static String createUniqueName(MultipartFile rawImage) {
+		return UUID.randomUUID() + extractExtension(rawImage);
+	}
 
+	private static String extractExtension(MultipartFile rawImage) {
+		return rawImage.getOriginalFilename().substring(rawImage.getOriginalFilename().lastIndexOf("."));
+	}
+
+	@PrePersist
+	public void anonymousSetup() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserAccountPrincipal userAccountPrincipal = (UserAccountPrincipal)authentication.getPrincipal();
+
+		this.createdBy = userAccountPrincipal.getBusinessName();
+		this.modifiedBy = userAccountPrincipal.getBusinessName();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (!(o instanceof ItemImage))
+			return false;
+		ItemImage itemImage = (ItemImage)o;
+		return uniqueName.equals(itemImage.uniqueName);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(uniqueName);
+	}
 }
