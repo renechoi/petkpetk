@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ItemImageDto {
 
-	private Long id;  
+	private Long id;
 
 	private  String uniqueName;
 
@@ -31,6 +31,11 @@ public class ItemImageDto {
 		this.originalName = originalName;
 	}
 
+	public ItemImageDto(String originalName, String uniqueName) {
+		this.originalName = originalName;
+		this.uniqueName = uniqueName;
+	}
+
 	public static ItemImageDto of(ItemImage itemImage){
 		return ItemImageDto.of(itemImage.getUniqueName(), itemImage.getOriginalName(), itemImage.getImageUrl(), itemImage.getRepresentativeImageYn());
 	}
@@ -48,5 +53,9 @@ public class ItemImageDto {
 
 	public static ItemImageDto of(String originalName) {
 		return new ItemImageDto(originalName);
+	}
+
+	public static ItemImageDto of(String originalName, String uniqueName) {
+		return new ItemImageDto(originalName, uniqueName);
 	}
 }

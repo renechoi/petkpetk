@@ -98,7 +98,9 @@ public class ItemController {
 		ItemRegisterRequest itemUpdateRequest,
 		BindingResult bindingResult, Model model,
 		@RequestParam("images") List<MultipartFile> rawImages,
-		@RequestParam("imageNames") List<String> imageNames) {
+		@RequestParam("imageNames") List<String> imageNames,
+		@RequestParam("uniqueImageNames") List<String> uniqueImageNames
+	) {
 
 		if (bindingResult.hasErrors()) {
 			log.info("errors = {}", bindingResult);
@@ -113,9 +115,11 @@ public class ItemController {
 		//   name="itemImageDtos[${status.index}].originalName" 주는 방식이 불가능하다.
 		//  이점을 추후 리팩토링 과제로 삼아볼만하다고 생각되며, 더불어서 이 방식이 가능하다며 현재 itemResponse로 송추되는 데이터 객체를 request로 변경하는 것이 바람직하겠다
 
+		// todo : original 네임은 필요 없음 !!! 추후 리팩토링
 		itemUpdateRequest.setImages(rawImages);
 		IntStream.range(0, imageNames.size())
-			.forEach(i -> itemUpdateRequest.getItemImageDtos().add(ItemImageDto.of(imageNames.get(i))));
+			.filter(i -> !imageNames.get(i).equals("첨부파일"))
+			.forEach(i -> itemUpdateRequest.getItemImageDtos().add(ItemImageDto.of(imageNames.get(i), uniqueImageNames.get(i))));
 
 		ItemResponse itemResponse = itemService.updateItem(itemUpdateRequest);
 		model.addAttribute("item", itemResponse);

@@ -42,8 +42,8 @@ public class ItemService {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<ManageItemDto> getItemList(ItemSearchDto itemSearchDto, Pageable pageable) {
-		return itemRepository.getManageList(itemSearchDto, pageable);
+	public Page<ManageItemDto> getItemList(ItemSearchDto itemSearchDto, Pageable pageable, String email) {
+		return itemRepository.getManageList(itemSearchDto, pageable, email);
 	}
 
 	public ItemResponse getItemDetail(Long itemId) {
@@ -70,8 +70,9 @@ public class ItemService {
 
 		List<ItemImage> notModifiedImages = itemUpdateRequest.getItemImageDtos()
 			.stream()
-			.map(ItemImageDto::getOriginalName)
-			.map(itemImageRepository::findByOriginalName).collect(Collectors.toList());
+			.map(ItemImageDto::getUniqueName)
+			.map(itemImageRepository::findByUniqueName)
+			.collect(Collectors.toList());
 
 		List<ItemImage> newlyAddedImages = itemUpdateRequest.getImages().stream()
 			.map(ItemImage::from).collect(Collectors.toList());
@@ -101,6 +102,7 @@ public class ItemService {
 
 		return ItemResponse.from(item);
 	}
+
 
 
 

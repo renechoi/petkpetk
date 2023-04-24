@@ -96,6 +96,12 @@
                     <div class="custom-file img-div">
                         <input id="firstImage" th:if="${itemImageDto.representativeImageYn=='Y'}" th:class="${'fileName'+num+' fileName'}" name="imageNames" th:value="${itemImageDto.originalName}" readonly>
                         <input th:unless="${itemImageDto.representativeImageYn=='Y'}" th:class="${'fileName'+num+' fileName'}" name="imageNames" th:value="${not #strings.isEmpty(itemImageDto.originalName)} ? ${itemImageDto.originalName} : '첨부파일'" readonly>
+
+
+                        <input type="hidden" id="firstImage2" th:if="${itemImageDto.representativeImageYn=='Y'}" th:class="${'fileName'+num+' fileName'}" name="uniqueImageNames" th:value="${itemImageDto.uniqueName}" readonly>
+                        <input type="hidden" th:unless="${itemImageDto.representativeImageYn=='Y'}" th:class="${'fileName'+num+' fileName'}" name="uniqueImageNames" th:value="${not #strings.isEmpty(itemImageDto.uniqueName)} ? ${itemImageDto.uniqueName} : '첨부파일'" readonly>
+
+
                         <label th:for="${'itemFile'+num}" class="itemFilesLable" th:text="${'이미지 업로드'}"></label>
                         <input type="file" th:id="${'itemFile'+num}" name="images" th:onchange="'getFileName('+${num}+')'">
                         <input type="hidden" name="itemImgIds" th:value="${itemImageDto.id}">
