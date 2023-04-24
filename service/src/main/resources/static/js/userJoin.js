@@ -26,28 +26,28 @@ function checkPhoneNumber() {
 }
 
 var errorMessage = document.getElementById("errorMessage");
-function checkSpace(str, title, event) {
-    if(str.value.search(/\s/) !== -1) {
-        errorMessage.innerHTML= title + "은/는 공백을 포함할 수 없습니다."
-        errorMessage.scrollIntoView({ behavior: "smooth", block: "start" });
-        str.focus();
-        event.preventDefault();
-        return false; // 스페이스가 있는 경우
-    }else{
-        return true; // 스페이스 없는 경우
-    }
+function checkSpace(str, title, event) {  // todo : 소셜 로그인시 이미 공백을 포함하여 들어오는 경우가 있음
+    // if(str.value.search(/\s/) !== -1) {
+    //     errorMessage.innerHTML= title + "은/는 공백을 포함할 수 없습니다."
+    //     errorMessage.scrollIntoView({ behavior: "smooth", block: "start" });
+    //     str.focus();
+    //     event.preventDefault();
+    //     return false; // 스페이스가 있는 경우
+    // }else{
+    //     return true; // 스페이스 없는 경우
+    // }
 }
 
 function checkNull(str,title , event){
-    if (str.value == null || str.value == "") {
-        errorMessage.innerHTML = title + "을/를 입력해주세요.";
-        errorMessage.scrollIntoView({behavior: "smooth", block: "start"});
-        str.focus();
-        event.preventDefault();
-        return false;
-    } else {
-        return true;
-    }
+    // if (str.value == null || str.value == "") {
+    //     errorMessage.innerHTML = title + "을/를 입력해주세요.";
+    //     errorMessage.scrollIntoView({behavior: "smooth", block: "start"});
+    //     str.focus();
+    //     event.preventDefault();
+    //     return false;
+    // } else {
+    //     return true;
+    // }
 
 }
 
