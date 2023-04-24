@@ -1,7 +1,7 @@
 package com.petkpetk.service.domain.shopping.dto.review.likes.request;
 
-import com.petkpetk.service.domain.shopping.entity.likes.Likes;
 import com.petkpetk.service.domain.shopping.entity.review.Review;
+import com.petkpetk.service.domain.shopping.entity.review.likes.Likes;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 
 import lombok.AllArgsConstructor;
