@@ -8,7 +8,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.petkpetk.service.common.AuditingFields;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 
 import lombok.AllArgsConstructor;
@@ -24,7 +23,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Entity
 @Table(name = "cart_item")
-public class CartItem extends AuditingFields {
+public class CartItem {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,33 +39,13 @@ public class CartItem extends AuditingFields {
 
 	private Long itemCount;
 
+	// private List<OrderItemDto> orderItemList = new ArrayList<>();
+	//
+
 	private Long totalPrice;
-
-	public CartItem(Cart cart, Item item, Long itemCount) {
-		this.cart = cart;
-		this.item = item;
-		this.itemCount = itemCount;
-	}
-
-	public static CartItem of(Cart cart, Item item, Long itemCount) {
-		return new CartItem(cart, item, itemCount);
-	}
-	public static CartItem createCartItem(Cart cart, Item item, Long itemCount) {
-		return CartItem.of(cart,item,itemCount);
-	}
-
-	public void addItemCount(Long itemCount){
-		this.itemCount += itemCount;
-	}
-
-	public void updateCount(Long itemCount){
-		this.itemCount = itemCount;
-	}
 
 
 }
-
-
 
 
 
