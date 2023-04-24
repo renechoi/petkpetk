@@ -48,7 +48,7 @@ select:focus {
 
 .itemMngTable {
     text-align: center;
-    min-width: 810px;
+    max-width: 1200px;
 }
 
 .itemMngForm {
@@ -195,17 +195,17 @@ input#addItem {
     margin-top: 10px;
     width: 100px;
     height: 40px;
-    border: 1px solid #ff828a;
+    border: 1px solid #ff7d97;
     border-radius: 5px;
-    background-color: #ff828a;
+    background-color: #ff7d97;
     color: white;
     font-size: 16px;
     cursor: pointer;
 }
 
 input#addItem:hover {
-    border: 1px solid #ff767f;
-    background-color: #ff767f;
+    border: 1px solid #ff6c8a;
+    background-color: #ff6c8a;
     animation: addItem 0.15s linear;
     animation-iteration-count: 4;
     animation-direction: alternate;
@@ -253,6 +253,16 @@ ul.pagination.justify-content-center {
 }
 footer{
     min-width: 1270px;
+}
+
+.pageNumber {
+    font-weight: bold;
+}
+
+.pageNumberBox {
+    text-align: center;
+    width: 20px;
+    margin: 0 3px;
 }
 
 @media screen and(max-width: 880px) {
