@@ -77,6 +77,12 @@ public class ItemImage extends AuditingFields implements PetkpetkImage {
 		);
 	}
 
+	public static ItemImage asRepresentative(MultipartFile rawImage) {
+		ItemImage itemImage = ItemImage.from(rawImage);
+		itemImage.setRepresentativeImageYn("Y");
+		return itemImage;
+	}
+
 	private String createImageUrl() {
 		return "/images/item/" + uniqueName;
 	}

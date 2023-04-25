@@ -36,6 +36,12 @@ public class ItemImageDto {
 		this.uniqueName = uniqueName;
 	}
 
+	public ItemImageDto(String originalName, String uniqueName, String representativeImageYn) {
+		this.originalName = originalName;
+		this.uniqueName = uniqueName;
+		this.representativeImageYn = representativeImageYn;
+	}
+
 	public static ItemImageDto of(ItemImage itemImage){
 		return ItemImageDto.of(itemImage.getUniqueName(), itemImage.getOriginalName(), itemImage.getImageUrl(), itemImage.getRepresentativeImageYn());
 	}
@@ -57,5 +63,9 @@ public class ItemImageDto {
 
 	public static ItemImageDto of(String originalName, String uniqueName) {
 		return new ItemImageDto(originalName, uniqueName);
+	}
+
+	public static ItemImageDto of(String originalName, String uniqueName, String representativeImageYn) {
+		return new ItemImageDto(originalName, uniqueName, representativeImageYn);
 	}
 }
