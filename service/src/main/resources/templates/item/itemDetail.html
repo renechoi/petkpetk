@@ -203,7 +203,7 @@
                     <div id="businessBtn" class="explainDiv" onclick="showDetailBoxs(this)">사업 정보
                     </div>
                 </div>
-                <div class="lead">
+                <div id="detailBox" class="lead">
                     <div th:text="${item.itemDetail}" style="margin-bottom: 40px"></div>
                     <div th:each="itemImg : ${item.itemImageDtos}" class="text-center imgCenter">
                         <img th:if="${itemImg.representativeImageYn.equals('Y')}"
