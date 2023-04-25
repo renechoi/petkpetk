@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="/layout/layout">
 
 
@@ -217,7 +218,7 @@
 
                 <div id="reviewBox" class="lead">
                     <div class="reviewOneBox" th:if="${!reviewList.isEmpty()}"
-                         th:each="review, status : ${reviewList}">
+                         th:each="review, status : ${reviewList}" th:with="number=${status.index}">
                         <div class="reviewOneBox_nickName_time">
                             <div class="ReviewFlex">
                                 <div class="userReviewProfile">
@@ -256,10 +257,8 @@
                             </div>
 
                             <div>
-                                <form class="btnFlex"
-                                      th:action="@{'/review/delete/'+${item.id}+'/'+${review.getId()}}"
-                                      method="post"
-                                      th:if="${review.userAccount.email.equals(userEmail)}">
+                                <form class="btnFlex" th:action="@{'/review/delete/'+${item.id}+'/'+${review.getId()}}" method="post" th:if="${review.userAccount.email.equals(userEmail)}">
+                                    <input type="hidden" th:id="'modifyId'+${number}" th:class="'reviewList['+${number}+']'">
                                     <input class="delete reviewBtn" type="submit" value="삭제">
                                     <input class="modify reviewBtn" type="button" value="수정"
                                            th:onclick="'showReviewModal('+${review.getId()}+', '+${item.id}+')'">
@@ -267,10 +266,58 @@
                             </div>
                         </div>
                         <pre><div th:id="'reviewContent'+${review.getId()}" class="reviewContent" th:text="${review.content}"></div></pre>
+
+                        <form th:if="${review.userAccount.email.equals(userEmail)}" method="post" id="reviewModalForm" style="display: none;" th:object="${reviewDtos}">
+                            <div id="reviewModal">
+                                <div class="reviewModifyBtn">
+                                    <input id="cancelModify" class="cancelModify modiBtn" type="button" value="취소">
+                                    <input class="completeModify modiBtn" type="submit" value="완료">
+                                </div>
+                                <div>
+                                    <pre><textarea th:field="*{content}" id="reviewModalContent" name="newReviewContent"></textarea></pre>
+                                </div>
+
+                                <div id="reviewImages" th:if="${not #lists.isEmpty(reviewList[number].reviewImageDtos)}">
+                                    <div id="reviewEach" >
+                                        <div th:each="reviewImageDto , status : ${reviewList[number].reviewImageDtos}" th:with="num=${status.index+1}">
+                                            <input th:class="${'fileName'+num+' fileName'}"  name="imageNames" th:value="${not #strings.isEmpty(reviewImageDto.uniqueName)}?${reviewImageDto.originalName}:'첨부파일'" readonly>
+                                            <input type="hidden" th:class="${'fileName'+num}" name="uniqueImageNames" th:value="${not #strings.isEmpty(reviewImageDto.uniqueName)}?${reviewImageDto.uniqueName} : '첨부파일'">
+
+                                            <label th:for="${'reviewFile'+num}" class="reviewFilesLable" th:text="${'이미지 업로드'}"></label>
+                                            <input type="file" th:id="${'reviewFile'+num}" name="images" th:onchange="'getFileName('+${num}+')'">
+                                            <input class="removeImage" type="button" value="삭제" th:onclick="'removeImage('+${num}+')'">
+                                        </div>
+                                        <div id="reviewNullImageBox" th:each="num : ${#numbers.sequence(reviewList[number].reviewImageDtos.size()+1, 5)}">
+                                            <input th:class="${'fileName'+num+' fileName'}" value="첨부파일" readonly>
+
+                                            <label th:for="${'reviewFile'+num}" class="reviewFilesLable" th:text="${'이미지 업로드'}"></label>
+                                            <input type="file" th:id="${'reviewFile'+num}" name="images" th:onchange="'getFileName('+${num}+')'">
+                                            <input class="removeImage" type="button" value="삭제" th:onclick="'removeImage('+${num}+')'">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="nullReviewImages" th:if="${#lists.isEmpty(reviewList[number].reviewImageDtos)}">
+                                    <div th:each="num: ${#numbers.sequence(1,5)}">
+                                        <div class="custom-file">
+                                            <input th:class="${'fileName'+num+' fileName'}"  name="imageNames" value="첨부파일" readonly>
+
+                                            <label th:for="${'reviewFile'+num}" class="reviewFilesLable" th:text="${'이미지 업로드'}"></label>
+                                            <input type="file" th:id="${'reviewFile'+num}" name="images" th:onchange="'getFileName('+${num}+')'">
+                                            <input class="removeImage" type="button" value="삭제" th:onclick="'removeImage('+${num}+')'">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        </form>
+
+
                     </div>
                     <div class="nonReview" th:if="${reviewList.isEmpty()}">
                         등록 된 리뷰가 없습니다.
                     </div>
+
 
                 </div>
                 <div id="businessBox" class="lead">
@@ -279,18 +326,7 @@
             </div>
         </div>
     </div>
-    <form method="post" id="reviewModalForm" style="display: none;">
-        <div id="reviewModal">
-            <div class="reviewModifyBtn">
-                <input id="cancelModify" class="cancelModify modiBtn" type="button" value="취소">
-                <input class="completeModify modiBtn" type="submit" value="완료">
-            </div>
-            <div>
-                <pre><textarea id="reviewModalContent" name="newReviewContent"></textarea></pre>
-            </div>
-        </div>
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-    </form>
+
 </div>
 
 
