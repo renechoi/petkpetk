@@ -1,5 +1,8 @@
 package com.petkpetk.service.domain.shopping.entity.review;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.petkpetk.service.common.AuditingFields;
@@ -47,18 +51,30 @@ public class Review extends AuditingFields {
 
 	private Long likes = 0L;
 
+	@OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+	@ToString.Exclude
+	private List<ReviewImage> images;
 
+	private List<ReviewImage> addImages(List<ReviewImage> images) {
+		images.forEach(image -> image.mapWith(this));
+		return images;
+	}
 
-	public Review(Item item, UserAccount userAccount, String content, Long likes) {
+	public void mapImages(List<ReviewImage> images) {
+		images.forEach(image -> image.mapWith(this));
+	}
+
+	public Review(Item item, UserAccount userAccount, String content, Long likes,
+		List<ReviewImage> images) {
 		this.item = item;
 		this.userAccount = userAccount;
 		this.content = content;
 		this.likes = likes;
-
+		this.images = addImages(images);
 	}
 
-	public static Review of(Item item, UserAccount userAccount, String content, Long likes) {
-		return new Review(item, userAccount, content, likes);
+	public static Review of(Item item, UserAccount userAccount, String content, Long likes, List<ReviewImage> images) {
+		return new Review(item, userAccount, content, likes, images);
 	}
 
 	public void updateReview(ReviewResponse reviewResponse) {
@@ -67,6 +83,8 @@ public class Review extends AuditingFields {
 		this.userAccount = reviewResponse.getUserAccount();
 		this.likes = reviewResponse.getLikes();
 	}
+
+
 
 }
 
