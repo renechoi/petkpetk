@@ -196,7 +196,13 @@
 
         <div class="jumbotron jumbotron-fluid mgt-30">
             <div class="EXDiv">
-                <div class="explainDiv">상품 상세</div>
+                <div class="chooseBtn">
+                    <div id="detailBtn" class="explainDiv" onclick="showDetailBoxs(this)">상품 상세
+                    </div>
+                    <div id="reviewBtn" class="explainDiv" onclick="showDetailBoxs(this)">리뷰</div>
+                    <div id="businessBtn" class="explainDiv" onclick="showDetailBoxs(this)">사업 정보
+                    </div>
+                </div>
                 <div class="lead">
                     <div th:text="${item.itemDetail}" style="margin-bottom: 40px"></div>
                     <div th:each="itemImg : ${item.itemImageDtos}" class="text-center imgCenter">
