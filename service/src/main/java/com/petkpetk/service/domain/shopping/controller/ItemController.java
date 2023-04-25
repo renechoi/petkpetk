@@ -86,17 +86,9 @@ public class ItemController {
 
 	// 해당 상품 수정 페이지 이동
 	@GetMapping("/modify/{itemId}")
-	public String modifyItemView(@PathVariable("itemId") Long itemId, Model model) {
-		try {
-			ItemRequest itemRequest = itemService.getItemDetail(itemId);
-			model.addAttribute("ItemResponse", itemRequest);
-
-		} catch (Exception e) {
-			model.addAttribute("errorMessage", "에러가 발생했습니다");
-			return "my-page/seller/sellerItemList";
-
-		}
-
+	public String modifyItem(@PathVariable("itemId") Long itemId, Model model) {
+		ItemResponse itemResponse = itemService.getItemDetail(itemId);
+		model.addAttribute("item", itemResponse);
 		return "item/itemApply";
 	}
 
@@ -115,22 +107,19 @@ public class ItemController {
 			return "redirect:/seller/item-manage";
 		}
 
-		if (itemImageFiles.get(0).isEmpty() && itemResponse.getId() == null) {
-			model.addAttribute("errorMessage", "대표 이미지를 정해주세요.");
-			return "item/itemApply";
-		}
+		// TODO: 대표이미지 정하라는 메시지는 register랑 다르게 나가야 함
 
-		try {
+		// TODO: requestParam으로 별도로 받는 images, imagesNames는 itemRequest 객체에서 필드로 images와 itemDtos를 갖고 있기 때문에 별도로 받을 필요가 없다.
+		//  하지만 해당 fields는 collection으로 존재하기 때문에 내부 객체가 개수로서 정의되어 있지 않고 따라서 각 객체마다 별도 초기화가 필요하다.
+		//  이와 같은 이유 때문에 thymeleaf에서 name 값으로
+		//   name="itemImageDtos[${status.index}].originalName" 주는 방식이 불가능하다.
+		//  이점을 추후 리팩토링 과제로 삼아볼만하다고 생각되며, 더불어서 이 방식이 가능하다며 현재 itemResponse로 송추되는 데이터 객체를 request로 변경하는 것이 바람직하겠다
 
-			ItemRequest itemRequest = itemService.updateItem(itemResponse, itemImageFiles, itemId, imageNames);
-			model.addAttribute("item", itemRequest);
-
-		} catch (Exception e) {
-			model.addAttribute("errorMessage", "에러가 발생했습니다");
-			return "redirect:/seller/item-manage";
-		}
-		return "redirect:/item/"+itemId;
-	}
+		// todo : original 네임은 필요 없음 !!! 추후 리팩토링
+		itemUpdateRequest.setImages(rawImages);
+		IntStream.range(0, imageNames.size())
+			.filter(i -> !imageNames.get(i).equals("첨부파일"))
+			.forEach(i -> itemUpdateRequest.getItemImageDtos().add(ItemImageDto.of(imageNames.get(i), uniqueImageNames.get(i))));
 
 		ItemResponse itemResponse = itemService.updateItem(itemUpdateRequest);
 		model.addAttribute("item", itemResponse);
