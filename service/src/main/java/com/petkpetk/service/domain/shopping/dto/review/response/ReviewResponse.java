@@ -2,11 +2,12 @@ package com.petkpetk.service.domain.shopping.dto.review.response;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotBlank;
 
+import com.petkpetk.service.config.converter.EntityAndDtoConverter;
 import com.petkpetk.service.domain.shopping.dto.review.ReviewImageDto;
-import com.petkpetk.service.domain.shopping.dto.review.request.ReviewRequest;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.shopping.entity.review.Review;
 import com.petkpetk.service.domain.user.entity.UserAccount;
@@ -33,14 +34,6 @@ public class ReviewResponse {
 
 	private List<ReviewImageDto> reviewImageDtos = new ArrayList<>();
 
-	private List<Long> itemImageIds = new ArrayList<>();
-
-	public ReviewResponse(String content, Long likes, Item item, UserAccount userAccount) {
-		this.content = content;
-		this.likes = likes;
-		this.item = item;
-		this.userAccount = userAccount;
-	}
 
 	public ReviewResponse(Long id, String content, Long likes, Item item, UserAccount userAccount) {
 		this.id = id;
@@ -50,22 +43,14 @@ public class ReviewResponse {
 		this.userAccount = userAccount;
 	}
 
-	public ReviewResponse(String content, Long likes, Item item, UserAccount userAccount,
-		List<ReviewImageDto> reviewImageDtos, List<Long> itemImageIds) {
-		this.content = content;
-		this.likes = likes;
-		this.item = item;
-		this.userAccount = userAccount;
-		this.reviewImageDtos = reviewImageDtos;
-		this.itemImageIds = itemImageIds;
-	}
 
 	public Review toEntity() {
 		return Review.of(
 			this.item,
 			this.userAccount,
 			this.content,
-			this.likes
+			this.likes,
+			null
 		);
 	}
 
@@ -73,25 +58,20 @@ public class ReviewResponse {
 		return new ReviewResponse(id,content, likes, item, userAccount);
 	}
 
-	public static ReviewResponse of(Review review) {
-		return ReviewResponse.of(review.getId(),review.getContent(), review.getLikes(), review.getItem(),
-			review.getUserAccount());
-	}
-	public static ReviewResponse of(ReviewRequest reviewRequest) {
-		return ReviewResponse.of(reviewRequest.getId(),reviewRequest.getContent(), reviewRequest.getLikes(), reviewRequest.getItem(),
-			reviewRequest.getUserAccount());
+	public static ReviewResponse from(Review review) {
+		ReviewResponse reviewResponse = EntityAndDtoConverter.convertToDto(review, ReviewResponse.class);
+		reviewResponse.setReviewImageDtos(review.getImages().stream().map(ReviewImageDto::from).collect(Collectors.toList()));
+		return reviewResponse;
 	}
 
-	public static ReviewResponse of(Review review, List<ReviewImageDto> reviewImageDtos,
-		List<Long> reviewImageIds) {
+	public static ReviewResponse of(Review review, List<ReviewImageDto> reviewImageDtos) {
 		return new ReviewResponse(
 			review.getId(),
 			review.getContent(),
 			review.getLikes(),
 			review.getItem(),
 			review.getUserAccount(),
-			reviewImageDtos,
-			reviewImageIds
+			reviewImageDtos
 		);
 	}
 
