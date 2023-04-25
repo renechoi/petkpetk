@@ -98,10 +98,8 @@
                         <input th:unless="${itemImageDto.representativeImageYn=='Y'}" th:class="${'fileName'+num+' fileName'}" name="imageNames" th:value="${not #strings.isEmpty(itemImageDto.originalName)} ? ${itemImageDto.originalName} : '첨부파일'" readonly>
 
 
-                        <input type="hidden" id="firstImage2" th:if="${itemImageDto.representativeImageYn=='Y'}" th:class="${'fileName'+num+' fileName2'}" name="uniqueImageNames" th:value="${itemImageDto.uniqueName}" >
-                        <input type="hidden" id="firstImage3" th:if="${itemImageDto.representativeImageYn=='Y'}" th:class="${'fileName'+num+' fileName3'}" name="representativeImageYn" th:value="Y" >
-                        <input type="hidden" th:unless="${itemImageDto.representativeImageYn=='Y'}" th:class="${'fileName'+num+' fileName4'}" name="uniqueImageNames" th:value="${not #strings.isEmpty(itemImageDto.uniqueName)} ? ${itemImageDto.uniqueName} : '첨부파일'" >
-                        <input type="hidden" th:unless="${itemImageDto.representativeImageYn=='Y'}" th:class="${'fileName'+num+' fileName5'}" name="representativeImageYn" th:value="${not #strings.isEmpty(itemImageDto.representativeImageYn)} ? ${itemImageDto.representativeImageYn} : '첨부파일'" >
+                        <input type="hidden" id="firstImage2" th:if="${itemImageDto.representativeImageYn=='Y'}" th:class="${'fileName'+num}" name="uniqueImageNames" th:value="${itemImageDto.uniqueName}" >
+                        <input type="hidden" th:unless="${itemImageDto.representativeImageYn=='Y'}" th:class="${'fileName'+num}" name="uniqueImageNames" th:value="${not #strings.isEmpty(itemImageDto.uniqueName)} ? ${itemImageDto.uniqueName} : '첨부파일'" >
 
 
                         <label th:for="${'itemFile'+num}" class="itemFilesLable" th:text="${'이미지 업로드'}"></label>

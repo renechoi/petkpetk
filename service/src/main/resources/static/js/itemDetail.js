@@ -161,10 +161,12 @@ function showReviewModal(reviewId, itemId){
     var reviewContent = document.getElementById("reviewContent" + reviewId+"");
     var cancelModify = document.getElementById("cancelModify");
 
+
     cancelModify.setAttribute("onclick", "closeReviewModal("+reviewId+")")
     reviewModalContent.value = reviewContent.textContent;
     reviewModalForm.setAttribute("action", "/review/modify/" + itemId + "/" + reviewId);
     reviewModalForm.style.display = "block";
+
 }
 
 function closeReviewModal(reviewId) {
@@ -175,4 +177,19 @@ function closeReviewModal(reviewId) {
 
     reviewModalContent.value = reviewContent.textContent;
     reviewModalForm.style.display = "none";
+}
+
+function getFileName(num) {
+    var fileName = $("#reviewFile" + num).val();
+    var cleanName = fileName.substring(12);
+    $(".fileName" + num).val(cleanName);
+}
+
+function removeImage(num) {
+    $("#reviewFile" + num).val(null);
+    if (num == 1) {
+        $(".fileName" + num).val('대표 이미지')
+    } else {
+        $(".fileName" + num).val('첨부파일')
+    }
 }
