@@ -19,6 +19,72 @@ input:focus {
     width: 100%;
 }
 
+.fileName {
+    display: inline-block;
+    height: 30px;
+    padding: 0 10px;
+    vertical-align: middle;
+    border: 1px solid #ff6879;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    width: calc(100% - 120.05px);
+    color: #ffb7bf;
+    background-color: #ffffffe3;
+}
+.reviewFilesLable {
+    width: 88.05px;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    line-height: 22px;
+    color: #fff;
+    background-color: #ff6879ed;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    cursor: pointer;
+    height: 30px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.reviewFilesLable:hover {
+    background-color: rgba(255, 134, 148, 0.86);
+}
+
+
+
+.custom-file {
+    display: flex;
+}
+
+input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
+
+input.removeImage {
+    cursor: pointer;
+    text-align: center;
+    height: 30px;
+    width: 32px;
+    margin-left: 5px;
+    border-radius: 5px;
+    border: 1px solid #ff6879;
+    background-color: #ffffffe6;
+    color: #FF6859;
+    font-size: 13px;
+}
+
+input.removeImage:hover {
+    border: 1px solid #ff5e71;
+    background-color: rgba(255, 236, 236, 0.91);
+    color: #ff5f4f;
+}
+
+
 #itemDetailMainImg {
     width: 100%;
     height: 100%;
@@ -367,15 +433,15 @@ form#reviewModalForm {
     left: 0;
     width: 100%;
     top: 0;
-    padding: 100px;
+    padding: 100px 20%;
     height: 100%;
     background-color: #41373d99;
     z-index: 200;
 }
 div#reviewModal {
     position: absolute;
-    top: 40%;
-    width: calc(100% - 200px);
+    top: 25%;
+    width: 60%;
 }
 
 .reviewModifyBtn {
