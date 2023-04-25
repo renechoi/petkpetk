@@ -36,6 +36,7 @@ public class ReviewImage {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "review_id")
+	@ToString.Exclude
 	private Review review;
 
 
@@ -46,4 +47,3 @@ public class ReviewImage {
 	}
 
 }
-

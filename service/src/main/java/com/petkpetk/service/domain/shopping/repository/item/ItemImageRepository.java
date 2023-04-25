@@ -11,5 +11,8 @@ public interface ItemImageRepository extends JpaRepository<ItemImage, Long>,
 	QuerydslPredicateExecutor<ItemImage> {
 	List<ItemImage> findByItemIdOrderByIdAsc(Long itemId);
 
+	// ItemImage findByOriginalName(String originalName);
+	List<ItemImage> findByOriginalName(String originalName);
+	ItemImage findByUniqueName(String originalName);
 
 }
