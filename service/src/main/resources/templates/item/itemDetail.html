@@ -123,7 +123,7 @@
             <div class="repImgDiv" >
                 <img th:each="itemImg : ${item.itemImageDtos}" th:if="${itemImg.representativeImageYn.equals('Y')}" id="itemDetailMainImg" th:src="${itemImg.imageUrl}"
                      class="rounded repImg "
-                     th:alt="${itemImg.imageName}">
+                     th:alt="${itemImg.getUniqueName}">
             </div>
             <div class="wd50">
                 <div class="SellStatus_ItemName">
@@ -196,7 +196,13 @@
 
         <div class="jumbotron jumbotron-fluid mgt-30">
             <div class="EXDiv">
-                <div class="explainDiv">상품 상세</div>
+                <div class="chooseBtn">
+                    <div id="detailBtn" class="explainDiv" onclick="showDetailBoxs(this)">상품 상세
+                    </div>
+                    <div id="reviewBtn" class="explainDiv" onclick="showDetailBoxs(this)">리뷰</div>
+                    <div id="businessBtn" class="explainDiv" onclick="showDetailBoxs(this)">사업 정보
+                    </div>
+                </div>
                 <div class="lead">
                     <div th:text="${item.itemDetail}" style="margin-bottom: 40px"></div>
                     <div th:each="itemImg : ${item.itemImageDtos}" class="text-center imgCenter">
@@ -208,11 +214,84 @@
                              width="800">
                     </div>
                 </div>
+
+                <div id="reviewBox" class="lead">
+                    <div class="reviewOneBox" th:if="${!reviewList.isEmpty()}"
+                         th:each="review, status : ${reviewList}">
+                        <div class="reviewOneBox_nickName_time">
+                            <div class="ReviewFlex">
+                                <div class="userReviewProfile">
+                                    <img class="reviewProfile" th:src="@{/images/icon.png}">
+                                </div>
+                                <div class="titleBox">
+                                    <div class="userNickName"
+                                         th:text="${review.userAccount.nickname}"></div>
+                                    <span class="likeTitle">도움이 됐어요</span>
+                                    <div class="reviewLikes" th:id="'reviewLikes'+${review.getId()}"
+                                         th:text="${review.getLikes()}"></div>
+                                </div>
+                                <input id="userEmail" type="hidden" th:value="${userEmail}">
+                                <input th:id="'likeCount'+${review.getId()}" type="hidden"
+                                       th:value="${review.getLikes()}">
+                                <div th:unless="${reviewHashMap == null}">
+                                    <img th:if="${reviewHashMap.get('review'+review.getId()) == null}"
+                                         sec:authorize="hasAnyAuthority('ROLE_USER')" class="likes"
+                                         th:id="'likes' + ${review.getId()}"
+                                         th:src="@{/images/likesBefore.png}"
+                                         th:onmouseover="'likesMouseOn('+${review.getId()}+'); intoLikeOnclick('+${review.getId()}+')'"
+                                         th:onmouseout="'likesMouseOn('+${review.getId()}+')'">
+                                    <img th:unless="${reviewHashMap.get('review'+review.getId()) == null}"
+                                         sec:authorize="hasAnyAuthority('ROLE_USER')" class="likes"
+                                         th:id="'likes' + ${review.getId()}"
+                                         th:src="@{/images/likesAfter.png}"
+                                         th:onmouseover="'intoLikeOnclick('+${review.getId()}+')'">
+                                </div>
+                                <div th:if="${reviewHashMap == null}">
+                                    <img sec:authorize="hasAnyAuthority('ROLE_USER')" class="likes"
+                                         th:id="'likes' + ${review.getId()}"
+                                         th:src="@{/images/likesBefore.png}"
+                                         th:onmouseover="'likesMouseOn('+${review.getId()}+'); intoLikeOnclick('+${review.getId()}+')'"
+                                         th:onmouseout="'likesMouseOn('+${review.getId()}+')'">
+                                </div>
+                            </div>
+
+                            <div>
+                                <form class="btnFlex"
+                                      th:action="@{'/review/delete/'+${item.id}+'/'+${review.getId()}}"
+                                      method="post"
+                                      th:if="${review.userAccount.email.equals(userEmail)}">
+                                    <input class="delete reviewBtn" type="submit" value="삭제">
+                                    <input class="modify reviewBtn" type="button" value="수정"
+                                           th:onclick="'showReviewModal('+${review.getId()}+', '+${item.id}+')'">
+                                </form>
+                            </div>
+                        </div>
+                        <pre><div th:id="'reviewContent'+${review.getId()}" class="reviewContent" th:text="${review.content}"></div></pre>
+                    </div>
+                    <div class="nonReview" th:if="${reviewList.isEmpty()}">
+                        등록 된 리뷰가 없습니다.
+                    </div>
+
+                </div>
+                <div id="businessBox" class="lead">
+                    사업정보
+                </div>
             </div>
         </div>
-
-
     </div>
+    <form method="post" id="reviewModalForm" style="display: none;">
+        <div id="reviewModal">
+            <div class="reviewModifyBtn">
+                <input id="cancelModify" class="cancelModify modiBtn" type="button" value="취소">
+                <input class="completeModify modiBtn" type="submit" value="완료">
+            </div>
+            <div>
+                <pre><textarea id="reviewModalContent" name="newReviewContent"></textarea></pre>
+            </div>
+        </div>
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    </form>
 </div>
+
 
 </html>

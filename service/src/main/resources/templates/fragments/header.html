@@ -19,10 +19,6 @@
                                              sec:authorize="hasAnyAuthority('ROLE_ADMIN')">관리
                     페이지</a>
                 </div>
-                <div class="top-business"><a th:href="@{/seller/item-manage}"
-                                             sec:authorize="hasAnyAuthority('ROLE_SELLER')">상품
-                    관리</a>
-                </div>
                 <div class="top-business"><a th:href="@{/seller/sign-up}" sec:authorize="!hasAnyAuthority('ROLE_ADMIN')">사업 등록</a>
                 </div>
             </div>
@@ -47,18 +43,15 @@
                 <ul class="flex justifyContent topList">
                     <li class="log"><a th:href="@{/logout}">로그아웃</a></li>
                     <li onmouseleave="hideMenu()">
-                        <a>
                             <a>
-                                <div class="profile Pone" onmouseover="showMenu()"></div>
+                                <div class="profile Pone" onmouseover="showMenu()">
+                                    <img class="userProfile" th:src="@{/images/pinkMoala.png}">
+                                </div>
                             </a>
-                            <a>
-                                <div class="profile Ptwo"></div>
-                            </a>
-                        </a>
                         <div id="topHoverMenu" class="topHoverMenu">
                             <img class="ladder" th:src="@{/images/ladder.png}">
                             <ul class="menuBox">
-                                <li class="nickName">내 닉네임</li>
+                                <li class="nickName" th:text="${#authentication.getPrincipal().getNickname()}">내 닉네임</li>
                                 <li class="menus"><a>마이 페이지</a></li>
                                 <li class="menus"><a th:href="@{/cart}">장바구니</a></li>
                                 <li class="menus"><a th:href="@{/order}">구매 이력</a></li>
@@ -73,18 +66,15 @@
                 <ul class="flex justifyContent topList">
                     <li class="log"><a th:href="@{/logout}">로그아웃</a></li>
                     <li onmouseleave="hideMenu()">
-                        <a>
                             <a>
-                                <div class="profile Pone" onmouseover="showMenu()"></div>
+                                <div class="profile Pone" onmouseover="showMenu()">
+                                    <img class="userProfile" th:src="@{/images/pinkMoala.png}">
+                                </div>
                             </a>
-                            <a>
-                                <div class="profile Ptwo"></div>
-                            </a>
-                        </a>
                         <div id="topHoverMenu" class="topHoverMenu">
                             <img class="ladder" th:src="@{/images/ladder.png}">
                             <ul class="menuBox">
-                                <li class="nickName">내 닉네임</li>
+                                <li class="nickName" th:text="${#authentication.getPrincipal().getNickname()}">내 닉네임</li>
                                 <li class="menus"><a th:href="@{/seller/information}">사업 정보</a></li>
                                 <li class="menus"><a th:href="@{/seller/item-manage}">상품 관리</a></li>
                                 <li class="menus"><a>주문 상태</a></li>
@@ -133,12 +123,14 @@
                 <li><a>QnA</a></li>
                 <div class="line"></div>
                 <!------------------------------ if user == null ------------------------------>
-                <li><a>마이 페이지 <span>My Page</span></a></li>
+                <li sec:authorize="hasAnyAuthority('ROLE_SELLER')"><a th:href="@{/seller/information}">사업 정보 <span>My Page</span></a></li>
+                <li sec:authorize="hasAnyAuthority('ROLE_SELLER')"><a th:href="@{/seller/item-manage}">상품 관리 <span>Manage Products</span></a></li>
+                <li sec:authorize="hasAnyAuthority('ROLE_SELLER')"><a>주문 관리 <span>Manage Orders</span></a></li>
+                <li sec:authorize="hasAnyAuthority('ROLE_SELLER')"><a>정산 <span>Calculate</span></a></li>
 
-                <!-- 모두 이용 가능 -->
-                <li><a th:href="@{/cart}">장바구니 <span>Cart</span></a></li>
-
-                <li sec:authorize="isAuthenticated()"><a th:href="@{/order}">구매 이력 <span>purchase history</span></a>
+                <li sec:authorize="hasAnyAuthority('ROLE_USER')"><a>마이 페이지 <span>My Page</span></a></li>
+                <li sec:authorize="hasAnyAuthority('ROLE_USER')"><a th:href="@{/order}">구매 이력 <span>purchase history</span></a>
+                <li sec:authorize="!hasAnyAuthority('ROLE_ADMIN', 'ROLE_SELLER')"><a th:href="@{/cart}">장바구니 <span>Cart</span></a></li>
                 </li>
 
                 <!------------------------------ if user == null ------------------------------>

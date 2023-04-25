@@ -34,7 +34,7 @@ public class MainController {
     @GetMapping("/")
     public String main(ItemSearchDto itemSearchDto, Optional<Integer> page, Model model) {
 
-        PageRequest pageRequest = PageRequest.of(page.orElse(0), 10);
+        PageRequest pageRequest = PageRequest.of(page.orElse(0), 12);
         Page<MainItemDto> items = itemService.getMainItemPage(itemSearchDto, pageRequest);
 
         System.out.println("◆◆◆◆◆◆◆◆◆◆◆◆◆◆ pageRequest = " + pageRequest);

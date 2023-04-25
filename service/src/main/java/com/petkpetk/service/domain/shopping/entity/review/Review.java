@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.petkpetk.service.common.AuditingFields;
+import com.petkpetk.service.domain.shopping.dto.review.response.ReviewResponse;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 
@@ -60,9 +61,12 @@ public class Review extends AuditingFields {
 		return new Review(item, userAccount, content, likes);
 	}
 
-	// public void updateReview(ReviewResponse reviewResponse) {
-	// 	this.content = reviewResponse.getContent();
-	// }
+	public void updateReview(ReviewResponse reviewResponse) {
+		this.item = reviewResponse.getItem();
+		this.content = reviewResponse.getContent();
+		this.userAccount = reviewResponse.getUserAccount();
+		this.likes = reviewResponse.getLikes();
+	}
 
 }
 

@@ -5,9 +5,7 @@ import java.time.LocalDateTime;
 import com.petkpetk.service.domain.shopping.constant.OrderStatus;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Data

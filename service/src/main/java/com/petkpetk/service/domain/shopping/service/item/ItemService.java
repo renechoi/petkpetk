@@ -1,11 +1,6 @@
 package com.petkpetk.service.domain.shopping.service.item;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -16,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.petkpetk.service.common.PetkpetkImage;
 import com.petkpetk.service.config.converter.ImageConverter;
 import com.petkpetk.service.config.file.ImageLocalRepository;
 import com.petkpetk.service.domain.shopping.dto.item.ItemDto;
@@ -48,8 +42,8 @@ public class ItemService {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<ManageItemDto> getItemList(ItemSearchDto itemSearchDto, Pageable pageable) {
-		return itemRepository.getManageList(itemSearchDto, pageable);
+	public Page<ManageItemDto> getItemList(ItemSearchDto itemSearchDto, Pageable pageable, String email) {
+		return itemRepository.getManageList(itemSearchDto, pageable, email);
 	}
 
 	public ItemResponse getItemDetail(Long itemId) {
@@ -66,6 +60,7 @@ public class ItemService {
 		IntStream.range(0, images.size())
 			.forEach(image -> imageLocalRepository.save(images.get(image), itemDto.getRawImages().get(image)));
 	}
+
 
 	public ItemResponse updateItem(ItemRegisterRequest itemUpdateRequest) {
 
@@ -123,8 +118,13 @@ public class ItemService {
 		return itemRepository.findById(itemId).orElseThrow(ItemNotFoundException::new);
 	}
 
+
 	private List<ItemImage> findByItemIdOrderByIdAsc(Long id) {
 		return itemImageRepository.findByItemIdOrderByIdAsc(id);
 	}
+	public Item getItem(Long id) {
+		return itemRepository.findById(id).get();
+	}
+
 
 }

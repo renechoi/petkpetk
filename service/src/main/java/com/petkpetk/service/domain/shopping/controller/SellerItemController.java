@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,17 +30,15 @@ public class SellerItemController {
 	}
 
 	@GetMapping(value = {"/item-manage", "/item-manage/{page}"})
-	public String itemManage(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page, Model model){
+	public String itemManage(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page, Model model, Authentication authentication){
 		System.out.println("♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠ itemSearchDto = " + itemSearchDto);
 		System.out.println("♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠ page = " + page);
+		String email = authentication.getName();
 
+		PageRequest pageRequest = PageRequest.of(page.orElse(0), 5);
 
-		PageRequest pageRequest = PageRequest.of(page.orElse(0), 10);
-
-
-		Page<ManageItemDto> items = itemService.getItemList(itemSearchDto, pageRequest);
-
-
+		Page<ManageItemDto> items = itemService.getItemList(itemSearchDto, pageRequest, email);
+		System.out.println("♠♠♠♠♠♠♠♠♠♠♠ items.getPageable().getPageNumber() = " + items.getPageable().getPageNumber());
 
 		model.addAttribute("items", items);
 		model.addAttribute("itemSearchDto",itemSearchDto);
