@@ -62,7 +62,6 @@ public class Item extends AuditingFields {
 	private UserAccount userAccount;
 
 	@OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
-	// @OneToMany(mappedBy = "item")
 	@ToString.Exclude
 	private List<ItemImage> images;
 
@@ -74,7 +73,6 @@ public class Item extends AuditingFields {
 	public void mapImages(List<ItemImage> images) {
 		images.forEach(image -> image.mapWith(this));
 	}
-
 
 
 	public void addImage(ItemImage image){
