@@ -12,7 +12,7 @@ function removeImage(num) {
     if (num == 1) {
         $(".fileName" + num).val('대표 이미지')
     } else {
-        $(".fileName" + num).val('첨부 파일')
+        $(".fileName" + num).val('첨부파일')
     }
 }
 
