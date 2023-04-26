@@ -33,7 +33,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @Table(indexes = {@Index(columnList = "email"), @Index(columnList = "createdAt"), @Index(columnList = "createdBy")})
-@Where(clause = "deletedYn=Y")
+@Where(clause = "deleted_yn='N'")
 @Entity
 public class AdminAccount extends AuditingFields implements Serializable {
 
