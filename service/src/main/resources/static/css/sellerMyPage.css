@@ -1,6 +1,11 @@
 div#sellerMyPape {
     width: 100%;
 }
+input::-webkit-inner-spin-button {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
 
 .MyPageTitle {
     font-size: 23px;
