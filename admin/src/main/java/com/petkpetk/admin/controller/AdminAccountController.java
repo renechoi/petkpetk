@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.petkpetk.admin.dto.request.AdminSignupRequest;
 import com.petkpetk.admin.service.AdminAccountService;
+import com.petkpetk.admin.service.EmailService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class AdminAccountController {
 
 	private final AdminAccountService adminAccountService;
+	private final EmailService emailService;
 
 	@GetMapping("/login")
 	public String admin() {
@@ -42,6 +44,22 @@ public class AdminAccountController {
 
 		return "redirect:/";
 	}
+
+
+	@ResponseBody
+	@PostMapping("/send-verification-code")
+	public boolean sendVerificationCode(@RequestParam String email){
+		String verificationCode = emailService.sendVerificationCode(email);
+		emailService.saveVerificationCode(email, verificationCode);
+		return true;
+	}
+
+	@ResponseBody
+	@PostMapping("/verify-verification-code")
+	public boolean verifyCode(@RequestParam String email, @RequestParam String verificationCode){
+		return emailService.verifyCode(email, verificationCode);
+	}
+
 
 	@ResponseBody
 	@PostMapping("/check-email")
