@@ -76,9 +76,8 @@ public class ReviewService {
 	}
 
 	public void deleteReview(Long reviewId) {
-		Review review =  entityManager.find(Review.class, reviewId);
+		Review review = reviewRepository.findById(reviewId).get();
 		review.setDeletedYn("Y");
-		entityManager.flush();
 
 		List<ReviewImage> reviewImages = reviewImageRepository.findByReviewIdOrderByIdAsc(reviewId);
 		reviewImages.forEach(reviewImage -> reviewImage.setDeletedYn("Y"));
@@ -87,9 +86,7 @@ public class ReviewService {
 	}
 
 	public ReviewResponse modifyReview(ReviewRegisterRequest reviewRegisterRequest, Long reviewId) {
-		Review review = entityManager.find(Review.class, reviewId);
-		review.setContent(reviewRegisterRequest.getContent());
-		entityManager.flush();
+		Review review = reviewRepository.findById(reviewId).get();
 
 		List<ReviewImage> reviewImages = review.getImages();
 		reviewRegisterRequest.getImages().removeIf(MultipartFile::isEmpty);
@@ -100,11 +97,9 @@ public class ReviewService {
 			.map(reviewImageRepository::findByUniqueName)
 			.collect(Collectors.toList());
 
-
 		List<ReviewImage> newlyAddedImages = reviewRegisterRequest.getImages().stream()
 			.map(image -> !image.isEmpty() ? ReviewImage.from(image) : null)
 			.collect(Collectors.toList());
-
 
 		List<ReviewImage> allRequestedImages = Stream.concat(notModifiedImages.stream(), newlyAddedImages.stream())
 			.collect(Collectors.toList());
@@ -123,7 +118,27 @@ public class ReviewService {
 
 		reviewImages.addAll(newlyAddedImages);
 		review.mapImages(reviewImages);
+		review.setContent(reviewRegisterRequest.getContent());
 
 		return ReviewResponse.from(review);
+	}
+
+
+	public void noImageModity(ReviewDto reviewDto, Long reviewId, List<MultipartFile> rawImages) {
+		Review review = reviewRepository.findById(reviewId).get();
+
+		if (rawImages == null) {
+
+		} else {
+			List<ReviewImage> images = ImageConverter.of(ReviewImage::from).convertToImages(rawImages);
+
+			IntStream.range(0, images.size())
+				.filter(i -> !rawImages.get(i).isEmpty())
+				.forEach(i -> imageLocalRepository.save(images.get(i), rawImages.get(i)));
+
+			review.addImage(images);
+		}
+
+		review.setContent(reviewDto.getContent());
 	}
 }
