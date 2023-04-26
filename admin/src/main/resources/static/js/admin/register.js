@@ -20,9 +20,16 @@ $(document).ready(function() {
         }
     }
 
+
+
+
+
+
     // 중복 이메일 검증을 실행하는 함수
-    function checkEmail() {
-        let email = $('input[name="email"]').val();
+
+
+    $('input[name="email"]').on('blur', function() {
+        let email = $(this).val();
         let csrfToken = $('meta[name="_csrf"]').attr('content');
         let csrfHeader = $('meta[name="_csrf_header"]').attr('content');
         let headers = {};
@@ -38,7 +45,6 @@ $(document).ready(function() {
                     enableSubmitButton();
                 } else {
                     $('#email-check-msg').html('이미 사용 중인 Email입니다.').css('color', 'red');
-                    enableSubmitButton();
                 }
             },
             error: function() {
@@ -46,7 +52,8 @@ $(document).ready(function() {
                 enableSubmitButton();
             }
         });
-    }
+    });
+
 
     // submit 버튼을 활성화하는 함수
     function enableSubmitButton() {
