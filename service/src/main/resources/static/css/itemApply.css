@@ -111,6 +111,8 @@ input[type="number"]::placeholder {
     outline: none;
     padding: 20px;
     margin: 5px 0 10px 0;
+    font-size: 15px;
+    color: #554b51;
 }
 
 .addItemDetail:focus {
@@ -212,7 +214,15 @@ input.removeImage:hover {
     color: #ff5f4f;
 }
 
-
+#textCount{
+    color: #b08f8f;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 5px 10px;
+    background-color: #ffffffc4;
+    border-radius: 5px;
+}
 
 
 @keyframes saveBtn {
