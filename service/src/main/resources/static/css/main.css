@@ -67,9 +67,7 @@ a .productOneBlock:hover {
     object-fit: cover;
 }
 
-.productName_Status {
 
-}
 
 .productDetail, .productPriceDetail, .productStar {
     padding: 2px 10px;
@@ -81,9 +79,7 @@ a .productOneBlock:hover {
     top: 5px;
 }
 
-.productPrice {
-    margin: 0 2px 0 5px;
-}
+
 
 .productStatus {
     border: 1px solid red;
@@ -97,9 +93,7 @@ a .productOneBlock:hover {
     top: 2px;
 }
 
-.productName_Status {
 
-}
 
 .won {
     color: #3A1D1D;
@@ -144,12 +138,15 @@ a .productOneBlock:hover {
 
 
 .productPrice {
-    font-size: 18px;
+    font-size: 21px;
     font-weight: bold;
     color: #ff475c;
     position: relative;
     bottom: 0.5px;
+    margin: 0 2px 0 5px;
+
 }
+
 
 .originalPrice {
     font-size: 14px;
