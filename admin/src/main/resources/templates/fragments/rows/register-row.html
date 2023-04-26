@@ -16,37 +16,36 @@
                 </div>
 
 
+
+
+
                 <div class="form-group">
                     <div class="input-group">
                         <input name="email" th:field="*{email}" type="email" class="form-control form-control-user"
                                id="email-input" placeholder="Email 주소를 입력하세요">
                         <div class="input-group-append">
+                            <button id="send-auth-code-btn" class="btn btn-outline-secondary" type="button">이메일 인증하기</button>
+                        </div>
+                        <div class="input-group-append">
                         </div>
                     </div>
                     <small id="email-check-msg"></small>
-                    <div class="input-group">
-                        <input name="authCode" type="text" class="form-control form-control-user"
-                               id="auth-code-input" placeholder="인증번호를 입력하세요">
-                        <div class="input-group-append">
-                            <button id="send-auth-code-btn" class="btn btn-outline-secondary" type="button">인증번호 보내기</button>
+                    <small id="auth-code-msg"></small>
+
+                    <div class="form-container" >
+                        <div class="form-title">이메일로 전송된 인증코드를 입력해주세요.</div>
+                        <div class="form-content">
+                            <div class="form-input">
+                                <input name="authCode" type="text"  id="auth-code-input" placeholder="인증코드 6자리 입력" class="form-input-box" value="">
+                                <span class="form-input-timer"></span>
+                                <button class="form-submit-button" type="button" disabled>확인</button>
+                            </div>
+                            <div id="email-validation-form-text" class="email-validation-form-text">이메일을 받지 못하셨나요? <a class="form-resend-link">이메일 재전송하기</a></div>
                         </div>
                     </div>
+
                 </div>
 
-
-
-
-
-<!--                <div class="form-group">-->
-<!--                    <div class="input-group">-->
-<!--                        <input name="email" th:field="*{email}" type="email" class="form-control form-control-user"-->
-<!--                               id="email-input" placeholder="Email 주소를 입력하세요">-->
-<!--                        <div class="input-group-append">-->
-<!--                            <button id="check-email-btn" class="btn btn-outline-secondary" type="button">중복확인</button>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <small id="email-check-msg"></small>-->
-<!--                </div>-->
 
 
                 <div class="form-group row">
@@ -77,12 +76,7 @@
                 <a href="http://www.localhost:8080/" class="btn btn-google btn-user btn-block">
                     <i class="fab fa-google fa-fw"></i> 페크페크 홈페이지 바로가기
                 </a>
-                <!--                <a href="../index.html" class="btn btn-google btn-user btn-block">-->
-                <!--                    <i class="fab fa-google fa-fw"></i> Register with Google-->
-                <!--                </a>-->
-                <!--                <a href="../index.html" class="btn btn-facebook btn-user btn-block">-->
-                <!--                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook-->
-                <!--                </a>-->
+
             </form>
             <hr>
             <div class="text-center">
@@ -95,6 +89,5 @@
     </div>
 
 </div>
-
 
 
