@@ -71,8 +71,11 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">상품 상세 내용</span>
                 </div>
-                <pre><textarea id="itemDetail" class="form-control addItemDetail" aria-label="With textarea"
-                               th:field="*{itemDetail}"></textarea></pre>
+                <div style="position: relative">
+                    <pre><textarea id="itemDetail" class="form-control addItemDetail" aria-label="With textarea"
+                               th:field="*{itemDetail}"  onkeydown="countText()" onkeyup="countText()"></textarea></pre>
+                    <div id="textCount" ></div>
+                </div>
             </div>
 
             <div th:if="${#lists.isEmpty(item.itemImageDtos)}">
