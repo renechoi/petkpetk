@@ -25,7 +25,7 @@ public class ReviewImageDto {
 		this.originalName = originalName;
 	}
 
-	public ReviewImageDto(String uniqueName, String originalName) {
+	public ReviewImageDto( String originalName, String uniqueName) {
 		this.uniqueName = uniqueName;
 		this.originalName = originalName;
 	}
@@ -46,8 +46,8 @@ public class ReviewImageDto {
 		return new ReviewImageDto(originalName);
 	}
 
-	public static ReviewImageDto of(String uniqueName, String originalName) {
-		return new ReviewImageDto(uniqueName, originalName);
+	public static ReviewImageDto of( String originalName, String uniqueName) {
+		return new ReviewImageDto(originalName, uniqueName);
 	}
 
 }

@@ -15,6 +15,20 @@ function checkSameWithPass() {
 
     }
 }
+function checkPass(e) {
+    var check_password = document.getElementById("check-password");
+    var re_password = document.getElementById("re-password");
+
+    if (e.value == 0) {
+        check_password.innerHTML="";
+    }else if (e.value === re_password.value) {
+        check_password.innerHTML = "";
+    } else if(re_password.value =="" || re_password.value == null){
+        check_password.innerHTML = "";
+    }else{
+        check_password.innerHTML = "비밀번호가 일치하지 않습니다.<br>password does not match.";
+    }
+}
 
 function checkPhoneNumber() {
     var phoneNumber = document.getElementById("phoneNumber");

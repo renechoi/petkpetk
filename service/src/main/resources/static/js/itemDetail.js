@@ -5,8 +5,7 @@ var itemDetailContainer = document.getElementById("itemDetailContainer");
 var userEmail = document.getElementById("userEmail");
 
 
-
-function minusLike(num, likesNum){
+function minusLike(num, likesNum) {
     clickLikes(num, likesNum, userEmail);
 }
 
@@ -86,83 +85,84 @@ function likesMouseOn(num) {
 function intoLikeOnclick(num) {
     $("#likes" + num).attr("onclick", "clickLikes(" + num + ", '" + userEmail.value + "')");
 }
+
 function clickLikes(num, email) {
 
-    var likeCount = document.getElementById("likeCount"+num);
-    if ($("#likes" + num + "").attr("onmouseover") == "intoLikeOnclick("+num+")") {
+    var likeCount = document.getElementById("likeCount" + num);
+    if ($("#likes" + num + "").attr("onmouseover") == "intoLikeOnclick(" + num + ")") {
 
         var intlike = parseInt(likeCount.value);
         var like = document.getElementById("reviewLikes" + num + "")
-        $("#likes" + num + "").attr("onmouseover", "likesMouseOn(" + num + "); intoLikeOnclick("+num+")");
+        $("#likes" + num + "").attr("onmouseover", "likesMouseOn(" + num + "); intoLikeOnclick(" + num + ")");
         $("#likes" + num + "").attr("onmouseout", "likesMouseOn(" + num + ")");
         $("#likes" + num + "").attr("src", "/images/likesHover.png");
 
         $.ajax({
-            url : "/api/review/like",
-            type : "post",
-            data : {
-                num : -1,
-                reviewId : num,
-                likeNum : intlike,
-                userEmail : email
+            url: "/api/review/like",
+            type: "post",
+            data: {
+                num: -1,
+                reviewId: num,
+                likeNum: intlike,
+                userEmail: email
             },
             dataType: "parameters",
-            success : function (isPlus) {
+            success: function (isPlus) {
                 if (isPlus == true) {
 
                 } else {
                     like.innerHTML = "좋아요 취소 실패";
                 }
             },
-            error : function(XHR, status, error) {
+            error: function (XHR, status, error) {
             }
         })
-            likeCount.value = intlike - 1;
-            like.innerHTML = intlike - 1;
+        likeCount.value = intlike - 1;
+        like.innerHTML = intlike - 1;
 
-    } else if($("#likes" + num + "").attr("onmouseover") == "likesMouseOn("+num+"); intoLikeOnclick("+num+")") {
+    } else if ($("#likes" + num + "").attr("onmouseover") == "likesMouseOn(" + num + "); intoLikeOnclick(" + num + ")") {
         var like = document.getElementById("reviewLikes" + num + "")
 
-        $("#likes" + num + "").attr("onmouseover", "intoLikeOnclick("+num+")");
+        $("#likes" + num + "").attr("onmouseover", "intoLikeOnclick(" + num + ")");
         $("#likes" + num + "").attr("onmouseout", "");
         $("#likes" + num + "").attr("src", "/images/likesAfter.png");
 
-        var likeCount = document.getElementById("likeCount"+num);
+        var likeCount = document.getElementById("likeCount" + num);
         var intlike = parseInt(likeCount.value);
 
         $.ajax({
-            url : "/api/review/like",
-            type : "post",
-            data :{
-                num : 1,
-                reviewId : num,
-                likeNum : intlike,
-                userEmail : email
+            url: "/api/review/like",
+            type: "post",
+            data: {
+                num: 1,
+                reviewId: num,
+                likeNum: intlike,
+                userEmail: email
             },
             dataType: "parameters",
-            success : function (isPlus) {
+            success: function (isPlus) {
                 if (isPlus == true) {
                 } else {
                     like.innerHTML.innerHTML = "좋아요 추가 실패";
                 }
             },
-            error : function(XHR, status, error) {
+            error: function (XHR, status, error) {
             }
         })
         likeCount.value = intlike + 1;
-        like.innerHTML = intlike +1;
+        like.innerHTML = intlike + 1;
     }
 }
 
 
-function showReviewModal(reviewId, itemId){
+function showReviewModal(reviewId, itemId) {
     var reviewModalForm = document.getElementById("reviewModalForm");
     var reviewModalContent = document.getElementById("reviewModalContent");
-    var reviewContent = document.getElementById("reviewContent" + reviewId+"");
+    var reviewContent = document.getElementById("reviewContent" + reviewId + "");
     var cancelModify = document.getElementById("cancelModify");
 
 
-    cancelModify.setAttribute("onclick", "closeReviewModal("+reviewId+")")
+    cancelModify.setAttribute("onclick", "closeReviewModal(" + reviewId + ")")
     reviewModalContent.value = reviewContent.textContent;
     reviewModalForm.setAttribute("action", "/review/modify/" + itemId + "/" + reviewId);
     reviewModalForm.style.display = "block";
@@ -187,9 +187,76 @@ function getFileName(num) {
 
 function removeImage(num) {
     $("#reviewFile" + num).val(null);
-    if (num == 1) {
-        $(".fileName" + num).val('대표 이미지')
-    } else {
-        $(".fileName" + num).val('첨부파일')
+    $(".fileName" + num).val('첨부파일')
+}
+
+var imageIdx = 0;
+function getPath(e, reviewId) {
+    var images = document.getElementsByClassName("reviewImages"+reviewId);
+    var path = $(e).attr('src');
+    popImage(path, reviewId);
+    imageIdx = Array.prototype.indexOf.call(images, e);
+    if (images.length == 1) {
+        $(".previousImageBtn").css("display", "none");
+        $(".nextImageBtn").css("display", "none");
+    }else {
+        if (imageIdx == (images.length - 1)) {
+            $(".nextImageBtn").css("display", "none");
+        } else if (imageIdx == 0) {
+            $(".previousImageBtn").css("display", "none");
+        }
     }
+
+}
+
+function popImage(path, reviewId) {
+    $(".image-wrap" + reviewId).css("display", "flex").show();
+    $(".images" + reviewId)
+        .html("<div class='btnPlace'><input type='button' value='◀' class='previousImageBtn' onclick='preImage("+reviewId+")'></div><div class='imageZomBox'><input class='closeBtn' type='button' value='✖' onclick='closeImage("+reviewId+")'><img src='" + path + "' class='zomInImage'></div><div class='btnPlace'><input type='button' value='▶' class='nextImageBtn' onclick='nextImage("+reviewId+")'></div>")
+        .css({width: '100%', height: '100%'});
+
+}
+
+function preImage(reviewId) {
+    var images = document.getElementsByClassName("reviewImages"+reviewId);
+    imageIdx--;
+
+    var path = images[imageIdx].getAttribute("src");
+    console.log(path);
+    $(".zomInImage").attr("src", path);
+
+    if (imageIdx == 0) {
+        $(".previousImageBtn").css("display", "none");
+        $(".nextImageBtn").css("display", "block");
+    } else {
+        $(".previousImageBtn").css("display", "block");
+        $(".nextImageBtn").css("display", "block");
+    }
+}
+function nextImage(reviewId) {
+    var images = document.getElementsByClassName("reviewImages"+reviewId);
+    imageIdx++;
+
+    var path = images[imageIdx].getAttribute("src");
+    console.log(path);
+    console.log(imageIdx);
+    console.log(images.length);
+    $(".zomInImage").attr("src", path);
+
+    if(imageIdx == (images.length-1)) {
+        $(".nextImageBtn").css("display", "none");
+        $(".previousImageBtn").css("display", "block");
+    }else {
+        $(".previousImageBtn").css("display", "block");
+        $(".nextImageBtn").css("display", "block");
+    }
+
+    }
+
+function closeImage(reviewId) {
+    $(".images" + reviewId).animate({width: '0%', height: '0%'});
+    $(".image-wrap" + reviewId).hide();
+    $(".previousImageBtn").css("display", "");
+    $(".nextImageBtn").css("display", "");
+    imageIdx = 0;
 }

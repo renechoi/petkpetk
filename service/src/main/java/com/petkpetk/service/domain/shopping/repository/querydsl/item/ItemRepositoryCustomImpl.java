@@ -172,6 +172,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 			.join(itemImg.item, item)
 			.where(itemImg.representativeImageYn.eq("Y"))
 			.where(item.userAccount.email.eq(email))
+			.where(item.deletedYn.eq("N"))
 			.where(
 				regDtsAfter(itemSearchDto.getSearchDateType())
 				, searchSellStatusEq(itemSearchDto.getSearchItemStatus())

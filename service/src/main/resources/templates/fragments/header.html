@@ -19,7 +19,7 @@
                                              sec:authorize="hasAnyAuthority('ROLE_ADMIN')">관리
                     페이지</a>
                 </div>
-                <div class="top-business"><a th:href="@{/seller/sign-up}" sec:authorize="!hasAnyAuthority('ROLE_ADMIN')">사업 등록</a>
+                <div class="top-business"><a th:href="@{/user/seller/sign-up}" sec:authorize="!hasAnyAuthority('ROLE_ADMIN')">사업 등록</a>
                 </div>
             </div>
 

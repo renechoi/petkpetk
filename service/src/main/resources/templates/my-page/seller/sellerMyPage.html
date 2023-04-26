@@ -19,7 +19,7 @@
     <div id="originalInformation" class="originalInformation" style="display: block">
         <div class="infos">
             <div class="infoTitle">Email</div>
-            <span class="informations">유저 이메일</span>
+            <span class="informations" th:text="${userInfo.email}">유저 이메일</span>
         </div>
 
         <!-- 수정하기 버튼 누르면 display = none -->
@@ -27,27 +27,27 @@
         <div class="myPageUserInformation" id="myPageUserInformation">
             <div class="infos">
                 <div class="infoTitle">Name</div>
-                <span class="informations">대표자 이름</span>
+                <span class="informations" th:text="${userInfo.name}">대표자 이름</span>
             </div>
             <div class="infos">
                 <div class="infoTitle">Nick name</div>
-                <span class="informations">유저 닉네임</span>
+                <span class="informations" th:text="${userInfo.nickname}">유저 닉네임</span>
             </div>
             <div class="infos">
                 <div class="infoTitle">Business name</div>
-                <span class="informations">상호명</span>
+                <span class="informations" th:text="${userInfo.businessName}">상호명</span>
             </div>
             <div class="infos">
                 <div class="infoTitle">Business number</div>
-                <span class="informations">사업 코드</span>
+                <span class="informations" th:text="${userInfo.businessNumber}">사업 코드</span>
             </div>
             <div class="infos">
                 <div class="infoTitle">C.P</div>
-                <span class="informations">전화번호</span>
+                <span class="informations" th:text="${userInfo.phoneNumber}">전화번호</span>
             </div>
             <div class="infos">
                 <div class="infoTitle">Address</div>
-                <span class="informations">유저 주소</span>
+                <span class="informations" th:text="${'('+userInfo.address.zipCode+') '+userInfo.address.address1+' '+userInfo.address.address2+' '+userInfo.address.addressEtc}">유저 주소</span>
             </div>
 
             <!--  여기에다가 원래 비밀번호 넣어주세유 비밀번호 바꿀 때 대조해서 원래 비번이랑 같으면 같다고 알럿창 띄울거유  -->
@@ -65,39 +65,39 @@
         <form>
             <div>
                 <div class="newTitle">이름<span>Name</span></div>
-                <input class="newInfos" type="text" placeholder="Type your name"  autocomplete="off" maxlength="10">
+                <input th:value="${userInfo.name}" class="newInfos" type="text" placeholder="Type your name"  autocomplete="off" maxlength="10">
             </div>
 
             <div>
                 <div class="newTitle">닉네임<span>Nick name</span></div>
-                <input class="newNickName" type="text" placeholder="Type your nickname"  autocomplete="off" maxlength="15">
+                <input th:value="${userInfo.nickname}" class="newNickName" type="text" placeholder="Type your nickname"  autocomplete="off" maxlength="15">
                 <input id="findNickName" type="button" value="중복 검사">
             </div>
 
             <div>
                 <div class="newTitle">상호명<span>Business name</span></div>
-                <input class="newInfos" type="text" placeholder="Type your business name"  autocomplete="off" maxlength="30">
+                <input th:value="${userInfo.businessName}" class="newInfos" type="text" placeholder="Type your business name"  autocomplete="off" maxlength="30">
             </div>
 
             <div>
                 <div class="newTitle">전화번호<span>C.P</span></div>
-                <input class="newInfos" type="number" placeholder="Type your C.P"  autocomplete="off" maxlength="11">
+                <input th:value="${userInfo.phoneNumber}" class="newInfos" type="number" placeholder="Type your C.P"  autocomplete="off" maxlength="11">
             </div>
 
             <div>
                 <div>
                     <div class="newTitle">우편번호<span>ADDRESS</span></div>
-                    <input type="text" class="newAddress" id="sample6_postcode" placeholder="우편번호" name="zipcode" readonly>
+                    <input th:value="${userInfo.address.zipCode}" type="text" class="newAddress" id="sample6_postcode" placeholder="우편번호" name="zipcode" readonly>
                     <input id="findZipcode" type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
 
                     <div class="newTitle">주소</div>
-                    <input class="newInfos" type="text" id="sample6_address" placeholder="주소" name="addr" readonly>
+                    <input th:value="${userInfo.address.address1}" class="newInfos" type="text" id="sample6_address" placeholder="주소" name="addr" readonly>
 
                     <div class="newTitle">상세주소<span>DETAIL ADDRESS</span></div>
-                    <input class="newInfos" type="text" id="sample6_detailAddress" placeholder="상세주소" name="addrdetail" autocomplete="off">
+                    <input th:value="${userInfo.address.address2}" class="newInfos" type="text" id="sample6_detailAddress" placeholder="상세주소" name="addrdetail" autocomplete="off">
 
                     <div class="newTitle">참고항목</div>
-                    <input class="newInfos" type="text" id="sample6_extraAddress" placeholder="참고항목" name="addretc" readonly>
+                    <input th:value="${userInfo.address.addressEtc}" class="newInfos" type="text" id="sample6_extraAddress" placeholder="참고항목" name="addretc" readonly>
 
                     <input type="hidden" id="address" placeholder="주소">
                 </div>

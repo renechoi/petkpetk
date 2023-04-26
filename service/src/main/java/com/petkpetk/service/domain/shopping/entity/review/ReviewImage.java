@@ -60,9 +60,10 @@ public class ReviewImage extends AuditingFields implements PetkpetkImage {
 		this.imageUrl = imageUrl;
 	}
 
-	public ReviewImage(String uniqueName, String originalName) {
+	public ReviewImage(String originalName, String uniqueName) {
 		this.uniqueName = uniqueName;
 		this.originalName = originalName;
+		this.imageUrl = createImageUrl();
 	}
 
 	public void mapWith(Review review) {
@@ -80,7 +81,7 @@ public class ReviewImage extends AuditingFields implements PetkpetkImage {
 
 
 	private String createImageUrl() {
-		return "/images/review/" + uniqueName;
+		return "/images/item/" + uniqueName;
 	}
 
 	private static String createUniqueName(MultipartFile rawImage) {
