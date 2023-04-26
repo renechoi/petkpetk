@@ -33,7 +33,7 @@
                         <li class="productDetail" th:text="${item.itemDetail}" title="상품 내용">내용</li>
                         <li class="productStar">
                             <img class="star" th:src="@{/images/star4_5.png}">
-                            <span class="reviewCount">(2)</span>
+                            <span class="reviewCount" th:text="'('+${item.reviewCount}+')'">(2)</span>
                         </li>
                         <li class="productPriceDetail"><span class="originalPrice">60000</span>
                             <span class="productPrice">[[${item.price}]]</span><span class="won">원</span>
