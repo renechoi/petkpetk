@@ -37,7 +37,7 @@ public class ReviewController {
 
 	@PostMapping("/new")
 	public String addReview(@RequestParam("itemId") Long itemId, Authentication authentication,
-		@Valid  ReviewRegisterRequest reviewRegisterRequest) {
+		@Valid ReviewRegisterRequest reviewRegisterRequest) {
 
 		String email = authentication.getName();
 		Item item = itemService.getItem(itemId);
@@ -66,25 +66,38 @@ public class ReviewController {
 	public String modifyReview(@PathVariable Long itemId,
 		@PathVariable Long reviewId,
 		ReviewRegisterRequest reviewRegisterRequest,
-		@RequestParam("images")List<MultipartFile> rawImages,
+		@RequestParam("images") List<MultipartFile> rawImages,
 		@RequestParam("imageNames") List<String> imageNames,
-		@RequestParam("uniqueImageNames") List<String> uniqueImageNames
-	){
+		@RequestParam(value = "uniqueImageNames", required = false) List<String> uniqueImageNames
+	) {
 
-		System.out.println("reviewRegisterRequest = " + reviewRegisterRequest);
+		for (MultipartFile imagename : rawImages) {
+			System.out.println("imagename.getOriginalFilename() = " + imagename.getOriginalFilename());
+			System.out.println("imagename.getName() = " + imagename.getName());
+			System.out.println("=====================================================");
+		}
+
 		System.out.println("rawImages = " + rawImages);
 		System.out.println("uniqueImageNames = " + uniqueImageNames);
 
 		reviewRegisterRequest.setImages(rawImages);
+		System.out.println("reviewRegisterRequest = " + reviewRegisterRequest);
+
 		IntStream.range(0, imageNames.size())
 			.filter(i -> !imageNames.get(i).equals("첨부파일"))
-			.forEach(i -> reviewRegisterRequest.getReviewImageDtos()
-				.add(ReviewImageDto.of(imageNames.get(i), uniqueImageNames.get(i))));
-
+			.forEach(i -> {
+					if (uniqueImageNames != null) {
+						reviewRegisterRequest.getReviewImageDtos()
+							.add(ReviewImageDto.of(imageNames.get(i), uniqueImageNames.get(i)));
+					} else{
+						reviewRegisterRequest.getReviewImageDtos()
+							.add(new ReviewImageDto());
+					}
+				}
+			);
 		reviewService.modifyReview(reviewRegisterRequest, reviewId);
 
 		return "redirect:/item/" + itemId;
 	}
-
 
 }
