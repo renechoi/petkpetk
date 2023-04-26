@@ -26,6 +26,11 @@ public class UserAccountController {
 		model.addAttribute("userAccount", new UserSignupRequest());
 		return "user/user/sign-up";
 	}
+	@GetMapping("/seller/sign-up")
+	public String sellerSignUp(Model model) {
+		model.addAttribute("userAccount", new UserSignupRequest());
+		return "user/seller/sign-up";
+	}
 
 	@PostMapping("/sign-up")
 	public String signUp(UserSignupRequest userSignupRequest) {
