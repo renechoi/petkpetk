@@ -60,6 +60,11 @@ public class Review extends AuditingFields {
 		return images;
 	}
 
+	public void addImage(List<ReviewImage> reviewImages){
+		reviewImages.forEach(image->image.mapWith(this));
+		this.images= reviewImages;
+	}
+
 	public void mapImages(List<ReviewImage> images) {
 		images.forEach(image -> image.mapWith(this));
 	}
