@@ -14,7 +14,7 @@
 
 
 
-    <form id="JoinForm" th:action="@{/seller/sign-up}" role="form" method="post" th:object="${sellerAccount}">
+    <form id="JoinForm" th:action="@{/user/sign-up}" role="form" method="post" th:object="${userAccount}">
 
         <div class="container">
             <div id="img">
@@ -54,7 +54,7 @@
             <input th:field="*{phoneNumber}" id="phoneNumber" type="number" placeholder="Type your phone number" autocomplete="off" onkeyup="checkPhoneNumber()">
 
             <div class="title">비밀번호<span>PASSWORD</span></div>
-            <input th:field="*{password}" id="password" type="password" placeholder="Type password" autocomplete="off" minlength="8" maxlength="16">
+            <input th:field="*{password}" id="password" type="password" placeholder="Type password" autocomplete="off" minlength="8" maxlength="16" onkeyup="checkPass(this)">
 
             <div class="title">비밀번호 재확인<span>RETYPE PASSWORD</span></div>
             <input name="re-password" id="re-password" type="password" placeholder="Retype password" autocomplete="off"
