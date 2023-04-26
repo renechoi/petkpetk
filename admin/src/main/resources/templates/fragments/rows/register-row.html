@@ -15,16 +15,38 @@
                     </div>
                 </div>
 
+
                 <div class="form-group">
                     <div class="input-group">
                         <input name="email" th:field="*{email}" type="email" class="form-control form-control-user"
                                id="email-input" placeholder="Email 주소를 입력하세요">
                         <div class="input-group-append">
-                            <button id="check-email-btn" class="btn btn-outline-secondary" type="button">중복확인</button>
                         </div>
                     </div>
                     <small id="email-check-msg"></small>
+                    <div class="input-group">
+                        <input name="authCode" type="text" class="form-control form-control-user"
+                               id="auth-code-input" placeholder="인증번호를 입력하세요">
+                        <div class="input-group-append">
+                            <button id="send-auth-code-btn" class="btn btn-outline-secondary" type="button">인증번호 보내기</button>
+                        </div>
+                    </div>
                 </div>
+
+
+
+
+
+<!--                <div class="form-group">-->
+<!--                    <div class="input-group">-->
+<!--                        <input name="email" th:field="*{email}" type="email" class="form-control form-control-user"-->
+<!--                               id="email-input" placeholder="Email 주소를 입력하세요">-->
+<!--                        <div class="input-group-append">-->
+<!--                            <button id="check-email-btn" class="btn btn-outline-secondary" type="button">중복확인</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <small id="email-check-msg"></small>-->
+<!--                </div>-->
 
 
                 <div class="form-group row">
