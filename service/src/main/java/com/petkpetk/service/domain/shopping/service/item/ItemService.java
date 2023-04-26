@@ -101,6 +101,8 @@ public class ItemService {
 		itemImages.addAll(newlyAddedImages);
 		item.mapImages(itemImages);
 
+		item.setContents(itemUpdateRequest);
+
 		return ItemResponse.from(item);
 	}
 

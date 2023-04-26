@@ -20,6 +20,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import com.petkpetk.service.common.AuditingFields;
 import com.petkpetk.service.domain.shopping.constant.ItemStatus;
+import com.petkpetk.service.domain.shopping.dto.item.request.ItemRegisterRequest;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 
 import lombok.Getter;
@@ -50,7 +51,7 @@ public class Item extends AuditingFields {
 	@Column(nullable = false)
 	private Long itemAmount;
 
-	@Column(nullable = false)
+	@Column(nullable = false,columnDefinition = "TEXT", length = 5000)
 	private String itemDetail;
 
 	@Enumerated(EnumType.STRING)
@@ -101,4 +102,11 @@ public class Item extends AuditingFields {
 		return images;
 	}
 
+	public void setContents(ItemRegisterRequest itemUpdateRequest) {
+		this.itemName = itemUpdateRequest.getItemName();
+		this.price = itemUpdateRequest.getPrice();
+		this.itemAmount = itemUpdateRequest.getItemAmount();
+		this.itemDetail = itemUpdateRequest.getItemDetail();
+		this.itemStatus = itemUpdateRequest.getItemStatus();
+	}
 }
