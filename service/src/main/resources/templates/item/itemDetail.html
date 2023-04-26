@@ -26,7 +26,7 @@
             let orderCount = $("#orderCount").val();
             let price = $("#price").val();
             let totalPrice = price * orderCount;
-            $("#totalPrice").html(totalPrice + '원');
+            $("#totalPrice").html(totalPrice);
         }
 
         // function order() {
@@ -146,15 +146,12 @@
                 <div class="chooseProduct">
                     <div class="h4 text-danger text-left cost">
                         <input type="hidden" th:value="${item.price}" id="price" name="price">
-                        <span class="OriginalCost">888원</span><span id="cost"
-                                                                    th:text="${item.price}"></span>
+                        <span class="OriginalCost">888원</span><span id="cost" th:text="${item.price}"></span>
                     </div>
                     <div class="input-group w-50 ChooseAmountBox">
-                        <div class="totalflexBox">
-                            <span class="chong">총</span>
-                            <div id="totalPrice" class="input-group-prepend "
-                                 th:text="${item.price}">
-                            </div>
+                        <div class="totalFlexBox">
+                            <span class="totalText">총</span>
+                            <span id="totalPrice" th:text="${item.price}"></span>
                             <span class="totalWon"> 원</span>
                         </div>
                         <div class="addBtn">
@@ -205,7 +202,7 @@
                     </div>
                 </div>
                 <div id="detailBox" class="lead">
-                    <div th:text="${item.itemDetail}" style="margin-bottom: 40px"></div>
+                    <div th:text="${item.itemDetail}" class="itemDetailZone" style="margin-bottom: 40px; white-space: pre-line"></div>
                     <div th:each="itemImg : ${item.itemImageDtos}" class="text-center imgCenter">
                         <img th:if="${itemImg.representativeImageYn.equals('Y')}"
                              th:src="${itemImg.imageUrl}" class="rounded mgb-15"
@@ -265,9 +262,19 @@
                                 </form>
                             </div>
                         </div>
-                        <pre><div th:id="'reviewContent'+${review.getId()}" class="reviewContent" th:text="${review.content}"></div></pre>
+                        <div class="reviewContent">
+                            <div class="reviewContentText" th:id="'reviewContent'+${review.getId()}" th:text="${review.content}" style="white-space: pre-line"></div>
+                                <div th:id="'reviewImages'+${review.getId()}" class="reviewImageBox" th:if="${not #lists.isEmpty(reviewList[number].getReviewImageDtos())}">
+                                    <img th:each="reviewImages, status :${reviewList[number].reviewImageDtos}" th:class="'reviewImages reviewImages'+${review.id}" th:src="${reviewImages.imageUrl}" th:onclick="'getPath(this, '+${review.id}+')'" style="cursor: pointer">
 
-                        <form th:if="${review.userAccount.email.equals(userEmail)}" method="post" id="reviewModalForm" style="display: none;" th:object="${reviewDtos}">
+                                    <div th:class="'image-wrap'+${review.id}+' imagesWrap'" style="display: none">
+                                        <div th:class="'images'+${review.id}+' zomImage'">
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+
+                        <form th:if="${review.userAccount.email.equals(userEmail)}" enctype="multipart/form-data" method="post" id="reviewModalForm" style="display: none;" th:object="${reviewDtos}">
                             <div id="reviewModal">
                                 <div class="reviewModifyBtn">
                                     <input id="cancelModify" class="cancelModify modiBtn" type="button" value="취소">
@@ -280,19 +287,23 @@
                                 <div id="reviewImages" th:if="${not #lists.isEmpty(reviewList[number].reviewImageDtos)}">
                                     <div id="reviewEach" >
                                         <div th:each="reviewImageDto , status : ${reviewList[number].reviewImageDtos}" th:with="num=${status.index+1}">
-                                            <input th:class="${'fileName'+num+' fileName'}"  name="imageNames" th:value="${not #strings.isEmpty(reviewImageDto.uniqueName)}?${reviewImageDto.originalName}:'첨부파일'" readonly>
-                                            <input type="hidden" th:class="${'fileName'+num}" name="uniqueImageNames" th:value="${not #strings.isEmpty(reviewImageDto.uniqueName)}?${reviewImageDto.uniqueName} : '첨부파일'">
+                                            <div class="custom-file">
+                                                <input th:class="${'fileName'+num+' fileName'}"  name="imageNames" th:value="${not #strings.isEmpty(reviewImageDto.uniqueName)}?${reviewImageDto.originalName}:'첨부파일'" readonly>
+                                                <input type="hidden" th:class="${'fileName'+num}" name="uniqueImageNames" th:value="${not #strings.isEmpty(reviewImageDto.uniqueName)}?${reviewImageDto.uniqueName} : '첨부파일'">
 
-                                            <label th:for="${'reviewFile'+num}" class="reviewFilesLable" th:text="${'이미지 업로드'}"></label>
-                                            <input type="file" th:id="${'reviewFile'+num}" name="images" th:onchange="'getFileName('+${num}+')'">
-                                            <input class="removeImage" type="button" value="삭제" th:onclick="'removeImage('+${num}+')'">
+                                                <label th:for="${'reviewFile'+num}" class="reviewFilesLable" th:text="${'이미지 업로드'}"></label>
+                                                <input type="file" th:id="${'reviewFile'+num}" name="images" th:onchange="'getFileName('+${num}+')'">
+                                                <input class="removeImage" type="button" value="삭제" th:onclick="'removeImage('+${num}+')'">
+                                            </div>
                                         </div>
                                         <div id="reviewNullImageBox" th:each="num : ${#numbers.sequence(reviewList[number].reviewImageDtos.size()+1, 5)}">
-                                            <input th:class="${'fileName'+num+' fileName'}" value="첨부파일" readonly>
+                                            <div class="custom-file">
+                                                <input th:class="${'fileName'+num+' fileName'}" value="첨부파일" readonly>
 
-                                            <label th:for="${'reviewFile'+num}" class="reviewFilesLable" th:text="${'이미지 업로드'}"></label>
-                                            <input type="file" th:id="${'reviewFile'+num}" name="images" th:onchange="'getFileName('+${num}+')'">
-                                            <input class="removeImage" type="button" value="삭제" th:onclick="'removeImage('+${num}+')'">
+                                                <label th:for="${'reviewFile'+num}" class="reviewFilesLable" th:text="${'이미지 업로드'}"></label>
+                                                <input type="file" th:id="${'reviewFile'+num}" name="images" th:onchange="'getFileName('+${num}+')'">
+                                                <input class="removeImage" type="button" value="삭제" th:onclick="'removeImage('+${num}+')'">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -301,6 +312,7 @@
                                     <div th:each="num: ${#numbers.sequence(1,5)}">
                                         <div class="custom-file">
                                             <input th:class="${'fileName'+num+' fileName'}"  name="imageNames" value="첨부파일" readonly>
+
 
                                             <label th:for="${'reviewFile'+num}" class="reviewFilesLable" th:text="${'이미지 업로드'}"></label>
                                             <input type="file" th:id="${'reviewFile'+num}" name="images" th:onchange="'getFileName('+${num}+')'">
@@ -321,7 +333,34 @@
 
                 </div>
                 <div id="businessBox" class="lead">
-                    사업정보
+                    <div>
+                        <table class="sellerTable">
+                            <tr>
+                                <th class="firstChild">사업명</th>
+                                <td class="firstChild" th:text="${itemUser.businessName}"></td>
+                            </tr>
+                            <tr>
+                                <th>대표자</th>
+                                <td th:text="${itemUser.name}"></td>
+                            </tr>
+                            <tr>
+                                <th>이메일</th>
+                                <td th:text="${itemUser.email}"></td>
+                            </tr>
+                            <tr>
+                                <th>전화번호</th>
+                                <td th:text="${itemUser.phoneNumber}"></td>
+                            </tr>
+                            <tr>
+                                <th>사업장 주소</th>
+                                <td th:text="'('+${itemUser.address.zipCode}+') '+${itemUser.address.address1}+' '+${itemUser.address.address2}+' '+${itemUser.address.addressEtc}"></td>
+                            </tr>
+                            <tr>
+                                <th class="lastChild">사업 등록 일자</th>
+                                <td class="lastChild" th:utext="${#temporals.format(itemUser.createdAt, 'yyyy-MM-DD HH:mm')}"></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
