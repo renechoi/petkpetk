@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.petkpetk.service.domain.shopping.dto.item.ItemSearchDto;
 import com.petkpetk.service.domain.shopping.dto.item.ManageItemDto;
 import com.petkpetk.service.domain.shopping.service.item.ItemService;
-import com.petkpetk.service.domain.user.entity.UserAccount;
+import com.petkpetk.service.domain.user.dto.security.UserAccountPrincipal;
 import com.petkpetk.service.domain.user.service.UserAccountService;
 
 import lombok.RequiredArgsConstructor;
@@ -27,11 +28,8 @@ public class SellerItemController {
 	private final ItemService itemService;
 
 	@GetMapping("/information")
-	public String informationView(Authentication authentication, Model model) {
-		String email = authentication.getName();
-		UserAccount userAccount = userAccountService.searchUser(email).get();
-
-		model.addAttribute("userInfo", userAccount);
+	public String informationView(Model model, @AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal) {
+		model.addAttribute("userAccount", userAccountService.getUserUpdateRequestView(userAccountPrincipal));
 		return "my-page/seller/sellerMyPage";
 	}
 
