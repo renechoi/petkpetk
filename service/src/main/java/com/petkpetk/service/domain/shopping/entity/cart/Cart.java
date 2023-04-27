@@ -2,9 +2,15 @@ package com.petkpetk.service.domain.shopping.entity.cart;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+import com.petkpetk.service.common.AuditingFields;
+import com.petkpetk.service.domain.user.entity.UserAccount;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,31 +24,30 @@ import lombok.ToString;
 @NoArgsConstructor
 @Entity
 @AllArgsConstructor
-public class Cart {
+public class Cart  extends AuditingFields {
 
 	@Id
 	@Column(name = "cart_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private Long user;
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_account_id")
+	private UserAccount userAccount;
 
-	// 맵핑 후 변경 예정
-	// @OneToOne(fetch = FetchType.EAGER)
-	// @JoinColumn(name = "user_id")
-	// private User user;
+	private Long totalPrice;
 
-	// private Cart(User user) {
-	// 	this.user = user;
-	// }
+	private Cart(UserAccount userAccount) {
+		this.userAccount = userAccount;
+	}
 
-	// 맵핑 후 수정 예정
-	// public static Cart of(Long userId) {
-	// 	return new Cart(userId);
-	// }
+	public static Cart of(UserAccount userAccount) {
+		return new Cart(userAccount);
+	}
 
-	// 	public static Cart createCart(User user){
-	// 		return Cart.of(user);
-	// }
+
+	public static Cart createCart(UserAccount userAccount){
+			return Cart.of(userAccount);
+	}
 
 }
