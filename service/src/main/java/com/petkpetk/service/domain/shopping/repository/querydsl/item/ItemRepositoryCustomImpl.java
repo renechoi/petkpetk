@@ -128,7 +128,8 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 					item.itemStatus,
 					itemImage.imageUrl,
 					item.price,
-					review.count().as("reviewCount")
+					review.count().as("reviewCount"),
+					item.totalRating
 				)
 			)
 			.from(item)

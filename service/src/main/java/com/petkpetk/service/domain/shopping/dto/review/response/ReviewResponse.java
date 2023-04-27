@@ -32,15 +32,18 @@ public class ReviewResponse {
 
 	private UserAccount userAccount;
 
+	private Double rating;
+
 	private List<ReviewImageDto> reviewImageDtos = new ArrayList<>();
 
 
-	public ReviewResponse(Long id, String content, Long likes, Item item, UserAccount userAccount) {
+	public ReviewResponse(Long id, String content, Long likes, Item item, UserAccount userAccount, Double rating) {
 		this.id = id;
 		this.content = content;
 		this.likes = likes;
 		this.item = item;
 		this.userAccount = userAccount;
+		this.rating = rating;
 	}
 
 
@@ -50,12 +53,13 @@ public class ReviewResponse {
 			this.userAccount,
 			this.content,
 			this.likes,
-			null
+			null,
+			this.rating
 		);
 	}
 
-	public static ReviewResponse of(Long id,String content, Long likes, Item item, UserAccount userAccount) {
-		return new ReviewResponse(id,content, likes, item, userAccount);
+	public static ReviewResponse of(Long id,String content, Long likes, Item item, UserAccount userAccount, Double rating) {
+		return new ReviewResponse(id,content, likes, item, userAccount, rating);
 	}
 
 	public static ReviewResponse from(Review review) {
@@ -71,6 +75,7 @@ public class ReviewResponse {
 			review.getLikes(),
 			review.getItem(),
 			review.getUserAccount(),
+			review.getRating(),
 			reviewImageDtos
 		);
 	}

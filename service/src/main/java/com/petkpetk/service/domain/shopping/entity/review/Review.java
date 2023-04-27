@@ -51,6 +51,9 @@ public class Review extends AuditingFields {
 
 	private Long likes = 0L;
 
+	@Column(nullable = false)
+	private Double rating;
+
 	@OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
 	@ToString.Exclude
 	private List<ReviewImage> images;
@@ -70,16 +73,17 @@ public class Review extends AuditingFields {
 	}
 
 	public Review(Item item, UserAccount userAccount, String content, Long likes,
-		List<ReviewImage> images) {
+		List<ReviewImage> images, Double rating) {
 		this.item = item;
 		this.userAccount = userAccount;
 		this.content = content;
 		this.likes = likes;
 		this.images = addImages(images);
+		this.rating = rating;
 	}
 
-	public static Review of(Item item, UserAccount userAccount, String content, Long likes, List<ReviewImage> images) {
-		return new Review(item, userAccount, content, likes, images);
+	public static Review of(Item item, UserAccount userAccount, String content, Long likes, List<ReviewImage> images, Double rating) {
+		return new Review(item, userAccount, content, likes, images, rating);
 	}
 
 	public void updateReview(ReviewResponse reviewResponse) {
