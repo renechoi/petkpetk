@@ -58,6 +58,7 @@ public class ItemController {
 	// 상품 등록
 	@PostMapping("/new")
 	public String registerItem(@Valid ItemRegisterRequest itemRegisterRequest, Authentication authentication) {
+		itemRegisterRequest.setTotalRating(5.0);
 		itemService.registerItem(
 			ItemDto.from(itemRegisterRequest, userAccountService.getCurrentPrincipal(authentication)));
 		return "redirect:/";
