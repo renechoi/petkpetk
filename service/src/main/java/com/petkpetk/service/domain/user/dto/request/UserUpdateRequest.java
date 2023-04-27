@@ -1,19 +1,13 @@
 package com.petkpetk.service.domain.user.dto.request;
 
-import java.io.IOException;
 import java.util.Set;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.petkpetk.service.common.RoleType;
 import com.petkpetk.service.config.converter.EntityAndDtoConverter;
@@ -57,10 +51,35 @@ public class UserUpdateRequest {
 
 	private String businessNumber;
 
+	public UserUpdateRequest(Long id, String email, String password, String name, String nickname,
+		Address address,
+		com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo OAuth2ProviderInfo,
+		Set<RoleType> roles, String phoneNumber, String businessName, String businessNumber) {
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.nickname = nickname;
+		this.address = address;
+		this.OAuth2ProviderInfo = OAuth2ProviderInfo;
+		this.roles = roles;
+		this.phoneNumber = phoneNumber;
+		this.businessName = businessName;
+		this.businessNumber = businessNumber;
+	}
+
 	public static UserUpdateRequest from(UserAccount userAccount, MultipartFile profileImage) {
 		return new UserUpdateRequest(userAccount.getId(), userAccount.getEmail(), userAccount.getPassword(),
 			userAccount.getName(), userAccount.getNickname(), profileImage, userAccount.getAddress(),userAccount.getOAuth2ProviderInfo(),userAccount.getRoles(),
 			userAccount.getPhoneNumber(), userAccount.getBusinessName(), userAccount.getBusinessNumber());
+	}
+
+	public static UserUpdateRequest from(UserAccount userAccount) {
+		return new UserUpdateRequest(
+			userAccount.getId(), userAccount.getEmail(), userAccount.getPassword(),
+			userAccount.getName(), userAccount.getNickname(), userAccount.getAddress(),userAccount.getOAuth2ProviderInfo(),userAccount.getRoles(),
+			userAccount.getPhoneNumber(), userAccount.getBusinessName(), userAccount.getBusinessNumber()
+		);
 	}
 
 	public UserAccount toEntity() {
