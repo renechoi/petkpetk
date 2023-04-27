@@ -23,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.petkpetk.admin.config.constant.RoleType;
 import com.petkpetk.admin.config.converter.RoleTypeConverter;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,6 +33,7 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true)
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(indexes = {@Index(columnList = "email"), @Index(columnList = "createdAt"), @Index(columnList = "createdBy")})
 @Where(clause = "deleted_yn='N'")
 @Entity
@@ -54,6 +56,14 @@ public class AdminAccount extends AuditingFields implements Serializable {
 	@Column(nullable = false)
 	@Convert(converter = RoleTypeConverter.class)
 	private Set<RoleType> roles = new LinkedHashSet<>();
+
+	public static AdminAccount of(String email, String password, String name, Set<RoleType> roles) {
+		return new AdminAccount(null, email,password,name,roles);
+	}
+
+	public static AdminAccount of(Long id, String email, String password, String name, Set<RoleType> roles) {
+		return new AdminAccount(id, email,password,name,roles);
+	}
 
 	public AdminAccount encodePassword(PasswordEncoder passwordEncoder) {
 		this.password = passwordEncoder.encode(this.password);
@@ -81,12 +91,12 @@ public class AdminAccount extends AuditingFields implements Serializable {
 		if (!(that instanceof AdminAccount)) {
 			return false;
 		}
-		return this.getId() != null && this.getId().equals(((AdminAccount)that).getId());
+		return this.getEmail() != null && this.getEmail().equals(((AdminAccount)that).getEmail());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.getId());
+		return Objects.hash(this.getEmail());
 	}
 
 }
