@@ -287,7 +287,7 @@
                         </div>
 
                         <form th:if="${review.userAccount.email.equals(userEmail)}" enctype="multipart/form-data" method="post" id="reviewModalForm" style="display: none;" th:object="${reviewDtos}">
-                            <input type="hidden" id="newRating" th:field="*{rating}" th:value="${review.rating}">
+                            <input type="hidden" id="newRating" th:value="${review.rating}" th:field="*{rating}">
                             <input type="hidden" id="oldRating" th:value="${review.rating}">
                             <div id="reviewModal">
                                 <div class="starZone">
