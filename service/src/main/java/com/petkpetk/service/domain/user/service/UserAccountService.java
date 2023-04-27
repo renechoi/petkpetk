@@ -61,10 +61,15 @@ public class UserAccountService {
 	public UserUpdateRequest getUserUpdateRequestView(UserAccountPrincipal userAccountPrincipal) {
 		UserAccount userAccount = searchUser(userAccountPrincipal);
 
-		MultipartFile profileRawImage = userAccountPrincipal instanceof OAuth2UserAccountPrincipal ? null :
-			imageLocalRepository.findByPetkpetkImage(userAccount.getProfileImage());
+		if (userAccountPrincipal.getProfileImage() != null) {
+			MultipartFile profileRawImage =
+				userAccountPrincipal instanceof OAuth2UserAccountPrincipal ? null :
+					imageLocalRepository.findByPetkpetkImage(userAccount.getProfileImage());
+			return UserUpdateRequest.from(userAccount, profileRawImage);
+		} else {
+			return UserUpdateRequest.from(userAccount);
+		}
 
-		return UserUpdateRequest.from(userAccount, profileRawImage);
 	}
 
 	/**
@@ -96,10 +101,12 @@ public class UserAccountService {
 				imageLocalRepository.delete(previousImage);
 				imageLocalRepository.save(profileImage, userUpdateRequest.getProfileImage());
 			});
+
 	}
 
 	public void delete(UserAccountDto userAccountDto) {
-		UserAccount userAccount = findByEmail(userAccountDto).orElseThrow(UserNotFoundException::new);
+		UserAccount userAccount = findByEmail(userAccountDto).orElseThrow(
+			UserNotFoundException::new);
 		userAccount.setDeletedYn("Y");
 		// TODO: 유저 삭제시 타 관련 정보들 전부 삭제 필요
 	}
@@ -126,7 +133,8 @@ public class UserAccountService {
 	}
 
 	private UserAccount findByEmail(UserUpdateRequest userUpdateRequest) {
-		return userAccountRepository.findByEmail(userUpdateRequest.getEmail()).orElseThrow(UserNotFoundException::new);
+		return userAccountRepository.findByEmail(userUpdateRequest.getEmail())
+			.orElseThrow(UserNotFoundException::new);
 	}
 
 	public UserAccount searchUser(UserAccountPrincipal userAccountPrincipal) {
@@ -134,6 +142,11 @@ public class UserAccountService {
 			.orElseThrow(UserNotFoundException::new);
 	}
 
+	public ProfileImage getUserProfile(UserAccountPrincipal userAccountPrincipal) {
+		ProfileImage profileImage = profileImageRepository.findById(userAccountPrincipal.getId()).get();
+
+		return profileImage;
+	}
 }
 
 
