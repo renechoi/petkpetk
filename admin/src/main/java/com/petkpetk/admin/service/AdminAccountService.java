@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.petkpetk.admin.dto.AdminAccountDto;
 import com.petkpetk.admin.dto.request.AdminSignupRequest;
 import com.petkpetk.admin.entity.AdminAccount;
+import com.petkpetk.admin.exception.EmailDuplicateException;
 import com.petkpetk.admin.repository.AdminAccountRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,10 @@ public class AdminAccountService {
 	}
 
 	public void save(AdminSignupRequest adminSignupRequest) {
+		String email = adminSignupRequest.getEmail();
+		if (adminAccountRepository.existsByEmail(email)) {
+			throw new EmailDuplicateException(email);
+		}
 		AdminAccount adminAccount = adminSignupRequest.toEntity();
 		adminAccount.encodePassword(passwordEncoder);
 		adminAccountRepository.save(adminAccount);
