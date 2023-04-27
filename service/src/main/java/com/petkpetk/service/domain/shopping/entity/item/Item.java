@@ -21,6 +21,8 @@ import org.hibernate.annotations.DynamicUpdate;
 import com.petkpetk.service.common.AuditingFields;
 import com.petkpetk.service.domain.shopping.constant.ItemStatus;
 import com.petkpetk.service.domain.shopping.dto.item.request.ItemRegisterRequest;
+import com.petkpetk.service.domain.shopping.dto.item.response.ItemResponse;
+import com.petkpetk.service.domain.shopping.exception.OutOfStockException;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 
 import lombok.Getter;
@@ -109,4 +111,29 @@ public class Item extends AuditingFields {
 		this.itemDetail = itemUpdateRequest.getItemDetail();
 		this.itemStatus = itemUpdateRequest.getItemStatus();
 	}
+
+	public void updateItem(ItemResponse itemResponse){
+		this.itemName = itemResponse.getItemName();
+		this.price = itemResponse.getPrice();
+		this.itemAmount = itemResponse.getItemAmount();
+		this.itemDetail = itemResponse.getItemDetail();
+		this.itemStatus = itemResponse.getItemStatus();
+	}
+
+	public void removeStock(Long itemAmount) {
+		System.out.println("itemAmount = " + itemAmount);
+		System.out.println("this.itemAmount = " + this.itemAmount);
+
+		if (this.itemAmount < itemAmount) {
+			throw new OutOfStockException("상품의 재고가 부족합니다 (현재 재고 수량 : " + this.itemAmount + ")");
+		}
+		this.itemAmount -= itemAmount;
+	}
+
+	public void addStock(Long itemAmount){
+		this.itemAmount += itemAmount;
+	}
+
+
+
 }
