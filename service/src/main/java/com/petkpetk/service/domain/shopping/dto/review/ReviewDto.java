@@ -21,23 +21,25 @@ public class ReviewDto {
 	private Long likes;
 	private Item item;
 	private UserAccount userAccount;
+	private Double rating;
 
 	private List<MultipartFile> rawImages = new ArrayList<>();
 	private List<ReviewImageDto> reviewImageDtos = new ArrayList<>();
 	private List<Long> reviewImageIds = new ArrayList<>();
 
 	public ReviewDto(String content, Long likes, Item item, UserAccount userAccount,
-		List<MultipartFile> rawImages) {
+		List<MultipartFile> rawImages, Double rating) {
 		this.content = content;
 		this.likes = likes;
 		this.item = item;
 		this.userAccount = userAccount;
 		this.rawImages = rawImages;
+		this.rating = rating;
 	}
 
 	public static ReviewDto of(String content, Long likes, Item item, UserAccount userAccount,
-		List<MultipartFile> rawImages) {
-		return new ReviewDto(content, likes, item, userAccount, rawImages);
+		List<MultipartFile> rawImages, Double rating) {
+		return new ReviewDto(content, likes, item, userAccount, rawImages, rating);
 	}
 
 	public static ReviewDto from(Review review) {
@@ -50,7 +52,8 @@ public class ReviewDto {
 			this.userAccount,
 			this.content,
 			this.likes,
-			images
+			images,
+			this.rating
 		);
 	}
 
@@ -60,7 +63,8 @@ public class ReviewDto {
 			this.userAccount,
 			this.content,
 			this.likes,
-			null
+			null,
+			this.rating
 		);
 	}
 
@@ -70,7 +74,8 @@ public class ReviewDto {
 			reviewRegisterRequest.getLikes(),
 			reviewRegisterRequest.getItem(),
 			reviewRegisterRequest.getUserAccount(),
-			reviewRegisterRequest.getImages()
+			reviewRegisterRequest.getImages(),
+			reviewRegisterRequest.getRating()
 		);
 	}
 

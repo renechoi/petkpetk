@@ -33,6 +33,8 @@ public class ItemDto {
 
 	private ItemStatus itemStatus;
 
+	private Double totalRating;
+
 	private List<MultipartFile> rawImages = new ArrayList<>();
 	private UserAccount userAccount;
 
@@ -42,7 +44,7 @@ public class ItemDto {
 
 	public ItemDto(String itemName, Long price, Long itemAmount, String itemDetail, ItemStatus itemStatus,
 		List<MultipartFile> rawImages,
-		UserAccount userAccount) {
+		UserAccount userAccount, Double totalRating) {
 		this.itemName = itemName;
 		this.price = price;
 		this.itemAmount = itemAmount;
@@ -50,11 +52,12 @@ public class ItemDto {
 		this.itemStatus = itemStatus;
 		this.rawImages = rawImages;
 		this.userAccount = userAccount;
+		this.totalRating = totalRating;
 	}
 
 	public static ItemDto of(String itemName, Long price, Long itemAmount, String itemDetail, ItemStatus itemStatus,
-		List<MultipartFile> rawImages, UserAccount userAccount) {
-		return new ItemDto(itemName, price, itemAmount, itemDetail, itemStatus, rawImages, userAccount);
+		List<MultipartFile> rawImages, UserAccount userAccount, Double totalRating) {
+		return new ItemDto(itemName, price, itemAmount, itemDetail, itemStatus, rawImages, userAccount, totalRating);
 	}
 
 
@@ -70,7 +73,8 @@ public class ItemDto {
 			this.itemDetail,
 			this.itemStatus,
 			images,
-			this.userAccount
+			this.userAccount,
+			this.totalRating
 		);
 	}
 
@@ -82,7 +86,8 @@ public class ItemDto {
 			this.itemDetail,
 			this.itemStatus,
 			null,
-			this.userAccount
+			this.userAccount,
+			this.totalRating
 		);
 	}
 
@@ -95,7 +100,8 @@ public class ItemDto {
 			itemRegisterRequest.getItemDetail(),
 			itemRegisterRequest.getItemStatus(),
 			itemRegisterRequest.getImages(),
-			userAccount
+			userAccount,
+			itemRegisterRequest.getTotalRating()
 		);
 	}
 }

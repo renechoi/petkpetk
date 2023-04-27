@@ -13,6 +13,5 @@ public interface ReviewImageRepository extends JpaRepository<ReviewImage, Long>,
 	List<ReviewImage> findByReviewIdOrderByIdAsc(Long reviewid);
 	ReviewImage findByUniqueName(String originalName);
 
-
 }
 

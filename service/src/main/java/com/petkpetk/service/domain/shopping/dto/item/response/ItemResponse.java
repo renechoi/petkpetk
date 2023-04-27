@@ -39,6 +39,8 @@ public class ItemResponse {
 
 	private UserAccount userAccount;
 
+	private Double totalRating;
+
 	private List<ItemImageDto> itemImageDtos = new ArrayList<>();
 
 	public Item toEntity() {
@@ -49,23 +51,25 @@ public class ItemResponse {
 			this.itemDetail,
 			this.itemStatus,
 			null, // TODO : null 처리
-			this.userAccount
+			this.userAccount,
+			this.totalRating
 		);
 	}
 
 	public ItemResponse(String itemName, Long price, Long itemAmount, String itemDetail,
-		ItemStatus itemStatus, UserAccount userAccount) {
+		ItemStatus itemStatus, UserAccount userAccount, Double totalRating) {
 		this.itemName = itemName;
 		this.price = price;
 		this.itemAmount = itemAmount;
 		this.itemDetail = itemDetail;
 		this.itemStatus = itemStatus;
 		this.userAccount = userAccount;
+		this.totalRating = totalRating;
 	}
 
 	public static ItemResponse of(String itemName, Long price, Long itemAmount, String itemDetail,
-		ItemStatus itemStatus, UserAccount userAccount) {
-		return new ItemResponse(itemName, price, itemAmount, itemDetail, itemStatus, userAccount);
+		ItemStatus itemStatus, UserAccount userAccount, Double totalRating) {
+		return new ItemResponse(itemName, price, itemAmount, itemDetail, itemStatus, userAccount, totalRating);
 	}
 
 	public static ItemResponse from(Item item) {
@@ -83,6 +87,7 @@ public class ItemResponse {
 			itemEntity.getItemDetail(),
 			itemEntity.getItemStatus(),
 			itemEntity.getUserAccount(),
+			itemEntity.getTotalRating(),
 			itemImageDtos
 		);
 	}

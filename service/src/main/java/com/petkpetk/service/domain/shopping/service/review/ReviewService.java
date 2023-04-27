@@ -19,8 +19,10 @@ import com.petkpetk.service.domain.shopping.dto.review.ReviewDto;
 import com.petkpetk.service.domain.shopping.dto.review.ReviewImageDto;
 import com.petkpetk.service.domain.shopping.dto.review.request.ReviewRegisterRequest;
 import com.petkpetk.service.domain.shopping.dto.review.response.ReviewResponse;
+import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.shopping.entity.review.Review;
 import com.petkpetk.service.domain.shopping.entity.review.ReviewImage;
+import com.petkpetk.service.domain.shopping.repository.item.ItemRepository;
 import com.petkpetk.service.domain.shopping.repository.review.ReviewImageRepository;
 import com.petkpetk.service.domain.shopping.repository.review.ReviewRepository;
 
@@ -33,6 +35,7 @@ public class ReviewService {
 
 	private final ReviewRepository reviewRepository;
 	private final ReviewImageRepository reviewImageRepository;
+	private final ItemRepository itemRepository;
 	private final ImageLocalRepository<ReviewImage> imageLocalRepository;
 
 	@PersistenceContext
@@ -45,6 +48,19 @@ public class ReviewService {
 
 		IntStream.range(0, images.size())
 			.forEach(image -> imageLocalRepository.save(images.get(image), reviewDto.getRawImages().get(image)));
+
+		List<Review> reviewList = reviewRepository.findAllByItem_Id(reviewDto.getItem().getId());
+		final Double[] totalRating = {0.0};
+
+		reviewList.stream()
+			.forEach(review -> {
+				totalRating[0] +=review.getRating();
+			});
+
+		Double rating = totalRating[0]/reviewList.size();
+
+		Item item =itemRepository.findById(reviewDto.getItem().getId()).get();
+		item.setTotalRating(rating);
 	}
 
 	public List<ReviewResponse> getReviewList(Long itemId) {
@@ -77,16 +93,33 @@ public class ReviewService {
 
 	public void deleteReview(Long reviewId) {
 		Review review = reviewRepository.findById(reviewId).get();
+		Long itemId = review.getItem().getId();
 		review.setDeletedYn("Y");
 
 		List<ReviewImage> reviewImages = reviewImageRepository.findByReviewIdOrderByIdAsc(reviewId);
 		reviewImages.forEach(reviewImage -> reviewImage.setDeletedYn("Y"));
 
 		imageLocalRepository.deleteFiles(reviewImages);
+
+
+		List<Review> reviewList = reviewRepository.findAllByItem_Id(itemId);
+		final Double[] totalRating = {0.0};
+
+		reviewList.stream()
+			.forEach(reviews -> {
+				totalRating[0] +=reviews.getRating();
+			});
+
+		Double rating = totalRating[0]/reviewList.size();
+
+		Item item =itemRepository.findById(itemId).get();
+		item.setTotalRating(rating);
+
 	}
 
 	public ReviewResponse modifyReview(ReviewRegisterRequest reviewRegisterRequest, Long reviewId) {
 		Review review = reviewRepository.findById(reviewId).get();
+		Long itemId = review.getItem().getId();
 
 		List<ReviewImage> reviewImages = review.getImages();
 		reviewRegisterRequest.getImages().removeIf(MultipartFile::isEmpty);
@@ -119,26 +152,24 @@ public class ReviewService {
 		reviewImages.addAll(newlyAddedImages);
 		review.mapImages(reviewImages);
 		review.setContent(reviewRegisterRequest.getContent());
+		review.setRating(reviewRegisterRequest.getRating());
+
+		List<Review> reviewList = reviewRepository.findAllByItem_Id(itemId);
+		final Double[] totalRating = {0.0};
+
+		reviewList.stream()
+			.forEach(reviews -> {
+				totalRating[0] +=reviews.getRating();
+			});
+
+		Double rating = totalRating[0]/reviewList.size();
+
+		Item item =itemRepository.findById(itemId).get();
+		item.setTotalRating(rating);
 
 		return ReviewResponse.from(review);
 	}
 
 
-	public void noImageModity(ReviewDto reviewDto, Long reviewId, List<MultipartFile> rawImages) {
-		Review review = reviewRepository.findById(reviewId).get();
 
-		if (rawImages == null) {
-
-		} else {
-			List<ReviewImage> images = ImageConverter.of(ReviewImage::from).convertToImages(rawImages);
-
-			IntStream.range(0, images.size())
-				.filter(i -> !rawImages.get(i).isEmpty())
-				.forEach(i -> imageLocalRepository.save(images.get(i), rawImages.get(i)));
-
-			review.addImage(images);
-		}
-
-		review.setContent(reviewDto.getContent());
-	}
 }
