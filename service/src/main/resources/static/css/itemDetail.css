@@ -466,8 +466,9 @@ div#reviewModal {
 
 .reviewModifyBtn {
     display: flex;
-    justify-content: flex-end;
 }
+
+
 
 textarea#reviewModalContent {
     width: 100%;
@@ -636,6 +637,35 @@ th.firstChild {
 td.firstChild {
     border-top-right-radius: 5px;
 }
+.ratingBox {
+    margin-left: 10px;
+}
+
+.star {
+    height: 18px;
+    position: relative;
+    top: 4px;
+}
+.starZone {
+    display: flex;
+    justify-content: space-between;
+}
+
+img#star {
+    height: 35px;
+    top: 0px;
+}
+
+.starBtn {
+    border: none;
+    width: 19.59px;
+    height: 34px;
+    cursor: pointer;
+    background-color: transparent;
+    color: transparent;
+}
+
+
 
 
 /*----------------------------------------------------------------------------------*/
