@@ -44,6 +44,29 @@ public class CartItem {
 
 	private Long totalPrice;
 
+	public CartItem(Cart cart, Item item, Long itemCount, Long totalPrice) {
+		this.cart = cart;
+		this.item = item;
+		this.itemCount = itemCount;
+		this.totalPrice = totalPrice;
+	}
+
+
+	public static CartItem of(Cart cart, Item item, Long itemCount, Long totalPrice) {
+		return new CartItem(cart, item, itemCount,totalPrice);
+	}
+
+	public static CartItem createCartItem(Cart cart, Item item, Long itemCount, Long totalPrice) {
+		return CartItem.of(cart,item,itemCount, totalPrice);
+	}
+
+	public void addItemCount(Long itemCount){
+		this.itemCount += itemCount;
+	}
+
+	public void updateCount(Long itemCount){
+		this.itemCount = itemCount;
+	}
 
 }
 
