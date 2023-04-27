@@ -4,7 +4,7 @@
 
 <div th:fragment="myPageMenubar">
 
-    <div>
+    <div sec:authorize="hasAnyAuthority('ROLE_SELLER')">
         <ul class="sellerMenubar bar">
             <li><a th:href="@{/seller/information}">사업 정보</a></li>
             <li><a th:href="@{/seller/item-manage}">등록 상품</a></li>
@@ -13,12 +13,12 @@
         </ul>
     </div>
 
-    <div style="display: none">
+    <div sec:authorize="hasAnyAuthority('ROLE_USER')">
         <ul class="userMenubar bar">
-            <li><a>마이 페이지</a></li>
+            <li><a th:href="@{/user/information}">마이 페이지</a></li>
             <li><a>장바구니</a></li>
             <li><a>구매 내역</a></li>
-            <li><a>리뷰 내역</a></li>
+            <li><a th:href="@{/user/reviewHistory}">리뷰 내역</a></li>
             <li><a>커뮤니티 활동</a></li>
         </ul>
     </div>

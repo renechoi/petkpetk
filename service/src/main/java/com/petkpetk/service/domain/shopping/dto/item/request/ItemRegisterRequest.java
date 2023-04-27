@@ -40,6 +40,8 @@ public class ItemRegisterRequest {
 
 	private UserAccount userAccount;
 
+	private Double totalRating;
+
 	private List<MultipartFile> images = new ArrayList<>();
 
 	private List<ItemImageDto> itemImageDtos = new ArrayList<>();
@@ -53,27 +55,29 @@ public class ItemRegisterRequest {
 			this.itemDetail,
 			this.itemStatus,
 			images,
-			this.userAccount
+			this.userAccount,
+			this.totalRating
 		);
 	}
 
 	public ItemRegisterRequest(String itemName, Long price, Long itemAmount, String itemDetail,
-		ItemStatus itemStatus, UserAccount userAccount) {
+		ItemStatus itemStatus, UserAccount userAccount, Double totalRating) {
 		this.itemName = itemName;
 		this.price = price;
 		this.itemAmount = itemAmount;
 		this.itemDetail = itemDetail;
 		this.itemStatus = itemStatus;
 		this.userAccount = userAccount;
+		this.totalRating = totalRating;
 	}
 
 	public static ItemRegisterRequest of(String itemName, Long price, Long itemAmount, String itemDetail,
-		ItemStatus itemStatus, UserAccount userAccount) {
-		return new ItemRegisterRequest(itemName, price, itemAmount, itemDetail, itemStatus, userAccount);
+		ItemStatus itemStatus, UserAccount userAccount, Double totalRating) {
+		return new ItemRegisterRequest(itemName, price, itemAmount, itemDetail, itemStatus, userAccount, totalRating);
 	}
 
 	public static ItemRegisterRequest of(Item item) {
 		return ItemRegisterRequest.of(item.getItemName(), item.getPrice(), item.getItemAmount(),
-			item.getItemDetail(), item.getItemStatus(), item.getUserAccount());
+			item.getItemDetail(), item.getItemStatus(), item.getUserAccount(), item.getTotalRating());
 	}
 }

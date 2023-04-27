@@ -59,6 +59,9 @@ public class Item extends AuditingFields {
 	@Enumerated(EnumType.STRING)
 	private ItemStatus itemStatus;
 
+	@Column(nullable = false)
+	private Double totalRating = 5.0;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_account_id")
 	@ToString.Exclude
@@ -84,7 +87,7 @@ public class Item extends AuditingFields {
 	}
 
 	private Item(String itemName, Long price, Long itemAmount, String itemDetail,
-		ItemStatus itemStatus, List<ItemImage> images, UserAccount userAccount) {
+		ItemStatus itemStatus, List<ItemImage> images, UserAccount userAccount, Double totalRating) {
 		this.itemName = itemName;
 		this.price = price;
 		this.itemAmount = itemAmount;
@@ -92,11 +95,12 @@ public class Item extends AuditingFields {
 		this.itemStatus = itemStatus;
 		this.images = addImages(setRepresentativeImage(images));
 		this.userAccount = userAccount;
+		this.totalRating = totalRating;
 	}
 
 	public static Item of(String itemName, Long price, Long itemAmount, String itemDetail, ItemStatus itemStatus,
-		List<ItemImage> images, UserAccount userAccount) {
-		return new Item(itemName, price, itemAmount, itemDetail, itemStatus, images, userAccount);
+		List<ItemImage> images, UserAccount userAccount, Double totalRating) {
+		return new Item(itemName, price, itemAmount, itemDetail, itemStatus, images, userAccount, totalRating);
 	}
 
 	private List<ItemImage> setRepresentativeImage(List<ItemImage> images) {

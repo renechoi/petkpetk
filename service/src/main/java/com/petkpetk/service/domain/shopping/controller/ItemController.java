@@ -25,7 +25,7 @@ import com.petkpetk.service.domain.shopping.dto.review.request.ReviewRegisterReq
 import com.petkpetk.service.domain.shopping.dto.review.response.ReviewResponse;
 import com.petkpetk.service.domain.shopping.service.item.ItemService;
 import com.petkpetk.service.domain.shopping.service.review.ReviewService;
-import com.petkpetk.service.domain.shopping.service.review.likes.LikesService;
+import com.petkpetk.service.domain.shopping.service.review.likes.ReviewLikesService;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 import com.petkpetk.service.domain.user.service.UserAccountService;
 
@@ -40,7 +40,7 @@ public class ItemController {
 
 	private final ItemService itemService;
 	private final UserAccountService userAccountService;
-	private final LikesService likesService;
+	private final ReviewLikesService reviewLikesService;
 	private final ReviewService reviewService;
 
 	@GetMapping("/my-page")
@@ -77,7 +77,7 @@ public class ItemController {
 			model.addAttribute("userEmail", email);
 			UserAccount userAccount = userAccountService.searchUser(email).get();
 			HashMap<String, String> hashMap;
-			hashMap = likesService.findHistoryLikeByUser(userAccount.getId());
+			hashMap = reviewLikesService.findHistoryLikeByUser(userAccount.getId());
 			model.addAttribute("reviewHashMap",hashMap);
 		}
 		List<ReviewResponse> reviewList = reviewService.getReviewList(itemId);

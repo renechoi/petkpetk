@@ -14,11 +14,12 @@ public class MainItemDto {
     private String imageUrl;
     private Long price;
     private Long reviewCount;
+    private Double totalRating;
 
     @QueryProjection
 
     public MainItemDto(Long id, String itemName, String itemDetail, ItemStatus itemStatus,
-        String imageUrl, Long price, Long reviewCount) {
+        String imageUrl, Long price, Long reviewCount, Double totalRating) {
         this.id = id;
         this.itemName = itemName;
         this.itemDetail = itemDetail;
@@ -26,5 +27,6 @@ public class MainItemDto {
         this.imageUrl = imageUrl;
         this.price = price;
         this.reviewCount = reviewCount;
+        this.totalRating = totalRating;
     }
 }
