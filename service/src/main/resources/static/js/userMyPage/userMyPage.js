@@ -67,14 +67,14 @@ function toggleRePass() {
     }
 }
 
+
+
 var newInfoForm = document.getElementById("newInfoForm");
 newInfoForm.addEventListener('submit', function (event) {
     var name = document.querySelector("#newName");
     var nickName = document.querySelector("#newNickName");
     var zipcode = document.querySelector("#zipcode");
     var address2 = document.querySelector("#address2");
-    var newBusinessName = document.querySelector("#newBusinessName");
-    var newPhoneNumber = document.querySelector("#newPhoneNumber");
 
     if ($("#newName").val() == "") {
         alert("이름을 입력해주세요.");
@@ -87,20 +87,6 @@ newInfoForm.addEventListener('submit', function (event) {
         alert("닉네임을 입력해주세요.");
         nickName.scrollIntoView({behavior: "smooth", block: "start"});
         nickName.focus();
-        event.preventDefault();
-        return false;
-    }
-    if($("#newBusinessName").val() == "") {
-        alert("상호명을 입력해주세요.");
-        newBusinessName.scrollIntoView({behavior: "smooth", block: "start"});
-        newBusinessName.focus();
-        event.preventDefault();
-        return false;
-    }
-    if($("#newPhoneNumber").val() == "") {
-        alert("전화번호를 입력해주세요.");
-        newPhoneNumber.scrollIntoView({behavior: "smooth", block: "start"});
-        newPhoneNumber.focus();
         event.preventDefault();
         return false;
     }
@@ -143,3 +129,51 @@ newPassForm.addEventListener('submit', function (event) {
     }
 
 });
+
+
+
+
+var profile;
+$("#file").on('change', function(e) {
+    var file = e.target.files;
+    var fileArr = Array.prototype.slice.call(file);
+    fileArr.forEach(function(a) {
+        profile = a;
+        var reader = new FileReader();
+
+        reader.onload = function(z) {
+            $("#userProfileImage").attr("src", z.target.result);
+        };
+
+        reader.readAsDataURL(a);
+    });
+});
+
+function showNewProfileBox() {
+    var newProfileBox = document.getElementById("newProfileBox");
+    var changeProfileBtn = document.getElementById("changeProfileBtn");
+    newProfileBox.style.display = "flex";
+    changeProfileBtn.style.display = "none";
+}
+function cancelNewProfile() {
+    var newProfileBox = document.getElementById("newProfileBox");
+    var changeProfileBtn = document.getElementById("changeProfileBtn");
+    var originalProfile = document.getElementById("originalProfile");
+    var userProfileImage = document.getElementById("userProfileImage");
+
+    userProfileImage.setAttribute("src", originalProfile.value);
+    newProfileBox.style.display = "none";
+    changeProfileBtn.style.display = "block";
+}
+
+function deleteProfile() {
+    var userProfileImage = document.getElementById("userProfileImage");
+    var uniqueImageName = document.getElementById("uniqueImageName");
+    if (uniqueImageName) {
+        uniqueImageName.value = "이미지삭제"
+    }
+    userProfileImage.setAttribute("src", "/images/basicProfile.png");
+
+}
+
+

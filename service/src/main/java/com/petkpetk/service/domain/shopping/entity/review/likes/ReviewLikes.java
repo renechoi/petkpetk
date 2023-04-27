@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.petkpetk.service.domain.shopping.dto.review.likes.request.LikesRequest;
+import com.petkpetk.service.domain.shopping.dto.review.likes.request.ReviewLikesRequest;
 import com.petkpetk.service.domain.shopping.entity.review.Review;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 
@@ -24,8 +24,8 @@ import lombok.ToString;
 @ToString
 @Entity
 @NoArgsConstructor
-@Table(name = "likes")
-public class Likes {
+@Table(name = "review_likes")
+public class ReviewLikes {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,16 +40,17 @@ public class Likes {
 	@JoinColumn(name = "review_id")
 	private Review review;
 
-	public Likes(UserAccount userAccount, Review review) {
+	public ReviewLikes(UserAccount userAccount, Review review) {
 		this.userAccount = userAccount;
 		this.review = review;
 	}
 
-	public static Likes of(UserAccount userAccount, Review review){
-		return new Likes(userAccount, review);
+
+	public static ReviewLikes of(UserAccount userAccount, Review review){
+		return new ReviewLikes(userAccount, review);
 	}
 
-	public static Likes of(LikesRequest likesRequest) {
-		return Likes.of(likesRequest.getUserAccount(), likesRequest.getReview());
+	public static ReviewLikes of(ReviewLikesRequest reviewLikesRequest) {
+		return ReviewLikes.of(reviewLikesRequest.getUserAccount(), reviewLikesRequest.getReview());
 	}
 }

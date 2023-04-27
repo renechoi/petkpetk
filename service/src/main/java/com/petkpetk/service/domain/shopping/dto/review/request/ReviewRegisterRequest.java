@@ -25,6 +25,7 @@ public class ReviewRegisterRequest {
 	private Long likes;
 	private Item item;
 	private UserAccount userAccount;
+	private Double rating;
 
 	private List<MultipartFile> images = new ArrayList<>();
 	private List<ReviewImageDto> reviewImageDtos = new ArrayList<>();
@@ -35,7 +36,8 @@ public class ReviewRegisterRequest {
 			this.userAccount,
 			this.content,
 			this.likes,
-			images
+			images,
+			this.rating
 		);
 	}
 
@@ -47,7 +49,7 @@ public class ReviewRegisterRequest {
 	}
 
 	public static ReviewRegisterRequest of(String content, Long likes, Item item,
-		UserAccount userAccount) {
-		return ReviewRegisterRequest.of(content, likes, item, userAccount);
+		UserAccount userAccount, Double rating) {
+		return ReviewRegisterRequest.of(content, likes, item, userAccount, rating);
 	}
 }

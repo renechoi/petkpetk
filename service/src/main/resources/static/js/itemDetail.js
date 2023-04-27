@@ -162,7 +162,7 @@ function showReviewModal(reviewId, itemId) {
     var cancelModify = document.getElementById("cancelModify");
 
 
-    cancelModify.setAttribute("onclick", "closeReviewModal(" + reviewId + ")")
+    cancelModify.setAttribute("onclick", "closeReviewModal(" + reviewId + "); cancelNewReview();")
     reviewModalContent.value = reviewContent.textContent;
     reviewModalForm.setAttribute("action", "/review/modify/" + itemId + "/" + reviewId);
     reviewModalForm.style.display = "block";
@@ -191,15 +191,16 @@ function removeImage(num) {
 }
 
 var imageIdx = 0;
+
 function getPath(e, reviewId) {
-    var images = document.getElementsByClassName("reviewImages"+reviewId);
+    var images = document.getElementsByClassName("reviewImages" + reviewId);
     var path = $(e).attr('src');
     popImage(path, reviewId);
     imageIdx = Array.prototype.indexOf.call(images, e);
     if (images.length == 1) {
         $(".previousImageBtn").css("display", "none");
         $(".nextImageBtn").css("display", "none");
-    }else {
+    } else {
         if (imageIdx == (images.length - 1)) {
             $(".nextImageBtn").css("display", "none");
         } else if (imageIdx == 0) {
@@ -212,13 +213,15 @@ function getPath(e, reviewId) {
 function popImage(path, reviewId) {
     $(".image-wrap" + reviewId).css("display", "flex").show();
     $(".images" + reviewId)
-        .html("<div class='btnPlace'><input type='button' value='◀' class='previousImageBtn' onclick='preImage("+reviewId+")'></div><div class='imageZomBox'><input class='closeBtn' type='button' value='✖' onclick='closeImage("+reviewId+")'><img src='" + path + "' class='zomInImage'></div><div class='btnPlace'><input type='button' value='▶' class='nextImageBtn' onclick='nextImage("+reviewId+")'></div>")
+        .html("<div class='btnPlace'><input type='button' value='◀' class='previousImageBtn' onclick='preImage(" + reviewId + ")'></div><div class='imageZomBox'><input class='closeBtn' type='button' value='✖' onclick='closeImage(" + reviewId + ")'><img src='" + path + "' class='zomInImage'></div><div class='btnPlace'><input type='button' value='▶' class='nextImageBtn' onclick='nextImage(" + reviewId + ")'></div>")
         .css({width: '100%', height: '100%'});
 
 }
 
+$("#newRating").val($("#oldRating").val());
+
 function preImage(reviewId) {
-    var images = document.getElementsByClassName("reviewImages"+reviewId);
+    var images = document.getElementsByClassName("reviewImages" + reviewId);
     imageIdx--;
 
     var path = images[imageIdx].getAttribute("src");
@@ -233,8 +236,9 @@ function preImage(reviewId) {
         $(".nextImageBtn").css("display", "block");
     }
 }
+
 function nextImage(reviewId) {
-    var images = document.getElementsByClassName("reviewImages"+reviewId);
+    var images = document.getElementsByClassName("reviewImages" + reviewId);
     imageIdx++;
 
     var path = images[imageIdx].getAttribute("src");
@@ -243,15 +247,15 @@ function nextImage(reviewId) {
     console.log(images.length);
     $(".zomInImage").attr("src", path);
 
-    if(imageIdx == (images.length-1)) {
+    if (imageIdx == (images.length - 1)) {
         $(".nextImageBtn").css("display", "none");
         $(".previousImageBtn").css("display", "block");
-    }else {
+    } else {
         $(".previousImageBtn").css("display", "block");
         $(".nextImageBtn").css("display", "block");
     }
 
-    }
+}
 
 function closeImage(reviewId) {
     $(".images" + reviewId).animate({width: '0%', height: '0%'});
@@ -259,4 +263,93 @@ function closeImage(reviewId) {
     $(".previousImageBtn").css("display", "");
     $(".nextImageBtn").css("display", "");
     imageIdx = 0;
+}
+
+
+function newStar(rating) {
+    var newRating = document.getElementById("newRating");
+    var star = document.getElementById("star");
+    newRating.value = rating;
+
+    if (rating == 0.5) {
+        star.setAttribute("src", "/images/star0_5.png")
+
+    } else if (rating == 1) {
+        star.setAttribute("src", "/images/star1_0.png")
+
+    } else if (rating == 1.5) {
+        star.setAttribute("src", "/images/star1_5.png")
+
+    } else if (rating == 2) {
+        star.setAttribute("src", "/images/star2_0.png")
+
+    } else if (rating == 2.5) {
+        star.setAttribute("src", "/images/star2_5.png")
+
+    } else if (rating == 3) {
+        star.setAttribute("src", "/images/star3_0.png")
+
+    } else if (rating == 3.5) {
+        star.setAttribute("src", "/images/star3_5.png")
+
+    } else if (rating == 4) {
+        star.setAttribute("src", "/images/star4_0.png")
+
+    } else if (rating == 4.5) {
+        star.setAttribute("src", "/images/star4_5.png")
+
+    } else if (rating == 5) {
+        star.setAttribute("src", "/images/star5_0.png")
+
+    }
+
+}
+
+function cancelNewReview() {
+    var oldRating = document.getElementById("oldRating");
+    var newRating = document.getElementById("newRating");
+    var star = document.getElementById("star");
+
+    if (oldRating.value == 0.5) {
+        star.setAttribute("src", "/images/star0_5.png")
+        newRating.value = oldRating.value;
+
+    } else if (oldRating.value == 1) {
+        star.setAttribute("src", "/images/star1_0.png")
+        newRating.value = oldRating.value;
+
+    } else if (oldRating.value == 1.5) {
+        star.setAttribute("src", "/images/star1_5.png")
+        newRating.value = oldRating.value;
+
+    } else if (oldRating.value == 2) {
+        star.setAttribute("src", "/images/star2_0.png")
+        newRating.value = oldRating.value;
+
+    } else if (oldRating.value == 2.5) {
+        star.setAttribute("src", "/images/star2_5.png")
+        newRating.value = oldRating.value;
+
+    } else if (oldRating.value == 3) {
+        star.setAttribute("src", "/images/star3_0.png")
+        newRating.value = oldRating.value;
+
+    } else if (oldRating.value == 3.5) {
+        star.setAttribute("src", "/images/star3_5.png")
+        newRating.value = oldRating.value;
+
+    } else if (oldRating.value == 4) {
+        star.setAttribute("src", "/images/star4_0.png")
+        newRating.value = oldRating.value;
+
+    } else if (oldRating.value == 4.5) {
+        star.setAttribute("src", "/images/star4_5.png")
+        newRating.value = oldRating.value;
+
+    } else if (oldRating.value == 5) {
+        star.setAttribute("src", "/images/star5_0.png")
+        newRating.value = oldRating.value;
+
+    }
+
 }

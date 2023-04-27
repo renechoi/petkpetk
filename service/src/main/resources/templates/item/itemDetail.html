@@ -251,6 +251,18 @@
                                          th:onmouseover="'likesMouseOn('+${review.getId()}+'); intoLikeOnclick('+${review.getId()}+')'"
                                          th:onmouseout="'likesMouseOn('+${review.getId()}+')'">
                                 </div>
+                                <div class="ratingBox">
+                                    <img th:if="${review.rating == 5}" class="star" th:src="@{/images/star5_0.png}">
+                                    <img th:if="${review.rating == 4.5}" class="star" th:src="@{/images/star4_5.png}">
+                                    <img th:if="${review.rating == 4}" class="star" th:src="@{/images/star4_0.png}">
+                                    <img th:if="${review.rating == 3.5}" class="star" th:src="@{/images/star3_5.png}">
+                                    <img th:if="${review.rating == 3}" class="star" th:src="@{/images/star3_0.png}">
+                                    <img th:if="${review.rating == 2.5}" class="star" th:src="@{/images/star2_5.png}">
+                                    <img th:if="${review.rating == 2}" class="star" th:src="@{/images/star2_0.png}">
+                                    <img th:if="${review.rating == 1.5}" class="star" th:src="@{/images/star1_5.png}">
+                                    <img th:if="${review.rating == 1}" class="star" th:src="@{/images/star1_0.png}">
+                                    <img th:if="${review.rating == 0.5}" class="star" th:src="@{/images/star0_5.png}">
+                                </div>
                             </div>
 
                             <div>
@@ -275,11 +287,41 @@
                         </div>
 
                         <form th:if="${review.userAccount.email.equals(userEmail)}" enctype="multipart/form-data" method="post" id="reviewModalForm" style="display: none;" th:object="${reviewDtos}">
+                            <input type="hidden" id="newRating" th:value="${review.rating}" th:field="*{rating}">
+                            <input type="hidden" id="oldRating" th:value="${review.rating}">
                             <div id="reviewModal">
-                                <div class="reviewModifyBtn">
-                                    <input id="cancelModify" class="cancelModify modiBtn" type="button" value="취소">
-                                    <input class="completeModify modiBtn" type="submit" value="완료">
+                                <div class="starZone">
+                                    <div style="display: flex; position: relative">
+                                        <img th:if="${review.rating == 5}" id="star" class="star" th:src="@{/images/star5_0.png}">
+                                        <img th:if="${review.rating == 4.5}" id="star" class="star" th:src="@{/images/star4_5.png}">
+                                        <img th:if="${review.rating == 4}" id="star" class="star" th:src="@{/images/star4_0.png}">
+                                        <img th:if="${review.rating == 3.5}" id="star" class="star" th:src="@{/images/star3_5.png}">
+                                        <img th:if="${review.rating == 3}" id="star" class="star" th:src="@{/images/star3_0.png}">
+                                        <img th:if="${review.rating == 2.5}" id="star" class="star" th:src="@{/images/star2_5.png}">
+                                        <img th:if="${review.rating == 2}" id="star" class="star" th:src="@{/images/star2_0.png}">
+                                        <img th:if="${review.rating == 1.5}" id="star" class="star" th:src="@{/images/star1_5.png}">
+                                        <img th:if="${review.rating == 1}" id="star" class="star" th:src="@{/images/star1_0.png}">
+                                        <img th:if="${review.rating == 0.5}" id="star" class="star" th:src="@{/images/star0_5.png}">
+
+                                        <div style="display: flex; position: absolute;" class="starAbsolute">
+                                            <input type="button" class="starBtn" value="0.5" onclick="newStar(0.5)">
+                                            <input type="button" class="starBtn" value="1" onclick="newStar(1)">
+                                            <input type="button" class="starBtn" value="1.5" onclick="newStar(1.5)">
+                                            <input type="button" class="starBtn" value="2" onclick="newStar(2)">
+                                            <input type="button" class="starBtn" value="2.5" onclick="newStar(2.5)">
+                                            <input type="button" class="starBtn" value="3" onclick="newStar(3)">
+                                            <input type="button" class="starBtn" value="3.5" onclick="newStar(3.5)">
+                                            <input type="button" class="starBtn" value="4" onclick="newStar(4)">
+                                            <input type="button" class="starBtn" value="4.5" onclick="newStar(4.5)">
+                                            <input type="button" class="starBtn" value="5" onclick="newStar(5)">
+                                        </div>
+                                    </div>
+                                    <div class="reviewModifyBtn">
+                                        <input id="cancelModify" class="cancelModify modiBtn" type="button" value="취소">
+                                        <input class="completeModify modiBtn" type="submit" value="완료">
+                                    </div>
                                 </div>
+
                                 <div>
                                     <pre><textarea th:field="*{content}" id="reviewModalContent" name="newReviewContent"></textarea></pre>
                                 </div>

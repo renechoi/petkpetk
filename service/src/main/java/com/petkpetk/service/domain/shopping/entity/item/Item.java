@@ -21,6 +21,8 @@ import org.hibernate.annotations.DynamicUpdate;
 import com.petkpetk.service.common.AuditingFields;
 import com.petkpetk.service.domain.shopping.constant.ItemStatus;
 import com.petkpetk.service.domain.shopping.dto.item.request.ItemRegisterRequest;
+import com.petkpetk.service.domain.shopping.dto.item.response.ItemResponse;
+import com.petkpetk.service.domain.shopping.exception.OutOfStockException;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 
 import lombok.Getter;
@@ -57,6 +59,9 @@ public class Item extends AuditingFields {
 	@Enumerated(EnumType.STRING)
 	private ItemStatus itemStatus;
 
+	@Column(nullable = false)
+	private Double totalRating = 5.0;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_account_id")
 	@ToString.Exclude
@@ -82,7 +87,7 @@ public class Item extends AuditingFields {
 	}
 
 	private Item(String itemName, Long price, Long itemAmount, String itemDetail,
-		ItemStatus itemStatus, List<ItemImage> images, UserAccount userAccount) {
+		ItemStatus itemStatus, List<ItemImage> images, UserAccount userAccount, Double totalRating) {
 		this.itemName = itemName;
 		this.price = price;
 		this.itemAmount = itemAmount;
@@ -90,11 +95,12 @@ public class Item extends AuditingFields {
 		this.itemStatus = itemStatus;
 		this.images = addImages(setRepresentativeImage(images));
 		this.userAccount = userAccount;
+		this.totalRating = totalRating;
 	}
 
 	public static Item of(String itemName, Long price, Long itemAmount, String itemDetail, ItemStatus itemStatus,
-		List<ItemImage> images, UserAccount userAccount) {
-		return new Item(itemName, price, itemAmount, itemDetail, itemStatus, images, userAccount);
+		List<ItemImage> images, UserAccount userAccount, Double totalRating) {
+		return new Item(itemName, price, itemAmount, itemDetail, itemStatus, images, userAccount, totalRating);
 	}
 
 	private List<ItemImage> setRepresentativeImage(List<ItemImage> images) {
@@ -109,4 +115,29 @@ public class Item extends AuditingFields {
 		this.itemDetail = itemUpdateRequest.getItemDetail();
 		this.itemStatus = itemUpdateRequest.getItemStatus();
 	}
+
+	public void updateItem(ItemResponse itemResponse){
+		this.itemName = itemResponse.getItemName();
+		this.price = itemResponse.getPrice();
+		this.itemAmount = itemResponse.getItemAmount();
+		this.itemDetail = itemResponse.getItemDetail();
+		this.itemStatus = itemResponse.getItemStatus();
+	}
+
+	public void removeStock(Long itemAmount) {
+		System.out.println("itemAmount = " + itemAmount);
+		System.out.println("this.itemAmount = " + this.itemAmount);
+
+		if (this.itemAmount < itemAmount) {
+			throw new OutOfStockException("상품의 재고가 부족합니다 (현재 재고 수량 : " + this.itemAmount + ")");
+		}
+		this.itemAmount -= itemAmount;
+	}
+
+	public void addStock(Long itemAmount){
+		this.itemAmount += itemAmount;
+	}
+
+
+
 }
