@@ -17,11 +17,12 @@ import com.petkpetk.service.domain.shopping.constant.ItemStatus;
 import com.petkpetk.service.domain.shopping.dto.item.ItemSearchDto;
 import com.petkpetk.service.domain.shopping.dto.item.MainItemDto;
 import com.petkpetk.service.domain.shopping.dto.item.ManageItemDto;
-import com.petkpetk.service.domain.shopping.dto.item.QMainItemDto;
 import com.petkpetk.service.domain.shopping.dto.item.QManageItemDto;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.shopping.entity.item.QItem;
 import com.petkpetk.service.domain.shopping.entity.item.QItemImage;
+import com.petkpetk.service.domain.shopping.entity.review.QReview;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -56,7 +57,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 			dateTime = dateTime.minusMonths(6);
 		}
 
-		return QItem.item.registeredAt.after(dateTime);
+		return QItem.item.createdAt.after(dateTime);
 	}
 
 	private BooleanExpression searchByLike(String searchBy, String searchQuery) {
@@ -114,24 +115,29 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 	@Override
 	public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
 		QItem item = QItem.item;
-		QItemImage itemImg = itemImage;
+		QReview review = QReview.review;
+		QItemImage itemImage = QItemImage.itemImage;
 
 		List<MainItemDto> content = queryFactory
 			.select(
-				new QMainItemDto(
+				Projections.constructor(
+					MainItemDto.class,
 					item.id,
 					item.itemName,
 					item.itemDetail,
 					item.itemStatus,
 					itemImage.imageUrl,
-					item.price
+					item.price,
+					review.count().as("reviewCount")
 				)
 			)
-			.from(itemImg)
-			.join(itemImg.item, item)
-			.where(itemImg.representativeImageYn.eq("Y"))
+			.from(item)
+			.leftJoin(review).on(review.item.eq(item))
+			.leftJoin(itemImage).on(itemImage.item.eq(item))
+			.where(itemImage.representativeImageYn.eq("Y"))
 			.where(itemNmLike(itemSearchDto.getSearchQuery()))
 			.where(item.deletedYn.eq("N"))
+			.groupBy(item.id)
 			.orderBy(item.id.desc())
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize())
@@ -140,9 +146,9 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 
 		long total = queryFactory
 			.select(Wildcard.count)
-			.from(itemImg)
-			.join(itemImg.item, item)
-			.where(itemImg.representativeImageYn.eq("Y"))
+			.from(itemImage)
+			.join(itemImage.item, item)
+			.where(itemImage.representativeImageYn.eq("Y"))
 			.where(itemNmLike(itemSearchDto.getSearchQuery()))
 			.fetchOne();
 
@@ -150,7 +156,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 	}
 
 	@Override
-	public Page<ManageItemDto> getManageList(ItemSearchDto itemSearchDto, Pageable pageable) {
+	public Page<ManageItemDto> getManageList(ItemSearchDto itemSearchDto, Pageable pageable, String email) {
 		QItem item = QItem.item;
 		QItemImage itemImg = itemImage;
 
@@ -161,15 +167,18 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 					item.itemName,
 					item.itemDetail,
 					item.itemStatus,
+					item.userAccount.email,
 					itemImage.imageUrl,
 					item.price,
 					item.createdBy,
-					item.registeredAt
+					item.createdAt
 				)
 			)
 			.from(itemImg)
 			.join(itemImg.item, item)
 			.where(itemImg.representativeImageYn.eq("Y"))
+			.where(item.userAccount.email.eq(email))
+			.where(item.deletedYn.eq("N"))
 			.where(
 				regDtsAfter(itemSearchDto.getSearchDateType())
 				, searchSellStatusEq(itemSearchDto.getSearchItemStatus())

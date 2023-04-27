@@ -1,5 +1,17 @@
+body {
+    min-width: 700px;
+}
+
 #itemDetailContainer {
     padding: 0 15%;
+}
+
+.jumped4 {
+    margin-top: 120px;
+}
+
+.jumped3 {
+    margin-top: 100px;
 }
 
 input {
@@ -13,6 +25,72 @@ input:focus {
 .d-flex {
     width: 100%;
 }
+
+.fileName {
+    display: inline-block;
+    height: 30px;
+    padding: 0 10px;
+    vertical-align: middle;
+    border: 1px solid #ff6879;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    width: calc(100% - 120.05px);
+    color: #ffb7bf;
+    background-color: #ffffffe3;
+}
+
+.reviewFilesLable {
+    width: 88.05px;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    line-height: 22px;
+    color: #fff;
+    background-color: #ff6879ed;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    cursor: pointer;
+    height: 30px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.reviewFilesLable:hover {
+    background-color: rgba(255, 134, 148, 0.86);
+}
+
+
+.custom-file {
+    display: flex;
+}
+
+input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
+
+input.removeImage {
+    cursor: pointer;
+    text-align: center;
+    height: 30px;
+    width: 32px;
+    margin-left: 5px;
+    border-radius: 5px;
+    border: 1px solid #ff6879;
+    background-color: #ffffffe6;
+    color: #FF6859;
+    font-size: 13px;
+}
+
+input.removeImage:hover {
+    border: 1px solid #ff5e71;
+    background-color: rgba(255, 236, 236, 0.91);
+    color: #ff5f4f;
+}
+
 
 #itemDetailMainImg {
     width: 100%;
@@ -70,7 +148,7 @@ input:focus {
 
 .itemDetailName {
     cursor: default;
-    font-size: 20px;
+    font-size: 26px;
 }
 
 #orderCount {
@@ -102,19 +180,20 @@ input:focus {
 }
 
 #totalPrice {
-    font-size: 27px;
-    color: red;
+    font-size: 30px;
+    margin-right: 2px;
+    color: #ff2d48;
     font-weight: bold;
 }
 
-.totalWon, .chong {
+.totalWon, .totalText {
     position: relative;
     top: 3px;
     font-size: 21px;
     color: #3A1D1D;
 }
 
-.chong {
+.totalText {
     margin-right: 5px;
 }
 
@@ -125,7 +204,7 @@ input:focus {
 }
 
 .cost {
-    font-size: 20px;
+    font-size: 28px;
     margin-bottom: 10px;
 }
 
@@ -153,10 +232,10 @@ input:focus {
 .getCart:enabled {
     background: #ff7688;
 }
+
 .getOrder:enabled {
     background: #ff415a;
 }
-
 
 
 .getCart:enabled:hover, .getOrder:enabled:hover {
@@ -189,6 +268,10 @@ input:focus {
     width: 100%;
 }
 
+.chooseBtn {
+    display: flex;
+}
+
 .chooseProduct {
     position: absolute;
     bottom: 50px;
@@ -196,28 +279,44 @@ input:focus {
     width: 100%;
 }
 
-.totalflexBox {
+.totalFlexBox {
     display: flex;
 }
 
-.EXDiv{
+.EXDiv {
     margin-top: 50px;
 }
 
-.explainDiv{
-    border: 1px solid #ff6879;
+.explainDiv {
+    border: 1px solid #ffdfe2;
     border-bottom: none;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     width: 150px;
     text-align: center;
     padding: 10px;
-    color: #ff6879;
+    color: #ff97a3;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
-.lead{
+.explainDiv:hover {
+    border: 1px solid #ffd7db;
+    border-bottom: none;
+    background-color: #ffeeef;
+    color: #ff8996;
+}
+
+.itemDetailBox {
+    margin-bottom: 40px;
+    background-color: #ffe6e9;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.lead {
     width: 100%;
-    border: 1px solid #ff6879;
+    border: 1px solid #ffdfe2;
     height: auto;
     padding: 50px;
     border-top-right-radius: 5px;
@@ -225,17 +324,321 @@ input:focus {
     border-bottom-left-radius: 5px;
     color: #60423b;
 }
+
 .imgCenter {
-    padding: 1% 10%;
+    padding: 1% 20%;
 }
 
-.imgCenter img{
+.imgCenter img {
     width: 100%;
+}
+
+.ReviewFlex {
+    display: flex;
+}
+
+#reviewBox, #businessBox {
+    display: none;
+}
+
+.reviewOneBox_nickName_time {
+    display: flex;
+}
+
+.reviewOneBox {
+    border: 1px solid #ffe6e9;
+    background-color: #ffe6e9;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px 0;
+}
+
+.reviewOneBox_nickName_time {
+    display: flex;
+    margin-bottom: 7px;
+    margin-left: 2px;
+    justify-content: space-between;
+}
+
+.titleBox {
+    display: flex;
+}
+
+.userNickName {
+    font-weight: bold;
+    font-size: 17px;
+    margin-right: 13px;
+    color: #874c4c;
+}
+
+.reviewLikes {
+    color: #ff5065;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+span.likeTitle {
+    color: #ff6577;
+    font-size: 13px;
+    line-height: 28px;
+}
+
+.reviewContent {
+    border: 1px solid #fff2f4;
+    background-color: #fff2f4;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.userReviewProfile {
+    width: 30px;
+    height: 30px;
+    border: 1px solid white;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.reviewProfile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.titleBox {
+    line-height: 30px;
+    margin-left: 6px;
+}
+
+.btnFlex {
+    display: flex;
+}
+
+.nonReview {
+    text-align: center;
+    color: #f5e2e4;
+}
+
+.likes {
+    width: 25px;
+    height: 25px;
+    margin-left: 4px;
+    cursor: pointer;
+    position: relative;
+    top: 1px;
+}
+
+.reviewBtn {
+    width: 35px;
+    height: 25px;
+    margin: 0 3px;
+    border: 1px solid #ffa2ad;
+    border-radius: 5px;
+    background-color: #ffffffad;
+    color: #ff6a7c;
+    font-size: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.reviewBtn:hover {
+    border: 1px solid #ff97a3;
+    background-color: rgba(255, 241, 241, 0.7);
+    color: #ff5e71;
+}
+
+form#reviewModalForm {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    top: 0;
+    padding: 100px 20%;
+    height: 100%;
+    background-color: #41373d99;
+    z-index: 200;
+}
+
+div#reviewModal {
+    position: absolute;
+    top: 25%;
+    width: 60%;
+}
+
+.reviewModifyBtn {
+    display: flex;
+    justify-content: flex-end;
+}
+
+textarea#reviewModalContent {
+    width: 100%;
+    height: 100px;
+    resize: none;
+    outline: none;
+    border: 1px solid #c05a66;
+    border-radius: 5px;
+    margin-top: 5px;
+    padding: 20px;
+    background-color: #ffe3e6e0;
+    font-size: 16px;
+    color: #c22c3b;
+}
+
+.modiBtn {
+    width: 48px;
+    height: 29px;
+    margin-left: 6px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid #ff6b7b;
+    background-color: #ffffffe6;
+    color: #e95867;
+}
+
+.modiBtn:hover {
+    border: 1px solid #ff5a6b;
+    background-color: rgba(255, 229, 229, 0.9);
+    color: #e74b5b;
+}
+
+.reviewImageBox {
+    width: 100%;
+    margin-top: 20px;
+
+}
+
+
+.reviewImages {
+    margin: 0 5px;
+    height: 100%;
+    object-fit: cover;
+    border: 2px solid #ffdadf;
+    border-radius: 3px;
+    height: 120px;
+
+}
+
+.imagesWrap {
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 200;
+    background: radial-gradient(rgb(255 0 24 / 12%), rgb(0 0 0 / 58%));
+}
+
+.zomImage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.zomInImage {
+    border: 3px solid #ffffff;
+    border-radius: 5px;
+    width: 600px;
+}
+
+.previousImageBtn, .nextImageBtn {
+    z-index: 300;
+    width: 50px;
+    height: 50px;
+    font-size: 40px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: rgba(255, 255, 255, 0.84);
+}
+
+.previousImageBtn:hover, .nextImageBtn:hover {
+    text-shadow: 0 0 5px white;
+    color: white;
+}
+
+.closeBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 25px;
+    color: #ffa8a8;
+    border: 1px solid #ffa8a8;
+    border-radius: 5px;
+    background-color: #ffffffd1;
+    cursor: pointer;
+}
+
+.imageZomBox {
+    position: relative;
+}
+
+.closeBtn:hover {
+    color: #ff9696;
+    border: 1px solid #ff9696;
+    background-color: rgba(255, 241, 241, 0.82);
+}
+
+.btnPlace {
+    width: 50px;
+    height: 50px;
+    margin: 0 20px;
+}
+
+.sellerTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+
+.sellerTable th {
+    text-align: left;
+    padding: 10px 20px;
+    background-color: #ffe0e0;
+    color: #896767;
+    width: 150px;
+    border-bottom: 1px solid #ffc3c3;
+}
+
+.sellerTable td {
+    padding: 0 20px;
+    background-color: #fff5f5;
+    width: calc(100% - 150px);
+    color: #9f8085;
+    border-bottom: 1px solid #ffdede;
+}
+
+
+.itemDetailZone {
+    background-color: #ffecec;
+    padding: 30px;
+    border-radius: 5px;
+}
+td.lastChild, th.lastChild {
+    border: none;
+}
+th.lastChild {
+    border-bottom-left-radius: 5px;
+}
+
+td.lastChild {
+    border-bottom-right-radius: 5px;
+}
+th.firstChild {
+    border-top-left-radius: 5px;
+}
+
+td.firstChild {
+    border-top-right-radius: 5px;
 }
 
 
 /*----------------------------------------------------------------------------------*/
-
 
 
 @media screen and (max-width: 880px) {
@@ -252,6 +655,7 @@ input:focus {
     #itemDetailContainer {
         margin-bottom: 100px;
     }
+
     .itemDetailName {
         font-size: 18px;
     }
@@ -306,7 +710,7 @@ input:focus {
 
     }
 
-    .totalWon, .chong {
+    .totalWon, .totalText {
         top: 1.5px;
         font-size: 18px;
     }
@@ -316,9 +720,11 @@ input:focus {
     #itemDetailContainer {
         margin-bottom: 100px;
     }
+
     .itemDetailName {
         font-size: 18px;
     }
+
     .cost {
         margin-bottom: 0;
     }
@@ -378,12 +784,9 @@ input:focus {
         font-size: 15px;
     }
 
-    #totalPrice {
-        font-size: 19px;
-    }
 
-    .totalWon, .chong {
-        top: 2px;
-        font-size: 16px;
+
+    .totalWon, .totalText {
+        font-size: 18px;
     }
 }

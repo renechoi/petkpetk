@@ -17,6 +17,10 @@ public enum StatusCode {
 
 	OAUTH2_PROVIDER_ERROR("소셜 로그인 진행중 오류가 발생했습니다. 다시 시도해주세요."),
 
+	IMAGE_UPLOAD_FAILURE("이미지 업로드 중 오류 발생"),
+
+	LOCAL_IMAGE_CONVERTING_FAILURE("로컬 이미지 변환 작업 중 오류 발생"),
+
 
 	// 상품
 
@@ -25,6 +29,7 @@ public enum StatusCode {
 	ALREADY_IN_CART("이미 장바구니에 존재합니다."),
 
 	OUT_OF_STOCK("재고가 없습니다."),
+	ITEM_NOT_FOUND("상품을 찾을 수 없습니다"),
 
 	// 결제
 
@@ -41,7 +46,6 @@ public enum StatusCode {
 	NOT_FOUND_COUPON("존재하지 않는 쿠폰입니다."),
 	ALREADY_USED_COUPON("이미 사용된 쿠폰입니다."),
 	EXPIRED_COUPON("만료된 쿠폰입니다."),
-
 
 
 

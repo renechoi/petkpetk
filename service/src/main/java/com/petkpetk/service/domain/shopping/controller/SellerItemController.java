@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.petkpetk.service.domain.shopping.dto.item.ItemSearchDto;
 import com.petkpetk.service.domain.shopping.dto.item.ManageItemDto;
 import com.petkpetk.service.domain.shopping.service.item.ItemService;
+import com.petkpetk.service.domain.user.entity.UserAccount;
+import com.petkpetk.service.domain.user.service.UserAccountService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,26 +23,25 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/seller")
 public class SellerItemController {
-
+	private final UserAccountService userAccountService;
 	private final ItemService itemService;
 
 	@GetMapping("/information")
-	public String informationView() {
+	public String informationView(Authentication authentication, Model model) {
+		String email = authentication.getName();
+		UserAccount userAccount = userAccountService.searchUser(email).get();
+
+		model.addAttribute("userInfo", userAccount);
 		return "my-page/seller/sellerMyPage";
 	}
 
 	@GetMapping(value = {"/item-manage", "/item-manage/{page}"})
-	public String itemManage(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page, Model model){
-		System.out.println("♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠ itemSearchDto = " + itemSearchDto);
-		System.out.println("♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠♠ page = " + page);
+	public String itemManage(ItemSearchDto itemSearchDto, @PathVariable("page") Optional<Integer> page, Model model, Authentication authentication){
+		String email = authentication.getName();
 
+		PageRequest pageRequest = PageRequest.of(page.orElse(0), 5);
 
-		PageRequest pageRequest = PageRequest.of(page.orElse(0), 10);
-
-
-		Page<ManageItemDto> items = itemService.getItemList(itemSearchDto, pageRequest);
-
-
+		Page<ManageItemDto> items = itemService.getItemList(itemSearchDto, pageRequest, email);
 
 		model.addAttribute("items", items);
 		model.addAttribute("itemSearchDto",itemSearchDto);

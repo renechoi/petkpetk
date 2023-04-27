@@ -11,7 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.petkpetk.service.domain.user.dto.security.UserAccountPrincipal;
-import com.petkpetk.service.domain.user.service.SocialAccountService;
+import com.petkpetk.service.domain.user.service.SocialUserAccountService;
 import com.petkpetk.service.domain.user.service.UserAccountService;
 
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 
 	private final OAuth2Config oAuth2Config;
-	private final SocialAccountService SocialAccountService;
+	private final SocialUserAccountService socialUserAccountService;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -29,10 +29,14 @@ public class SecurityConfig {
 		return http.authorizeHttpRequests(
 				auth -> auth.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
 					.permitAll()
-					.mvcMatchers("/", "/user/**", "/error/**", "/login", "/seller/sign-up", "/seller/**", "/admin/**", "/test/**")
-					.permitAll()
+					.mvcMatchers("/", "/user/**", "/error/**", "/login", "/seller/sign-up", "/seller/**", "/admin/**",
+						"/test/**", "item/**").permitAll()
+					.mvcMatchers("/api/**", "/explorer").permitAll()
+
 					.anyRequest()
 					.authenticated())
+
+			.csrf(csrf -> csrf.ignoringAntMatchers("/api/**"))
 
 			.formLogin(formLogin -> formLogin.loginPage("/login")
 				.loginProcessingUrl("/login/process")
@@ -45,8 +49,8 @@ public class SecurityConfig {
 			.oauth2Login(oauth2 -> oauth2.clientRegistrationRepository(oAuth2Config.clientRegistrationRepository())
 				.authorizedClientService(oAuth2Config.oAuth2AuthorizedClientService())
 				.userInfoEndpoint(
-					user -> user
-						.userService(SocialAccountService)
+					user -> user.oidcUserService(socialUserAccountService)
+						.userService(socialUserAccountService)
 				)
 			)
 
@@ -64,4 +68,5 @@ public class SecurityConfig {
 			.map(UserAccountPrincipal::from)
 			.orElseThrow(() -> new UsernameNotFoundException("회원을 찾을 수 없습니다"));
 	}
+
 }

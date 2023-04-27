@@ -1,23 +1,27 @@
 package com.petkpetk.service.domain.shopping.entity.item;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.petkpetk.service.common.AuditingFields;
-import com.petkpetk.service.common.StatusCode;
 import com.petkpetk.service.domain.shopping.constant.ItemStatus;
-import com.petkpetk.service.domain.shopping.dto.item.response.ItemResponse;
-import com.petkpetk.service.domain.shopping.exception.OutOfStockException;
+import com.petkpetk.service.domain.shopping.dto.item.request.ItemRegisterRequest;
+import com.petkpetk.service.domain.user.entity.UserAccount;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,7 +43,7 @@ public class Item extends AuditingFields {
 	private Long id;
 
 	@Column(nullable = false, length = 50)
-	private  String itemName;
+	private String itemName;
 
 	@Column(name = "price", nullable = false)
 	private Long price;
@@ -47,54 +51,62 @@ public class Item extends AuditingFields {
 	@Column(nullable = false)
 	private Long itemAmount;
 
-	@Column(nullable = false)
+	@Column(nullable = false,columnDefinition = "TEXT", length = 5000)
 	private String itemDetail;
 
 	@Enumerated(EnumType.STRING)
 	private ItemStatus itemStatus;
 
-	private LocalDateTime registeredAt;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_account_id")
+	@ToString.Exclude
+	private UserAccount userAccount;
 
-	private LocalDateTime updatedAt;
+	@OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+	@ToString.Exclude
+	private List<ItemImage> images;
+
+	private List<ItemImage> addImages(List<ItemImage> images) {
+		images.forEach(image -> image.mapWith(this));
+		return images;
+	}
+
+	public void mapImages(List<ItemImage> images) {
+		images.forEach(image -> image.mapWith(this));
+	}
+
+
+	public void addImage(ItemImage image){
+		image.mapWith(this);
+		this.images.add(image);
+	}
 
 	private Item(String itemName, Long price, Long itemAmount, String itemDetail,
-		ItemStatus itemStatus, LocalDateTime registeredAt, LocalDateTime updatedAt) {
+		ItemStatus itemStatus, List<ItemImage> images, UserAccount userAccount) {
 		this.itemName = itemName;
 		this.price = price;
 		this.itemAmount = itemAmount;
 		this.itemDetail = itemDetail;
 		this.itemStatus = itemStatus;
-		this.registeredAt = registeredAt;
-		this.updatedAt = updatedAt;
+		this.images = addImages(setRepresentativeImage(images));
+		this.userAccount = userAccount;
 	}
 
-	public static Item of(String itemName, Long price, Long itemAmount, String itemDetail, ItemStatus itemStatus, LocalDateTime registeredAt, LocalDateTime updatedAt) {
-		return new Item(itemName, price, itemAmount, itemDetail, itemStatus, registeredAt, updatedAt);
+	public static Item of(String itemName, Long price, Long itemAmount, String itemDetail, ItemStatus itemStatus,
+		List<ItemImage> images, UserAccount userAccount) {
+		return new Item(itemName, price, itemAmount, itemDetail, itemStatus, images, userAccount);
 	}
 
-
-	public void updateItem(ItemResponse itemResponse){
-		this.itemName = itemResponse.getItemName();
-		this.price = itemResponse.getPrice();
-		this.itemAmount = itemResponse.getItemAmount();
-		this.itemDetail = itemResponse.getItemDetail();
-		this.itemStatus = itemResponse.getItemStatus();
+	private List<ItemImage> setRepresentativeImage(List<ItemImage> images) {
+		images.get(0).setRepresentativeImageYn("Y");
+		return images;
 	}
 
-	public void selledItem(Long stockAmount) {
-		System.out.println("stockAmount = " + stockAmount);
-		System.out.println("this.stockAmount = " + this.itemAmount);
-
-		if (this.itemAmount < stockAmount) {
-			throw new OutOfStockException(StatusCode.OUT_OF_STOCK,"(현재 재고 수량 : " + this.itemAmount + ")");
-		}
-		this.itemAmount -= stockAmount;
+	public void setContents(ItemRegisterRequest itemUpdateRequest) {
+		this.itemName = itemUpdateRequest.getItemName();
+		this.price = itemUpdateRequest.getPrice();
+		this.itemAmount = itemUpdateRequest.getItemAmount();
+		this.itemDetail = itemUpdateRequest.getItemDetail();
+		this.itemStatus = itemUpdateRequest.getItemStatus();
 	}
-
-	public void addItem(Long stockAmount){
-		this.itemAmount += stockAmount;
-	}
-
-
-
 }

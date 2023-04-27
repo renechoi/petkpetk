@@ -91,7 +91,7 @@
                  th:with="start=${(items.number/maxPage)*maxPage + 1}, end=(${(items.totalPages == 0) ? 1 : (start + (maxPage - 1) < items.totalPages ? start + (maxPage - 1) : items.totalPages)})">
                 <ul class="pagination justify-content-center">
 
-                    <li class="page-item previousBtn" th:classappend="${items.first}?'disabled'">
+                    <li class="page-item previousBtn" th:if="${!items.first}">
                         <a th:onclick="'javascript:page(' + ${items.number - 1} + ')'"
                            aria-label='◀' class="page-link">
                             <span aria-hidden='true'>◀</span>
@@ -101,10 +101,13 @@
                     <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"
                         th:classappend="${items.number eq page - 1}?'active':''">
                         <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text"
-                           class="page-link">[[${page}]]</a>
+                           class="page-link pageNumber">
+                            <div th:unless="${(items.getPageable().getPageNumber() + 1) == page}" class="pageNumberBox">[[${page}]]</div>
+                            <div th:if="${(items.getPageable().getPageNumber() + 1) == page}" style="color: #ff597a" class="pageNumberBox">[[${page}]]</div>
+                        </a>
                     </li>
 
-                    <li class="page-item nextBtn" th:classappend="${items.last}?'disabled'">
+                    <li class="page-item nextBtn" th:if="${!items.last}">
                         <a th:onclick="'javascript:page(' + ${items.number + 1} + ')'"
                            aria-label='▶' class="page-link">
                             <span aria-hidden='true'>▶</span>

@@ -42,7 +42,7 @@
 <br>
 
 <!-- 로그인 페이지로 이동하는 버튼 -->
-<form method="get" action="/user/login">
+<form method="get" action="/login">
     <input type="submit" value="공통 Log In">
 </form>
 
@@ -95,6 +95,35 @@
 <form th:action="@{/user/logout}" method="post">
     <input type="submit" value="로그아웃">
 </form>
+
+
+
+<form th:action="@{/user/sign-up}" method="get">
+    <input type="submit" value="회원가입">
+</form>
+
+<form th:action="@{/user/update}" method="get">
+    <input type="submit" value="수정">
+</form>
+
+
+
+
+
+
+
+
+<form th:action="@{/test/post}" method="post">
+    <input type="text" value="post">
+    <input type="submit" value="post">
+</form>
+
+
+<form th:action="@{/item/new}" method="post">
+    <input type="text" value="item-new">
+    <input type="submit" value="item-new">
+</form>
+
 
 
 </body>

@@ -1,23 +1,15 @@
 package com.petkpetk.service.domain.user.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.petkpetk.service.domain.user.dto.UserAccountDto;
-import com.petkpetk.service.domain.user.dto.request.UserAccountRequest;
-import com.petkpetk.service.domain.user.dto.response.UserAccountResponse;
+import com.petkpetk.service.domain.user.dto.request.UserSignupRequest;
+import com.petkpetk.service.domain.user.dto.request.UserUpdateRequest;
 import com.petkpetk.service.domain.user.dto.security.UserAccountPrincipal;
-import com.petkpetk.service.domain.user.exception.UserNotFoundException;
 import com.petkpetk.service.domain.user.service.UserAccountService;
 
 import lombok.RequiredArgsConstructor;
@@ -31,45 +23,30 @@ public class UserAccountController {
 
 	@GetMapping("/sign-up")
 	public String signUp(Model model) {
-		model.addAttribute("userAccount", new UserAccountRequest());
-		return "user/sign-up";
+		model.addAttribute("userAccount", new UserSignupRequest());
+		return "user/user/sign-up";
+	}
+	@GetMapping("/seller/sign-up")
+	public String sellerSignUp(Model model) {
+		model.addAttribute("userAccount", new UserSignupRequest());
+		return "user/seller/sign-up";
 	}
 
 	@PostMapping("/sign-up")
-	public String signUp(UserAccountRequest userAccountRequest) {
-		userAccountService.save(userAccountRequest.toDto());
+	public String signUp(UserSignupRequest userSignupRequest) {
+		userAccountService.save(userSignupRequest);
 		return "/login";
 	}
 
-	@GetMapping("/login")
-	public String login() {
-		return "/login";
-	}
-
-
-	@GetMapping("/logout")
-	public String logout(HttpServletRequest request, HttpServletResponse response) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-		if (authentication != null) {
-			new SecurityContextLogoutHandler().logout(request, response, authentication);
-		}
-
-		return "redirect:/";
-	}
-
-	@GetMapping("/my-page/update")
+	@GetMapping("/update")
 	public String update(@AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal, Model model) {
-		UserAccountDto userAccountDto = userAccountService.searchUserDto(userAccountPrincipal.toDto()).orElseThrow(
-			UserNotFoundException::new);
-		UserAccountResponse userAccountResponse = UserAccountResponse.from(userAccountDto);
-		model.addAttribute("userAccount", userAccountResponse);
-		return "user/my-page";
+		model.addAttribute("userAccount", userAccountService.getUserUpdateRequestView(userAccountPrincipal));
+		return "user/user/update";
 	}
 
-	@PostMapping("/my-page/update")
-	public String update(UserAccountRequest userAccountRequest) {
-		userAccountService.update(userAccountRequest.toDto());
+	@PostMapping("/update")
+	public String update(UserUpdateRequest userUpdateRequest) {
+		userAccountService.update(userUpdateRequest);
 		return "redirect:/";
 	}
 
@@ -78,9 +55,5 @@ public class UserAccountController {
 		userAccountService.delete(userAccountPrincipal.toDto());
 		return "redirect:/";
 	}
-
-
 }
-
-
 
