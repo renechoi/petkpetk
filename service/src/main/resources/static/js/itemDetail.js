@@ -218,6 +218,8 @@ function popImage(path, reviewId) {
 
 }
 
+$("#newRating").val($("#oldRating").val());
+
 function preImage(reviewId) {
     var images = document.getElementsByClassName("reviewImages" + reviewId);
     imageIdx--;
