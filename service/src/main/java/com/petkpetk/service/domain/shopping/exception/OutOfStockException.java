@@ -15,6 +15,10 @@ public class OutOfStockException extends  PetkpetkServerException{
 		super(statusCode);
 	}
 
+	public OutOfStockException(String message) {
+		super(statusCode);
+	}
+
 	public OutOfStockException(StatusCode statusCode, String detailMessage) {
 		super(statusCode, detailMessage);
 	}
