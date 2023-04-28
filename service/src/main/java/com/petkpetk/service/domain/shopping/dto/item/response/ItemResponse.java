@@ -26,6 +26,10 @@ public class ItemResponse {
 	@NotBlank(message = "상품명을 입력해주세요.")
 	private String itemName;
 
+	private Long originalPrice;
+
+	private Double discountRate;
+
 	@NotNull(message = "가격을 입력해주세요.")
 	private Long price;
 
@@ -46,6 +50,8 @@ public class ItemResponse {
 	public Item toEntity() {
 		return Item.of(
 			this.itemName,
+			this.originalPrice,
+			this.discountRate,
 			this.price,
 			this.itemAmount,
 			this.itemDetail,
@@ -56,10 +62,12 @@ public class ItemResponse {
 		);
 	}
 
-	public ItemResponse(String itemName, Long price, Long itemAmount, String itemDetail,
+	public ItemResponse(String itemName,Long originalPrice, Double discountRate, Long price, Long itemAmount, String itemDetail,
 		ItemStatus itemStatus, UserAccount userAccount, Double totalRating) {
 		this.itemName = itemName;
-		this.price = price;
+		this.originalPrice = originalPrice;
+		this.discountRate = discountRate;
+		this.price = (long)(originalPrice - originalPrice*discountRate);
 		this.itemAmount = itemAmount;
 		this.itemDetail = itemDetail;
 		this.itemStatus = itemStatus;
@@ -67,9 +75,9 @@ public class ItemResponse {
 		this.totalRating = totalRating;
 	}
 
-	public static ItemResponse of(String itemName, Long price, Long itemAmount, String itemDetail,
+	public static ItemResponse of(String itemName,Long originalPrice, Double discountRate, Long price, Long itemAmount, String itemDetail,
 		ItemStatus itemStatus, UserAccount userAccount, Double totalRating) {
-		return new ItemResponse(itemName, price, itemAmount, itemDetail, itemStatus, userAccount, totalRating);
+		return new ItemResponse(itemName,originalPrice, discountRate, (long)(originalPrice - originalPrice*discountRate), itemAmount, itemDetail, itemStatus, userAccount, totalRating);
 	}
 
 	public static ItemResponse from(Item item) {
@@ -82,6 +90,8 @@ public class ItemResponse {
 		return new ItemResponse(
 			itemEntity.getId(),
 			itemEntity.getItemName(),
+			itemEntity.getOriginalPrice(),
+			itemEntity.getDiscountRate(),
 			itemEntity.getPrice(),
 			itemEntity.getItemAmount(),
 			itemEntity.getItemDetail(),
