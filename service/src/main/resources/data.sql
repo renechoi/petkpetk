@@ -40,21 +40,12 @@ insert into user_account (deleted_yn, created_at, modified_at, created_by, modif
 
 
 
+INSERT INTO item (created_at,created_by,modified_at,modified_by,deleted_yn, item_name, price, item_amount, item_detail, item_status, user_account_id) VALUES
+    (now(),'페크페크', now(),'페크페크','N','item1', 10000, 10, 'item1 detail', 'SELLING', 2);
 
-#
-#
-#
-# INSERT INTO item (created_at,created_by,modified_at,modified_by,deleted_yn, item_name, price, item_amount, item_detail, item_status, user_account_id)
-# VALUES
-#     (now(),'페크페크', now(),'페크페크','N','item1', 1000, 10, 'item1 detail', 'SELL', 2),
-#     (now(),'페크페크', now(),'페크페크','N','item1', 1000, 10, 'item1 detail', 'SELL', 2),
-#     (now(),'페크페크', now(),'페크페크','N','item1', 1000, 10, 'item1 detail', 'SELL', 2);
-#
-# INSERT INTO item_image (created_at,created_by,modified_at,modified_by,deleted_yn,unique_name, original_name, image_url, representative_image_yn, item_id)
-# VALUES
-#     (now(),'페크페크', now(),'페크페크','N','12341-uniqueName1', 'originalName1', 'imageUrl1', 'Y', 1),
-#     (now(),'페크페크', now(),'페크페크','N','12345-uniqueName2', 'originalName2', 'imageUrl2', 'N', 1),
-#     (now(),'페크페크', now(),'페크페크','N','12345-uniqueName3', 'originalName3', 'imageUrl2', 'Y', 2),
-#     (now(),'페크페크', now(),'페크페크','N','34564-uniqueName4', 'originalName4', 'imageUrl2', 'Y', 3),
-#     (now(),'페크페크', now(),'페크페크','N','36345-uniqueName5', 'originalName5', 'imageUrl2', 'N', 3);
-#
+INSERT INTO item_image (created_at,created_by,modified_at,modified_by,deleted_yn,unique_name, original_name, image_url, representative_image_yn, item_id) VALUES
+                                                                                      (now(),'페크페크', now(),'페크페크','N', 'file:///Users/Rene/Documents/rene/projectFiles/jpa-shopping-practice-files/34124.jpeg', '34124.jpeg', 'file:///Users/Rene/Documents/rene/projectFiles/jpa-shopping-practice-files/34124.jpeg', 'Y', 1),
+                                                                                      (now(),'페크페크', now(),'페크페크','N', 'file:///Users/Rene/Documents/rene/projectFiles/jpa-shopping-practice-files/1224.jpeg', '1224.jpeg', 'images/item/1224.jpeg', 'N', 1),
+                                                                                      (now(),'페크페크', now(),'페크페크','N', 'file:///Users/Rene/Documents/rene/projectFiles/jpa-shopping-practice-files/스크린샷 2023-04-19 오후 3.12.41.png', '스크린샷 2023-04-19 오후 3.12.41.png', '/images/item/스크린샷 2023-04-19 오후 3.12.41.png', 'N', 1),
+                                                                                      (now(),'페크페크', now(),'페크페크','N', 'file:///Users/Rene/Documents/rene/projectFiles/jpa-shopping-practice-files/53232.jpeg', '53232.jpeg', '', 'N', 1),
+                                                                                      (now(),'페크페크', now(),'페크페크','N', 'file:///Users/Rene/Documents/rene/projectFiles/jpa-shopping-practice-files/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg', 'KakaoTalk_Photo_2023-01-05-22-29-06.jpeg', '', 'N',1);
