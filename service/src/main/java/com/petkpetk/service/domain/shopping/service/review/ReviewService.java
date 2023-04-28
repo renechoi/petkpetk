@@ -57,8 +57,8 @@ public class ReviewService {
 				totalRating[0] +=review.getRating();
 			});
 
-		Double rating = totalRating[0]/reviewList.size();
-
+		Double rating = totalRating[0]/(double)reviewList.size();
+		rating = (Math.round(rating * 2) / 2.0);
 		Item item =itemRepository.findById(reviewDto.getItem().getId()).get();
 		item.setTotalRating(rating);
 	}
@@ -75,7 +75,7 @@ public class ReviewService {
 		return reviewResponses;
 	}
 
-	public boolean plusLike(Long num, Long reviewId, Long likeNum) {
+	public boolean plusLike(Long reviewId, Long likeNum) {
 		Review review =  entityManager.find(Review.class, reviewId);
 		review.setLikes(likeNum + 1);
 		entityManager.flush();
@@ -83,7 +83,7 @@ public class ReviewService {
 		return true;
 	}
 
-	public boolean minusLike(Long num, Long reviewId, Long likeNum) {
+	public boolean minusLike(Long reviewId) {
 		Review review =  entityManager.find(Review.class, reviewId);
 		review.setLikes(review.getLikes() - 1);
 		entityManager.flush();
@@ -110,8 +110,8 @@ public class ReviewService {
 				totalRating[0] +=reviews.getRating();
 			});
 
-		Double rating = totalRating[0]/reviewList.size();
-
+		Double rating = totalRating[0]/(double)reviewList.size();
+		rating =(Math.round(rating * 2) / 2.0);
 		Item item =itemRepository.findById(itemId).get();
 		item.setTotalRating(rating);
 
@@ -163,6 +163,10 @@ public class ReviewService {
 			});
 
 		Double rating = totalRating[0]/reviewList.size();
+
+		System.out.println("rating = " + rating);
+		rating = (Math.round(rating * 2) / 2.0);
+		System.out.println("rating = " + rating);
 
 		Item item =itemRepository.findById(itemId).get();
 		item.setTotalRating(rating);

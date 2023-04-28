@@ -224,6 +224,26 @@ input.removeImage:hover {
     border-radius: 5px;
 }
 
+select#discountRate {
+    height: 30px;
+    border: 1px solid #ff475c;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+input#price {
+    height: 30px;
+    width: 150px;
+    text-align: right;
+    border: 1px solid #ff475c;
+    border-radius: 5px;
+    padding: 0 10px;
+    color: #ff001d;
+    font-weight: bold;
+}
+
 
 @keyframes saveBtn {
     from {
