@@ -146,7 +146,7 @@
                 <div class="chooseProduct">
                     <div class="h4 text-danger text-left cost">
                         <input type="hidden" th:value="${item.price}" id="price" name="price">
-                        <span class="OriginalCost">888원</span><span id="cost" th:text="${item.price}"></span>
+                        <span class="OriginalCost" th:text="${item.originalPrice}+'원'">원가격</span><span id="discountRate" th:text="'('+${#numbers.formatDecimal(item.discountRate*100,0,0)}+'%)'"></span><span id="cost" th:text="${item.price}"></span><span style="font-size: 20px; position: relative; bottom: 3px; margin-left: 1px;" class="won">원</span>
                     </div>
                     <div class="input-group w-50 ChooseAmountBox">
                         <div class="totalFlexBox">
