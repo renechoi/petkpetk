@@ -209,8 +209,8 @@ input.removeImage:hover {
 }
 
 .OriginalCost {
-    font-size: 16px;
-    color: #bdb1b1;
+    font-size: 19px;
+    color: #ab9d9d;
     text-decoration: line-through;
     margin-right: 10px;
     position: relative;
@@ -666,7 +666,13 @@ img#star {
 }
 
 
-
+span#discountRate {
+    font-size: 24px;
+    margin-right: 3px;
+    position: relative;
+    bottom: 1px;
+    color: #ff4b5b;
+}
 
 /*----------------------------------------------------------------------------------*/
 

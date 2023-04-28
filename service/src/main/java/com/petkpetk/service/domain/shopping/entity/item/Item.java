@@ -47,6 +47,12 @@ public class Item extends AuditingFields {
 	@Column(nullable = false, length = 50)
 	private String itemName;
 
+	@Column(nullable = false)
+	private Long originalPrice;
+
+	@Column(nullable = false)
+	private Double discountRate;
+
 	@Column(name = "price", nullable = false)
 	private Long price;
 
@@ -86,10 +92,12 @@ public class Item extends AuditingFields {
 		this.images.add(image);
 	}
 
-	private Item(String itemName, Long price, Long itemAmount, String itemDetail,
+	private Item(String itemName,Long originalPrice, Double discountRate, Long price, Long itemAmount, String itemDetail,
 		ItemStatus itemStatus, List<ItemImage> images, UserAccount userAccount, Double totalRating) {
 		this.itemName = itemName;
-		this.price = price;
+		this.originalPrice = originalPrice;
+		this.discountRate = discountRate;
+		this.price = (long)(originalPrice - originalPrice*discountRate);
 		this.itemAmount = itemAmount;
 		this.itemDetail = itemDetail;
 		this.itemStatus = itemStatus;
@@ -98,9 +106,9 @@ public class Item extends AuditingFields {
 		this.totalRating = totalRating;
 	}
 
-	public static Item of(String itemName, Long price, Long itemAmount, String itemDetail, ItemStatus itemStatus,
+	public static Item of(String itemName, Long originalPrice, Double discountRate, Long price, Long itemAmount, String itemDetail, ItemStatus itemStatus,
 		List<ItemImage> images, UserAccount userAccount, Double totalRating) {
-		return new Item(itemName, price, itemAmount, itemDetail, itemStatus, images, userAccount, totalRating);
+		return new Item(itemName,originalPrice,discountRate, (long)(originalPrice - originalPrice*discountRate), itemAmount, itemDetail, itemStatus, images, userAccount, totalRating);
 	}
 
 	private List<ItemImage> setRepresentativeImage(List<ItemImage> images) {
@@ -110,7 +118,9 @@ public class Item extends AuditingFields {
 
 	public void setContents(ItemRegisterRequest itemUpdateRequest) {
 		this.itemName = itemUpdateRequest.getItemName();
-		this.price = itemUpdateRequest.getPrice();
+		this.originalPrice = itemUpdateRequest.getOriginalPrice();
+		this.discountRate = itemUpdateRequest.getDiscountRate();
+		this.price = (long)(itemUpdateRequest.getOriginalPrice() - itemUpdateRequest.getOriginalPrice()*itemUpdateRequest.getDiscountRate());
 		this.itemAmount = itemUpdateRequest.getItemAmount();
 		this.itemDetail = itemUpdateRequest.getItemDetail();
 		this.itemStatus = itemUpdateRequest.getItemStatus();
@@ -118,7 +128,9 @@ public class Item extends AuditingFields {
 
 	public void updateItem(ItemResponse itemResponse){
 		this.itemName = itemResponse.getItemName();
-		this.price = itemResponse.getPrice();
+		this.originalPrice = itemResponse.getOriginalPrice();
+		this.discountRate = itemResponse.getDiscountRate();
+		this.price = (long)(itemResponse.getOriginalPrice() - itemResponse.getOriginalPrice()*itemResponse.getDiscountRate());
 		this.itemAmount = itemResponse.getItemAmount();
 		this.itemDetail = itemResponse.getItemDetail();
 		this.itemStatus = itemResponse.getItemStatus();
