@@ -25,6 +25,10 @@ public class ItemDto {
 
 	private String itemName;
 
+	private Long originalPrice;
+
+	private Double discountRate;
+
 	private Long price;
 
 	private Long itemAmount;
@@ -42,11 +46,13 @@ public class ItemDto {
 
 	private List<Long> itemImageIds = new ArrayList<>();
 
-	public ItemDto(String itemName, Long price, Long itemAmount, String itemDetail, ItemStatus itemStatus,
+	public ItemDto(String itemName, Long originalPrice, Double discountRate, Long price, Long itemAmount, String itemDetail, ItemStatus itemStatus,
 		List<MultipartFile> rawImages,
 		UserAccount userAccount, Double totalRating) {
 		this.itemName = itemName;
-		this.price = price;
+		this.originalPrice = originalPrice;
+		this.discountRate = discountRate;
+		this.price = (long)(originalPrice - originalPrice*discountRate);
 		this.itemAmount = itemAmount;
 		this.itemDetail = itemDetail;
 		this.itemStatus = itemStatus;
@@ -55,9 +61,9 @@ public class ItemDto {
 		this.totalRating = totalRating;
 	}
 
-	public static ItemDto of(String itemName, Long price, Long itemAmount, String itemDetail, ItemStatus itemStatus,
+	public static ItemDto of(String itemName, Long originalPrice, Double discountRate, Long price, Long itemAmount, String itemDetail, ItemStatus itemStatus,
 		List<MultipartFile> rawImages, UserAccount userAccount, Double totalRating) {
-		return new ItemDto(itemName, price, itemAmount, itemDetail, itemStatus, rawImages, userAccount, totalRating);
+		return new ItemDto(itemName, originalPrice, discountRate, (long)(originalPrice - originalPrice*discountRate), itemAmount, itemDetail, itemStatus, rawImages, userAccount, totalRating);
 	}
 
 
@@ -68,7 +74,9 @@ public class ItemDto {
 	public Item toEntity(List<ItemImage> images) {
 		return Item.of(
 			this.itemName,
-			this.price,
+			this.originalPrice,
+			this.discountRate,
+			(long)(this.originalPrice - this.originalPrice*this.discountRate),
 			this.itemAmount,
 			this.itemDetail,
 			this.itemStatus,
@@ -81,7 +89,9 @@ public class ItemDto {
 	public Item toEntity() {
 		return Item.of(
 			this.itemName,
-			this.price,
+			this.originalPrice,
+			this.discountRate,
+			(long)(this.originalPrice - this.originalPrice*this.discountRate),
 			this.itemAmount,
 			this.itemDetail,
 			this.itemStatus,
@@ -95,6 +105,8 @@ public class ItemDto {
 	public static ItemDto from(ItemRegisterRequest itemRegisterRequest, UserAccount userAccount) {
 		return new ItemDto(
 			itemRegisterRequest.getItemName(),
+			itemRegisterRequest.getOriginalPrice(),
+			itemRegisterRequest.getDiscountRate(),
 			itemRegisterRequest.getPrice(),
 			itemRegisterRequest.getItemAmount(),
 			itemRegisterRequest.getItemDetail(),

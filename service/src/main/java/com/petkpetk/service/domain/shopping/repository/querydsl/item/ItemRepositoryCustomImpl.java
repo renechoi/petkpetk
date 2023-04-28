@@ -127,6 +127,8 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 					item.itemDetail,
 					item.itemStatus,
 					itemImage.imageUrl,
+					item.originalPrice,
+					item.discountRate,
 					item.price,
 					review.count().as("reviewCount"),
 					item.totalRating
