@@ -1,4 +1,4 @@
-package com.petkpetk.service.domain.board.repository;
+package com.petkpetk.service.domain.community.repository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,10 +14,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 
 import com.petkpetk.service.config.jpaConfig.TestJpaConfig;
-import com.petkpetk.service.domain.board.entity.Article;
-import com.petkpetk.service.domain.board.entity.Hashtag;
+import com.petkpetk.service.domain.community.entity.Article;
+import com.petkpetk.service.domain.community.entity.Hashtag;
 
-@DisplayName("Jpa repository 테스트")
+@DisplayName("Article Repository 테스트")
 @Import(TestJpaConfig.class)
 @ActiveProfiles("test")
 @TestPropertySource(properties = {
