@@ -206,4 +206,6 @@ function closeImage(reviewId) {
 
 var BigOneReviewBoxs = document.querySelectorAll(".BigOneReviewBox");
 var reviewCount = document.getElementById("reviewCount");
-reviewCount.innerHTML = "총 리뷰 갯수 ("+BigOneReviewBoxs.length + ")";
+if (BigOneReviewBoxs.length>0) {
+    reviewCount.innerHTML = "총 리뷰 갯수 ("+BigOneReviewBoxs.length + ")";
+}
