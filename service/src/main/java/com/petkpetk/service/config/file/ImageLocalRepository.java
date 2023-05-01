@@ -82,6 +82,5 @@ public class ImageLocalRepository<T extends PetkpetkImage> {
 			.map(name -> new File(filePath + "/" + name))
 			.filter(File::exists)
 			.ifPresent(File::delete);
-
 	}
 }

@@ -16,4 +16,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long>,
 	@Query("select r from Review r where r.item.id = ?1 and r.deletedYn = 'N' order by r.likes DESC , r.id DESC ")
 	List<Review> findAllByItem_Id(Long itemId);
 
+	@Query("select r from Review r where r.userAccount.email = ?1 and r.deletedYn='N' order by r.id desc")
+	List<Review> findAllByUserAccountEmail(String email);
+
 }
