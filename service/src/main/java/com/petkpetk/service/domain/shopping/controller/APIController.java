@@ -22,18 +22,13 @@ public class APIController {
 
 	@RequestMapping(value = "/review/like", method = RequestMethod.POST)
 	public Boolean like(Long num, Long reviewId, Long likeNum, String userEmail){
-		System.out.println("============== num = " + num);
-		System.out.println("============== reviewId = " + reviewId);
-		System.out.println("============== likeNum = " + likeNum);
-		System.out.println("============== userEmail = " + userEmail);
-
 
 		if (num == 1) {
-			reviewService.plusLike(num, reviewId, likeNum);
+			reviewService.plusLike(reviewId, likeNum);
 			reviewLikesService.plusLike(reviewId, userEmail);
 			return true;
 		} else if (num == -1) {
-			reviewService.minusLike(num, reviewId, likeNum);
+			reviewService.minusLike(reviewId);
 			reviewLikesService.minusLike(reviewId, userEmail);
 			return true;
 		} else {
