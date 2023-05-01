@@ -32,7 +32,7 @@
                     <div style="display: flex; justify-content: flex-end;" class="itemPriceZone">
                         <span class="originalPrice" th:if="${review.item.originalPrice != 0}" th:text="${review.item.originalPrice}"></span>
                         <span class="discountRate" th:if="${review.item.discountRate != 0}" th:text="'('+${#numbers.formatDecimal(review.item.discountRate*100,0,0)}+'%)'"></span>
-                        <span class="price" th:text="${review.item.price}"></span><span style="font-size: 22px;">원</span>
+                        <span class="price" th:text="${review.item.price}"></span><span style="font-size: 22px; color: #583c42;">원</span>
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@
             <div id="OneReviewItemBox" style="display: flex; position: relative;">
                 <div class="white" style="position: absolute"></div>
                 <div id="itemRepresentativeImage">
-                    <img id="itemImage" th:each="itemImageUrl , status : ${itemImageUrls}" th:if="${review.item.id == itemImageUrl.item.id && itemImageUrl.imageUrl != null}" th:src="${itemImageUrl.imageUrl}">
+                    <img id="deletedItemImage" th:each="itemImageUrl , status : ${itemImageUrls}" th:if="${review.item.id == itemImageUrl.item.id && itemImageUrl.imageUrl != null}" th:src="${itemImageUrl.imageUrl}">
                 </div>
                 <div id="itemDetail">
                     <div style="display: flex" class="itemNameZone">
@@ -51,7 +51,7 @@
                     <div style="display: flex; justify-content: flex-end;" class="itemPriceZone">
                         <span class="originalPrice" th:if="${review.item.originalPrice != 0}" th:text="${review.item.originalPrice}"></span>
                         <span class="discountRate" th:if="${review.item.discountRate != 0}" th:text="'('+${#numbers.formatDecimal(review.item.discountRate*100,0,0)}+'%)'"></span>
-                        <span class="price" th:text="${review.item.price}"></span><span style="font-size: 21px; color: #7a6267;">원</span>
+                        <span class="price" th:text="${review.item.price}"></span><span style="font-size: 21px; color: #583c42;">원</span>
                     </div>
                 </div>
             </div>
