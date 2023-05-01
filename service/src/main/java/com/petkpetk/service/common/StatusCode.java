@@ -49,6 +49,9 @@ public enum StatusCode {
 
 
 
+	// 커뮤니티
+
+	ARTICLE_NOT_FOUND("게시글을 조회할 수 없습니다"),
 
 
 
