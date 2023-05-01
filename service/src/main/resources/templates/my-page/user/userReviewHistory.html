@@ -16,7 +16,7 @@
         <span class="MyPageTitle">리뷰 내역</span>
     </div>
 
-    <div id="reviewCount"></div>
+    <div id="reviewCount" th:if="${!reviewList.isEmpty()}"></div>
 
     <div  id="BigOneReviewBox" class="BigOneReviewBox" th:each="review, status:${reviewList}"  th:with="number=${status.index}" th:if="${!reviewList.isEmpty()}" >
         <a th:if="${review.item.deletedYn.equals('N')}" th:href="@{'/item/'+${review.item.id}}">
@@ -77,7 +77,7 @@
                     </div>
                     <div id="modifyBtns">
                         <form method="post" th:action="@{'/user/delete/'+${review.item.id}+'/'+${review.getId()}}">
-                            <input  th:class="'modifyBtn modifyBtn'+${review.id}" type="button" value="수정" th:onclick="'showModifyBox('+${review.id}+')'">
+                            <input  th:class="'modifyBtn modifyBtn'+${review.id}" th:if="${review.item.deletedYn.equals('N')}" type="button" value="수정" th:onclick="'showModifyBox('+${review.id}+')'">
                             <input th:class="'modifyBtn modifyBtn'+${review.id}" type="submit" value="삭제">
                         </form>
                     </div>
@@ -173,6 +173,10 @@
                 </form>
             </div>
         </div>
+    </div>
+
+    <div id="noneReviewBox" th:unless="${!reviewList.isEmpty()}">
+        등록 된 리뷰가 없습니다.
     </div>
 
 </div>
