@@ -174,6 +174,16 @@ public class ReviewService {
 		return ReviewResponse.from(review);
 	}
 
+	public List<ReviewResponse> getUserReviewList(String email) {
+		List<Review> reviewList = reviewRepository.findAllByUserAccountEmail(email);
+		List<ReviewResponse> reviewResponses = new ArrayList<>();
+
+		IntStream.range(0, reviewList.size())
+			.filter(i -> reviewList.get(i).getDeletedYn().equals("N"))
+			.forEach(i-> reviewResponses.add(ReviewResponse.from(reviewList.get(i))));
+
+		return reviewResponses;
+	}
 
 
 }

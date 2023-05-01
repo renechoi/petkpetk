@@ -129,13 +129,13 @@ input.removeImage:hover {
 #SoldOut {
     cursor: default;
     text-align: center;
-    width: 50px;
-    height: 20px;
+    width: 65px;
+    height: 30px;
     background: #ff415a;
     border-radius: 5px;
     color: white;
-    font-size: 13px;
-    line-height: 20px;
+    font-size: 17px;
+    line-height: 31px;
 }
 
 .statusClass {
@@ -750,6 +750,13 @@ span#discountRate {
         top: 1.5px;
         font-size: 18px;
     }
+
+    #SoldOut {
+        width: 50px;
+        height: 22px;
+        font-size: 13px;
+        line-height: 22px;
+    }
 }
 
 @media screen and (max-width: 660px) {
@@ -819,7 +826,12 @@ span#discountRate {
     .itemDetailName {
         font-size: 15px;
     }
-
+    #SoldOut {
+        width: 46px;
+        height: 19px;
+        font-size: 12px;
+        line-height: 19px;
+    }
 
 
     .totalWon, .totalText {
