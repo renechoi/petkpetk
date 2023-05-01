@@ -1,5 +1,6 @@
 package com.petkpetk.service.domain.shopping.dto.review.response;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,18 +35,20 @@ public class ReviewResponse {
 
 	private Double rating;
 
+	private LocalDateTime modifiedAt;
+
 	private List<ReviewImageDto> reviewImageDtos = new ArrayList<>();
 
-
-	public ReviewResponse(Long id, String content, Long likes, Item item, UserAccount userAccount, Double rating) {
+	public ReviewResponse(Long id, String content, Long likes, Item item, UserAccount userAccount,
+		Double rating, LocalDateTime modifiedAt) {
 		this.id = id;
 		this.content = content;
 		this.likes = likes;
 		this.item = item;
 		this.userAccount = userAccount;
 		this.rating = rating;
+		this.modifiedAt = modifiedAt;
 	}
-
 
 	public Review toEntity() {
 		return Review.of(
@@ -58,8 +61,8 @@ public class ReviewResponse {
 		);
 	}
 
-	public static ReviewResponse of(Long id,String content, Long likes, Item item, UserAccount userAccount, Double rating) {
-		return new ReviewResponse(id,content, likes, item, userAccount, rating);
+	public static ReviewResponse of(Long id,String content, Long likes, Item item, UserAccount userAccount, Double rating, LocalDateTime modifiedAt) {
+		return new ReviewResponse(id,content, likes, item, userAccount, rating, modifiedAt);
 	}
 
 	public static ReviewResponse from(Review review) {
@@ -76,6 +79,7 @@ public class ReviewResponse {
 			review.getItem(),
 			review.getUserAccount(),
 			review.getRating(),
+			review.getModifiedAt(),
 			reviewImageDtos
 		);
 	}
