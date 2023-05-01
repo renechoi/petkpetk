@@ -342,3 +342,9 @@ div#reviewCount {
     color: #d9cdcd;
     border-bottom: 2px solid #ebe5e5;
 }
+
+div#noneReviewBox {
+    text-align: center;
+    padding: 50px;
+    color: #dccbcb;
+}
