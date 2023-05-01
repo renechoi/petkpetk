@@ -156,7 +156,7 @@ public class ItemService {
 
 	public List<ItemImage> finditemImageUrls(List<Long> itemIds) {
 		List<ItemImage> itemImages = new ArrayList<>();
-		IntStream.range(0, (itemIds.size()-1))
+		IntStream.range(0, (itemIds.size()))
 			.forEach( i ->
 				itemImages.add(itemImageRepository.findAllByItem_Id(itemIds.get(i)))
 			);
