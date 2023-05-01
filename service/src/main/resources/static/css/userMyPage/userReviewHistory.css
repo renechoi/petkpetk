@@ -95,6 +95,13 @@ img#itemImage {
     border-top-left-radius: 5px;
     border-right: 1px solid #ffa3a3;
 }
+img#deletedItemImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-top-left-radius: 5px;
+    border-right: 1px solid #ffa3a3;
+}
 
 div#itemDetail {
     width: calc(100% - 200px);
@@ -341,4 +348,26 @@ div#reviewCount {
     font-size: 18px;
     color: #d9cdcd;
     border-bottom: 2px solid #ebe5e5;
+}
+
+div#noneReviewBox {
+    text-align: center;
+    padding: 50px;
+    color: #dccbcb;
+}
+
+span.productStatus {
+    border: 1px solid #ff465d;
+    border-radius: 5px;
+    width: 50px;
+    text-align: center;
+    font-size: 15px;
+    line-height: 22px;
+    background-color: #ff465d;
+    color: white;
+    margin-right: 5px;
+}
+
+span.itemName:hover {
+    text-decoration: underline;
 }
