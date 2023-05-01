@@ -1,10 +1,12 @@
 package com.petkpetk.service.domain.shopping.service.item;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,9 +24,11 @@ import com.petkpetk.service.domain.shopping.dto.item.request.ItemRegisterRequest
 import com.petkpetk.service.domain.shopping.dto.item.response.ItemResponse;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.shopping.entity.item.ItemImage;
+import com.petkpetk.service.domain.shopping.entity.review.Review;
 import com.petkpetk.service.domain.shopping.exception.ItemNotFoundException;
 import com.petkpetk.service.domain.shopping.repository.item.ItemImageRepository;
 import com.petkpetk.service.domain.shopping.repository.item.ItemRepository;
+import com.petkpetk.service.domain.shopping.repository.review.ReviewRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -33,8 +37,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ItemService {
 	private final ItemRepository itemRepository;
+	private final ReviewRepository reviewRepository;
 	private final ItemImageRepository itemImageRepository;
 	private final ImageLocalRepository<ItemImage> imageLocalRepository;
+
+
+	@Value("${LOCAL_ITEM_IMAGE_UPLOAD_PATH}")
+	private String filePath;
+
 
 	@Transactional(readOnly = true)
 	public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
@@ -42,7 +52,8 @@ public class ItemService {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<ManageItemDto> getItemList(ItemSearchDto itemSearchDto, Pageable pageable, String email) {
+	public Page<ManageItemDto> getItemList(ItemSearchDto itemSearchDto, Pageable pageable,
+		String email) {
 		return itemRepository.getManageList(itemSearchDto, pageable, email);
 	}
 
@@ -51,20 +62,22 @@ public class ItemService {
 	}
 
 	public void registerItem(ItemDto itemDto) {
-		List<ItemImage> images = ImageConverter.of(ItemImage::from).convertToImages(itemDto.getRawImages());
+		List<ItemImage> images = ImageConverter.of(ItemImage::from)
+			.convertToImages(itemDto.getRawImages());
 
 		// 영속화 
 		itemRepository.save(itemDto.toEntity(images));
 
 		// local 저장
 		IntStream.range(0, images.size())
-			.forEach(image -> imageLocalRepository.save(images.get(image), itemDto.getRawImages().get(image)));
+			.forEach(image -> imageLocalRepository.save(images.get(image),
+				itemDto.getRawImages().get(image)));
 	}
-
 
 	public ItemResponse updateItem(ItemRegisterRequest itemUpdateRequest) {
 
-		Item item = itemRepository.findById(itemUpdateRequest.getId()).orElseThrow(ItemNotFoundException::new);
+		Item item = itemRepository.findById(itemUpdateRequest.getId())
+			.orElseThrow(ItemNotFoundException::new);
 		List<ItemImage> itemImages = item.getImages();
 		itemUpdateRequest.getImages().removeIf(MultipartFile::isEmpty);
 
@@ -80,7 +93,8 @@ public class ItemService {
 				: ItemImage.from(image))
 			.collect(Collectors.toList());
 
-		List<ItemImage> allRequestedImages = Stream.concat(notModifiedImages.stream(), newlyAddedImages.stream())
+		List<ItemImage> allRequestedImages = Stream.concat(notModifiedImages.stream(),
+				newlyAddedImages.stream())
 			.collect(Collectors.toList());
 
 		// todo : itemImages(DB) 중에서 allRequestedImages 없으면 삭제 대상.
@@ -113,20 +127,40 @@ public class ItemService {
 		List<ItemImage> itemImages = itemImageRepository.findByItemIdOrderByIdAsc(itemId);
 		itemImages.forEach(itemImage -> itemImage.setDeletedYn("Y"));
 
-		imageLocalRepository.deleteFiles(itemImages);
+		IntStream.range(0, itemImages.size())
+			.forEach(i ->
+				imageLocalRepository.deleteFile(filePath, itemImages.get(i).getUniqueName())
+			);
 	}
 
 	private Item findById(Long itemId) {
 		return itemRepository.findById(itemId).orElseThrow(ItemNotFoundException::new);
 	}
 
-
 	private List<ItemImage> findByItemIdOrderByIdAsc(Long id) {
 		return itemImageRepository.findByItemIdOrderByIdAsc(id);
 	}
+
 	public Item getItem(Long id) {
 		return itemRepository.findById(id).get();
 	}
 
+	public List<Item> getReviewItemList(List<Review> reviewList) {
 
+		List<Item> itemList = new ArrayList<>();
+		reviewList.forEach(
+			review -> itemList.add(itemRepository.findById(review.getItem().getId()).get()));
+
+		return itemList;
+	}
+
+	public List<ItemImage> finditemImageUrls(List<Long> itemIds) {
+		List<ItemImage> itemImages = new ArrayList<>();
+		IntStream.range(0, (itemIds.size()-1))
+			.forEach( i ->
+				itemImages.add(itemImageRepository.findAllByItem_Id(itemIds.get(i)))
+			);
+
+		return itemImages;
+	}
 }
