@@ -20,8 +20,6 @@ public class OrderDto {
 	private double salePercent;
 	private Long salePrice;
 
-
-
 	public Order toEntity() {
 		return EntityAndDtoConverter.convertToEntity(this, Order.class);
 	}
