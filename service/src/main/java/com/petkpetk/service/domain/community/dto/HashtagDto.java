@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class HashtagDto {
 
 	private Long id;
-	private String hashTagName;
+	private String hashtagName;
 	private Set<Article> articles = new LinkedHashSet<>();
 
 	public static HashtagDto from(Hashtag hashtag) {
