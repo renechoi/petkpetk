@@ -1,9 +1,13 @@
 package com.petkpetk.service.domain.shopping.controller;
 
+import java.security.Principal;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.petkpetk.service.domain.shopping.dto.order.OrderHistoryDto;
 import com.petkpetk.service.domain.shopping.dto.order.request.OrderRequest;
 import com.petkpetk.service.domain.shopping.entity.delivery.Delivery;
 import com.petkpetk.service.domain.shopping.entity.order.Order;
@@ -77,6 +82,20 @@ public class OrderController {
 
 		orderService.cancelOrder(order, delivery);
 		return ResponseEntity.ok(order);
+	}
+
+
+	@GetMapping(value = {"/orders", "/orders/{page}"})
+	public String orderHistory(@PathVariable("page") Optional<Integer> page, @AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal, Model model){
+		PageRequest pageRequest = PageRequest.of(page.orElse(0), 4);
+
+		Page<OrderHistoryDto> orderHistoryDtos = orderService.getOrders(userAccountPrincipal.getName(), pageRequest);
+
+		model.addAttribute("orders", orderHistoryDtos);
+		model.addAttribute("page", pageRequest.getPageNumber());
+		model.addAttribute("maxPage", 5);
+
+		return "order/orderHist";
 	}
 	
 	
