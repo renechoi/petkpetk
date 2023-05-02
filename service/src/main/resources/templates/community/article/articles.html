@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 목록 조회하기</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/article-basic.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/article.css}">
+</head>
+<body>
+<h1>게시글 목록</h1>
+<form action="#" method="get">
+    <div>
+        <label for="searchType">Search Type:</label>
+        <select id="searchType" name="searchType">
+            <option th:each="type : ${searchTypes}" th:value="${type}" th:text="${type}"></option>
+        </select>
+    </div>
+    <div>
+        <label for="searchValue">Search Value:</label>
+        <input type="text" id="searchValue" name="searchValue" value="" />
+    </div>
+    <div>
+        <button type="submit">Search</button>
+    </div>
+</form>
+
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Author</th>
+        <th>Title</th>
+        <th>Content</th>
+        <th>Hashtags</th>
+        <th>CreatedAt</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="article : ${articles}">
+        <td th:text="${article.id}"></td>
+        <td th:text="${article.name}"></td>
+        <td>
+            <a th:text="${article.title}" th:href="@{/community/articles/__${article.id}__}" ></a>
+        </td>
+        <td th:text="${article.content}"></td>
+        <td>
+            <span th:each="hashtag : ${article.hashtags}">
+                <span th:text="${hashtag}"></span>
+                <span th:unless="${hashtagStat.last}">, </span>
+            </span>
+        </td>
+        <td class="date" th:text="${#temporals.format(article.createdAt, 'yyyy.MM.dd HH:mm')}"></td>
+
+<!--        <td th:text="${article.createdAt}"></td>-->
+    </tr>
+    </tbody>
+</table>
+
+
+
+<div>
+    <nav>
+        <ul class="pagination" id="pagination">
+            <li class="page-item">
+                <a class="page-link"
+                   th:text="'previous'"
+                   th:href="@{/community/articles(page=${articles.number - 1}, searchType=${param.searchType}, searchValue=${param.searchValue})}"
+                   th:classappend="${articles.number <= 0} ? ' disabled' : ''"
+                   aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li th:classappend="${pageNumber == articles.number} ? ' active' : ''" th:each="pageNumber : ${pageBars}">
+                <a class="page-link"
+                   th:text="${pageNumber + 1}"
+                   th:href="@{/community/articles(page=${pageNumber}, searchType=${param.searchType}, searchValue=${param.searchValue})}">
+                    <span th:text="${pageNumber + 1}"></span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link"
+                   th:text="'next'"
+                   th:href="@{/community/articles(page=${articles.number + 1}, searchType=${param.searchType}, searchValue=${param.searchValue})}"
+                   th:classappend="${articles.number >= articles.totalPages - 1} ? ' disabled' : ''"
+                   aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+</div>
+
+
+</body>
+</html>
