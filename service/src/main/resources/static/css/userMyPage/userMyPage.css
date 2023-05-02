@@ -327,3 +327,8 @@ input.deleteProfile:hover{
     background-color: #fff3f3;
     color: #ff5d72;
 }
+div#textBox {
+    height: 20px;
+    font-size: 13px;
+    padding: 5px 2px;
+}

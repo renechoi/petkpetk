@@ -69,15 +69,37 @@ public class APIController {
 		return result;
 	}
 
-	@RequestMapping("checkPass")
+	@RequestMapping("/checkPass")
 	@ResponseBody
 	public boolean checkPass(String password, String email) {
 		System.out.println("password = " + password);
 		System.out.println("email = " + email);
 		UserAccount userAccount = userAccountService.searchUser(email).orElseThrow(
-				UserNotFoundException::new);
+			UserNotFoundException::new);
 
 		return userAccount.checkPassword(password, passwordEncoder);
+
+	}
+
+	@RequestMapping("/checkNickName")
+	@ResponseBody
+	public boolean checkNickName(String nickName, String email) {
+		if (email != null) {
+			UserAccount userAccount = userAccountService.searchUser(email).orElseThrow(
+				UserNotFoundException::new);
+			if (userAccount.getNickname().equals(nickName)) {
+				return false;
+			} else {
+				return userAccountService.searchUserByNickName(nickName).isPresent();
+			}
+		}
+			return userAccountService.searchUserByNickName(nickName).isPresent();
+
+	}
+	@RequestMapping("/checkEmail")
+	@ResponseBody
+	public boolean checkEmail(String email) {
+			return userAccountService.searchUser(email).isPresent();
 
 	}
 }

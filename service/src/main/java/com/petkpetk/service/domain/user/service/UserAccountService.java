@@ -147,6 +147,10 @@ public class UserAccountService {
 
 		return profileImage;
 	}
+
+	public Optional<UserAccount> searchUserByNickName(String nickName) {
+		return userAccountRepository.findByNickname(nickName);
+	}
 }
 
 
