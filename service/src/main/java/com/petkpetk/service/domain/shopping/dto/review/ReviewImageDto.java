@@ -1,5 +1,6 @@
 package com.petkpetk.service.domain.shopping.dto.review;
 
+import com.petkpetk.service.config.converter.EntityAndDtoConverter;
 import com.petkpetk.service.domain.shopping.entity.review.ReviewImage;
 
 import lombok.Data;
@@ -10,26 +11,50 @@ import lombok.NoArgsConstructor;
 public class ReviewImageDto {
 
 	private Long id;
-
-	private  String imageName;
-
-	private  String originalImageName;
-
+	private  String uniqueName;
+	private  String originalName;
 	private String imageUrl;
 
-	public ReviewImageDto(String imageName, String originalImageName, String imageUrl) {
-		this.imageName = imageName;
-		this.originalImageName = originalImageName;
+	public ReviewImageDto(String uniqueName, String originalName, String imageUrl) {
+		this.uniqueName = uniqueName;
+		this.originalName = originalName;
 		this.imageUrl = imageUrl;
 	}
 
-	public static ReviewImageDto of(ReviewImage reviewImage) {
-		return ReviewImageDto.of(reviewImage.getImageName(), reviewImage.getOriginalImageName(),
-			reviewImage.getImageUrl());
+	public ReviewImageDto(String originalName) {
+		this.originalName = originalName;
 	}
 
-	public static ReviewImageDto of(String imageName, String originalImageName, String imageUrl){
-		return new ReviewImageDto(imageName,originalImageName,imageUrl);
+	public ReviewImageDto( String originalName, String uniqueName) {
+		this.uniqueName = uniqueName;
+		this.originalName = originalName;
+	}
+
+	public static ReviewImageDto of(ReviewImage reviewImage) {
+		return ReviewImageDto.of(reviewImage.getUniqueName(), reviewImage.getOriginalName(), reviewImage.getImageUrl());
+	}
+
+	public static ReviewImageDto of(String uniqueName, String originalName, String imageUrl) {
+		return new ReviewImageDto(uniqueName, originalName, imageUrl);
+	}
+
+	public static ReviewImageDto from(ReviewImage reviewImage) {
+		return EntityAndDtoConverter.convertToDto(reviewImage, ReviewImageDto.class);
+	}
+
+	public static ReviewImageDto of(String originalName) {
+		return new ReviewImageDto(originalName);
+	}
+
+	public static ReviewImageDto of( String originalName, String uniqueName) {
+		return new ReviewImageDto(originalName, uniqueName);
 	}
 
 }
+
+
+
+
+
+
+

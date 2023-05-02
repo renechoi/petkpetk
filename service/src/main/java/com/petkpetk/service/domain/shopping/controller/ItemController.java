@@ -21,10 +21,11 @@ import com.petkpetk.service.domain.shopping.dto.item.ItemDto;
 import com.petkpetk.service.domain.shopping.dto.item.ItemImageDto;
 import com.petkpetk.service.domain.shopping.dto.item.request.ItemRegisterRequest;
 import com.petkpetk.service.domain.shopping.dto.item.response.ItemResponse;
+import com.petkpetk.service.domain.shopping.dto.review.request.ReviewRegisterRequest;
 import com.petkpetk.service.domain.shopping.dto.review.response.ReviewResponse;
 import com.petkpetk.service.domain.shopping.service.item.ItemService;
 import com.petkpetk.service.domain.shopping.service.review.ReviewService;
-import com.petkpetk.service.domain.shopping.service.review.likes.LikesService;
+import com.petkpetk.service.domain.shopping.service.review.likes.ReviewLikesService;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 import com.petkpetk.service.domain.user.service.UserAccountService;
 
@@ -39,7 +40,7 @@ public class ItemController {
 
 	private final ItemService itemService;
 	private final UserAccountService userAccountService;
-	private final LikesService likesService;
+	private final ReviewLikesService reviewLikesService;
 	private final ReviewService reviewService;
 
 	@GetMapping("/my-page")
@@ -57,6 +58,7 @@ public class ItemController {
 	// 상품 등록
 	@PostMapping("/new")
 	public String registerItem(@Valid ItemRegisterRequest itemRegisterRequest, Authentication authentication) {
+		itemRegisterRequest.setTotalRating(5.0);
 		itemService.registerItem(
 			ItemDto.from(itemRegisterRequest, userAccountService.getCurrentPrincipal(authentication)));
 		return "redirect:/";
@@ -66,6 +68,9 @@ public class ItemController {
 	@GetMapping("/{itemId}")
 	public String itemDetail(Model model, @PathVariable("itemId") Long itemId, Authentication authentication) {
 		ItemResponse itemResponse = itemService.getItemDetail(itemId);
+		UserAccount itemUser = userAccountService.searchUser(itemResponse.getUserAccount().getEmail()).get();
+
+		System.out.println("itemUser = " + itemUser);
 
 		String email = "";
 		if (authentication != null && authentication.isAuthenticated()) {
@@ -73,13 +78,15 @@ public class ItemController {
 			model.addAttribute("userEmail", email);
 			UserAccount userAccount = userAccountService.searchUser(email).get();
 			HashMap<String, String> hashMap;
-			hashMap = likesService.findHistoryLikeByUser(userAccount.getId());
+			hashMap = reviewLikesService.findHistoryLikeByUser(userAccount.getId());
 			model.addAttribute("reviewHashMap",hashMap);
 		}
 		List<ReviewResponse> reviewList = reviewService.getReviewList(itemId);
 
 		model.addAttribute("item", itemResponse);
+		model.addAttribute("itemUser", itemUser);
 		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("reviewDtos", new ReviewRegisterRequest());
 		return "item/itemDetail";
 
 	}

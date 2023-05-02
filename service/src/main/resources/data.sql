@@ -40,21 +40,74 @@ insert into user_account (deleted_yn, created_at, modified_at, created_by, modif
 
 
 
+INSERT INTO item (created_at,created_by,modified_at,modified_by,deleted_yn, item_name, price, item_amount, item_detail, item_status, original_price, discount_rate, total_rating,  user_account_id) VALUES
+    (now(),'페크페크', now(),'페크페크','N','item1', 10000, 10, 'item1 detail', 'SELL', 10000,2,2, 2);
 
-#
-#
-#
-# INSERT INTO item (created_at,created_by,modified_at,modified_by,deleted_yn, item_name, price, item_amount, item_detail, item_status, user_account_id)
-# VALUES
-#     (now(),'페크페크', now(),'페크페크','N','item1', 1000, 10, 'item1 detail', 'SELL', 2),
-#     (now(),'페크페크', now(),'페크페크','N','item1', 1000, 10, 'item1 detail', 'SELL', 2),
-#     (now(),'페크페크', now(),'페크페크','N','item1', 1000, 10, 'item1 detail', 'SELL', 2);
-#
-# INSERT INTO item_image (created_at,created_by,modified_at,modified_by,deleted_yn,unique_name, original_name, image_url, representative_image_yn, item_id)
-# VALUES
-#     (now(),'페크페크', now(),'페크페크','N','12341-uniqueName1', 'originalName1', 'imageUrl1', 'Y', 1),
-#     (now(),'페크페크', now(),'페크페크','N','12345-uniqueName2', 'originalName2', 'imageUrl2', 'N', 1),
-#     (now(),'페크페크', now(),'페크페크','N','12345-uniqueName3', 'originalName3', 'imageUrl2', 'Y', 2),
-#     (now(),'페크페크', now(),'페크페크','N','34564-uniqueName4', 'originalName4', 'imageUrl2', 'Y', 3),
-#     (now(),'페크페크', now(),'페크페크','N','36345-uniqueName5', 'originalName5', 'imageUrl2', 'N', 3);
-#
+INSERT INTO item_image (created_at,created_by,modified_at,modified_by,deleted_yn,unique_name, original_name, image_url, representative_image_yn, item_id) VALUES
+                                                                                      (now(),'페크페크', now(),'페크페크','N', 'file:///Users/Rene/Documents/rene/projectFiles/jpa-shopping-practice-files/34124.jpeg', '34124.jpeg', '/images/item/34124.jpeg', 'Y', 1),
+                                                                                      (now(),'페크페크', now(),'페크페크','N', 'file:///Users/Rene/Documents/rene/projectFiles/jpa-shopping-practice-files/1224.jpeg', '1224.jpeg', '/images/item/1224.jpeg', 'N', 1),
+                                                                                      (now(),'페크페크', now(),'페크페크','N', 'file:///Users/Rene/Documents/rene/projectFiles/jpa-shopping-practice-files/스크린샷 2023-04-19 오후 3.12.41.png', '스크린샷 2023-04-19 오후 3.12.41.png', '/images/item/스크린샷 2023-04-19 오후 3.12.41.png', 'N', 1),
+                                                                                      (now(),'페크페크', now(),'페크페크','N', 'file:///Users/Rene/Documents/rene/projectFiles/jpa-shopping-practice-files/53232.jpeg', '53232.jpeg', '/images/item/53232.jpeg', 'N', 1),
+                                                                                      (now(),'페크페크', now(),'페크페크','N', 'file:///Users/Rene/Documents/rene/projectFiles/jpa-shopping-practice-files/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg', 'KakaoTalk_Photo_2023-01-05-22-29-06.jpeg', '/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg', 'N',1);
+
+
+insert into article( created_at, created_by,  modified_at, modified_by, deleted_yn, category_type, title, content, hit, user_account_id) VALUES
+(now(),'테스트 유저', now(),'테스트 유저1','N','DOG', '테스트용 타이틀입니다1', '테스트용 내용입니다1', 0, 1),
+(now(),'테스트 유저', now(),'테스트 유저2','N','DOG', '테스트용 타이틀입니다2', '테스트용 내용입니다2', 1, 1),
+(now(),'테스트 유저', now(),'테스트 유저3','N','CAT', '테스트용 타이틀입니다3', '테스트용 내용입니다3', 2, 1),
+(now(),'테스트 유저', now(),'테스트 유저4','N','CAT', '테스트용 타이틀입니다4', '테스트용 내용입니다4', 3, 1),
+(now(),'테스트 유저', now(),'테스트 유저5','N','CAT', '테스트용 타이틀입니다5', '테스트용 내용입니다5', 4, 2),
+(now(),'테스트 유저', now(),'테스트 유저6','N','CAT', '테스트용 타이틀입니다6', '테스트용 내용입니다6', 5, 2),
+(now(),'테스트 유저', now(),'테스트 유저','N','DOG', '테스트용 타이틀입니다7', '테스트용 내용입니다7', 1, 2),
+(now(),'테스트 유저', now(),'테스트 유저','N','DOG', '테스트용 타이틀입니다8', '테스트용 내용입니다8', 2, 2),
+(now(),'테스트 유저', now(),'테스트 유저','N','DOG', '테스트용 타이틀입니다9', '테스트용 내용입니다9', 3, 2),
+(now(),'테스트 유저', now(),'테스트 유저','N','CAT', '테스트용 타이틀입니다10', '테스트용 내용입니다10', 4, 2),
+(now(),'테스트 유저', now(),'테스트 유저','N','DOG', '테스트용 타이틀입니다11', '테스트용 내용입니다11', 10, 2),
+(now(),'테스트 유저', now(),'테스트 유저','N','DOG', '테스트용 타이틀입니다12', '테스트용 내용입니다12', 10, 2),
+(now(),'테스트 유저', now(),'테스트 유저','N','DOG', '테스트용 타이틀입니다13', '테스트용 내용입니다13', 10, 2),
+(now(),'테스트 유저', now(),'테스트 유저','N','DOG', '테스트용 타이틀입니다14', '테스트용 내용입니다14', 10, 2),
+(now(),'테스트 유저', now(),'테스트 유저','N','DOG', '테스트용 타이틀입니다15', '테스트용 내용입니다15', 0, 2),
+(now(),'테스트 유저', now(),'테스트 유저','N','DOG', '테스트용 타이틀입니다16', '테스트용 내용입니다16', 0, 1),
+(now(),'테스트 유저', now(),'테스트 유저','N','DOG', '테스트용 타이틀입니다17', '테스트용 내용입니다17', 0, 1),
+(now(),'테스트 유저', now(),'테스트 유저','N','DOG', '테스트용 타이틀입니다18', '테스트용 내용입니다18', 0, 1),
+(now(),'테스트 유저', now(),'테스트 유저','N','DOG', '테스트용 타이틀입니다19', '테스트용 내용입니다19', 0, 1),
+(now(),'테스트 유저', now(),'테스트 유저','N','DOG', '테스트용 타이틀입니다20', '테스트용 내용입니다20', 0, 1),
+(now(),'테스트 유저', now(),'테스트 유저','N','DOG', '테스트용 타이틀입니다21', '테스트용 내용입니다21', 0, 1),
+(now(),'테스트 유저', now(),'테스트 유저','N','DOG', '테스트용 타이틀입니다22', '테스트용 내용입니다22', 0, 1),
+(now(),'테스트 유저', now(),'테스트 유저','N','DOG', '테스트용 타이틀입니다23', '테스트용 내용입니다23', 0, 1),
+(now(),'테스트 유저', now(),'테스트 유저','N','DOG', '테스트용 타이틀입니다24', '테스트용 내용입니다24', 0, 1);
+
+INSERT INTO article_image (created_at,created_by,modified_at,modified_by,deleted_yn,unique_name, original_name, image_url, representative_image_yn, article_id) VALUES
+                                                                                                                                                              (now(),'페크페크', now(),'페크페크','N', 'abcde-34124.jpeg', '34124.jpeg', '/images/item/34124.jpeg', 'Y', 1),
+                                                                                                                                                              (now(),'페크페크', now(),'페크페크','N', 'abcde-1224.jpeg', '1224.jpeg', '/images/item/1224.jpeg', 'N', 1),
+                                                                                                                                                              (now(),'페크페크', now(),'페크페크','N', 'abcde-스크린샷 2023-04-19 오후 3.12.41.png', '스크린샷 2023-04-19 오후 3.12.41.png', '/images/item/스크린샷 2023-04-19 오후 3.12.41.png', 'N', 1),
+                                                                                                                                                              (now(),'페크페크', now(),'페크페크','N', 'abcde-53232.jpeg', '53232.jpeg', '/images/item/53232.jpeg', 'N', 2),
+                                                                                                                                                              (now(),'페크페크', now(),'페크페크','N', 'abcde-KakaoTalk_Photo_2023-01-05-22-29-06.jpeg', 'KakaoTalk_Photo_2023-01-05-22-29-06.jpeg', '/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg', 'N',2);
+
+insert into hashtag(created_at,created_by,modified_at,modified_by,deleted_yn, hash_tag_name) VALUES
+(now(),'테스트 유저', now(),'테스트 유저','N', 'hashtag1'),
+(now(),'테스트 유저', now(),'테스트 유저','N', 'hashtag2'),
+(now(),'테스트 유저', now(),'테스트 유저','N', 'hashtag3'),
+(now(),'테스트 유저', now(),'테스트 유저','N', 'hashtag4'),
+(now(),'테스트 유저', now(),'테스트 유저','N', 'hashtag5'),
+(now(),'테스트 유저', now(),'테스트 유저','N', 'hashtag6'),
+(now(),'테스트 유저', now(),'테스트 유저','N', 'hashtag7'),
+(now(),'테스트 유저', now(),'테스트 유저','N', 'hashtag8'),
+(now(),'테스트 유저', now(),'테스트 유저','N', 'hashtag9'),
+(now(),'테스트 유저', now(),'테스트 유저','N', 'hashtag10'),
+(now(),'테스트 유저', now(),'테스트 유저','N', 'hashtag11');
+
+
+insert into article_hashtag(article_id, hashtag_id) VALUES
+(1,1),
+(2,2),
+(3,3),
+(4,4),
+(5,5),
+(1,2),
+(1,3),
+(2,4),
+(2,5),
+(5,1),
+(6,6),
+(7,7);

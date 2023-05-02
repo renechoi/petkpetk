@@ -32,11 +32,20 @@
                         </li>
                         <li class="productDetail" th:text="${item.itemDetail}" title="상품 내용">내용</li>
                         <li class="productStar">
-                            <img class="star" th:src="@{/images/star4_5.png}">
-                            <span class="reviewCount">(2)</span>
+                            <img th:if="${item.totalRating == 5}" class="star" th:src="@{/images/star5_0.png}">
+                            <img th:if="${item.totalRating == 4.5}" class="star" th:src="@{/images/star4_5.png}">
+                            <img th:if="${item.totalRating == 4}" class="star" th:src="@{/images/star4_0.png}">
+                            <img th:if="${item.totalRating == 3.5}" class="star" th:src="@{/images/star3_5.png}">
+                            <img th:if="${item.totalRating == 3}" class="star" th:src="@{/images/star3_0.png}">
+                            <img th:if="${item.totalRating == 2.5}" class="star" th:src="@{/images/star2_5.png}">
+                            <img th:if="${item.totalRating == 2}" class="star" th:src="@{/images/star2_0.png}">
+                            <img th:if="${item.totalRating == 1.5}" class="star" th:src="@{/images/star1_5.png}">
+                            <img th:if="${item.totalRating == 1}" class="star" th:src="@{/images/star1_0.png}">
+                            <img th:if="${item.totalRating == 0.5}" class="star" th:src="@{/images/star0_5.png}">
+                            <span class="reviewCount" th:text="'('+${item.reviewCount}+')'">리뷰갯수</span>
                         </li>
-                        <li class="productPriceDetail"><span class="originalPrice">60000</span>
-                            <span class="productPrice">[[${item.price}]]</span><span class="won">원</span>
+                        <li class="productPriceDetail"><span th:if="${item.discountRate!=0}" class="originalPrice" th:text="${item.originalPrice}"></span>
+                            <span th:if="${item.discountRate!=0}" class="discountRate" th:text="'('+${item.discountRate}+'%)'"></span><span class="productPrice">[[${item.price}]]</span><span class="won">원</span>
                         </li>
                     </ul>
                 </div>

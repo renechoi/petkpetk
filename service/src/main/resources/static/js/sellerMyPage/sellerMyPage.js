@@ -28,9 +28,14 @@ function hideNewPassBox() {
     var modifyPass = document.getElementById("modifyPass");
     var modifyInfo = document.getElementById("modifyInfo");
     var newPasswordForm = document.getElementById("newPasswordForm");
+    var newPassword = document.getElementById("newPassword");
+    var reNewPassword = document.getElementById("reNewPassword");
+
 
     modifyPass.style.display = "";
     modifyInfo.style.display = "";
+    newPassword.value = "";
+    reNewPassword.value = "";
     newPasswordForm.style.display = "none";
 }
 
@@ -62,21 +67,79 @@ function toggleRePass() {
     }
 }
 
-var newPassword = document.getElementById("newPassword");
-var reNewPassword = document.getElementById("reNewPassword");
+var newInfoForm = document.getElementById("newInfoForm");
+newInfoForm.addEventListener('submit', function (event) {
+    var name = document.querySelector("#newName");
+    var nickName = document.querySelector("#newNickName");
+    var zipcode = document.querySelector("#zipcode");
+    var address2 = document.querySelector("#address2");
+    var newBusinessName = document.querySelector("#newBusinessName");
+    var newPhoneNumber = document.querySelector("#newPhoneNumber");
 
-function checkPassword() {
-    if (reNewPassword.value != newPassword.value) {
-        alert("비밀번호가 일치하지 않습니다.")
-        reNewPassword.focus();
-    }
-}
-
-var newPassForm = document.getElementById("newPassForm");
-newPassForm.addEventListener('submit', function (event) {
-
-    if (reNewPassword.value != newPassword.value) {
+    if ($("#newName").val() == "") {
+        alert("이름을 입력해주세요.");
+        name.scrollIntoView({behavior: "smooth", block: "start"});
+        name.focus();
         event.preventDefault();
         return false;
     }
+    if($("#newNickName").val() == "") {
+        alert("닉네임을 입력해주세요.");
+        nickName.scrollIntoView({behavior: "smooth", block: "start"});
+        nickName.focus();
+        event.preventDefault();
+        return false;
+    }
+    if($("#newBusinessName").val() == "") {
+        alert("상호명을 입력해주세요.");
+        newBusinessName.scrollIntoView({behavior: "smooth", block: "start"});
+        newBusinessName.focus();
+        event.preventDefault();
+        return false;
+    }
+    if($("#newPhoneNumber").val() == "") {
+        alert("전화번호를 입력해주세요.");
+        newPhoneNumber.scrollIntoView({behavior: "smooth", block: "start"});
+        newPhoneNumber.focus();
+        event.preventDefault();
+        return false;
+    }
+    if($("#zipcode").val() == "") {
+        alert("주소를 검색해주세요.");
+        zipcode.scrollIntoView({behavior: "smooth", block: "start"});
+        zipcode.focus();
+        event.preventDefault();
+        return false;
+    }
+    if($("#address2").val() == "") {
+        alert("상세주소를 입력해주세요.");
+        address2.scrollIntoView({behavior: "smooth", block: "start"});
+        address2.focus();
+        event.preventDefault();
+        return false;
+    }
+
+
+});
+
+
+var newPassForm = document.getElementById("newPassForm");
+
+newPassForm.addEventListener('submit', function (event) {
+    var originalPassWord = document.getElementById("originalPassWord");
+    var newPassword = document.getElementById("newPassword");
+    var reNewPassword = document.getElementById("reNewPassword");
+
+    if (reNewPassword.value != newPassword.value) {
+        alert("비밀번호가 일치하지 않습니다.");
+        reNewPassword.focus();
+        event.preventDefault();
+        return false;
+    }
+    if (newPassword.value === originalPassWord.value) {
+        alert("기존 비밀번호와 일치합니다.");
+        event.preventDefault();
+        return false;
+    }
+
 });

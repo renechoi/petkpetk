@@ -26,6 +26,10 @@ public class ItemResponse {
 	@NotBlank(message = "상품명을 입력해주세요.")
 	private String itemName;
 
+	private Long originalPrice;
+
+	private Double discountRate;
+
 	@NotNull(message = "가격을 입력해주세요.")
 	private Long price;
 
@@ -39,33 +43,41 @@ public class ItemResponse {
 
 	private UserAccount userAccount;
 
+	private Double totalRating;
+
 	private List<ItemImageDto> itemImageDtos = new ArrayList<>();
 
 	public Item toEntity() {
 		return Item.of(
 			this.itemName,
+			this.originalPrice,
+			this.discountRate,
 			this.price,
 			this.itemAmount,
 			this.itemDetail,
 			this.itemStatus,
 			null, // TODO : null 처리
-			this.userAccount
+			this.userAccount,
+			this.totalRating
 		);
 	}
 
-	public ItemResponse(String itemName, Long price, Long itemAmount, String itemDetail,
-		ItemStatus itemStatus, UserAccount userAccount) {
+	public ItemResponse(String itemName,Long originalPrice, Double discountRate, Long price, Long itemAmount, String itemDetail,
+		ItemStatus itemStatus, UserAccount userAccount, Double totalRating) {
 		this.itemName = itemName;
-		this.price = price;
+		this.originalPrice = originalPrice;
+		this.discountRate = discountRate;
+		this.price = (long)(originalPrice - originalPrice*discountRate);
 		this.itemAmount = itemAmount;
 		this.itemDetail = itemDetail;
 		this.itemStatus = itemStatus;
 		this.userAccount = userAccount;
+		this.totalRating = totalRating;
 	}
 
-	public static ItemResponse of(String itemName, Long price, Long itemAmount, String itemDetail,
-		ItemStatus itemStatus, UserAccount userAccount) {
-		return new ItemResponse(itemName, price, itemAmount, itemDetail, itemStatus, userAccount);
+	public static ItemResponse of(String itemName,Long originalPrice, Double discountRate, Long price, Long itemAmount, String itemDetail,
+		ItemStatus itemStatus, UserAccount userAccount, Double totalRating) {
+		return new ItemResponse(itemName,originalPrice, discountRate, (long)(originalPrice - originalPrice*discountRate), itemAmount, itemDetail, itemStatus, userAccount, totalRating);
 	}
 
 	public static ItemResponse from(Item item) {
@@ -78,11 +90,14 @@ public class ItemResponse {
 		return new ItemResponse(
 			itemEntity.getId(),
 			itemEntity.getItemName(),
+			itemEntity.getOriginalPrice(),
+			itemEntity.getDiscountRate(),
 			itemEntity.getPrice(),
 			itemEntity.getItemAmount(),
 			itemEntity.getItemDetail(),
 			itemEntity.getItemStatus(),
 			itemEntity.getUserAccount(),
+			itemEntity.getTotalRating(),
 			itemImageDtos
 		);
 	}

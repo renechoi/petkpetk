@@ -1,19 +1,21 @@
 package com.petkpetk.service.domain.shopping.controller;
 
 import java.util.List;
+import java.util.stream.IntStream;
+
+import javax.validation.Valid;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.petkpetk.service.domain.shopping.dto.item.response.ItemResponse;
 import com.petkpetk.service.domain.shopping.dto.review.ReviewDto;
-import com.petkpetk.service.domain.shopping.dto.review.request.ReviewRequest;
-import com.petkpetk.service.domain.shopping.dto.review.response.ReviewResponse;
+import com.petkpetk.service.domain.shopping.dto.review.ReviewImageDto;
+import com.petkpetk.service.domain.shopping.dto.review.request.ReviewRegisterRequest;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.shopping.service.item.ItemService;
 import com.petkpetk.service.domain.shopping.service.review.ReviewService;
@@ -35,20 +37,19 @@ public class ReviewController {
 
 	@PostMapping("/new")
 	public String addReview(@RequestParam("itemId") Long itemId, Authentication authentication,
-		ReviewRequest reviewRequest, Model model) {
+		@Valid ReviewRegisterRequest reviewRegisterRequest) {
 
 		String email = authentication.getName();
-
 		Item item = itemService.getItem(itemId);
 		UserAccount userAccount = userAccountService.searchUser(email).get();
 
-		reviewRequest.setUserAccount(userAccount);
-		reviewRequest.setItem(item);
-		reviewRequest.setLikes(0L);
+		reviewRegisterRequest.setUserAccount(userAccount);
+		reviewRegisterRequest.setItem(item);
+		reviewRegisterRequest.setLikes(0L);
 
-		ReviewDto reviewDto = reviewService.addReview(reviewRequest);
-		ItemResponse itemResponse = itemService.getItemDetail(itemId);
-		List<ReviewResponse> reviewList = reviewService.getReviewList(itemId);
+		reviewService.addReview(
+			ReviewDto.from(reviewRegisterRequest)
+		);
 
 		return "redirect:/item/" + itemId;
 	}
@@ -62,11 +63,41 @@ public class ReviewController {
 	}
 
 	@PostMapping("/modify/{itemId}/{reviewId}")
-	public String modifyReview(@PathVariable Long itemId, @PathVariable Long reviewId, @RequestParam("newReviewContent") String content){
-		reviewService.modifyReview(reviewId, content);
+	public String modifyReview(@PathVariable Long itemId,
+		@PathVariable Long reviewId,
+		ReviewRegisterRequest reviewRegisterRequest,
+		@RequestParam("images") List<MultipartFile> rawImages,
+		@RequestParam("imageNames") List<String> imageNames,
+		@RequestParam(value = "uniqueImageNames", required = false) List<String> uniqueImageNames
+	) {
+
+		for (MultipartFile imagename : rawImages) {
+			System.out.println("imagename.getOriginalFilename() = " + imagename.getOriginalFilename());
+			System.out.println("imagename.getName() = " + imagename.getName());
+			System.out.println("=====================================================");
+		}
+
+		System.out.println("rawImages = " + rawImages);
+		System.out.println("uniqueImageNames = " + uniqueImageNames);
+
+		reviewRegisterRequest.setImages(rawImages);
+		System.out.println("reviewRegisterRequest = " + reviewRegisterRequest);
+
+		IntStream.range(0, imageNames.size())
+			.filter(i -> !imageNames.get(i).equals("첨부파일"))
+			.forEach(i -> {
+					if (uniqueImageNames != null) {
+						reviewRegisterRequest.getReviewImageDtos()
+							.add(ReviewImageDto.of(imageNames.get(i), uniqueImageNames.get(i)));
+					} else{
+						reviewRegisterRequest.getReviewImageDtos()
+							.add(new ReviewImageDto());
+					}
+				}
+			);
+		reviewService.modifyReview(reviewRegisterRequest, reviewId);
 
 		return "redirect:/item/" + itemId;
 	}
-
 
 }

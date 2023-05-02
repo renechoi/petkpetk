@@ -21,6 +21,10 @@ public class ItemRequest {
 
 	private String itemName;
 
+	private Long originalPrice;
+
+	private Double discountRate;
+
 	private Long price;
 
 	private Long itemAmount;
@@ -39,6 +43,8 @@ public class ItemRequest {
 		return new ItemRequest(
 			entity.getId(),
 			entity.getItemName(),
+			entity.getOriginalPrice(),
+			entity.getDiscountRate(),
 			entity.getPrice(),
 			entity.getItemAmount(),
 			entity.getItemDetail(),

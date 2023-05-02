@@ -27,6 +27,10 @@ public class ItemRegisterRequest {
 	@NotBlank(message = "상품명을 입력해주세요.")
 	private String itemName;
 
+	private Long originalPrice;
+
+	private Double discountRate;
+
 	@NotNull(message = "가격을 입력해주세요.")
 	private Long price;
 
@@ -40,6 +44,8 @@ public class ItemRegisterRequest {
 
 	private UserAccount userAccount;
 
+	private Double totalRating;
+
 	private List<MultipartFile> images = new ArrayList<>();
 
 	private List<ItemImageDto> itemImageDtos = new ArrayList<>();
@@ -48,32 +54,38 @@ public class ItemRegisterRequest {
 	public Item toEntity(List<ItemImage> images) {
 		return Item.of(
 			this.itemName,
-			this.price,
+			this.originalPrice,
+			this.discountRate,
+			(long)(this.originalPrice - this.originalPrice*this.discountRate),
 			this.itemAmount,
 			this.itemDetail,
 			this.itemStatus,
 			images,
-			this.userAccount
+			this.userAccount,
+			this.totalRating
 		);
 	}
 
-	public ItemRegisterRequest(String itemName, Long price, Long itemAmount, String itemDetail,
-		ItemStatus itemStatus, UserAccount userAccount) {
+	public ItemRegisterRequest(String itemName,Long originalPrice, Double discountRate, Long price, Long itemAmount, String itemDetail,
+		ItemStatus itemStatus, UserAccount userAccount, Double totalRating) {
 		this.itemName = itemName;
-		this.price = price;
+		this.originalPrice = originalPrice;
+		this.discountRate = discountRate;
+		this.price = (long)(originalPrice - originalPrice*discountRate);
 		this.itemAmount = itemAmount;
 		this.itemDetail = itemDetail;
 		this.itemStatus = itemStatus;
 		this.userAccount = userAccount;
+		this.totalRating = totalRating;
 	}
 
-	public static ItemRegisterRequest of(String itemName, Long price, Long itemAmount, String itemDetail,
-		ItemStatus itemStatus, UserAccount userAccount) {
-		return new ItemRegisterRequest(itemName, price, itemAmount, itemDetail, itemStatus, userAccount);
+	public static ItemRegisterRequest of(String itemName, Long originalPrice, Double discountRate, Long price, Long itemAmount, String itemDetail,
+		ItemStatus itemStatus, UserAccount userAccount, Double totalRating) {
+		return new ItemRegisterRequest(itemName, originalPrice, discountRate, (long)(originalPrice - originalPrice*discountRate), itemAmount, itemDetail, itemStatus, userAccount, totalRating);
 	}
 
 	public static ItemRegisterRequest of(Item item) {
-		return ItemRegisterRequest.of(item.getItemName(), item.getPrice(), item.getItemAmount(),
-			item.getItemDetail(), item.getItemStatus(), item.getUserAccount());
+		return ItemRegisterRequest.of(item.getItemName(),item.getOriginalPrice(), item.getDiscountRate(), item.getPrice(), item.getItemAmount(),
+			item.getItemDetail(), item.getItemStatus(), item.getUserAccount(), item.getTotalRating());
 	}
 }
