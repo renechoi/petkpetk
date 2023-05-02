@@ -12,6 +12,8 @@ import javax.persistence.Index;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
+
 import com.petkpetk.service.common.AuditingFields;
 
 import lombok.Getter;
@@ -26,6 +28,7 @@ import lombok.ToString;
 	@Index(columnList = "createdBy")
 })
 @NoArgsConstructor
+@Where(clause = "deleted_yn='N'")
 @Entity
 public class Hashtag extends AuditingFields {
 
@@ -33,18 +36,18 @@ public class Hashtag extends AuditingFields {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "hashtag_id", length = 10)
 	private Long id;
-	private String hashTagName;
+	private String hashtagName;
 
 	@ToString.Exclude
 	@ManyToMany(mappedBy = "hashtags")
 	private Set<Article> articles = new LinkedHashSet<>();
 
-	public Hashtag(String hashTagName) {
-		this.hashTagName = hashTagName;
+	public Hashtag(String hashtagName) {
+		this.hashtagName = hashtagName;
 	}
 
-	public Hashtag(String hashTagName, Article article) {
-		this.hashTagName = hashTagName;
+	public Hashtag(String hashtagName, Article article) {
+		this.hashtagName = hashtagName;
 		this.articles.add(article);
 	}
 

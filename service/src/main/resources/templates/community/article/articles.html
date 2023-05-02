@@ -5,6 +5,9 @@
     <title>게시글 목록 조회하기</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/article-basic.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/article.css}">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 <body>
 <h1>게시글 목록</h1>
@@ -12,17 +15,42 @@
     <div>
         <label for="searchType">Search Type:</label>
         <select id="searchType" name="searchType">
-            <option th:each="type : ${searchTypes}" th:value="${type}" th:text="${type}"></option>
+            <option th:each="type : ${searchTypes}" th:if="${type != type.CATEGORY}" th:value="${type}"
+                    th:text="${type}"></option>
         </select>
     </div>
     <div>
         <label for="searchValue">Search Value:</label>
-        <input type="text" id="searchValue" name="searchValue" value="" />
+        <input type="text" id="searchValue" name="searchValue" value=""/>
     </div>
     <div>
         <button type="submit">Search</button>
     </div>
 </form>
+
+
+<div>
+    <form onchange="sortArticles()">
+        <label>
+            <input type="radio" name="sort" value="createdAt" checked> 최신순
+        </label>
+        <label>
+            <input type="radio" name="sort" value="hit"> 인기순
+        </label>
+    </form>
+</div>
+
+
+<div>
+    <label th:each="category : ${T(com.petkpetk.service.common.CategoryType).values()}">
+        <input type="checkbox" name="category" th:id="${'category_' + category}" th:value="${category}"/>
+        <label th:for="${'category_' + category}" th:text="${category.description}"></label>
+    </label>
+    <input type="hidden" id="category-search-type"
+           th:value="${T(com.petkpetk.service.domain.community.constatnt.SearchType).CATEGORY}">
+    <button id="category-apply">적용</button>
+</div>
+
 
 <table>
     <thead>
@@ -40,7 +68,7 @@
         <td th:text="${article.id}"></td>
         <td th:text="${article.name}"></td>
         <td>
-            <a th:text="${article.title}" th:href="@{/community/articles/__${article.id}__}" ></a>
+            <a th:text="${article.title}" th:href="@{/community/articles/__${article.id}__}"></a>
         </td>
         <td th:text="${article.content}"></td>
         <td>
@@ -51,16 +79,25 @@
         </td>
         <td class="date" th:text="${#temporals.format(article.createdAt, 'yyyy.MM.dd HH:mm')}"></td>
 
-<!--        <td th:text="${article.createdAt}"></td>-->
     </tr>
     </tbody>
 </table>
 
 
-
 <div>
     <nav>
         <ul class="pagination" id="pagination">
+
+
+            <a class="page-link"
+               th:text="'&laquo;'"
+               th:href="@{/community/articles(page=0,searchType=${param.searchType},searchValue=${param.searchValue},sort=${param.sort})}"
+               aria-label="First"
+               title="첫 페이지로 이동">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+
+
             <li class="page-item">
                 <a class="page-link"
                    th:text="'previous'"
@@ -86,11 +123,22 @@
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
+
+            <a class="page-link"
+               th:text="'&raquo;'"
+               th:href="@{/community/articles(page=${articles.totalPages - 1},searchType=${param.searchType},searchValue=${param.searchValue},sort=${param.sort})}"
+               aria-label="Last"
+               title="마지막 페이지로 이동">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
         </ul>
     </nav>
 
 </div>
 
-
+<script src="/js/articles.js"></script>
 </body>
 </html>
+
+
+
