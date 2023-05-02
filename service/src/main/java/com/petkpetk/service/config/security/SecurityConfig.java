@@ -30,7 +30,7 @@ public class SecurityConfig {
 				auth -> auth.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
 					.permitAll()
 					.mvcMatchers("/", "/user/**", "/error/**", "/login", "/seller/sign-up", "/seller/**", "/admin/**",
-						"/test/**", "item/**").permitAll()
+						"/test/**", "item/**", "/community/**").permitAll()
 					.mvcMatchers("/api/**", "/explorer").permitAll()
 
 					.anyRequest()
@@ -53,6 +53,11 @@ public class SecurityConfig {
 						.userService(socialUserAccountService)
 				)
 			)
+
+			.rememberMe(rememberMe->rememberMe
+				.key("remember-me-key")
+				.tokenValiditySeconds(3600)
+				.rememberMeCookieName("remember-me-cookie-name"))
 
 			.logout(
 				logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/user/logout")).logoutSuccessUrl("/"))

@@ -5,6 +5,7 @@ import java.util.Set;
 import com.petkpetk.service.common.RoleType;
 import com.petkpetk.service.config.converter.EntityAndDtoConverter;
 import com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo;
+import com.petkpetk.service.domain.user.dto.security.UserAccountPrincipal;
 import com.petkpetk.service.domain.user.entity.ProfileImage;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 import com.petkpetk.service.domain.user.entity.embedded.Address;
@@ -19,7 +20,6 @@ import lombok.NoArgsConstructor;
 public class UserAccountDto {
 
 	private Long id;
-
 	private String email;
 	private String password;
 	private String name;
@@ -34,6 +34,18 @@ public class UserAccountDto {
 	private String businessName;
 
 	private String businessNumber;
+
+	public static UserAccountDto from(UserAccountPrincipal userAccountPrincipal) {
+		UserAccountDto userAccountDto = EntityAndDtoConverter.convertToDto(userAccountPrincipal, UserAccountDto.class);
+		userAccountDto.setRoles(Set.of(RoleType.USER));
+		return userAccountDto;
+	}
+
+	public static UserAccountDto from(UserAccount userAccount) {
+		UserAccountDto userAccountDto = EntityAndDtoConverter.convertToDto(userAccount, UserAccountDto.class);
+		userAccountDto.setRoles(Set.of(RoleType.USER));
+		return userAccountDto;
+	}
 
 	public UserAccount toEntity() {
 		UserAccount userAccount = EntityAndDtoConverter.convertToEntity(this, UserAccount.class);
