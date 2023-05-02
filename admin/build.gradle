@@ -38,13 +38,13 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.modelmapper:modelmapper:2.4.4'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
 
 
     //security
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-
 
 
     // thymeleaf
@@ -55,6 +55,7 @@ dependencies {
     // db
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation 'com.h2database:h2'
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.7'
 
 
@@ -66,6 +67,10 @@ dependencies {
     // rest
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'org.springframework.data:spring-data-rest-hal-explorer'
+
+
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
 
     //test
@@ -81,7 +86,6 @@ tasks.named('test') {
 }
 
 
-
 //querydsl q파일 생성 세팅
 def querydslDir = "$buildDir/generated/querydsl"
 
@@ -92,7 +96,7 @@ querydsl {
 sourceSets {
     main.java.srcDir querydslDir
 }
-compileQuerydsl{
+compileQuerydsl {
     options.annotationProcessorPath = configurations.querydsl
 }
 configurations {
