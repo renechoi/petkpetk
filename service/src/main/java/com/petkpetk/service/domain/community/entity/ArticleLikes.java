@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.Where;
+
 import com.petkpetk.service.common.AuditingFields;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 
@@ -20,8 +22,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Entity
 @NoArgsConstructor
+@Where(clause = "deleted_yn='N'")
+@Entity
 public class ArticleLikes extends AuditingFields {
 
 	@Id
