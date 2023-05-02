@@ -7,9 +7,7 @@
 <div >
     <div th:fragment="header" id="headerZone">
         <div>
-            <a th:href="@{#}"><img id="topDog" class="topDog" th:src="@{/images/topDog(1).png}"
-                                   onmouseover="movingTopDog()"
-                                   onmouseout="stopTopDog()" title="TOP"></a>
+            <a th:href="@{#}"><img id="topDog" class="topDog" th:src="@{/images/topDog(1).png}" onmouseover="movingTopDog()" onmouseout="stopTopDog()" title="TOP"></a>
         </div>
 
         <div class="head">
@@ -42,46 +40,47 @@
             <div class="logIn" sec:authorize="hasAnyAuthority('ROLE_USER')">
                 <ul class="flex justifyContent topList">
                     <li class="log"><a th:href="@{/logout}">로그아웃</a></li>
-                    <li onmouseleave="hideMenu()">
+                    <li >
                             <a th:href="@{/user/information}">
-                                <div class="profile Pone" onmouseover="showMenu()">
+                                <div class="profile Pone" onmouseover="showMenu()" onmouseleave="hideMenu()">
                                     <img class="userProfile" th:src="@{/images/pinkMoala.png}">
+                                    <div id="topHoverMenu" class="topHoverMenu">
+                                        <img class="ladder" th:src="@{/images/ladder.png}">
+                                        <ul class="menuBox">
+                                            <li class="nickName" th:text="${#authentication.getPrincipal().getNickname()}">내 닉네임</li>
+                                            <li class="menus"><a th:href="@{/user/information}">마이 페이지</a></li>
+                                            <li class="menus"><a th:href="@{/cart}">장바구니</a></li>
+                                            <li class="menus"><a th:href="@{/order}">구매 이력</a></li>
+                                            <li class="menus"><a th:href="@{/QnA}">QnA</a></li>
+                                            <li class="menus"><a th:href="@{/logout}">로그아웃</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </a>
-                        <div id="topHoverMenu" class="topHoverMenu">
-                            <img class="ladder" th:src="@{/images/ladder.png}">
-                            <ul class="menuBox">
-                                <li class="nickName" th:text="${#authentication.getPrincipal().getNickname()}">내 닉네임</li>
-                                <li class="menus"><a th:href="@{/user/information}">마이 페이지</a></li>
-                                <li class="menus"><a th:href="@{/cart}">장바구니</a></li>
-                                <li class="menus"><a th:href="@{/order}">구매 이력</a></li>
-                                <li class="menus"><a th:href="@{/QnA}">QnA</a></li>
-                                <li class="menus"><a th:href="@{/logout}">로그아웃</a></li>
-                            </ul>
-                        </div>
                     </li>
                 </ul>
             </div>
             <div class="logIn" sec:authorize="hasAnyAuthority('ROLE_SELLER')">
                 <ul class="flex justifyContent topList">
                     <li class="log"><a th:href="@{/logout}">로그아웃</a></li>
-                    <li onmouseleave="hideMenu()">
+                    <li >
                             <a  th:href="@{/seller/information}">
-                                <div class="profile Pone" onmouseover="showMenu()">
+                                <div class="profile Pone" onmouseover="showMenu()" onmouseleave="hideMenu()">
                                     <img class="userProfile" th:src="@{/images/pinkMoala.png}">
+                                    <div id="topHoverMenu" class="topHoverMenu">
+                                        <img class="ladder" th:src="@{/images/ladder.png}">
+                                        <ul class="menuBox">
+                                            <li class="nickName" th:text="${#authentication.getPrincipal().getNickname()}">내 닉네임</li>
+                                            <li class="menus"><a th:href="@{/seller/information}">사업 정보</a></li>
+                                            <li class="menus"><a th:href="@{/seller/item-manage}">상품 관리</a></li>
+                                            <li class="menus"><a>주문 상태</a></li>
+                                            <li class="menus"><a th:href="@{/QnA}">QnA</a></li>
+                                            <li class="menus"><a th:href="@{/logout}">로그아웃</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </a>
-                        <div id="topHoverMenu" class="topHoverMenu">
-                            <img class="ladder" th:src="@{/images/ladder.png}">
-                            <ul class="menuBox">
-                                <li class="nickName" th:text="${#authentication.getPrincipal().getNickname()}">내 닉네임</li>
-                                <li class="menus"><a th:href="@{/seller/information}">사업 정보</a></li>
-                                <li class="menus"><a th:href="@{/seller/item-manage}">상품 관리</a></li>
-                                <li class="menus"><a>주문 상태</a></li>
-                                <li class="menus"><a th:href="@{/QnA}">QnA</a></li>
-                                <li class="menus"><a th:href="@{/logout}">로그아웃</a></li>
-                            </ul>
-                        </div>
+
                     </li>
                 </ul>
             </div>
@@ -97,8 +96,7 @@
                 </ul>
             </nav>
         </div>
-        <div id="main" class="flex justifyContent main"
-             sec:authorize="isAuthenticated()" onmouseover="hideMenu()">
+        <div id="main" class="flex justifyContent main" sec:authorize="isAuthenticated()">
             <a th:href="@{/}"><img class="logo-img" th:src="@{/images/PetkPetk-logo_Kor.png}"></a>
             <nav>
                 <ul class="mainMenu">
