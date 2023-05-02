@@ -66,15 +66,15 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 
 		if (StringUtils.equals("itemName", searchBy)) {
 
-			if(searchQuery == null || searchQuery.equals("")){
+			if (searchQuery == null || searchQuery.equals("")) {
 
-			}else{
+			} else {
 				return QItem.item.itemName.like("%" + searchQuery + "%");
 			}
 		} else if (StringUtils.equals("createdBy", searchBy)) {
-			if(searchQuery == null || searchQuery.equals("")){
+			if (searchQuery == null || searchQuery.equals("")) {
 
-			}else {
+			} else {
 				return QItem.item.createdBy.like("%" + searchQuery + "%");
 			}
 		}
@@ -140,12 +140,11 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 			.where(itemImage.representativeImageYn.eq("Y"))
 			.where(itemNmLike(itemSearchDto.getSearchQuery()))
 			.where(item.deletedYn.eq("N"))
-			.groupBy(item.id)
+			.groupBy(item.id, itemImage.imageUrl) // 수정된 부분
 			.orderBy(item.id.desc())
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize())
 			.fetch();
-
 
 		long total = queryFactory
 			.select(Wildcard.count)
