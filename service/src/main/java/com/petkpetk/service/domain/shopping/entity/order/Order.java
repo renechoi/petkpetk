@@ -26,14 +26,16 @@ import com.petkpetk.service.domain.user.entity.UserAccount;
 
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Where;
 
 @Table(name = "orders")
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString
 @NoArgsConstructor
 @Entity
 @DynamicUpdate
+@Where(clause = "deletedYn=N")
 public class Order extends AuditingFields {
 
 	@Id
@@ -130,13 +132,22 @@ public class Order extends AuditingFields {
 	}
 
 
-	public void cancelOrder(){
-		if (delivery.getDeliveryStatus() == DeliveryStatus.DELIVERY_COMPLETED) {
-			throw new RuntimeException("이미 배송완료된 상품은 취소가 불가능합니다.");
-		}
-		this.orderStatus = OrderStatus.CANCEL;
-		orderItems.forEach(OrderItem::cancel);
 
+	// public void cancelOrder(){
+	// 	if (delivery.getDeliveryStatus() == DeliveryStatus.DELIVERY_COMPLETED) {
+	// 		throw new RuntimeException("이미 배송완료된 상품은 취소가 불가능합니다.");
+	// 	}
+	// 	this.orderStatus = OrderStatus.CANCEL;
+	// 	orderItems.forEach(OrderItem::cancel);
+	//
+	// }
+
+	public void cancel() {
+		this.orderStatus = OrderStatus.CANCEL;
+		this.deletedYn = "Y";
 	}
 
+	public boolean isDeliveryInProcess(){
+		return delivery.getDeliveryStatus() == DeliveryStatus.DELIVERING || delivery.getDeliveryStatus() == DeliveryStatus.DELIVERY_COMPLETED;
+	}
 }
