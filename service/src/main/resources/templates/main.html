@@ -17,7 +17,7 @@
         </div>
     </div>
     <div th:if="${!items.isEmpty()}" class="mainContainer">
-
+        <input type="hidden" id="itemCount" th:value="${itemCount}">
         <th:block th:each="item, status: ${items.getContent()}">
             <a th:href="'/item/'+ ${item.id}">
                 <div class="productOneBlock">
@@ -59,6 +59,7 @@
     </div>
 
     <div class="moreBtnZone">
-        <input id="moreBtn" type="button" value="더보기">
+        <input id="moreBtn" type="button" value="더보기" onclick="getItems()">
     </div>
+
 </div>

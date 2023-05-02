@@ -17,4 +17,5 @@ public interface ItemImageRepository extends JpaRepository<ItemImage, Long>,
 	@Query("select iti from ItemImage iti where iti.item.id = ?1 and iti.representativeImageYn = 'Y'")
 	ItemImage findAllByItem_Id(Long itemId);
 
+	ItemImage findByItemIdAndRepresentativeImageYn(Long id, String y);
 }

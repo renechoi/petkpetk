@@ -84,8 +84,6 @@ public class UserAccountController {
 		List<ReviewResponse> reviewList = reviewService.getUserReviewList(email);
 		List<Long> itemIds = new ArrayList<>();
 
-		// System.out.println("♡♡♡♡♡♡♡♡♡♡♡♡♡♡itemIds = " + itemIds);
-
 		for (ReviewResponse review : reviewList) {
 			itemIds.add(review.getItem().getId());
 		}
@@ -95,8 +93,6 @@ public class UserAccountController {
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("itemImageUrls", itemImageUrls);
 		model.addAttribute("newReview", new ReviewRegisterRequest());
-
-		// System.out.println("♥♥♥♥♥♥♥♥♥♥♥♥♥♥ itemImageUrls = " + itemImageUrls);
 
 		return "my-page/user/userReviewHistory";
 	}

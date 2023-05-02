@@ -18,8 +18,8 @@ public class MainItemDto {
     private Long reviewCount;
     private Double totalRating;
 
-    @QueryProjection
 
+    @QueryProjection
     public MainItemDto(Long id, String itemName, String itemDetail, ItemStatus itemStatus,
         String imageUrl,Long originalPrice, Double discountRate, Long price, Long reviewCount, Double totalRating) {
         this.id = id;
