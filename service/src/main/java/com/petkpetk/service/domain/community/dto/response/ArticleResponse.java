@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.petkpetk.service.common.CategoryType;
 import com.petkpetk.service.config.converter.EntityAndDtoConverter;
 import com.petkpetk.service.domain.community.dto.ArticleDto;
@@ -25,6 +26,8 @@ public class ArticleResponse {
 	private String content;
 	private Long hit;
 	private CategoryType categoryType;
+
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private List<MultipartFile> rawImages = new ArrayList<>();
 	private Set<String> hashtags;
 	private LocalDateTime createdAt;
@@ -34,10 +37,9 @@ public class ArticleResponse {
 		articleResponse.setName(extractName(articleDto));
 		articleResponse.setEmail(articleDto.getUserAccountDto().getEmail());
 		articleResponse.setHashtags(articleDto.getHashtagDtos().stream()
-			.map(HashtagDto::getHashTagName)
+			.map(HashtagDto::getHashtagName)
 			.collect(Collectors.toSet())
 		);
-		System.out.println("articleResponse = " + articleResponse.getHashtags());
 		articleResponse.setRawImages(articleDto.getRawImages());
 		return articleResponse;
 	}
