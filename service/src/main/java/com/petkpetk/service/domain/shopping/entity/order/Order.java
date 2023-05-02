@@ -15,16 +15,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.petkpetk.service.common.AuditingFields;
+import com.petkpetk.service.domain.shopping.constant.DeliveryStatus;
 import com.petkpetk.service.domain.shopping.constant.OrderStatus;
+import com.petkpetk.service.domain.shopping.entity.delivery.Delivery;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Table(name = "orders")
 @Getter
@@ -32,6 +33,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @Entity
+@DynamicUpdate
 public class Order extends AuditingFields {
 
 	@Id
@@ -49,8 +51,14 @@ public class Order extends AuditingFields {
 	@ToString.Exclude
 	private List<OrderItem> orderItems = new ArrayList<>();
 
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "DELIVERY_ID")
+	private Delivery delivery;
+
 	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;
+
+
 
 	private Long amount;
 	private double salePercent;
@@ -84,12 +92,13 @@ public class Order extends AuditingFields {
 		this.orderItems = orderItems;
 	}
 
+
 	public void addOrderItem(OrderItem orderItem){
 		orderItems.add(orderItem);
 		orderItem.setOrder(this);
 	}
 
-	public static Order createOrder(UserAccount userAccount, List<OrderItem> orderItems){
+	public static Order from(UserAccount userAccount, List<OrderItem> orderItems){
 		Order order = new Order();
 		order.setUserAccount(userAccount);
 		order.setOrderStatus(OrderStatus.ORDER);
@@ -99,6 +108,22 @@ public class Order extends AuditingFields {
 
 	}
 
+	public void createDelivery(Delivery delivery) {
+		this.delivery = delivery;
+		delivery.setOrder(this);
+	}
+
+	public static Order from(UserAccount userAccount, List<OrderItem> orderItems, OrderStatus orderStatus, Delivery delivery){
+		Order order = new Order();
+		order.setUserAccount(userAccount);
+		order.setOrderStatus(OrderStatus.ORDER);
+		order.createDelivery(Delivery.of(userAccount));
+
+		orderItems.forEach(order::addOrderItem);
+		return order;
+	}
+
+
 	public Long getTotalPrice(){
 		return orderItems.stream().mapToLong(OrderItem::getTotalPrice).sum();
 
@@ -106,8 +131,12 @@ public class Order extends AuditingFields {
 
 
 	public void cancelOrder(){
+		if (delivery.getDeliveryStatus() == DeliveryStatus.DELIVERY_COMPLETED) {
+			throw new RuntimeException("이미 배송완료된 상품은 취소가 불가능합니다.");
+		}
 		this.orderStatus = OrderStatus.CANCEL;
 		orderItems.forEach(OrderItem::cancel);
+
 	}
 
 }
