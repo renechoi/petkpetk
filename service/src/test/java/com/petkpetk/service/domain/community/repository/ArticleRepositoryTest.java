@@ -13,12 +13,10 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 
-import com.petkpetk.service.config.jpaConfig.TestJpaConfig;
 import com.petkpetk.service.domain.community.entity.Article;
 import com.petkpetk.service.domain.community.entity.Hashtag;
 
 @DisplayName("Article Repository 테스트")
-@Import(TestJpaConfig.class)
 @ActiveProfiles("test")
 @TestPropertySource(properties = {
 	"spring.sql.init.mode=never",
