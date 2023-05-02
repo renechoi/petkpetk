@@ -1,11 +1,7 @@
 package com.petkpetk.service.domain.shopping.dto.order;
 
 import com.petkpetk.service.config.converter.EntityAndDtoConverter;
-import com.petkpetk.service.domain.shopping.dto.delivery.DeliveryDto;
-import com.petkpetk.service.domain.shopping.entity.delivery.Delivery;
 import com.petkpetk.service.domain.shopping.entity.order.Order;
-import com.petkpetk.service.domain.shopping.service.delivery.DeliveryService;
-import com.petkpetk.service.domain.user.entity.UserAccount;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +19,7 @@ public class OrderDto {
 	private Long amount;
 	private double salePercent;
 	private Long salePrice;
+
 
 
 	public Order toEntity() {
