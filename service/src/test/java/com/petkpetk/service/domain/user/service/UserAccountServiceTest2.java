@@ -17,6 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.petkpetk.service.common.RoleType;
 import com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
+import com.petkpetk.service.domain.user.dto.request.UserSignupRequest;
+import com.petkpetk.service.domain.user.dto.request.UserUpdateRequest;
+import com.petkpetk.service.domain.user.entity.ProfileImage;
 import com.petkpetk.service.domain.user.entity.embedded.Address;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 import com.petkpetk.service.domain.user.exception.UserDuplicateException;
@@ -43,7 +46,7 @@ class UserAccountServiceTest2 {
 		userAccountDto.setEmail(email);
 
 		// when
-		Optional<UserAccount> optionalUserAccount = userAccountService.searchUser(userAccountDto);
+		Optional<UserAccount> optionalUserAccount = userAccountService.searchUser(userAccountDto.getEmail());
 
 		// then
 		assertTrue(optionalUserAccount.isPresent());
@@ -60,7 +63,7 @@ class UserAccountServiceTest2 {
 		userAccountDto.setEmail(email);
 
 		// when
-		Optional<UserAccount> optionalUserAccount = userAccountService.searchUser(userAccountDto);
+		Optional<UserAccount> optionalUserAccount = userAccountService.searchUser(userAccountDto.getEmail());
 
 		// then
 		assertFalse(optionalUserAccount.isPresent());
@@ -70,11 +73,13 @@ class UserAccountServiceTest2 {
 	@Test
 	void save_createsNewUserAccount() {
 		// given
-		UserAccountDto newUserAccountDto = new UserAccountDto(null, "newuser@user.com", "password", "새로운 유저", "newuser",
-			new Address("12345", "강남", "2", "etc"), "profile.jpg", OAuth2ProviderInfo.NAVER, Set.of(RoleType.USER));
-
+		UserAccountDto newUserAccountDto = UserAccountDto.of(1L, "newuser@user.com", "password", "홍길동", "길동", ProfileImage.of("/images/item/test.jpg"),
+			Address.of("34589", "서울특별시 광진구", "자바동", "기타"), OAuth2ProviderInfo.GOOGLE, Set.of(RoleType.USER), "010-1234-1234", "페크페크", "123-1234-12345");
 		// when
-		userAccountService.save(newUserAccountDto);
+
+		UserSignupRequest userSignupRequest = new UserSignupRequest(1L, "newuser@user.com", "password", "홍길동", "길동", null,
+			Address.of("34589", "서울특별시 광진구", "자바동", "기타"), OAuth2ProviderInfo.GOOGLE, Set.of(RoleType.USER), "010-1234-1234", "페크페크", "123-1234-12345");
+		userAccountService.save(userSignupRequest);
 
 		// then
 		Optional<UserAccountDto> optionalUserAccountDto = userAccountService.searchUserDto("newuser@user.com");
@@ -97,11 +102,11 @@ class UserAccountServiceTest2 {
 	@DisplayName("실제 db 테스트 - 중복 가입 이메일로 회원가입에 실패한다")
 	void saveTest_userAccountDuplicateException() {
 		// given
-		UserAccountDto newUserAccountDto = new UserAccountDto(null, "user@user.com", "password", "새로운 유저", "newuser",
-			new Address("12345", "강남", "2", "etc"), "profile.jpg", OAuth2ProviderInfo.NAVER, Set.of(RoleType.USER));
+		UserSignupRequest userSignupRequest = new UserSignupRequest(1L, "user@user.com", "password", "홍길동", "길동", null,
+			Address.of("34589", "서울특별시 광진구", "자바동", "기타"), OAuth2ProviderInfo.GOOGLE, Set.of(RoleType.USER), "010-1234-1234", "페크페크", "123-1234-12345");
 
 		// when & then
-		assertThrows(UserDuplicateException.class, () -> userAccountService.save(newUserAccountDto));
+		assertThrows(UserDuplicateException.class, () -> userAccountService.save(userSignupRequest));
 	}
 
 	@DisplayName("실제 db 테스트 - 기존 사용자 계정 업데이트 한다")
@@ -110,12 +115,12 @@ class UserAccountServiceTest2 {
 
 		// given
 		String email = "user@user.com";
-		UserAccountDto updatedUserAccountDto = new UserAccountDto(null, "user@user.com", "new_password", "새로운 유저",
-			"newuser", new Address("54321", "강서", "3", "etc"), "new_profile.jpg", OAuth2ProviderInfo.GOOGLE,
-			Set.of(RoleType.ADMIN));
+		UserUpdateRequest userUpdateRequest = new UserUpdateRequest(1L, email, "password", "홍길동", "길동", null,
+			Address.of("34589", "서울특별시 광진구", "자바동", "기타"), OAuth2ProviderInfo.GOOGLE, Set.of(RoleType.USER), "010-1234-1234", "페크페크", "123-1234-12345");
+
 
 		// when
-		userAccountService.update(updatedUserAccountDto);
+		userAccountService.update(userUpdateRequest);
 
 		// then
 		Optional<UserAccountDto> optionalUserAccountDto = userAccountService.searchUserDto(email);
