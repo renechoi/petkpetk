@@ -13,13 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.petkpetk.service.domain.shopping.constant.OrderStatus;
 import com.petkpetk.service.domain.shopping.dto.order.OrderDto;
 import com.petkpetk.service.domain.shopping.dto.order.request.OrderRequest;
+import com.petkpetk.service.domain.shopping.entity.delivery.Delivery;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.shopping.entity.order.Order;
 import com.petkpetk.service.domain.shopping.entity.order.OrderItem;
+import com.petkpetk.service.domain.shopping.exception.OrderAlreadyInProcessException;
 import com.petkpetk.service.domain.shopping.repository.item.ItemImageRepository;
 import com.petkpetk.service.domain.shopping.repository.item.ItemRepository;
 import com.petkpetk.service.domain.shopping.repository.order.OrderRepository;
-import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 import com.petkpetk.service.domain.user.repository.UserAccountRepository;
 
@@ -51,6 +52,8 @@ public class OrderService {
 
 		// 주문 생성
 		Order order = Order.from(userAccount, orderItems);
+		order.createDelivery(new Delivery(userAccount.getAddress()));
+
 		// 주문 저장
 		Order savedOrder = orderRepository.save(order);
 
@@ -58,11 +61,16 @@ public class OrderService {
 	}
 
 	/** 주문 취소 */
-	public void cancelOrder(Long orderId) {
-		orderRepository.
-			findById(orderId)
-			.orElseThrow(() -> new EntityNotFoundException())
-			.cancelOrder();
+	public void cancelOrder(Order order, Delivery delivery ) {
+		// TODO : 주문취소 ... => 영속화된 주문을 n 으로 바꿔주기 + 연관관계 매핑된 애들도 n으로 바꿔주기
+		// orderstatus -> cancel로 변경
+
+		if (order.isDeliveryInProcess()) {
+			throw new OrderAlreadyInProcessException();
+		}
+		order.cancel();
+		delivery.cancelDelivery();
+
 	}
 
 	/** 주문 검색 **/
@@ -72,5 +80,19 @@ public class OrderService {
 			.map(OrderDto::fromEntity)
 			.collect(Collectors.toList());
 	}
+	@Transactional(readOnly = true)
+	public boolean validateOrder(Long orderId, String email) {
+		UserAccount currentUser = findUserAccountByEmail(email);
+		Order order = orderRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
+		UserAccount savedUser = order.getUserAccount();
+
+		return (currentUser == savedUser);
+	}
+
+	private UserAccount findUserAccountByEmail(String email) {
+		return userAccountRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
+	}
+
+
 
 }
