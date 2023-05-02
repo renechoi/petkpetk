@@ -163,4 +163,8 @@ public class ItemService {
 
 		return itemImages;
 	}
+
+	public Long getItemCount() {
+		return itemRepository.getItemCount();
+	}
 }

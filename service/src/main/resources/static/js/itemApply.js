@@ -113,7 +113,6 @@ function countText() {
     var textCount = document.getElementById("textCount");
 
     var textLength = itemDetail.value.length;
-    console.log(textLength);
 
     textCount.innerText=textLength+"/5000";
 
@@ -128,9 +127,10 @@ function countText() {
 }
 
 $("#discountRate").on("change", function () {
-    $("#price").val($("#itemPrice").val()-$("#itemPrice").val()*$("#discountRate").val());
+    $("#price").val(Math.round($("#itemPrice").val() - $("#itemPrice").val() * $("#discountRate").val()));
 });
 
 $("#itemPrice").on("keyup", function () {
-    $("#price").val($("#itemPrice").val()-$("#itemPrice").val()*$("#discountRate").val());
+    $("#price").val(Math.round($("#itemPrice").val() - $("#itemPrice").val() * $("#discountRate").val()));
+
 });
