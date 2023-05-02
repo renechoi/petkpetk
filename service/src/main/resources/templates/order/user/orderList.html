@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layout/myPageLayout">
+
+<th:block layout:fragment="css">
+    <link th:href="@{/css/order/userOrderList.css}" rel="stylesheet">
+</th:block>
+
+<div layout:fragment="content" id="userOrderList">
+    <div id="oneOrderContent" style="width: 500px;">
+        <form method="post">
+            <div id="orderInfoBox">
+                <div style="display: flex;">
+                    <div>기간</div><!-- th:text=${order.기간} 이런식으로 데이터 불러오기 -->
+                    <input type="submit" value="주문 취소">
+                </div>
+                <div style="display: flex;" id="itemContent">
+                    <div id="itemRepresentativeImage">
+                        <img src=""><!-- 상품 대표 이미지 -->
+                    </div>
+                    <div>
+                        <div>아이템 이름</div>
+                        <div style="display: flex;">
+                            <span>아이템 가격</span>/<span>갯수</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; justify-content: flex-end;">
+                <div>총금액 : 50000</div>
+            </div>
+        </form>
+    </div>
+</div>
+<th:block layout:fragment="script">
+    <script th:inline="javascript" th:src="@{/js/order/userOrderList.js}"></script>
+</th:block>
+
+</html>
