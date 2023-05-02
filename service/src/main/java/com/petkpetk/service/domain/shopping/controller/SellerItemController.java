@@ -16,6 +16,7 @@ import com.petkpetk.service.domain.shopping.dto.item.ItemSearchDto;
 import com.petkpetk.service.domain.shopping.dto.item.ManageItemDto;
 import com.petkpetk.service.domain.shopping.service.item.ItemService;
 import com.petkpetk.service.domain.user.dto.security.UserAccountPrincipal;
+import com.petkpetk.service.domain.user.entity.ProfileImage;
 import com.petkpetk.service.domain.user.service.UserAccountService;
 
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,8 @@ public class SellerItemController {
 	@GetMapping("/information")
 	public String informationView(Model model, @AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal) {
 		model.addAttribute("userAccount", userAccountService.getUserUpdateRequestView(userAccountPrincipal));
+		ProfileImage profileImage = userAccountService.getUserProfile(userAccountPrincipal);
+		model.addAttribute("profileImage", profileImage);
 		return "my-page/seller/sellerMyPage";
 	}
 

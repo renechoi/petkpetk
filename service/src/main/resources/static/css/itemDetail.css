@@ -188,7 +188,7 @@ input.removeImage:hover {
 
 .totalWon, .totalText {
     position: relative;
-    top: 3px;
+    top: 3.5px;
     font-size: 21px;
     color: #3A1D1D;
 }

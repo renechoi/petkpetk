@@ -98,7 +98,7 @@
                         </a>
                     </li>
 
-                    <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}"
+                    <li class="page-item" th:each="page: ${#numbers.sequence(start, (end - 1))}"
                         th:classappend="${items.number eq page - 1}?'active':''">
                         <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text"
                            class="page-link pageNumber">
