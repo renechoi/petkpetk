@@ -19,15 +19,19 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Where;
+
 import com.petkpetk.service.common.AuditingFields;
 import com.petkpetk.service.domain.shopping.constant.DeliveryStatus;
 import com.petkpetk.service.domain.shopping.constant.OrderStatus;
 import com.petkpetk.service.domain.shopping.entity.delivery.Delivery;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 
-import lombok.*;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Where;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Table(name = "orders")
 @Getter
@@ -36,7 +40,7 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor
 @Entity
 @DynamicUpdate
-@Where(clause = "deletedYn=N")
+@Where(clause = "deleted_yn='N'")
 public class Order extends AuditingFields {
 
 	@Id
