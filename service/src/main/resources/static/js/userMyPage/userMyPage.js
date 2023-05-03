@@ -216,6 +216,11 @@ function deleteProfile() {
 
 function checkNick() {
     var checkNickTxt = document.getElementById("checkNickTxt");
+    if ($("#newNickName").val() == "") {
+        checkNickTxt.textContent = "";
+        $("#checkNickName").val("");
+    } else {
+
     $.ajax({
         url: "/api/checkNickName",
         type: "post",
@@ -237,6 +242,6 @@ function checkNick() {
             }
         }
 
-    })
+    })}
 }
 
