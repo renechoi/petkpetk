@@ -1,7 +1,11 @@
 package com.petkpetk.service.domain.shopping.dto.order;
 
+import java.time.LocalDateTime;
+
 import com.petkpetk.service.config.converter.EntityAndDtoConverter;
+import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.shopping.entity.order.Order;
+import com.petkpetk.service.domain.shopping.entity.order.OrderItem;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,8 +19,10 @@ public class OrderDto {
 	private Long id;
 
 	private Long userId;
+
 	private Long productId;
 	private Long amount;
+	private Long orderPrice;
 	private double salePercent;
 	private Long salePrice;
 

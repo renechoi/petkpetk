@@ -76,7 +76,7 @@
                         <div class="likes" th:text="'❤ '+${review.likes}"></div>
                     </div>
                     <div id="modifyBtns">
-                        <form method="post" th:action="@{'/user/delete/'+${review.item.id}+'/'+${review.getId()}}">
+                        <form method="post" th:action="@{'/user/my-page/delete/'+${review.item.id}+'/'+${review.getId()}}">
                             <input  th:class="'modifyBtn modifyBtn'+${review.id}" th:if="${review.item.deletedYn.equals('N')}" type="button" value="수정" th:onclick="'showModifyBox('+${review.id}+')'">
                             <input th:class="'modifyBtn modifyBtn'+${review.id}" type="submit" value="삭제">
                         </form>
@@ -95,7 +95,7 @@
             </div>
 
             <div th:id="'modifyReview'+${review.id}" style="display: none;">
-                <form method="post" th:action="@{'/user/modify/'+${review.item.id}+'/'+${review.id}}" th:object="${newReview}" enctype="multipart/form-data">
+                <form method="post" th:action="@{'/user/my-page/modify/'+${review.item.id}+'/'+${review.id}}" th:object="${newReview}" enctype="multipart/form-data">
                     <input type="hidden" th:field="*{rating}" th:id="'newRating'+${review.id}" th:value="${review.rating}">
                     <input type="hidden" th:id="'oldRating'+${review.id}" th:value="${review.rating}">
                     <div id="starZone">
