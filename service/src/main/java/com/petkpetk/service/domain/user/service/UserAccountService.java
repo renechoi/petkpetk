@@ -61,15 +61,10 @@ public class UserAccountService {
 	public UserUpdateRequest getUserUpdateRequestView(UserAccountPrincipal userAccountPrincipal) {
 		UserAccount userAccount = findByEmail(userAccountPrincipal.getEmail()).orElseThrow(UserNotFoundException::new);
 
-		if (userAccountPrincipal.getProfileImage() != null) {
-			MultipartFile profileRawImage =
-				userAccountPrincipal instanceof OAuth2UserAccountPrincipal ? null :
-					imageLocalRepository.findByPetkpetkImage(userAccount.getProfileImage());
-			return UserUpdateRequest.from(userAccount, profileRawImage);
-		} else {
-			return UserUpdateRequest.from(userAccount);
-		}
-
+		return userAccountPrincipal.getProfileImage() != null ?
+			UserUpdateRequest.from(userAccount, userAccountPrincipal instanceof OAuth2UserAccountPrincipal ? null :
+				imageLocalRepository.findByPetkpetkImage(userAccount.getProfileImage())) :
+			UserUpdateRequest.from(userAccount);
 	}
 
 	/**
@@ -111,11 +106,12 @@ public class UserAccountService {
 	}
 
 	public UserAccountDto searchUserDto(String email) {
-		return userAccountRepository.findByEmail(email).map(UserAccountDto::fromEntity).orElseThrow();
+		return userAccountRepository.findByEmail(email).map(UserAccountDto::fromEntity).orElseThrow(UserNotFoundException::new);
 	}
 
 	public ProfileImage getUserProfile(UserAccountPrincipal userAccountPrincipal) {
-		return profileImageRepository.findByUserAccountId(userAccountPrincipal.getId()).orElseThrow(UserNotFoundException::new);
+		return profileImageRepository.findByUserAccountId(userAccountPrincipal.getId())
+			.orElseThrow(UserNotFoundException::new);
 	}
 
 	public boolean isPasswordSame(String password, String email) {
