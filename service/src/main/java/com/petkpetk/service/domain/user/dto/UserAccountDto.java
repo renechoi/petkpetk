@@ -1,5 +1,6 @@
 package com.petkpetk.service.domain.user.dto;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import com.petkpetk.service.common.RoleType;
@@ -34,6 +35,26 @@ public class UserAccountDto {
 	private String businessName;
 
 	private String businessNumber;
+
+	private LocalDateTime createdAt;
+
+	public UserAccountDto(Long id, String email, String password, String name, String nickname,
+		ProfileImage profileImage,
+		Address address, com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo OAuth2ProviderInfo,
+		Set<RoleType> roles, String phoneNumber, String businessName, String businessNumber) {
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.nickname = nickname;
+		this.profileImage = profileImage;
+		this.address = address;
+		this.OAuth2ProviderInfo = OAuth2ProviderInfo;
+		this.roles = roles;
+		this.phoneNumber = phoneNumber;
+		this.businessName = businessName;
+		this.businessNumber = businessNumber;
+	}
 
 	public static UserAccountDto from(UserAccountPrincipal userAccountPrincipal) {
 		UserAccountDto userAccountDto = EntityAndDtoConverter.convertToDto(userAccountPrincipal, UserAccountDto.class);
