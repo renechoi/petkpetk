@@ -47,17 +47,13 @@ public enum StatusCode {
 	ALREADY_USED_COUPON("이미 사용된 쿠폰입니다."),
 	EXPIRED_COUPON("만료된 쿠폰입니다."),
 
+	ORDER_ALREADY_IN_PROCESS("이미 배송 처리중입니다."),
 
 
 	// 커뮤니티
 
-	ARTICLE_NOT_FOUND("게시글을 조회할 수 없습니다"),
-
-
-
-
-	;
-
+	ARTICLE_NOT_FOUND("게시글을 조회할 수 없습니다")
+		;
 
 	private final String message;
 }

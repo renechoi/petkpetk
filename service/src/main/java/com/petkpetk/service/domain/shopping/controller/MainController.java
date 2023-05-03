@@ -34,18 +34,16 @@ public class MainController {
     @GetMapping("/")
     public String main(ItemSearchDto itemSearchDto, Optional<Integer> page, Model model) {
 
-        PageRequest pageRequest = PageRequest.of(page.orElse(0), 12);
+        PageRequest pageRequest = PageRequest.of(page.orElse(0),12);
         Page<MainItemDto> items = itemService.getMainItemPage(itemSearchDto, pageRequest);
 
-        System.out.println("◆◆◆◆◆◆◆◆◆◆◆◆◆◆ pageRequest = " + pageRequest);
-        System.out.println("◆◆◆◆◆◆◆◆◆◆◆◆◆◆ items = " + items);
-        items.stream().forEach(System.out::println);
+        Long itemCount = itemService.getItemCount();
 
         System.out.println("itemSearchDto = " + itemSearchDto);
 
+        model.addAttribute("itemCount", itemCount);
         model.addAttribute("items", items);
         model.addAttribute("itemSearchDto", itemSearchDto);
-        model.addAttribute("maxPage", 5);
         return "main";
 
     }

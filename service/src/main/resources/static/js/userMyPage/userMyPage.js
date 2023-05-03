@@ -9,9 +9,19 @@ function openNewInfoBox() {
 function hideNewInfoBox() {
     var originalInformation = document.getElementById("originalInformation");
     var newUserInformationForm = document.getElementById("newUserInformationForm");
+    var checkNickTxt = document.getElementById("checkNickTxt");
 
+    checkNickTxt.textContent = "";
     originalInformation.style.display = "block";
     newUserInformationForm.style.display = "none";
+
+    $("#checkNickName").val("");
+    $("#newName").val($("#name").text());
+    $("#newNickName").val($("#nickName").text());
+    $("#zipcode").val($("#zip").val());
+    $("#address1").val($("#addr1").val());
+    $("#address2").val($("#addr2").val());
+    $("#addressEtc").val($("#addrEtc").val());
 }
 
 function openNewPassBox() {
@@ -71,6 +81,8 @@ function toggleRePass() {
 
 var newInfoForm = document.getElementById("newInfoForm");
 newInfoForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+
     var name = document.querySelector("#newName");
     var nickName = document.querySelector("#newNickName");
     var zipcode = document.querySelector("#zipcode");
@@ -80,54 +92,80 @@ newInfoForm.addEventListener('submit', function (event) {
         alert("이름을 입력해주세요.");
         name.scrollIntoView({behavior: "smooth", block: "start"});
         name.focus();
-        event.preventDefault();
         return false;
     }
     if($("#newNickName").val() == "") {
         alert("닉네임을 입력해주세요.");
         nickName.scrollIntoView({behavior: "smooth", block: "start"});
         nickName.focus();
-        event.preventDefault();
         return false;
     }
     if($("#zipcode").val() == "") {
         alert("주소를 검색해주세요.");
         zipcode.scrollIntoView({behavior: "smooth", block: "start"});
         zipcode.focus();
-        event.preventDefault();
         return false;
     }
     if($("#address2").val() == "") {
         alert("상세주소를 입력해주세요.");
         address2.scrollIntoView({behavior: "smooth", block: "start"});
         address2.focus();
-        event.preventDefault();
         return false;
     }
+    if ($("#checkNickName").val() == "") {
+        alert("닉네임을 확인해주세요.");
+        return false;
+    }
+    newInfoForm.submit();
 
 
 });
 
+$("#newNickName").on("keyup", function () {
+    var checkNickTxt = document.getElementById("checkNickTxt");
+    checkNickTxt.textContent = "";
+    $("#checkNickName").val("");
+});
 
 var newPassForm = document.getElementById("newPassForm");
 
 newPassForm.addEventListener('submit', function (event) {
-    var originalPassWord = document.getElementById("originalPassWord");
+    event.preventDefault();
+
     var newPassword = document.getElementById("newPassword");
     var reNewPassword = document.getElementById("reNewPassword");
+
+    if (newPassword.value == null || newPassword.value == "") {
+        alert("새 비밀번호를 입력해주세요.");
+        newPassword.focus();
+        return false;
+    }
 
     if (reNewPassword.value != newPassword.value) {
         alert("비밀번호가 일치하지 않습니다.");
         reNewPassword.focus();
-        event.preventDefault();
-        return false;
-    }
-    if (newPassword.value === originalPassWord.value) {
-        alert("기존 비밀번호와 일치합니다.");
-        event.preventDefault();
         return false;
     }
 
+    $.ajax({
+        url: "/api/checkPass",
+        type: "post",
+        data: {
+            password: newPassword.value,
+            email: $("#userEmail").val()
+        },
+        dataType: "json",
+        success: function (result) {
+            if (result == true) {
+                alert("기존 비밀번호와 동일합니다.");
+                return false;
+            }
+            if (result == false) {
+                // 기존 비밀번호와 다른 경우
+                newPassForm.submit(); // form submit
+            }
+        }
+    });
 });
 
 
@@ -176,4 +214,29 @@ function deleteProfile() {
 
 }
 
+function checkNick() {
+    var checkNickTxt = document.getElementById("checkNickTxt");
+    $.ajax({
+        url: "/api/checkNickName",
+        type: "post",
+        data : {
+            nickName : $("#newNickName").val(),
+            email: $("#userEmail").val()
+        },
+        dataType: "json",
+        success: function (sameNick) {
+            console.log(sameNick);
+            if (sameNick == true) {
+                checkNickTxt.textContent = "중복 된 닉네임입니다.";
+                checkNickTxt.style.color = "#ff3b57";
+                $("#checkNickName").val("");
+            } else {
+                checkNickTxt.textContent = "사용 가능한 닉네임입니다.";
+                checkNickTxt.style.color = "#9a9f73";
+                $("#checkNickName").val(1);
+            }
+        }
+
+    })
+}
 

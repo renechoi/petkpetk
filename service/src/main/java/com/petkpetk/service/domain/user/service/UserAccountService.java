@@ -101,7 +101,6 @@ public class UserAccountService {
 				imageLocalRepository.delete(previousImage);
 				imageLocalRepository.save(profileImage, userUpdateRequest.getProfileImage());
 			});
-
 	}
 
 	public void delete(UserAccountDto userAccountDto) {
@@ -146,6 +145,10 @@ public class UserAccountService {
 		ProfileImage profileImage = profileImageRepository.findById(userAccountPrincipal.getId()).get();
 
 		return profileImage;
+	}
+
+	public Optional<UserAccount> searchUserByNickName(String nickName) {
+		return userAccountRepository.findByNickname(nickName);
 	}
 }
 

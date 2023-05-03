@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
+import org.hibernate.annotations.Where;
+
 import com.petkpetk.service.common.AuditingFields;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 
@@ -26,6 +28,7 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true)
 @NoArgsConstructor
+@Where(clause = "deleted_yn='N'")
 @Entity
 public class ArticleComment extends AuditingFields {
 

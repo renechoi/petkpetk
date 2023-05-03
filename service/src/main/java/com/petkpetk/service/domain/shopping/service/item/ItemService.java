@@ -137,10 +137,10 @@ public class ItemService {
 		return itemRepository.findById(itemId).orElseThrow(ItemNotFoundException::new);
 	}
 
+
 	private List<ItemImage> findByItemIdOrderByIdAsc(Long id) {
 		return itemImageRepository.findByItemIdOrderByIdAsc(id);
 	}
-
 	public Item getItem(Long id) {
 		return itemRepository.findById(id).get();
 	}
@@ -162,5 +162,9 @@ public class ItemService {
 			);
 
 		return itemImages;
+	}
+
+	public Long getItemCount() {
+		return itemRepository.getItemCount();
 	}
 }

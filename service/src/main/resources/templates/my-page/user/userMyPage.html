@@ -48,19 +48,19 @@
       <div class="infoTitle">Email</div>
       <span class="informations" th:text="${userAccount.email}">유저 이메일</span>
     </div>
+    <input type="hidden" id="userEmail" th:value="${userAccount.email}">
 
     <!-- 수정하기 버튼 누르면 display = none -->
     <!-- 여기에다가 회원 정보들 좀 가져와 담아주시오 -->
     <div class="myPageUserInformation" id="myPageUserInformation">
-
       <div class="infos">
         <div class="infoTitle">Name</div>
-        <span class="informations" th:text="${userAccount.name}">유저 이름</span>
+        <span class="informations" th:text="${userAccount.name}" id="name">유저 이름</span>
       </div>
 
       <div class="infos">
         <div class="infoTitle">Nick name</div>
-        <span class="informations" th:text="${userAccount.nickname}">유저 닉네임</span>
+        <span class="informations" th:text="${userAccount.nickname}" id="nickName">유저 닉네임</span>
       </div>
 
       <div class="infos">
@@ -68,8 +68,10 @@
         <span class="informations" th:text="${'('+userAccount.address.zipCode+') '+userAccount.address.address1+' '+userAccount.address.address2+' '+userAccount.address.addressEtc}">유저 주소</span>
       </div>
 
-      <!--  여기에다가 원래 비밀번호 넣어주세유 비밀번호 바꿀 때 대조해서 원래 비번이랑 같으면 같다고 알럿창 띄울거유  -->
-      <input id="originalPassWord" type="hidden" th:value="${userAccount.password}">
+      <input type="hidden" id="zip" th:value="${userAccount.address.zipCode}">
+      <input type="hidden" id="addr1" th:value="${userAccount.address.address1}">
+      <input type="hidden" id="addr2" th:value="${userAccount.address.address2}">
+      <input type="hidden" id="addrEtc" th:value="${userAccount.address.addressEtc}">
 
       <input id="modifyInfo" type="button" value="수정하기" onclick="openNewInfoBox()">
       <br>
@@ -86,9 +88,13 @@
 
       <div>
         <div class="newTitle">닉네임<span>Nick name</span></div>
-        <input th:value="*{nickname}" id="newNickName" th:field="*{nickname}" class="newNickName" type="text" placeholder="Type your nickname"  autocomplete="off" maxlength="15">
-        <input id="findNickName" type="button" value="중복 검사">
+        <input th:value="*{nickname}" id="newNickName" th:field="*{nickname}" class="newNickName" th:id="newNickName" type="text" placeholder="Type your nickname"  autocomplete="off" maxlength="10">
+        <input id="findNickName" type="button" value="중복 검사" onclick="checkNick()">
       </div>
+      <div id="textBox">
+        <p id="checkNickTxt"></p>
+      </div>
+      <input type="hidden" id="checkNickName">
 
         <div>
           <div class="newTitle">우편번호<span>ADDRESS</span></div>
@@ -104,7 +110,6 @@
           <div class="newTitle">참고항목</div>
           <input th:value="*{address.addressEtc}" th:field="*{address.addressEtc}" class="newInfos" type="text" id="addressEtc" placeholder="참고항목" name="addretc" readonly>
 
-          <input type="hidden" id="address" placeholder="주소">
         </div>
 
 
