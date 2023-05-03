@@ -12,6 +12,7 @@ import com.petkpetk.service.domain.shopping.constant.ItemStatus;
 import com.petkpetk.service.domain.shopping.dto.item.ItemImageDto;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.shopping.entity.item.ItemImage;
+import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 
 import lombok.AllArgsConstructor;
@@ -42,7 +43,7 @@ public class ItemRegisterRequest {
 
 	private ItemStatus itemStatus;
 
-	private UserAccount userAccount;
+	private UserAccountDto userAccountDto;
 
 	private Double totalRating;
 
@@ -61,13 +62,13 @@ public class ItemRegisterRequest {
 			this.itemDetail,
 			this.itemStatus,
 			images,
-			this.userAccount,
+			this.userAccountDto,
 			this.totalRating
 		);
 	}
 
 	public ItemRegisterRequest(String itemName,Long originalPrice, Double discountRate, Long price, Long itemAmount, String itemDetail,
-		ItemStatus itemStatus, UserAccount userAccount, Double totalRating) {
+		ItemStatus itemStatus, UserAccountDto userAccountDto, Double totalRating) {
 		this.itemName = itemName;
 		this.originalPrice = originalPrice;
 		this.discountRate = discountRate;
@@ -75,17 +76,17 @@ public class ItemRegisterRequest {
 		this.itemAmount = itemAmount;
 		this.itemDetail = itemDetail;
 		this.itemStatus = itemStatus;
-		this.userAccount = userAccount;
+		this.userAccountDto = userAccountDto;
 		this.totalRating = totalRating;
 	}
 
 	public static ItemRegisterRequest of(String itemName, Long originalPrice, Double discountRate, Long price, Long itemAmount, String itemDetail,
-		ItemStatus itemStatus, UserAccount userAccount, Double totalRating) {
+		ItemStatus itemStatus, UserAccountDto userAccount, Double totalRating) {
 		return new ItemRegisterRequest(itemName, originalPrice, discountRate, (long)(originalPrice - originalPrice*discountRate), itemAmount, itemDetail, itemStatus, userAccount, totalRating);
 	}
 
 	public static ItemRegisterRequest of(Item item) {
 		return ItemRegisterRequest.of(item.getItemName(),item.getOriginalPrice(), item.getDiscountRate(), item.getPrice(), item.getItemAmount(),
-			item.getItemDetail(), item.getItemStatus(), item.getUserAccount(), item.getTotalRating());
+			item.getItemDetail(), item.getItemStatus(), UserAccountDto.fromEntity(item.getUserAccount()), item.getTotalRating());
 	}
 }

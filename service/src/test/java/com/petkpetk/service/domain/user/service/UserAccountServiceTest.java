@@ -99,10 +99,10 @@ public class UserAccountServiceTest {
 		when(userAccountRepository.findByEmail(email)).thenReturn(Optional.of(userAccount));
 
 		// when
-		Optional<UserAccountDto> result = userAccountService.searchUserDto(email);
+		UserAccountDto result = userAccountService.searchUserDto(email);
 
 		// then
-		assertThat(result).isPresent();
-		assertThat(result.get().getEmail()).isEqualTo(email);
+		assertThat(result).isNotNull();
+		assertThat(result.getEmail()).isEqualTo(email);
 	}
 }

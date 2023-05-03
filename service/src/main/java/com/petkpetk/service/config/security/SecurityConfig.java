@@ -69,9 +69,7 @@ public class SecurityConfig {
 
 	@Bean
 	public UserDetailsService userDetailsService(UserAccountService userAccountService) {
-		return email -> userAccountService.searchUserDto(email)
-			.map(UserAccountPrincipal::from)
-			.orElseThrow(() -> new UsernameNotFoundException("회원을 찾을 수 없습니다"));
+		return email -> UserAccountPrincipal.from(userAccountService.searchUserDto(email));
 	}
 
 }
