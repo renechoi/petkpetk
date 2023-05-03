@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Where;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,6 +38,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Entity
 @DynamicUpdate
+@Where(clause = "deleted_yn='N'")
 public class ReviewImage extends AuditingFields implements PetkpetkImage {
 
 	@Id
