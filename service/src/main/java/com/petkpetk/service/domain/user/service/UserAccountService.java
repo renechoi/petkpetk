@@ -149,6 +149,4 @@ public class UserAccountService {
 	private Optional<UserAccount> findByEmail(String email) {
 		return userAccountRepository.findByEmail(email);
 	}
-
-
 }
