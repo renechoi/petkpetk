@@ -50,7 +50,7 @@
                                             <li class="nickName" th:text="${#authentication.getPrincipal().getNickname()}">내 닉네임</li>
                                             <li class="menus"><a th:href="@{/user/my-page/information}">마이 페이지</a></li>
                                             <li class="menus"><a th:href="@{/cart}">장바구니</a></li>
-                                            <li class="menus"><a th:href="@{/user/order/orders}">구매 이력</a></li>
+                                            <li class="menus"><a th:href="@{/user/order/orders}">구매 내역</a></li>
                                             <li class="menus"><a th:href="@{/QnA}">QnA</a></li>
                                             <li class="menus"><a th:href="@{/logout}">로그아웃</a></li>
                                         </ul>
@@ -91,7 +91,7 @@
             <nav>
                 <ul class="mainMenu">
                     <li><a th:href="@{/}">쇼핑</a></li>
-                    <li><a>커뮤니티</a></li>
+                    <li><a th:href="@{/community/articles}">커뮤니티</a></li>
                     <li><a>ABOUT</a></li>
                 </ul>
             </nav>
@@ -101,7 +101,7 @@
             <nav>
                 <ul class="mainMenu">
                     <li><a th:href="@{/}">쇼핑</a></li>
-                    <li><a>커뮤니티</a></li>
+                    <li><a th:href="@{/community/articles}">커뮤니티</a></li>
                     <li><a>ABOUT</a></li>
                 </ul>
             </nav>
@@ -116,7 +116,7 @@
         <div id="midiMenu" class="midiMenu">
             <ul id="midi">
                 <a th:href="@{/}"><li>쇼핑 <span>Shopping</span></li></a>
-                <a><li>커뮤니티 <span>Community</span></li></a>
+                <a th:href="@{/community/articles}"><li>커뮤니티 <span>Community</span></li></a>
                 <a><li>ABOUT</li></a>
                 <a><li>QnA</li></a>
                 <div class="line"></div>
@@ -127,7 +127,7 @@
                 <a><li sec:authorize="hasAnyAuthority('ROLE_SELLER')">정산 <span>Calculate</span></li></a>
 
                 <a th:href="@{/user/my-page/information}"><li sec:authorize="hasAnyAuthority('ROLE_USER')">마이 페이지 <span>My Page</span></li></a>
-                <a th:href="@{/order}"><li sec:authorize="hasAnyAuthority('ROLE_USER')">구매 이력 <span>purchase history</span></li></a>
+                <a th:href="@{/order}"><li sec:authorize="hasAnyAuthority('ROLE_USER')">구매 내역 <span>purchase history</span></li></a>
                 <a th:href="@{/cart}"><li sec:authorize="!hasAnyAuthority('ROLE_ADMIN', 'ROLE_SELLER')">장바구니 <span>Cart</span></li></a>
 
 
