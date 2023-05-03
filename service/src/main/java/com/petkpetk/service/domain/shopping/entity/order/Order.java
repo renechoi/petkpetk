@@ -36,7 +36,7 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor
 @Entity
 @DynamicUpdate
-@Where(clause = "deletedYn=N")
+// @Where(clause = "deletedYn=N")
 public class Order extends AuditingFields {
 
 	@Id
