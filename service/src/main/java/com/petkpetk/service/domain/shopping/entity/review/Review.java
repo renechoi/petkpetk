@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
+
 import com.petkpetk.service.common.AuditingFields;
 import com.petkpetk.service.domain.shopping.dto.review.response.ReviewResponse;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
@@ -31,6 +33,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @Entity
+@Where(clause = "deleted_yn='N'")
 public class Review extends AuditingFields {
 
 	@Id

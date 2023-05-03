@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.petkpetk.service.common.AuditingFields;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Entity
 @Table(name = "cart_item")
-public class CartItem {
+public class CartItem extends AuditingFields {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
