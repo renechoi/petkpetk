@@ -40,7 +40,12 @@ public class UserMyPageController {
 	public String update(UserUpdateRequest userUpdateRequest) {
 		userAccountService.update(userUpdateRequest);
 		return "redirect:/user/my-page/information";
+	}
 
+	@PostMapping("/password/update")
+	public String updatePassword(UserUpdateRequest userUpdateRequest) {
+		userAccountService.updatePassword(userUpdateRequest);
+		return "redirect:/user/my-page/information";
 	}
 
 	@PostMapping("/delete")
@@ -50,12 +55,8 @@ public class UserMyPageController {
 	}
 
 	@GetMapping("/information")
-	public String informationView(Model model,
-		@AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal) {
-		ProfileImage profileImage = userAccountService.getUserProfile(userAccountPrincipal);
-		model.addAttribute("profileImage", profileImage);
-		model.addAttribute("userAccount",
-			userAccountService.getUserUpdateRequestView(userAccountPrincipal));
+	public String informationView(Model model, @AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal) {
+		model.addAttribute("userAccount", userAccountService.getUserUpdateRequestView(userAccountPrincipal));
 		return "my-page/user/userMyPage";
 	}
 

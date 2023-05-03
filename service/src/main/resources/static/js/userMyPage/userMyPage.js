@@ -225,7 +225,7 @@ function checkNick() {
         url: "/api/checkNickName",
         type: "post",
         data : {
-            nickName : $("#newNickName").val(),
+            nickname : $("#newNickName").val(),
             email: $("#userEmail").val()
         },
         dataType: "json",
