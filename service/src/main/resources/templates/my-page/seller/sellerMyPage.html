@@ -13,7 +13,7 @@
         <span class="MyPageTitle">사업 정보</span>
     </div>
 
-    <form th:if="${profileImage != null}" id="newProfileForm" method="post" enctype="multipart/form-data" th:action="@{/user/update}" th:object="${userAccount}">
+    <form th:if="${profileImage != null}" id="newProfileForm" method="post" enctype="multipart/form-data" th:action="@{/user/my-page/update}" th:object="${userAccount}">
         <input type="hidden" id="originalProfile" th:value="${profileImage.imageUrl}">
         <div  style="display: flex; align-items: flex-end; margin-bottom: 50px;">
             <div class="bigImageBox"><img th:src="${profileImage.imageUrl}" id="userProfileImage" class="userOriginalProfile"></div>
@@ -29,7 +29,7 @@
         </div>
     </form>
 
-    <form th:unless="${profileImage != null}" id="newProfileForm" method="post" enctype="multipart/form-data" th:action="@{/user/update}" th:object="${userAccount}">
+    <form th:unless="${profileImage != null}" id="newProfileForm" method="post" enctype="multipart/form-data" th:action="@{/user/my-page/update}" th:object="${userAccount}">
         <div  style="display: flex; align-items: flex-end;margin-bottom: 50px;">
             <div class="bigImageBox"><img th:src="@{/images/basicProfile.png}" id="userProfileImage" class="userOriginalProfile"></div>
             <input type="button" value="프로필 등록" id="changeProfileBtn" class="changeProfile" onclick="showNewProfileBox()">
@@ -93,7 +93,7 @@
     <!--  유저 정보 수정 Form  -->
     <!--  유저 정보들 담겨있는 상태 그대로에서 수정하도록 ㄱㄱ  -->
     <div class="newUserInformationForm" id="newUserInformationForm" style="display: none">
-        <form method="post" th:action="@{/user/update}" th:object="${userAccount}" id="newInfoForm">
+        <form method="post" th:action="@{/user/my-page/update}" th:object="${userAccount}" id="newInfoForm">
             <div>
                 <div class="newTitle">이름<span>Name</span></div>
                 <input th:value="*{name}" th:field="*{name}" id="newName" class="newInfos" type="text" placeholder="Type your name"  autocomplete="off" maxlength="10">
@@ -145,7 +145,7 @@
 
     <!--  비밀번호 수정 Form  -->
     <div class="newPasswordForm" id="newPasswordForm" style="display: none">
-        <form method="post" th:action="@{/user/update}" id="newPassForm" th:object="${userAccount}">
+        <form method="post" th:action="@{/user/my-page/update}" id="newPassForm" th:object="${userAccount}">
             <div class="newPassFlex">
                 <div class="newPassInput">
                     <span>새 비밀번호</span>

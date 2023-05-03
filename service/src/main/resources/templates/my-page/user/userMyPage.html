@@ -12,7 +12,7 @@
     <span class="MyPageTitle">회원 정보</span>
   </div>
   <!--  유저 정보 확인 div  -->
-  <form th:if="${profileImage != null}" id="newProfileForm" method="post" enctype="multipart/form-data" th:action="@{/user/update}" th:object="${userAccount}">
+  <form th:if="${profileImage != null}" id="newProfileForm" method="post" enctype="multipart/form-data" th:action="@{/user/my-page/update}" th:object="${userAccount}">
     <input type="hidden" id="originalProfile" th:value="${profileImage.imageUrl}">
     <div  style="display: flex; align-items: flex-end; margin-bottom: 50px;">
       <div class="bigImageBox"><img th:src="${profileImage.imageUrl}" id="userProfileImage" class="userOriginalProfile"></div>
@@ -28,7 +28,7 @@
     </div>
   </form>
 
-  <form th:unless="${profileImage != null}" id="newProfileForm" method="post" enctype="multipart/form-data" th:action="@{/user/update}" th:object="${userAccount}">
+  <form th:unless="${profileImage != null}" id="newProfileForm" method="post" enctype="multipart/form-data" th:action="@{/user/my-page/update}" th:object="${userAccount}">
     <div  style="display: flex; align-items: flex-end;margin-bottom: 50px;">
       <div class="bigImageBox"><img th:src="@{/images/basicProfile.png}" id="userProfileImage" class="userOriginalProfile"></div>
       <input type="button" value="프로필 등록" id="changeProfileBtn" class="changeProfile" onclick="showNewProfileBox()">
@@ -80,7 +80,7 @@
   </div>
 
   <div class="newUserInformationForm" id="newUserInformationForm" style="display: none">
-    <form method="post" id="newInfoForm" th:action="@{/user/update}" th:object="${userAccount}">
+    <form method="post" id="newInfoForm" th:action="@{/user/my-page/update}" th:object="${userAccount}">
       <div>
         <div class="newTitle">이름<span>Name</span></div>
         <input th:value="*{name}" id="newName" th:field="*{name}" class="newInfos" type="text" placeholder="Type your name"  autocomplete="off" maxlength="10">
@@ -120,7 +120,7 @@
 
   <!--  비밀번호 수정 Form  -->
   <div class="newPasswordForm" id="newPasswordForm" style="display: none">
-    <form method="post" th:action="@{/user/update}" id="newPassForm" th:object="${userAccount}">
+    <form method="post" th:action="@{/user/my-page/update}" id="newPassForm" th:object="${userAccount}">
       <div class="newPassFlex">
         <div class="newPassInput">
           <span>새 비밀번호</span>
