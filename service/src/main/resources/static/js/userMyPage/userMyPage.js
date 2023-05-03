@@ -4,6 +4,8 @@ function openNewInfoBox() {
 
     originalInformation.style.display = "none";
     newUserInformationForm.style.display = "block";
+
+    $("#checkNickName").val(1);
 }
 
 function hideNewInfoBox() {
