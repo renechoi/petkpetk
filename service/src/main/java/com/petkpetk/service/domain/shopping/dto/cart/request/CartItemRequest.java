@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class CartRequest {
+public class CartItemRequest {
 
 	@NotNull(message = "상품 아이디는 필수 입력 값 입니다")
 	private Long itemId;
