@@ -32,7 +32,7 @@ public class TestSecurityConfig {
 	@BeforeTestMethod
 	public void securitySetUp() {
 		// 코드를 통해 인증된 사용자로 설정된 사용자 객체가 존재하는 것으로 가정
-		given(userAccountService.searchUser(anyString())).willReturn(Optional.of(createUserAccount()));
+		given(userAccountService.searchUserDto(anyString())).willReturn(UserAccountDto.from(createUserAccount()));
 
 		// given(userAccountService.searchUser(anyString())).willReturn(Optional.empty());
 

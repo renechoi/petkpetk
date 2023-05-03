@@ -23,6 +23,7 @@ import com.petkpetk.service.domain.shopping.constant.ItemStatus;
 import com.petkpetk.service.domain.shopping.dto.item.request.ItemRegisterRequest;
 import com.petkpetk.service.domain.shopping.dto.item.response.ItemResponse;
 import com.petkpetk.service.domain.shopping.exception.OutOfStockException;
+import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 
 import lombok.Getter;
@@ -107,8 +108,8 @@ public class Item extends AuditingFields {
 	}
 
 	public static Item of(String itemName, Long originalPrice, Double discountRate, Long price, Long itemAmount, String itemDetail, ItemStatus itemStatus,
-		List<ItemImage> images, UserAccount userAccount, Double totalRating) {
-		return new Item(itemName,originalPrice,discountRate, (long)(originalPrice - originalPrice*discountRate), itemAmount, itemDetail, itemStatus, images, userAccount, totalRating);
+		List<ItemImage> images, UserAccountDto userAccountDto, Double totalRating) {
+		return new Item(itemName,originalPrice,discountRate, (long)(originalPrice - originalPrice*discountRate), itemAmount, itemDetail, itemStatus, images, userAccountDto.toEntity(), totalRating);
 	}
 
 	private List<ItemImage> setRepresentativeImage(List<ItemImage> images) {

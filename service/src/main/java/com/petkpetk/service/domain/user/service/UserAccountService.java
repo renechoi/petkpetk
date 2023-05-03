@@ -59,7 +59,7 @@ public class UserAccountService {
 	}
 
 	public UserUpdateRequest getUserUpdateRequestView(UserAccountPrincipal userAccountPrincipal) {
-		UserAccount userAccount = searchUser(userAccountPrincipal);
+		UserAccount userAccount = findByEmail(userAccountPrincipal.getEmail()).orElseThrow(UserNotFoundException::new);
 
 		if (userAccountPrincipal.getProfileImage() != null) {
 			MultipartFile profileRawImage =
@@ -81,7 +81,7 @@ public class UserAccountService {
 	 * 이미지 비교는 이미 객체 내부에서 Equals and hash 코드를 재정의 했으므로 그냥 비교하면 된다.
 	 */
 	public void update(UserUpdateRequest userUpdateRequest) {
-		UserAccount userAccount = findByEmail(userUpdateRequest);
+		UserAccount userAccount = findByEmail(userUpdateRequest.getEmail()).orElseThrow(UserNotFoundException::new);
 		ProfileImage previousImage = userAccount.getProfileImage();
 
 		if (userUpdateRequest.getProfileImage().isEmpty()) {
@@ -101,58 +101,50 @@ public class UserAccountService {
 				imageLocalRepository.delete(previousImage);
 				imageLocalRepository.save(profileImage, userUpdateRequest.getProfileImage());
 			});
-
 	}
 
 	public void delete(UserAccountDto userAccountDto) {
-		UserAccount userAccount = findByEmail(userAccountDto).orElseThrow(
+		UserAccount userAccount = findByEmail(userAccountDto.getEmail()).orElseThrow(
 			UserNotFoundException::new);
 		userAccount.setDeletedYn("Y");
 		// TODO: 유저 삭제시 타 관련 정보들 전부 삭제 필요
 	}
 
-	public Optional<UserAccountDto> searchUserDto(String email) {
-		return userAccountRepository.findByEmail(email).map(UserAccountDto::fromEntity);
+	public UserAccountDto searchUserDto(String email) {
+		return userAccountRepository.findByEmail(email).map(UserAccountDto::fromEntity).orElseThrow();
 	}
 
-	public Optional<UserAccount> searchUser(String email) {
-		return userAccountRepository.findByEmail(email);
+	public ProfileImage getUserProfile(UserAccountPrincipal userAccountPrincipal) {
+		return profileImageRepository.findByUserAccountId(userAccountPrincipal.getId()).orElseThrow(UserNotFoundException::new);
 	}
 
-	public UserAccount getCurrentPrincipal(Authentication authentication) {
-		return searchUser(authentication.getName())
-			.orElseThrow(PetkpetkServerException::new);
+	public boolean isPasswordSame(String password, String email) {
+		return findByEmail(email).orElseThrow(UserNotFoundException::new).checkPassword(password, passwordEncoder);
+	}
+
+	public boolean isEmailDuplicate(String email) {
+		return findByEmail(email).isPresent();
+	}
+
+	public boolean isNicknameDuplicate(String nickName, String email) {
+		// 초기 회원가입의 경우 => 즉 이메일이 없는 경우 단순 nickname 중복값만 체크
+		// 수정의 경우 => 이메일을 받아서 1) 본인것과 같은지 => 허용 / 2) 중복 값이 있는지
+		return email == null ? isNickNamePresent(nickName) :
+			!userAccountRepository.findByNickname(nickName)
+				.orElseThrow(UserNotFoundException::new)
+				.getNickname()
+				.equals(nickName) && isNickNamePresent(nickName);
+	}
+
+	private boolean isNickNamePresent(String nickName) {
+		return userAccountRepository.findByNickname(nickName).isPresent();
 	}
 
 	private boolean isDuplicate(String email) {
 		return userAccountRepository.findByEmail(email).isPresent();
 	}
 
-	private Optional<UserAccount> findByEmail(UserAccountDto userAccountDto) {
-		return userAccountRepository.findByEmail(userAccountDto.getEmail());
-	}
-
-	private UserAccount findByEmail(UserUpdateRequest userUpdateRequest) {
-		return userAccountRepository.findByEmail(userUpdateRequest.getEmail())
-			.orElseThrow(UserNotFoundException::new);
-	}
-
-	public UserAccount searchUser(UserAccountPrincipal userAccountPrincipal) {
-		return userAccountRepository.findByEmail(userAccountPrincipal.getEmail())
-			.orElseThrow(UserNotFoundException::new);
-	}
-
-	public ProfileImage getUserProfile(UserAccountPrincipal userAccountPrincipal) {
-		ProfileImage profileImage = profileImageRepository.findById(userAccountPrincipal.getId()).get();
-
-		return profileImage;
-	}
-
-	public Optional<UserAccount> searchUserByNickName(String nickName) {
-		return userAccountRepository.findByNickname(nickName);
+	private Optional<UserAccount> findByEmail(String email) {
+		return userAccountRepository.findByEmail(email);
 	}
 }
-
-
-
-
