@@ -47,7 +47,8 @@
                 <div class="infoTitle">Email</div>
                 <span class="informations" th:text="${userAccount.email}">유저 이메일</span>
             </div>
-            <input type="hidden" id="userEmail" th:value="${userAccount.email}">
+            <input type="hidden" th:field="${userAccount.email}">
+            <input type="hidden" th:field="${userAccount.roles}">
 
             <!-- 수정하기 버튼 누르면 display = none -->
             <!-- 여기에다가 회원 정보들 좀 가져와 담아주시오 -->
@@ -99,7 +100,7 @@
 
                 <div>
                     <div class="newTitle">닉네임<span>Nick name</span></div>
-                    <input th:value="*{nickname}" th:field="*{nickname}" class="newNickName" id="newNickName" type="text" placeholder="Type your nickname"  autocomplete="off" maxlength="10">
+                    <input th:field="*{nickname}" class="newNickName" id="newNickName" type="text" placeholder="Type your nickname"  autocomplete="off" maxlength="10">
                     <input id="findNickName" type="button" value="중복 검사" onclick="checkNick()">
                 </div>
                 <div id="textBox">
@@ -163,6 +164,8 @@
                 </div>
 
                 <input class="submitNewPass passBtn" type="submit" value="수정 완료">
+                <input type="hidden" id="userEmail" th:field="${userAccount.email}">
+                <input type="hidden" th:field="${userAccount.roles}">
                 <input id="cancelNewPass" class="cancelNewPass passBtn" type="button" value="취소" onclick="hideNewPassBox()">
             </form>
         </div>
