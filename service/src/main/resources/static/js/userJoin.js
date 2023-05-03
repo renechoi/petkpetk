@@ -168,7 +168,7 @@ function checkNick() {
         url: "/api/checkNickName",
         type: "post",
         data: {
-            nickName: $("#nickName").val(),
+            nickname: $("#nickName").val(),
         },
         dataType: "json",
         success: function (sameNick) {

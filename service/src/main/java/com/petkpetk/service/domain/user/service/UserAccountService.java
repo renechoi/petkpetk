@@ -98,6 +98,12 @@ public class UserAccountService {
 			});
 	}
 
+	public void updatePassword(UserUpdateRequest userUpdateRequest) {
+		UserAccount userAccount = findByEmail(userUpdateRequest.getEmail()).orElseThrow(UserNotFoundException::new);
+		userAccount.setPassword(userAccount.getPassword());
+		userAccount.encodePassword(passwordEncoder);
+	}
+
 	public void delete(UserAccountDto userAccountDto) {
 		UserAccount userAccount = findByEmail(userAccountDto.getEmail()).orElseThrow(
 			UserNotFoundException::new);
@@ -122,14 +128,14 @@ public class UserAccountService {
 		return findByEmail(email).isPresent();
 	}
 
+	/**
+	 * 닉네임 중복 검증 로직은 다음과 같다.
+	 * 초기 회원가입의 경우 => 즉 이메일이 없는 경우 단순 nickname 중복값만 체크
+	 * 수정의 경우 => 이메일을 받아서 1) 본인것과 같은지 => 허용 , 2) 중복 값이 있는지 체크
+	 */
 	public boolean isNicknameDuplicate(String nickName, String email) {
-		// 초기 회원가입의 경우 => 즉 이메일이 없는 경우 단순 nickname 중복값만 체크
-		// 수정의 경우 => 이메일을 받아서 1) 본인것과 같은지 => 허용 / 2) 중복 값이 있는지
-		return email == null ? isNickNamePresent(nickName) :
-			!userAccountRepository.findByNickname(nickName)
-				.orElseThrow(UserNotFoundException::new)
-				.getNickname()
-				.equals(nickName) && isNickNamePresent(nickName);
+		return email == null || !isEmailDuplicate(email) ? isNickNamePresent(nickName) :
+			!findByEmail(email).orElseThrow(UserNotFoundException::new).getNickname().equals(nickName) && isNickNamePresent(nickName);
 	}
 
 	private boolean isNickNamePresent(String nickName) {
@@ -143,4 +149,6 @@ public class UserAccountService {
 	private Optional<UserAccount> findByEmail(String email) {
 		return userAccountRepository.findByEmail(email);
 	}
+
+
 }
