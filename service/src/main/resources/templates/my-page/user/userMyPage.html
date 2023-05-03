@@ -18,15 +18,6 @@
         <input type="hidden" id="originalProfile" th:value="${userAccount.profileImage.getName()}">
         <div  style="display: flex; align-items: flex-end; margin-bottom: 50px;">
           <div class="bigImageBox"><img th:src="${userAccount.profileImage.getName()}" id="userProfileImage" class="userOriginalProfile"></div>
-          <input type="button" value="프로필 변경" id="changeProfileBtn" class="changeProfile" onclick="showNewProfileBox()">
-          <div id="newProfileBox" style="display: none;">
-            <label for="file"  class="changeProfile">이미지 선택</label>
-            <input th:field="*{profileImage}" type="file" id="file">
-            <input type="button" value="삭제" class="deleteProfile" onclick="deleteProfile()">
-<!--            <input type="hidden" th:value="${profileImage.uniqueName}" id="uniqueImageName" name="uniqueImageName">-->
-            <input type="submit" value="저장" class="postProfile">
-            <input type="button" value="✖" class="cancelNewProfile" onclick="cancelNewProfile()">
-          </div>
         </div>
       </div>
 
@@ -81,6 +72,28 @@
     </div>
 
     <div class="newUserInformationForm" id="newUserInformationForm" style="display: none">
+
+      <div th:if="${userAccount.profileImage != null}">
+        <input type="button" value="프로필 변경" id="changeProfileBtn" class="changeProfile" onclick="showNewProfileBox()">
+        <div id="newProfileBox" style="display: none;">
+          <label for="file"  class="changeProfile">이미지 선택</label>
+          <input th:field="*{profileImage}" type="file" id="file">
+          <input type="button" value="삭제" class="deleteProfile" onclick="deleteProfile()">
+          <!--            <input type="hidden" th:value="${profileImage.uniqueName}" id="uniqueImageName" name="uniqueImageName">-->
+          <input type="button" value="✖" class="cancelNewProfile" onclick="cancelNewProfile()">
+        </div>
+      </div>
+
+      <div th:unless="${userAccount.profileImage != null}">
+        <input type="button" value="프로필 등록" id="changeProfileBtn" class="changeProfile" onclick="showNewProfileBox()">
+        <div id="newProfileBox" style="display: none;">
+          <label for="file" class="changeProfile">이미지 선택</label>
+          <input th:field="*{profileImage}" type="file" id="file">
+          <input type="button" value="삭제" class="deleteProfile" onclick="deleteProfile()">
+          <input type="button" value="✖" class="cancelNewProfile" onclick="cancelNewProfile()">
+        </div>
+      </div>
+
         <div>
           <div class="newTitle">이름<span>Name</span></div>
           <input th:value="*{name}" id="newName" th:field="*{name}" class="newInfos" type="text" placeholder="Type your name"  autocomplete="off" maxlength="10">
@@ -88,7 +101,7 @@
 
         <div>
           <div class="newTitle">닉네임<span>Nick name</span></div>
-          <input th:value="*{nickname}" id="newNickName" th:field="*{nickname}" class="newNickName" type="text" placeholder="Type your nickname"  autocomplete="off" maxlength="10">
+          <input id="newNickName" th:field="*{nickname}" class="newNickName" type="text" placeholder="Type your nickname"  autocomplete="off" maxlength="10">
           <input id="findNickName" type="button" value="중복 검사" onclick="checkNick()">
         </div>
         <div id="textBox">
