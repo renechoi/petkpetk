@@ -66,6 +66,25 @@ public class OrderService {
 		return savedOrder.getId();
 	}
 
+	public Long createOrders(List<OrderDto> orderDtoList, String email) {
+		UserAccount userAccount = findUserAccountByEmail(email);
+		List<OrderItem> orderItems = createOrderItems(orderDtoList, OrderStatus.ORDER);
+
+		Order order = Order.createOrder(userAccount, orderItems);
+		Order savedOrder = orderRepository.save(order);
+		return savedOrder.getId();
+	}
+
+	private List<OrderItem> createOrderItems(List<OrderDto> orderDtoList, OrderStatus orderStatus) {
+		return orderDtoList.stream()
+			.map(orderDto -> {
+				Item item = itemRepository.findById(orderDto.getProductId())
+					.orElseThrow(EntityNotFoundException::new);
+				return OrderItem.createOrderItem(item, orderDto.getAmount(),OrderStatus.ORDER);
+			})
+			.collect(Collectors.toList());
+	}
+
 	/** 주문 취소 */
 	public void cancelOrder(Order order, Delivery delivery ) {
 		// TODO : 주문취소 ... => 영속화된 주문을 n 으로 바꿔주기 + 연관관계 매핑된 애들도 n으로 바꿔주기
