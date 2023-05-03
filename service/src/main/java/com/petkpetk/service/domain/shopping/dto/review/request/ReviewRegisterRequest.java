@@ -9,6 +9,7 @@ import com.petkpetk.service.domain.shopping.dto.review.ReviewImageDto;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.shopping.entity.review.Review;
 import com.petkpetk.service.domain.shopping.entity.review.ReviewImage;
+import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 
 import lombok.AllArgsConstructor;
@@ -24,7 +25,7 @@ public class ReviewRegisterRequest {
 	private String content;
 	private Long likes;
 	private Item item;
-	private UserAccount userAccount;
+	private UserAccountDto userAccountDto;
 	private Double rating;
 
 	private List<MultipartFile> images = new ArrayList<>();
@@ -33,7 +34,7 @@ public class ReviewRegisterRequest {
 	public Review toEntity(List<ReviewImage> images) {
 		return Review.of(
 			this.item,
-			this.userAccount,
+			this.userAccountDto,
 			this.content,
 			this.likes,
 			images,
@@ -41,11 +42,11 @@ public class ReviewRegisterRequest {
 		);
 	}
 
-	public ReviewRegisterRequest(String content, Long likes, Item item, UserAccount userAccount) {
+	public ReviewRegisterRequest(String content, Long likes, Item item, UserAccountDto userAccountDto) {
 		this.content = content;
 		this.likes = likes;
 		this.item = item;
-		this.userAccount = userAccount;
+		this.userAccountDto = userAccountDto;
 	}
 
 	public static ReviewRegisterRequest of(String content, Long likes, Item item,

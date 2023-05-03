@@ -32,6 +32,7 @@ public class SellerMyPageController {
 	public String informationView(
 		Model model, @AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal) {
 		model.addAttribute("userAccount", userAccountService.getUserUpdateRequestView(userAccountPrincipal));
+		//todo : profile 이미지가 없는 유저의 경우 null exception 발생
 		ProfileImage profileImage = userAccountService.getUserProfile(userAccountPrincipal);
 		model.addAttribute("profileImage", profileImage);
 		return "my-page/seller/sellerMyPage";

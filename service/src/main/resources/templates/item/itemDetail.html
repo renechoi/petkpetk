@@ -223,7 +223,7 @@
                                 </div>
                                 <div class="titleBox">
                                     <div class="userNickName"
-                                         th:text="${review.userAccount.nickname}"></div>
+                                         th:text="${review.getUserAccountDto.nickname}"></div>
                                     <span class="likeTitle">도움이 됐어요</span>
                                     <div class="reviewLikes" th:id="'reviewLikes'+${review.getId()}"
                                          th:text="${review.getLikes()}"></div>
@@ -266,7 +266,7 @@
                             </div>
 
                             <div>
-                                <form class="btnFlex" th:action="@{'/review/delete/'+${item.id}+'/'+${review.getId()}}" method="post" th:if="${review.userAccount.email.equals(userEmail)}">
+                                <form class="btnFlex" th:action="@{'/review/delete/'+${item.id}+'/'+${review.getId()}}" method="post" th:if="${review.getUserAccountDto.email.equals(userEmail)}">
                                     <input type="hidden" th:id="'modifyId'+${number}" th:class="'reviewList['+${number}+']'">
                                     <input class="delete reviewBtn" type="submit" value="삭제">
                                     <input class="modify reviewBtn" type="button" value="수정"
@@ -286,7 +286,7 @@
                                 </div>
                         </div>
 
-                        <form th:if="${review.userAccount.email.equals(userEmail)}" enctype="multipart/form-data" method="post" id="reviewModalForm" style="display: none;" th:object="${reviewDtos}">
+                        <form th:if="${review.getUserAccountDto.email.equals(userEmail)}" enctype="multipart/form-data" method="post" id="reviewModalForm" style="display: none;" th:object="${reviewDtos}">
                             <input type="hidden" id="newRating" th:value="${review.rating}" th:field="*{rating}">
                             <input type="hidden" id="oldRating" th:value="${review.rating}">
                             <div id="reviewModal">

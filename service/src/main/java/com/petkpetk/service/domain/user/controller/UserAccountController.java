@@ -19,8 +19,6 @@ import lombok.RequiredArgsConstructor;
 public class UserAccountController {
 
 	private final UserAccountService userAccountService;
-	private final ReviewService reviewService;
-	private final ItemService itemService;
 
 	@GetMapping("/sign-up")
 	public String signUp(Model model) {

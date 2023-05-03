@@ -1,4 +1,4 @@
-package com.petkpetk.service.domain.shopping.controller;
+package com.petkpetk.service.common;
 
 import java.util.Optional;
 
@@ -48,6 +48,7 @@ public class MainController {
 
     }
 
+    // todo : 비밀번호가 틀린 경우 메시지를 제공한다
     @GetMapping("/login")
     public String loginPage() {
         return "/login";
