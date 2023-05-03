@@ -84,6 +84,7 @@ public class ItemResponse {
 	public static ItemResponse from(Item item) {
 		ItemResponse itemResponse = EntityAndDtoConverter.convertToDto(item, ItemResponse.class);
 		itemResponse.setItemImageDtos(item.getImages().stream().map(ItemImageDto::from).collect(Collectors.toList()));
+		itemResponse.setUserAccountDto(UserAccountDto.from(item.getUserAccount()));
 		return itemResponse;
 	}
 
