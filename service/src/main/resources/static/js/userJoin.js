@@ -131,6 +131,10 @@ function checkNewEmail() {
     }
 
     var checkEmailTxt = document.getElementById("checkEmailTxt");
+    if ($("#email").val() == "") {
+        checkNickTxt.textContent = "";
+        $("#checkEmail").val("");
+    }else{
     $.ajax({
         url: "/api/checkEmail",
         type: "post",
@@ -151,11 +155,15 @@ function checkNewEmail() {
             }
         }
 
-    })
+    })}
 }
 
 function checkNick() {
     var checkNickTxt = document.getElementById("checkNickTxt");
+    if ($("#nickName").val() == "") {
+        checkNickTxt.textContent = "";
+        $("#checkNickName").val("");
+    } else {
     $.ajax({
         url: "/api/checkNickName",
         type: "post",
@@ -174,8 +182,7 @@ function checkNick() {
                 $("#checkNickName").val(1);
             }
         }
-
-    })
+    })}
 }
 
 var profile;
