@@ -65,7 +65,6 @@ public class UserAccountService {
 			UserUpdateRequest.from(userAccount, userAccountPrincipal instanceof OAuth2UserAccountPrincipal ? null :
 				imageLocalRepository.findByPetkpetkImage(userAccount.getProfileImage())) :
 			UserUpdateRequest.from(userAccount);
-
 	}
 
 	/**
@@ -107,7 +106,7 @@ public class UserAccountService {
 	}
 
 	public UserAccountDto searchUserDto(String email) {
-		return userAccountRepository.findByEmail(email).map(UserAccountDto::fromEntity).orElseThrow();
+		return userAccountRepository.findByEmail(email).map(UserAccountDto::fromEntity).orElseThrow(UserNotFoundException::new);
 	}
 
 	public ProfileImage getUserProfile(UserAccountPrincipal userAccountPrincipal) {
