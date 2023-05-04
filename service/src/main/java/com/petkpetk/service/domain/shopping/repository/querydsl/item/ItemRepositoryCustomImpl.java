@@ -135,7 +135,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 				)
 			)
 			.from(item)
-			.leftJoin(review).on(review.item.eq(item))
+			.leftJoin(review).on(review.item.eq(item)).on(review.deletedYn.eq("N"))
 			.leftJoin(itemImage).on(itemImage.item.eq(item))
 			.where(itemImage.representativeImageYn.eq("Y"))
 			.where(itemNmLike(itemSearchDto.getSearchQuery()))
