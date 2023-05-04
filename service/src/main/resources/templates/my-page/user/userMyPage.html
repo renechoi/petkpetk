@@ -83,7 +83,7 @@
           <label for="file"  class="changeProfile">이미지 선택</label>
           <input th:field="*{profileImage}" type="file" id="file">
           <input type="button" value="삭제" class="deleteProfile" onclick="deleteProfile()">
-          <input type="hidden" id="isProfileDeleted" name="isProfileDeleted" >
+          <input type="hidden" id="isProfileDeleted" name="isProfileDeleted" th:value="false">
           <input type="button" value="✖" class="cancelNewProfile" onclick="cancelNewProfile()">
         </div>
       </div>

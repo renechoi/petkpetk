@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.petkpetk.service.config.converter.ImageConverter;
 import com.petkpetk.service.config.file.ImageLocalRepository;
@@ -37,14 +38,19 @@ public class UserAccountService {
 			throw new UserDuplicateException();
 		}
 
-		ProfileImage profileImage = ImageConverter.of(ProfileImage::from)
-			.convertToImage(userSignupRequest.getProfileImage());
+		ProfileImage profileImage = createProfileImage(userSignupRequest.getProfileImage());
 
 		UserAccount userAccount = userSignupRequest.toEntity(profileImage);
 		userAccount.encodePassword(passwordEncoder);
 		userAccountRepository.save(userAccount);
 
 		imageLocalRepository.save(profileImage, userSignupRequest.getProfileImage());
+	}
+
+	private ProfileImage createProfileImage(MultipartFile multipartFile) {
+		return multipartFile.isEmpty() ? ProfileImage.of("defaultProfile.jpeg", "defaultProfile.jpeg") :
+			ImageConverter.of(ProfileImage::from)
+				.convertToImage(multipartFile);
 	}
 
 	public void saveSocialUser(OAuth2UserAccountPrincipal oAuth2UserAccountPrincipal) {
