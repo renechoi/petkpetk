@@ -32,6 +32,7 @@
                         </li>
                         <li class="productDetail" th:text="${item.itemDetail}" title="상품 내용">내용</li>
                         <li class="productStar">
+                            <img th:if="${item.totalRating == 0}" class="star" th:src="@{/images/star5_0.png}">
                             <img th:if="${item.totalRating == 5}" class="star" th:src="@{/images/star5_0.png}">
                             <img th:if="${item.totalRating == 4.5}" class="star" th:src="@{/images/star4_5.png}">
                             <img th:if="${item.totalRating == 4}" class="star" th:src="@{/images/star4_0.png}">

@@ -12,7 +12,6 @@ import com.petkpetk.service.domain.shopping.dto.review.ReviewImageDto;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.shopping.entity.review.Review;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
-import com.petkpetk.service.domain.user.entity.UserAccount;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,6 +31,8 @@ public class ReviewResponse {
 
 	private Item item;
 
+	private String itemImageUrl;
+
 	private UserAccountDto userAccountDto;
 
 	private Double rating;
@@ -40,12 +41,14 @@ public class ReviewResponse {
 
 	private List<ReviewImageDto> reviewImageDtos = new ArrayList<>();
 
-	public ReviewResponse(Long id, String content, Long likes, Item item, UserAccountDto userAccountDto,
+
+	public ReviewResponse(Long id, String content, Long likes, Item item, String itemImageUrl,  UserAccountDto userAccountDto,
 		Double rating, LocalDateTime modifiedAt) {
 		this.id = id;
 		this.content = content;
 		this.likes = likes;
 		this.item = item;
+		this.itemImageUrl = itemImageUrl;
 		this.userAccountDto = userAccountDto;
 		this.rating = rating;
 		this.modifiedAt = modifiedAt;
@@ -62,8 +65,8 @@ public class ReviewResponse {
 		);
 	}
 
-	public static ReviewResponse of(Long id,String content, Long likes, Item item, UserAccountDto userAccount, Double rating, LocalDateTime modifiedAt) {
-		return new ReviewResponse(id,content, likes, item, userAccount, rating, modifiedAt);
+	public static ReviewResponse of(Long id,String content, Long likes, Item item, String itemImageUrl, UserAccountDto userAccount, Double rating, LocalDateTime modifiedAt) {
+		return new ReviewResponse(id,content, likes, item, itemImageUrl, userAccount, rating, modifiedAt);
 	}
 
 	public static ReviewResponse from(Review review) {
@@ -72,12 +75,13 @@ public class ReviewResponse {
 		return reviewResponse;
 	}
 
-	public static ReviewResponse of(Review review, List<ReviewImageDto> reviewImageDtos) {
+	public static ReviewResponse of(Review review, String itemImageUrl, List<ReviewImageDto> reviewImageDtos) {
 		return new ReviewResponse(
 			review.getId(),
 			review.getContent(),
 			review.getLikes(),
 			review.getItem(),
+			itemImageUrl,
 			UserAccountDto.from(review.getUserAccount()),
 			review.getRating(),
 			review.getModifiedAt(),

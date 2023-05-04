@@ -87,6 +87,9 @@ function getItems() {
                     } else if (result[i].totalRating == 0.5) {
                         content += "<img class='star' src='/images/star0_5.png'>";
 
+                    }else if (result[i].totalRating == 0) {
+                        content += "<img class='star' src='/images/star5_0.png'>";
+
                     }
 
                     content += "<span class='reviewCount' style='margin-left: 5px;'>(" + result[i].reviewCount + ")</span>";

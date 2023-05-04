@@ -152,6 +152,11 @@ $("#newNickName").on("keyup", function () {
     var checkNickTxt = document.getElementById("checkNickTxt");
         checkNickTxt.textContent = "";
     $("#checkNickName").val("");
+
+    if ($("#newNickName").val() == $("#nickName").text()) {
+        $("#checkNickName").val(1);
+
+    }
 });
 
 var newPassForm = document.getElementById("newPassForm");
@@ -217,9 +222,17 @@ function checkNick() {
                 checkNickTxt.style.color = "#ff3b57";
                 $("#checkNickName").val("");
             } else {
-                checkNickTxt.textContent = "사용 가능한 닉네임입니다.";
-                checkNickTxt.style.color = "#9a9f73";
-                $("#checkNickName").val(1);
+
+                if ($("#newNickName").val() == $("#nickName").text()) {
+                    checkNickTxt.textContent = "";
+                    $("#checkNickName").val(1);
+
+                } else {
+                    checkNickTxt.textContent = "사용 가능한 닉네임입니다.";
+                    checkNickTxt.style.color = "#9a9f73";
+                    $("#checkNickName").val(1);
+
+                }
             }
         }
 
