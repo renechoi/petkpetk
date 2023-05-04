@@ -68,6 +68,10 @@ public class ProfileImage implements PetkpetkImage {
 		return new ProfileImage(imageUrl);
 	}
 
+	public static ProfileImage of(String OriginalName, String uniqueName) {
+		return new ProfileImage(OriginalName, uniqueName);
+	}
+
 	public void mapWith(UserAccount userAccount) {
 		if (this.userAccount == null) {
 			this.userAccount = userAccount;

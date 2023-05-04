@@ -37,8 +37,8 @@ public class UserMyPageController {
 	private final ReviewService reviewService;
 	private final ItemService itemService;
 	@PostMapping("/update")
-	public String update(UserUpdateRequest userUpdateRequest) {
-		userAccountService.update(userUpdateRequest);
+	public String update(UserUpdateRequest userUpdateRequest, @RequestParam("isProfileDeleted") Boolean isProfileDeleted) {
+		userAccountService.update(userUpdateRequest, isProfileDeleted);
 		return "redirect:/user/my-page/information";
 	}
 
