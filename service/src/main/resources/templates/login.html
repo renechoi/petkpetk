@@ -16,7 +16,9 @@
     </a>
 
     <br>
-    <p th:if="${errorMessage}" class="error-message" th:text="${errorMessage}"></p>
+    <div id="errorBox">
+        <p th:if="${errorMessage}" class="error-message" th:text="${errorMessage}"></p>
+    </div>
     <form role="form" method="post" action="/login/process">
         <input name="email" type="text" placeholder="Type your email" autocomplete="off">
         <br>
