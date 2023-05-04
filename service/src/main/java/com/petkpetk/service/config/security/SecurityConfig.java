@@ -35,7 +35,7 @@ public class SecurityConfig {
 				auth -> auth.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
 					.permitAll()
 					.mvcMatchers("/", "/user/**", "/error/**", "/login", "/seller/sign-up", "/seller/**", "/admin/**",
-						"/test/**", "item/**", "/community/**").permitAll()
+						"/test/**", "item/**", "/community/**", "/order/**", "/cart/**").permitAll()
 					.mvcMatchers("/api/**", "/explorer").permitAll()
 
 					.anyRequest()
