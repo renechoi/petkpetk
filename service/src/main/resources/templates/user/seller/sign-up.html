@@ -12,7 +12,7 @@
 
 
 
-    <form id="JoinForm" th:action="@{/user/sign-up}" role="form" method="post" th:object="${userAccount}">
+    <form id="JoinForm" th:action="@{/user/sign-up}" role="form" method="post" enctype="multipart/form-data" th:object="${userAccount}">
 
         <div class="container">
             <div id="img">
@@ -32,23 +32,25 @@
             <input th:field="*{name}" id="name" type="text" placeholder="Type your name" autocomplete="off" maxlength="11">
 
             <div class="title">닉네임<span>NICK NAME</span></div>
-            <input name="nickName" id="nickName" type="text" placeholder="Type your nickname" autocomplete="off" maxlength="8">
+            <input name="nickname" id="nickName" type="text" placeholder="Type your nickname" autocomplete="off" maxlength="8">
             <input id="findNickName" type="button" value="중복 검사"  onclick="checkNick()">
             <input type="hidden" id="checkNickName" >
             <div class="textBox">
                 <p id="checkNickTxt"></p>
             </div>
 
+
             <div class="title">프로필 사진<span>Profile image</span></div>
             <div class="file_box">
                 <div>
-                <label for="file" id="findImg">파일찾기</label>
-                <input type="file" id="file">
+                    <label for="file" id="findImg">파일찾기</label>
+                    <input th:field="*{profileImage}" type="file" id="file">
                 </div>
                 <div class="profileImg">
-                    <img id="sign-upProfileImg" class="signupProfileImg" src="" style="display: none">
+                    <img id="signupProfileImg" class="signupProfileImg" src="" style="display: none">
                 </div>
             </div>
+
 
             <div class="title">상호명<span>BUSINESS NAME</span></div>
             <input th:field="*{businessName}" id="businessName" type="text" placeholder="Type your business name" autocomplete="off" maxlength="30">
@@ -86,7 +88,7 @@
             <div class="title">참고항목</div>
             <input type="text" th:field="*{address.addressEtc}" id="extraAddress" placeholder="참고항목" name="addretc" readonly>
 
-
+            <input type="hidden" th:value="${T(com.petkpetk.service.common.RoleType).SELLER}" name="roles">
             <br>
             <input type="submit" value="가입하기">
             <br>

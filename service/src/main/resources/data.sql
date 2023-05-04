@@ -46,6 +46,19 @@ insert into user_account (deleted_yn, created_at, modified_at, created_by, modif
 
 
 
+insert into profile_image(image_url, original_name, representative_image_yn, unique_name, user_account_id) values
+                                                                                                               ('/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','N','ab1.jpeg',1),
+                                                                                                               ('/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','N','ab2.jpeg',2),
+                                                                                                               ('/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','N','ab3.jpeg',3),
+                                                                                                               ('/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','N','ab4.jpeg',4),
+                                                                                                               ('/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','N','ab5.jpeg',5),
+                                                                                                               ('/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','N','ab6.jpeg',6),
+                                                                                                               ('/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','N','ab7.jpeg',7),
+                                                                                                               ('/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','N','ab8.jpeg',8),
+                                                                                                               ('/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','N','ab9.jpeg',9),
+                                                                                                               ('/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','N','ab10.jpeg',10);
+
+
 
 INSERT INTO item (created_at,created_by,modified_at,modified_by,deleted_yn, item_name, price, item_amount, item_detail, item_status, original_price, discount_rate, total_rating,  user_account_id) VALUES
 (now(),'페크페크', now(),'페크페크','N','item1', 10000, 10, 'item1 detail', 'SELL', 10000,2,1, 2),
@@ -82,6 +95,62 @@ INSERT INTO item_image (created_at,created_by,modified_at,modified_by,deleted_yn
                                                                                       (now(),'페크페크', now(),'페크페크','N', 'abcde-16KakaoTalk_Photo_2023-01-05-22-29-06.jpeg', 'KakaoTalk_Photo_2023-01-05-22-29-06.jpeg', '/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg', 'N',9),
                                                                                       (now(),'페크페크', now(),'페크페크','N', 'abcde-17KakaoTalk_Photo_2023-01-05-22-29-06.jpeg', 'KakaoTalk_Photo_2023-01-05-22-29-06.jpeg', '/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg', 'Y',10),
                                                                                       (now(),'페크페크', now(),'페크페크','N', 'abcde-18KakaoTalk_Photo_2023-01-05-22-29-06.jpeg', 'KakaoTalk_Photo_2023-01-05-22-29-06.jpeg', '/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg', 'N',10);
+
+
+
+insert into review(created_at, created_by, modified_at, modified_by, deleted_yn, content, likes, rating, item_id, user_account_id) values
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용1',10,5,1,1),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용2',10,5,1,2),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용3',10,5,1,3),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용4',10,5,2,4),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용5',10,5,2,5),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용6',10,5,2,6),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용7',10,5,3,7),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용8',10,5,3,1),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용9',10,5,4,2),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용10',10,5,4,3),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용11',10,5,5,4),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용12',10,5,5,5),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용13',10,5,6,6),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용14',10,5,6,7),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용15',10,5,7,8);
+
+insert into review_image(created_at, created_by, modified_at, modified_by,deleted_yn,  image_url, original_name, unique_name, review_id) values
+(now(),'페크페크', now(),'페크페크','N','/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','ab4.jpeg',3),
+(now(),'페크페크', now(),'페크페크','N','/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','ab5.jpeg',4),
+(now(),'페크페크', now(),'페크페크','N','/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','ab6.jpeg',5),
+(now(),'페크페크', now(),'페크페크','N','/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','ab7.jpeg',5),
+(now(),'페크페크', now(),'페크페크','N','/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','ab8.jpeg',6),
+(now(),'페크페크', now(),'페크페크','N','/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','ab9.jpeg',6),
+(now(),'페크페크', now(),'페크페크','N','/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','ab10.jpeg',6),
+(now(),'페크페크', now(),'페크페크','N','/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','ab11.jpeg',7);
+
+insert into review_likes(review_id, user_account_id) VALUES
+(1,1),
+(2,1),
+(3,1),
+(4,2),
+(5,2),
+(6,2),
+(7,2),
+(1,3);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 insert into article( created_at, created_by,  modified_at, modified_by, deleted_yn, category_type, title, content, hit, user_account_id) VALUES

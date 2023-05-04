@@ -11,6 +11,7 @@ import com.petkpetk.service.config.converter.EntityAndDtoConverter;
 import com.petkpetk.service.domain.shopping.constant.ItemStatus;
 import com.petkpetk.service.domain.shopping.dto.item.ItemImageDto;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
+import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 
 import lombok.AllArgsConstructor;
@@ -41,7 +42,7 @@ public class ItemResponse {
 
 	private ItemStatus itemStatus;
 
-	private UserAccount userAccount;
+	private UserAccountDto userAccountDto;
 
 	private Double totalRating;
 
@@ -57,13 +58,13 @@ public class ItemResponse {
 			this.itemDetail,
 			this.itemStatus,
 			null, // TODO : null 처리
-			this.userAccount,
+			this.userAccountDto,
 			this.totalRating
 		);
 	}
 
 	public ItemResponse(String itemName,Long originalPrice, Double discountRate, Long price, Long itemAmount, String itemDetail,
-		ItemStatus itemStatus, UserAccount userAccount, Double totalRating) {
+		ItemStatus itemStatus, UserAccountDto userAccountDto, Double totalRating) {
 		this.itemName = itemName;
 		this.originalPrice = originalPrice;
 		this.discountRate = discountRate;
@@ -71,18 +72,19 @@ public class ItemResponse {
 		this.itemAmount = itemAmount;
 		this.itemDetail = itemDetail;
 		this.itemStatus = itemStatus;
-		this.userAccount = userAccount;
+		this.userAccountDto = userAccountDto;
 		this.totalRating = totalRating;
 	}
 
 	public static ItemResponse of(String itemName,Long originalPrice, Double discountRate, Long price, Long itemAmount, String itemDetail,
-		ItemStatus itemStatus, UserAccount userAccount, Double totalRating) {
-		return new ItemResponse(itemName,originalPrice, discountRate, (long)(originalPrice - originalPrice*discountRate), itemAmount, itemDetail, itemStatus, userAccount, totalRating);
+		ItemStatus itemStatus, UserAccountDto userAccountDto, Double totalRating) {
+		return new ItemResponse(itemName,originalPrice, discountRate, (long)(originalPrice - originalPrice*discountRate), itemAmount, itemDetail, itemStatus, userAccountDto, totalRating);
 	}
 
 	public static ItemResponse from(Item item) {
 		ItemResponse itemResponse = EntityAndDtoConverter.convertToDto(item, ItemResponse.class);
 		itemResponse.setItemImageDtos(item.getImages().stream().map(ItemImageDto::from).collect(Collectors.toList()));
+		itemResponse.setUserAccountDto(UserAccountDto.from(item.getUserAccount()));
 		return itemResponse;
 	}
 
@@ -96,7 +98,7 @@ public class ItemResponse {
 			itemEntity.getItemAmount(),
 			itemEntity.getItemDetail(),
 			itemEntity.getItemStatus(),
-			itemEntity.getUserAccount(),
+			UserAccountDto.from(itemEntity.getUserAccount()),
 			itemEntity.getTotalRating(),
 			itemImageDtos
 		);

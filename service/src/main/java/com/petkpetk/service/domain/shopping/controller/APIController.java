@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,8 +16,6 @@ import com.petkpetk.service.domain.shopping.dto.item.MainItemDto;
 import com.petkpetk.service.domain.shopping.service.item.ItemService;
 import com.petkpetk.service.domain.shopping.service.review.ReviewService;
 import com.petkpetk.service.domain.shopping.service.review.likes.ReviewLikesService;
-import com.petkpetk.service.domain.user.entity.UserAccount;
-import com.petkpetk.service.domain.user.exception.UserNotFoundException;
 import com.petkpetk.service.domain.user.service.UserAccountService;
 
 import lombok.RequiredArgsConstructor;
@@ -34,7 +31,6 @@ public class APIController {
 	private final ItemService itemService;
 	private final ReviewService reviewService;
 	private final ReviewLikesService reviewLikesService;
-	private final PasswordEncoder passwordEncoder;
 
 	@RequestMapping(value = "/review/like", method = RequestMethod.POST)
 	public Boolean like(Long num, Long reviewId, Long likeNum, String userEmail) {
@@ -72,34 +68,19 @@ public class APIController {
 	@RequestMapping("/checkPass")
 	@ResponseBody
 	public boolean checkPass(String password, String email) {
-		System.out.println("password = " + password);
-		System.out.println("email = " + email);
-		UserAccount userAccount = userAccountService.searchUser(email).orElseThrow(
-			UserNotFoundException::new);
+		return userAccountService.isPasswordSame(password, email);
+	}
 
-		return userAccount.checkPassword(password, passwordEncoder);
-
+	@RequestMapping("/checkEmail")
+	@ResponseBody
+	public boolean checkEmail(String email) {
+		return userAccountService.isEmailDuplicate(email);
 	}
 
 	@RequestMapping("/checkNickName")
 	@ResponseBody
-	public boolean checkNickName(String nickName, String email) {
-		if (email != null) {
-			UserAccount userAccount = userAccountService.searchUser(email).orElseThrow(
-				UserNotFoundException::new);
-			if (userAccount.getNickname().equals(nickName)) {
-				return false;
-			} else {
-				return userAccountService.searchUserByNickName(nickName).isPresent();
-			}
-		}
-			return userAccountService.searchUserByNickName(nickName).isPresent();
-
+	public boolean checkNickname(String nickname, String email) {
+		return userAccountService.isNicknameDuplicate(nickname, email);
 	}
-	@RequestMapping("/checkEmail")
-	@ResponseBody
-	public boolean checkEmail(String email) {
-			return userAccountService.searchUser(email).isPresent();
 
-	}
 }

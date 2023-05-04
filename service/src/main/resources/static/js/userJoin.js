@@ -131,6 +131,10 @@ function checkNewEmail() {
     }
 
     var checkEmailTxt = document.getElementById("checkEmailTxt");
+    if ($("#email").val() == "") {
+        checkNickTxt.textContent = "";
+        $("#checkEmail").val("");
+    }else{
     $.ajax({
         url: "/api/checkEmail",
         type: "post",
@@ -146,21 +150,25 @@ function checkNewEmail() {
                 $("#checkEmail").val("");
             } else {
                 checkEmailTxt.textContent = "사용 가능한 이메일입니다.";
-                checkEmailTxt.style.color = "#9a9f73";
+                checkEmailTxt.style.color = "rgb(185 146 200)";
                 $("#checkEmail").val(1);
             }
         }
 
-    })
+    })}
 }
 
 function checkNick() {
     var checkNickTxt = document.getElementById("checkNickTxt");
+    if ($("#nickName").val() == "") {
+        checkNickTxt.textContent = "";
+        $("#checkNickName").val("");
+    } else {
     $.ajax({
         url: "/api/checkNickName",
         type: "post",
         data: {
-            nickName: $("#nickName").val(),
+            nickname: $("#nickName").val(),
         },
         dataType: "json",
         success: function (sameNick) {
@@ -170,12 +178,11 @@ function checkNick() {
                 $("#checkNickName").val("");
             } else {
                 checkNickTxt.textContent = "사용 가능한 닉네임입니다.";
-                checkNickTxt.style.color = "#9a9f73";
+                checkNickTxt.style.color = "rgb(185 146 200)";
                 $("#checkNickName").val(1);
             }
         }
-
-    })
+    })}
 }
 
 var profile;

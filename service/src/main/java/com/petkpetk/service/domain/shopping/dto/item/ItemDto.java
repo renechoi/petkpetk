@@ -10,7 +10,7 @@ import com.petkpetk.service.domain.shopping.constant.ItemStatus;
 import com.petkpetk.service.domain.shopping.dto.item.request.ItemRegisterRequest;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.shopping.entity.item.ItemImage;
-import com.petkpetk.service.domain.user.entity.UserAccount;
+import com.petkpetk.service.domain.user.dto.UserAccountDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,7 +40,7 @@ public class ItemDto {
 	private Double totalRating;
 
 	private List<MultipartFile> rawImages = new ArrayList<>();
-	private UserAccount userAccount;
+	private UserAccountDto userAccountDto;
 
 	private List<ItemImageDto> itemImageDtos = new ArrayList<>();
 
@@ -48,7 +48,7 @@ public class ItemDto {
 
 	public ItemDto(String itemName, Long originalPrice, Double discountRate, Long price, Long itemAmount, String itemDetail, ItemStatus itemStatus,
 		List<MultipartFile> rawImages,
-		UserAccount userAccount, Double totalRating) {
+		UserAccountDto userAccountDto, Double totalRating) {
 		this.itemName = itemName;
 		this.originalPrice = originalPrice;
 		this.discountRate = discountRate;
@@ -57,13 +57,13 @@ public class ItemDto {
 		this.itemDetail = itemDetail;
 		this.itemStatus = itemStatus;
 		this.rawImages = rawImages;
-		this.userAccount = userAccount;
+		this.userAccountDto = userAccountDto;
 		this.totalRating = totalRating;
 	}
 
 	public static ItemDto of(String itemName, Long originalPrice, Double discountRate, Long price, Long itemAmount, String itemDetail, ItemStatus itemStatus,
-		List<MultipartFile> rawImages, UserAccount userAccount, Double totalRating) {
-		return new ItemDto(itemName, originalPrice, discountRate, (long)(originalPrice - originalPrice*discountRate), itemAmount, itemDetail, itemStatus, rawImages, userAccount, totalRating);
+		List<MultipartFile> rawImages, UserAccountDto userAccountDto, Double totalRating) {
+		return new ItemDto(itemName, originalPrice, discountRate, (long)(originalPrice - originalPrice*discountRate), itemAmount, itemDetail, itemStatus, rawImages, userAccountDto, totalRating);
 	}
 
 
@@ -81,7 +81,7 @@ public class ItemDto {
 			this.itemDetail,
 			this.itemStatus,
 			images,
-			this.userAccount,
+			this.userAccountDto,
 			this.totalRating
 		);
 	}
@@ -96,13 +96,13 @@ public class ItemDto {
 			this.itemDetail,
 			this.itemStatus,
 			null,
-			this.userAccount,
+			this.userAccountDto,
 			this.totalRating
 		);
 	}
 
 
-	public static ItemDto from(ItemRegisterRequest itemRegisterRequest, UserAccount userAccount) {
+	public static ItemDto from(ItemRegisterRequest itemRegisterRequest, UserAccountDto userAccountDto) {
 		return new ItemDto(
 			itemRegisterRequest.getItemName(),
 			itemRegisterRequest.getOriginalPrice(),
@@ -112,7 +112,7 @@ public class ItemDto {
 			itemRegisterRequest.getItemDetail(),
 			itemRegisterRequest.getItemStatus(),
 			itemRegisterRequest.getImages(),
-			userAccount,
+			userAccountDto,
 			itemRegisterRequest.getTotalRating()
 		);
 	}

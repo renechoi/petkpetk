@@ -11,25 +11,17 @@
   <div class="BigTitle">
     <span class="MyPageTitle">회원 정보</span>
   </div>
-  <!--  유저 정보 확인 div  -->
-  <form th:if="${profileImage != null}" id="newProfileForm" method="post" enctype="multipart/form-data" th:action="@{/user/update}" th:object="${userAccount}">
-    <input type="hidden" id="originalProfile" th:value="${profileImage.imageUrl}">
-    <div  style="display: flex; align-items: flex-end; margin-bottom: 50px;">
-      <div class="bigImageBox"><img th:src="${profileImage.imageUrl}" id="userProfileImage" class="userOriginalProfile"></div>
-      <input type="button" value="프로필 변경" id="changeProfileBtn" class="changeProfile" onclick="showNewProfileBox()">
-      <div id="newProfileBox" style="display: none;">
-        <label for="file"  class="changeProfile">이미지 선택</label>
-        <input th:field="*{profileImage}" type="file" id="file">
-        <input type="button" value="삭제" class="deleteProfile" onclick="deleteProfile()">
-        <input type="hidden" th:value="${profileImage.uniqueName}" id="uniqueImageName" name="uniqueImageName">
-        <input type="submit" value="저장" class="postProfile">
-        <input type="button" value="✖" class="cancelNewProfile" onclick="cancelNewProfile()">
-      </div>
-    </div>
-  </form>
 
-  <form th:unless="${profileImage != null}" id="newProfileForm" method="post" enctype="multipart/form-data" th:action="@{/user/update}" th:object="${userAccount}">
-    <div  style="display: flex; align-items: flex-end;margin-bottom: 50px;">
+  <!--  유저 정보 확인 div  -->
+  <form method="post" th:action="@{/user/my-page/update}" th:object="${userAccount}" id="newInfoForm" enctype="multipart/form-data">
+      <div  th:if="${userAccount.profileImage != null}">
+        <input type="hidden" id="originalProfile" th:value="${userAccount.profileImage.getName()}">
+        <div  style="display: flex; align-items: flex-end; margin-bottom: 50px;">
+          <div class="bigImageBox"><img th:src="${userAccount.profileImage.getName()}" id="userProfileImage" class="userOriginalProfile"></div>
+        </div>
+      </div>
+
+    <div th:unless="${userAccount.profileImage != null}" style="display: flex; align-items: flex-end;margin-bottom: 50px;">
       <div class="bigImageBox"><img th:src="@{/images/basicProfile.png}" id="userProfileImage" class="userOriginalProfile"></div>
       <input type="button" value="프로필 등록" id="changeProfileBtn" class="changeProfile" onclick="showNewProfileBox()">
       <div id="newProfileBox" style="display: none;">
@@ -40,87 +32,113 @@
         <input type="button" value="✖" class="cancelNewProfile" onclick="cancelNewProfile()">
       </div>
     </div>
-  </form>
 
 
-  <div id="originalInformation" class="originalInformation" style="display: block">
-    <div class="infos">
-      <div class="infoTitle">Email</div>
-      <span class="informations" th:text="${userAccount.email}">유저 이메일</span>
-    </div>
-    <input type="hidden" id="userEmail" th:value="${userAccount.email}">
 
-    <!-- 수정하기 버튼 누르면 display = none -->
-    <!-- 여기에다가 회원 정보들 좀 가져와 담아주시오 -->
-    <div class="myPageUserInformation" id="myPageUserInformation">
+
+
+
+    <div id="originalInformation" class="originalInformation" style="display: block">
       <div class="infos">
-        <div class="infoTitle">Name</div>
-        <span class="informations" th:text="${userAccount.name}" id="name">유저 이름</span>
+        <div class="infoTitle">Email</div>
+        <span class="informations" th:text="${userAccount.email}">유저 이메일</span>
       </div>
+      <input type="hidden" th:field="${userAccount.email}">
+      <input type="hidden" th:field="${userAccount.roles}">
 
-      <div class="infos">
-        <div class="infoTitle">Nick name</div>
-        <span class="informations" th:text="${userAccount.nickname}" id="nickName">유저 닉네임</span>
-      </div>
-
-      <div class="infos">
-        <div class="infoTitle">Address</div>
-        <span class="informations" th:text="${'('+userAccount.address.zipCode+') '+userAccount.address.address1+' '+userAccount.address.address2+' '+userAccount.address.addressEtc}">유저 주소</span>
-      </div>
-
-      <input type="hidden" id="zip" th:value="${userAccount.address.zipCode}">
-      <input type="hidden" id="addr1" th:value="${userAccount.address.address1}">
-      <input type="hidden" id="addr2" th:value="${userAccount.address.address2}">
-      <input type="hidden" id="addrEtc" th:value="${userAccount.address.addressEtc}">
-
-      <input id="modifyInfo" type="button" value="수정하기" onclick="openNewInfoBox()">
-      <br>
-      <input id="modifyPass" type="button" value="비밀번호 수정" onclick="openNewPassBox()">
-    </div>
-  </div>
-
-  <div class="newUserInformationForm" id="newUserInformationForm" style="display: none">
-    <form method="post" id="newInfoForm" th:action="@{/user/update}" th:object="${userAccount}">
-      <div>
-        <div class="newTitle">이름<span>Name</span></div>
-        <input th:value="*{name}" id="newName" th:field="*{name}" class="newInfos" type="text" placeholder="Type your name"  autocomplete="off" maxlength="10">
-      </div>
-
-      <div>
-        <div class="newTitle">닉네임<span>Nick name</span></div>
-        <input th:value="*{nickname}" id="newNickName" th:field="*{nickname}" class="newNickName" th:id="newNickName" type="text" placeholder="Type your nickname"  autocomplete="off" maxlength="10">
-        <input id="findNickName" type="button" value="중복 검사" onclick="checkNick()">
-      </div>
-      <div id="textBox">
-        <p id="checkNickTxt"></p>
-      </div>
-      <input type="hidden" id="checkNickName">
-
-        <div>
-          <div class="newTitle">우편번호<span>ADDRESS</span></div>
-          <input th:value="*{address.zipCode}" th:field="*{address.zipCode}" type="text" class="newAddress" id="zipcode" placeholder="우편번호" name="zipcode" readonly>
-          <input id="findZipcode" type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
-
-          <div class="newTitle">주소</div>
-          <input th:value="*{address.address1}" th:field="*{address.address1}" class="newInfos" type="text" id="address1" placeholder="주소" name="addr" readonly>
-
-          <div class="newTitle">상세주소<span>DETAIL ADDRESS</span></div>
-          <input th:value="*{address.address2}" th:field="*{address.address2}" class="newInfos" type="text" id="address2" placeholder="상세주소" name="addrdetail" autocomplete="off">
-
-          <div class="newTitle">참고항목</div>
-          <input th:value="*{address.addressEtc}" th:field="*{address.addressEtc}" class="newInfos" type="text" id="addressEtc" placeholder="참고항목" name="addretc" readonly>
-
+      <!-- 수정하기 버튼 누르면 display = none -->
+      <!-- 여기에다가 회원 정보들 좀 가져와 담아주시오 -->
+      <div class="myPageUserInformation" id="myPageUserInformation">
+        <div class="infos">
+          <div class="infoTitle">Name</div>
+          <span class="informations" th:text="${userAccount.name}" id="name">유저 이름</span>
         </div>
 
+        <div class="infos">
+          <div class="infoTitle">Nick name</div>
+          <span class="informations" th:text="${userAccount.nickname}" id="nickName">유저 닉네임</span>
+        </div>
 
-      <input class="submitNewInfo" type="submit" value="수정 완료">
-      <input class="cancelNewInfo" type="button" value="취소" onclick="hideNewInfoBox()">
-    </form>
-  </div>
+        <div class="infos">
+          <div class="infoTitle">Address</div>
+          <span class="informations" th:text="${'('+userAccount.address.zipCode+') '+userAccount.address.address1+' '+userAccount.address.address2+' '+userAccount.address.addressEtc}">유저 주소</span>
+        </div>
 
+        <input type="hidden" id="zip" th:value="${userAccount.address.zipCode}">
+        <input type="hidden" id="addr1" th:value="${userAccount.address.address1}">
+        <input type="hidden" id="addr2" th:value="${userAccount.address.address2}">
+        <input type="hidden" id="addrEtc" th:value="${userAccount.address.addressEtc}">
+
+        <input id="modifyInfo" type="button" value="수정하기" onclick="openNewInfoBox()">
+        <br>
+        <input id="modifyPass" type="button" value="비밀번호 수정" onclick="openNewPassBox()">
+      </div>
+    </div>
+
+    <div class="newUserInformationForm" id="newUserInformationForm" style="display: none">
+
+      <div th:if="${userAccount.profileImage != null}">
+        <input type="button" value="프로필 변경" id="changeProfileBtn" class="changeProfile" onclick="showNewProfileBox()">
+        <div id="newProfileBox" style="display: none;">
+          <label for="file"  class="changeProfile">이미지 선택</label>
+          <input th:field="*{profileImage}" type="file" id="file">
+          <input type="button" value="삭제" class="deleteProfile" onclick="deleteProfile()">
+          <input type="hidden" id="isProfileDeleted" name="isProfileDeleted" th:value="false">
+          <input type="button" value="✖" class="cancelNewProfile" onclick="cancelNewProfile()">
+        </div>
+      </div>
+
+      <div th:unless="${userAccount.profileImage != null}">
+        <input type="button" value="프로필 등록" id="changeProfileBtn" class="changeProfile" onclick="showNewProfileBox()">
+        <div id="newProfileBox" style="display: none;">
+          <label for="file" class="changeProfile">이미지 선택</label>
+          <input th:field="*{profileImage}" type="file" id="file">
+          <input type="button" value="삭제" class="deleteProfile" onclick="deleteProfile()">
+          <input type="button" value="✖" class="cancelNewProfile" onclick="cancelNewProfile()">
+        </div>
+      </div>
+
+        <div>
+          <div class="newTitle">이름<span>Name</span></div>
+          <input th:value="*{name}" id="newName" th:field="*{name}" class="newInfos" type="text" placeholder="Type your name"  autocomplete="off" maxlength="10">
+        </div>
+
+        <div>
+          <div class="newTitle">닉네임<span>Nick name</span></div>
+          <input id="newNickName" th:field="*{nickname}" class="newNickName" type="text" placeholder="Type your nickname"  autocomplete="off" maxlength="10">
+          <input id="findNickName" type="button" value="중복 검사" onclick="checkNick()">
+        </div>
+        <div id="textBox">
+          <p id="checkNickTxt"></p>
+        </div>
+        <input type="hidden" id="checkNickName">
+
+          <div>
+            <div class="newTitle">우편번호<span>ADDRESS</span></div>
+            <input th:value="*{address.zipCode}" th:field="*{address.zipCode}" type="text" class="newAddress" id="zipcode" placeholder="우편번호" name="zipcode" readonly>
+            <input id="findZipcode" type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+
+            <div class="newTitle">주소</div>
+            <input th:value="*{address.address1}" th:field="*{address.address1}" class="newInfos" type="text" id="address1" placeholder="주소" name="addr" readonly>
+
+            <div class="newTitle">상세주소<span>DETAIL ADDRESS</span></div>
+            <input th:value="*{address.address2}" th:field="*{address.address2}" class="newInfos" type="text" id="address2" placeholder="상세주소" name="addrdetail" autocomplete="off">
+
+            <div class="newTitle">참고항목</div>
+            <input th:value="*{address.addressEtc}" th:field="*{address.addressEtc}" class="newInfos" type="text" id="addressEtc" placeholder="참고항목" name="addretc" readonly>
+
+          </div>
+
+
+        <input class="submitNewInfo" type="submit" value="수정 완료">
+        <input class="cancelNewInfo" type="button" value="취소" onclick="hideNewInfoBox()">
+    </div>
+  </form>
   <!--  비밀번호 수정 Form  -->
   <div class="newPasswordForm" id="newPasswordForm" style="display: none">
-    <form method="post" th:action="@{/user/update}" id="newPassForm" th:object="${userAccount}">
+    <form method="post" th:action="@{/user/my-page/password/update}" id="newPassForm" th:object="${userAccount}">
+      <input type="hidden" id="userEmail" th:field="${userAccount.email}">
+      <input type="hidden" th:field="${userAccount.roles}">
       <div class="newPassFlex">
         <div class="newPassInput">
           <span>새 비밀번호</span>

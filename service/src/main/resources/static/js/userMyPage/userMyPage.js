@@ -4,6 +4,8 @@ function openNewInfoBox() {
 
     originalInformation.style.display = "none";
     newUserInformationForm.style.display = "block";
+
+    $("#checkNickName").val(1);
 }
 
 function hideNewInfoBox() {
@@ -198,6 +200,7 @@ function cancelNewProfile() {
     var changeProfileBtn = document.getElementById("changeProfileBtn");
     var originalProfile = document.getElementById("originalProfile");
     var userProfileImage = document.getElementById("userProfileImage");
+    $("#isProfileDeleted").val(false);
 
     userProfileImage.setAttribute("src", originalProfile.value);
     newProfileBox.style.display = "none";
@@ -206,12 +209,9 @@ function cancelNewProfile() {
 
 function deleteProfile() {
     var userProfileImage = document.getElementById("userProfileImage");
-    var uniqueImageName = document.getElementById("uniqueImageName");
-    if (uniqueImageName) {
-        uniqueImageName.value = "이미지삭제"
-    }
-    userProfileImage.setAttribute("src", "/images/basicProfile.png");
+    $("#isProfileDeleted").val(true);
 
+    userProfileImage.setAttribute("src", "/images/basicProfile.png");
 }
 
 function checkNick() {
@@ -238,5 +238,37 @@ function checkNick() {
         }
 
     })
+}
+
+
+function checkNick() {
+    var checkNickTxt = document.getElementById("checkNickTxt");
+    if ($("#newNickName").val() == "") {
+        checkNickTxt.textContent = "";
+        $("#checkNickName").val("");
+    } else {
+
+    $.ajax({
+        url: "/api/checkNickName",
+        type: "post",
+        data : {
+            nickname : $("#newNickName").val(),
+            email: $("#userEmail").val()
+        },
+        dataType: "json",
+        success: function (sameNick) {
+            console.log(sameNick);
+            if (sameNick == true) {
+                checkNickTxt.textContent = "중복 된 닉네임입니다.";
+                checkNickTxt.style.color = "#ff3b57";
+                $("#checkNickName").val("");
+            } else {
+                checkNickTxt.textContent = "사용 가능한 닉네임입니다.";
+                checkNickTxt.style.color = "#9a9f73";
+                $("#checkNickName").val(1);
+            }
+        }
+
+    })}
 }
 

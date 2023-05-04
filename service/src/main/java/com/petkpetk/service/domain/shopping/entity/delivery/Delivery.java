@@ -34,8 +34,6 @@ public class Delivery {
 	private Long id;
 
 	private Long payId;
-	private Long userId;
-	private Long orderId;
 
 	@OneToOne(mappedBy = "delivery", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private Order order;
@@ -43,14 +41,12 @@ public class Delivery {
 	@Enumerated(EnumType.STRING)
 	private DeliveryStatus deliveryStatus;
 
-	/** 배송지*/
+	/** 배송지 */
 	@Embedded
 	private Address address;
 
-	public Delivery(Long payId, Long userId, Long orderId, DeliveryStatus deliveryStatus, Address address) {
+	public Delivery(Long payId, DeliveryStatus deliveryStatus, Address address) {
 		this.payId = payId;
-		this.userId = userId;
-		this.orderId = orderId;
 		this.deliveryStatus = deliveryStatus;
 		this.address = address;
 	}
@@ -63,8 +59,8 @@ public class Delivery {
 		return new Delivery(userAccount.getAddress());
 	}
 
-	public static Delivery of(Long payId, Long userId, Long orderId, DeliveryStatus deliveryStatus, Address address) {
-		return new Delivery(payId, userId, orderId, deliveryStatus,address);
+	public static Delivery of(Long payId, DeliveryStatus deliveryStatus, Address address) {
+		return new Delivery(payId, deliveryStatus,address);
 	}
 
 	public void cancelDelivery(){

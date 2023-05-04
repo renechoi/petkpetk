@@ -1,8 +1,11 @@
 package com.petkpetk.service.config.security;
 
+import java.util.Arrays;
+
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,7 +13,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.petkpetk.service.config.exception.PetkpetkServerException;
 import com.petkpetk.service.domain.user.dto.security.UserAccountPrincipal;
+import com.petkpetk.service.domain.user.exception.UserNotFoundException;
 import com.petkpetk.service.domain.user.service.SocialUserAccountService;
 import com.petkpetk.service.domain.user.service.UserAccountService;
 
@@ -30,7 +35,7 @@ public class SecurityConfig {
 				auth -> auth.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
 					.permitAll()
 					.mvcMatchers("/", "/user/**", "/error/**", "/login", "/seller/sign-up", "/seller/**", "/admin/**",
-						"/test/**", "item/**", "/community/**").permitAll()
+						"/test/**", "item/**", "/community/**", "/order/**", "/cart/**").permitAll()
 					.mvcMatchers("/api/**", "/explorer").permitAll()
 
 					.anyRequest()
@@ -43,7 +48,12 @@ public class SecurityConfig {
 				.defaultSuccessUrl("/")
 				.failureUrl("/login")
 				.usernameParameter("email")
-				.passwordParameter("password"))
+				.passwordParameter("password")
+				.failureHandler((request, response, exception) -> {
+						request.setAttribute("errorMessage", "이메일 혹은 비밀번호가 일치하지 않습니다.");
+						request.getRequestDispatcher("/login").forward(request, response);
+					}
+				))
 
 			.oauth2Login(Customizer.withDefaults())
 			.oauth2Login(oauth2 -> oauth2.clientRegistrationRepository(oAuth2Config.clientRegistrationRepository())
@@ -54,7 +64,7 @@ public class SecurityConfig {
 				)
 			)
 
-			.rememberMe(rememberMe->rememberMe
+			.rememberMe(rememberMe -> rememberMe
 				.key("remember-me-key")
 				.tokenValiditySeconds(3600)
 				.rememberMeCookieName("remember-me-cookie-name"))
@@ -69,9 +79,10 @@ public class SecurityConfig {
 
 	@Bean
 	public UserDetailsService userDetailsService(UserAccountService userAccountService) {
-		return email -> userAccountService.searchUserDto(email)
-			.map(UserAccountPrincipal::from)
-			.orElseThrow(() -> new UsernameNotFoundException("회원을 찾을 수 없습니다"));
+		return email -> UserAccountPrincipal.from(userAccountService.searchUserDto(email));
 	}
 
 }
+
+
+

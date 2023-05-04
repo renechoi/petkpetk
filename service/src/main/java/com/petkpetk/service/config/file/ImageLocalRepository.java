@@ -2,6 +2,8 @@ package com.petkpetk.service.config.file;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -24,8 +26,8 @@ public class ImageLocalRepository<T extends PetkpetkImage> {
 
 	public void save(T petkpetkImage, MultipartFile rawImage) {
 		try {
-			rawImage.transferTo(new File(petkpetkImage.getImageUrl().replace(ServerProperty.IMAGE_SERVER_LOCATION.getServerLocation(), getSystemStorage())));
-		} catch (IOException e) {
+			rawImage.transferTo(new File(createPath(petkpetkImage)));
+		} catch (IOException | URISyntaxException e) {
 			throw new ImageUploadFailureException();
 		}
 	}
@@ -35,24 +37,40 @@ public class ImageLocalRepository<T extends PetkpetkImage> {
 	}
 
 	public void delete(T petkpetkImage) {
-		new File(petkpetkImage.getImageUrl().replace(ServerProperty.IMAGE_SERVER_LOCATION.getServerLocation(), getSystemStorage())).delete();
+		if (petkpetkImage.getOriginalName().equals("defaultProfile.jpeg")){
+			return;
+		}
+
+		try {
+			new File(createPath(petkpetkImage)).delete();
+		} catch (URISyntaxException e) {
+			throw new ImageUploadFailureException();
+		}
 	}
 
 	public MultipartFile findByPetkpetkImage(T petkpetkImage) {
+
 		try {
-			Path path = Paths.get(petkpetkImage.getImageUrl().replace(ServerProperty.IMAGE_SERVER_LOCATION.getServerLocation(), getSystemStorage()));
+			Path path = Paths.get(createPath(petkpetkImage));
 			byte[] content = Files.readAllBytes(path);
 			String contentType = Files.probeContentType(path);
 			return new PetkpetkRawImage(petkpetkImage.getImageUrl(), path.getFileName().toString(), contentType,
 				content);
-		} catch (IOException e) {
+		} catch (IOException | URISyntaxException e) {
 			throw new PetkpetkServerException(StatusCode.LOCAL_IMAGE_CONVERTING_FAILURE);
 		}
+	}
+
+	private URI createPath(T petkpetkImage) throws URISyntaxException {
+		return new URI("file", null, petkpetkImage.getImageUrl()
+			.replace(ServerProperty.IMAGE_SERVER_LOCATION.getServerLocation(), getSystemStorage()), null);
 	}
 
 	private String getSystemStorage() {
 		return LocalProperty.getInstance().getItemLocalStorage();
 	}
+
+
 
 	/**
 	 * 아래 메서드들은 deprecated 될 예정이나, test code에서 사용되고 있으므로 추후 test code 리팩토링 후 삭제한다.

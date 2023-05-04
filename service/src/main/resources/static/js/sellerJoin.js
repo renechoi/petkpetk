@@ -122,6 +122,10 @@ function checkNewEmail() {
     }
 
     var checkEmailTxt = document.getElementById("checkEmailTxt");
+    if ($("#email").val() == "") {
+        checkNickTxt.textContent = "";
+        $("#checkEmail").val("");
+    } else {
     $.ajax({
         url: "/api/checkEmail",
         type: "post",
@@ -137,16 +141,19 @@ function checkNewEmail() {
                 $("#checkEmail").val("");
             } else {
                 checkEmailTxt.textContent = "사용 가능한 이메일입니다.";
-                checkEmailTxt.style.color = "#9a9f73";
+                checkEmailTxt.style.color = "rgb(185 146 200)";
                 $("#checkEmail").val(1);
             }
         }
-
-    })
+    })}
 }
 
 function checkNick() {
     var checkNickTxt = document.getElementById("checkNickTxt");
+    if ($("#nickName").val() == "") {
+        checkNickTxt.textContent = "";
+        $("#checkNickName").val("");
+    } else {
     $.ajax({
         url: "/api/checkNickName",
         type: "post",
@@ -161,12 +168,11 @@ function checkNick() {
                 $("#checkNickName").val("");
             } else {
                 checkNickTxt.textContent = "사용 가능한 닉네임입니다.";
-                checkNickTxt.style.color = "#9a9f73";
+                checkNickTxt.style.color = "rgb(185 146 200)";
                 $("#checkNickName").val(1);
             }
         }
-
-    })
+    })}
 }
 
 var profile;
@@ -178,14 +184,14 @@ $("#file").on('change',function(e){
         var reader = new FileReader();
 
         reader.onload = function (z) {
-            $("#sign-upProfileImg").attr("src", z.target.result);
+            $("#signupProfileImg").attr("src", z.target.result);
         };
 
         reader.readAsDataURL(a);
 
     });
 
-    var sign_upProfileImg = document.getElementById("sign-upProfileImg");
+    var sign_upProfileImg = document.getElementById("signupProfileImg");
     sign_upProfileImg.style.display = "block";
 
 });

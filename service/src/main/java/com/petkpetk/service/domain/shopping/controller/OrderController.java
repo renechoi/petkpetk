@@ -1,6 +1,5 @@
 package com.petkpetk.service.domain.shopping.controller;
 
-import java.security.Principal;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -10,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -86,16 +86,16 @@ public class OrderController {
 
 
 	@GetMapping(value = {"/orders", "/orders/{page}"})
-	public String orderHistory(@PathVariable("page") Optional<Integer> page, @AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal, Model model){
+	public String orderHistory(@PathVariable("page") Optional<Integer> page, Authentication authentication, Model model){
 		PageRequest pageRequest = PageRequest.of(page.orElse(0), 4);
 
-		Page<OrderHistoryDto> orderHistoryDtos = orderService.getOrders(userAccountPrincipal.getName(), pageRequest);
+		Page<OrderHistoryDto> orderHistoryDtos = orderService.getOrders(authentication.getName(), pageRequest);
 
 		model.addAttribute("orders", orderHistoryDtos);
 		model.addAttribute("page", pageRequest.getPageNumber());
 		model.addAttribute("maxPage", 5);
 
-		return "order/orderHist";
+		return "order/user/orderList";
 	}
 	
 	
