@@ -208,13 +208,16 @@ function cancelNewProfile() {
 
 function deleteProfile() {
     var userProfileImage = document.getElementById("userProfileImage");
-    var uniqueImageName = document.getElementById("uniqueImageName");
-    if (uniqueImageName) {
-        uniqueImageName.value = "이미지삭제"
-    }
-    userProfileImage.setAttribute("src", "/images/basicProfile.png");
+    $("#isProfileDeleted").val(true);
 
+    userProfileImage.setAttribute("src", "/images/basicProfile.png");
 }
+
+
+
+
+
+
 
 function checkNick() {
     var checkNickTxt = document.getElementById("checkNickTxt");

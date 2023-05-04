@@ -74,7 +74,6 @@ public class UserAccount extends AuditingFields implements Serializable {
 	@Convert(converter = RoleTypeConverter.class)
 	private Set<RoleType> roles = new LinkedHashSet<>();
 
-
 	private String phoneNumber;
 
 	private String businessName;
@@ -140,7 +139,6 @@ public class UserAccount extends AuditingFields implements Serializable {
 
 	public void update(UserUpdateRequest userUpdateRequest, ProfileImage profileImage) {
 		this.email = userUpdateRequest.getEmail();
-		this.password = userUpdateRequest.getPassword();
 		this.name = userUpdateRequest.getName();
 		this.nickname = userUpdateRequest.getNickname();
 		this.profileImage = mapImage(profileImage);
@@ -151,7 +149,6 @@ public class UserAccount extends AuditingFields implements Serializable {
 
 	public void update(UserUpdateRequest userUpdateRequest) {
 		this.email = userUpdateRequest.getEmail();
-		this.password = userUpdateRequest.getPassword();
 		this.name = userUpdateRequest.getName();
 		this.nickname = userUpdateRequest.getNickname();
 		this.address = userUpdateRequest.getAddress();
@@ -185,4 +182,3 @@ public class UserAccount extends AuditingFields implements Serializable {
 	}
 
 }
-
