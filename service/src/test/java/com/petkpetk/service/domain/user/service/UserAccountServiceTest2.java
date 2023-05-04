@@ -115,7 +115,7 @@ class UserAccountServiceTest2 {
 
 
 		// when
-		userAccountService.update(userUpdateRequest);
+		userAccountService.update(userUpdateRequest, false);
 
 		// then
 		UserAccountDto userAccountDto = userAccountService.searchUserDto(email);

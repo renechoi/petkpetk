@@ -200,6 +200,7 @@ function cancelNewProfile() {
     var changeProfileBtn = document.getElementById("changeProfileBtn");
     var originalProfile = document.getElementById("originalProfile");
     var userProfileImage = document.getElementById("userProfileImage");
+    $("#isProfileDeleted").val(false);
 
     userProfileImage.setAttribute("src", originalProfile.value);
     newProfileBox.style.display = "none";
@@ -212,10 +213,6 @@ function deleteProfile() {
 
     userProfileImage.setAttribute("src", "/images/basicProfile.png");
 }
-
-
-
-
 
 
 
