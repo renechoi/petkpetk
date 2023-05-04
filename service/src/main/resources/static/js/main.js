@@ -1,24 +1,26 @@
-function showMoreBtn(num) {
+let itemsCount;
+let items = 2;
+let num = 1;
+
+function showMoreBtn(totalItemCount, num) {
     var divs = document.querySelectorAll('.mainContainer div');
     var moreBtn = document.getElementById("moreBtn");
 
-    if (divs.length >= 12 && divs.length != $("#itemCount").val()) {
+    if (divs.length >= 12*num && divs.length != $("#itemCount").val()) {
 
         moreBtn.style.display = "inline";
     }
-    if (num != null) {
-        if (divs.length == num) {
+    if (totalItemCount != null) {
+        if (divs.length == totalItemCount) {
             moreBtn.style.display = "none";
         }
     }
 }
 
-showMoreBtn();
+showMoreBtn(null, 1);
 
 
-let itemsCount;
-let items = 2;
-let num = 1;
+
 
 function getItems() {
     itemsCount = items * num;
@@ -106,7 +108,7 @@ function getItems() {
                     $(".mainContainer").append(content);
                 }
             }
-            showMoreBtn(totalItemCount);
+            showMoreBtn(totalItemCount, num);
             num++;
         }
     })
