@@ -23,7 +23,7 @@ import com.petkpetk.service.domain.shopping.dto.item.ItemImageDto;
 import com.petkpetk.service.domain.shopping.dto.item.request.ItemRegisterRequest;
 import com.petkpetk.service.domain.shopping.dto.item.response.ItemResponse;
 import com.petkpetk.service.domain.shopping.dto.order.CheckoutDto;
-import com.petkpetk.service.domain.shopping.dto.order.request.CheckoutReqeust;
+import com.petkpetk.service.domain.shopping.dto.order.request.CheckoutRequest;
 import com.petkpetk.service.domain.shopping.dto.review.request.ReviewRegisterRequest;
 import com.petkpetk.service.domain.shopping.dto.review.response.ReviewResponse;
 import com.petkpetk.service.domain.shopping.service.item.ItemService;
@@ -89,7 +89,7 @@ public class ItemController {
 		List<ReviewResponse> reviewList = reviewService.getReviewList(itemId);
 
 		model.addAttribute("item", itemResponse);
-		model.addAttribute("order",new CheckoutReqeust(List.of(new CheckoutDto(itemResponse.getId()))));
+		model.addAttribute("order",new CheckoutRequest(List.of(new CheckoutDto(itemResponse.getId()))));
 		model.addAttribute("itemUser", itemUser);
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("reviewDtos", new ReviewRegisterRequest());
