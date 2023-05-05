@@ -13,7 +13,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.petkpetk.service.domain.shopping.entity.order.Order;
-
+import com.petkpetk.service.domain.user.entity.UserAccount;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long>, QuerydslPredicateExecutor<Order>, OrderRepositoryCustom {
@@ -29,5 +29,7 @@ public interface OrderRepository extends JpaRepository<Order, Long>, QuerydslPre
 	Long countOrder(@Param("email") String email);
 
 
+	@Query("select o from Order o where o.userAccount.email = :email order by o.createdAt desc")
+	List<Order> findByUserAccount(UserAccount userAccount);
 
 }
