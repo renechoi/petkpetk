@@ -4,6 +4,11 @@ var totalPrice = document.getElementById("totalPrice");
 var itemDetailContainer = document.getElementById("itemDetailContainer");
 var userEmail = document.getElementById("userEmail");
 
+function setcount(){
+    $("#orderCount").val(1);
+}
+
+setcount();
 
 function minusLike(num, likesNum) {
     clickLikes(num, likesNum, userEmail);
@@ -352,4 +357,8 @@ function cancelNewReview() {
 
     }
 
+}
+
+function getOrderItemId(){
+    $("#orderItemId").val($("#itemId").val());
 }
