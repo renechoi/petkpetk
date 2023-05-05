@@ -1,4 +1,4 @@
-package com.petkpetk.service.domain.shopping.controller;
+package com.petkpetk.service.common;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,11 +6,19 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.petkpetk.service.domain.community.constatnt.SearchType;
+import com.petkpetk.service.domain.community.dto.response.ArticleResponse;
+import com.petkpetk.service.domain.community.service.ArticleService;
 import com.petkpetk.service.domain.shopping.dto.item.ItemSearchDto;
 import com.petkpetk.service.domain.shopping.dto.item.MainItemDto;
 import com.petkpetk.service.domain.shopping.service.item.ItemService;
@@ -31,6 +39,7 @@ public class APIController {
 	private final ItemService itemService;
 	private final ReviewService reviewService;
 	private final ReviewLikesService reviewLikesService;
+	private final ArticleService articleService;
 
 	@RequestMapping(value = "/review/like", method = RequestMethod.POST)
 	public Boolean like(Long num, Long reviewId, Long likeNum, String userEmail) {
@@ -61,6 +70,33 @@ public class APIController {
 
 		result.put("result", items.getContent());
 		result.put("totalItemCount", itemCount);
+
+		return result;
+	}
+
+	@RequestMapping("/articles")
+	@ResponseBody
+	public Map<String, Object> getArticles(@RequestParam(required = false, name = "searchType") SearchType searchType,
+		@RequestParam(required = false) String searchValue, @PageableDefault(size = 12) Pageable pageable, Model model,
+		@RequestParam(required = false, defaultValue = "createdAt") String sort) {
+
+		Map<String, Object> result = new HashMap<>();
+
+		if (sort.equals("hit")) {
+			pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("hit").descending());
+		} else {
+			pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
+				Sort.by("createdAt").descending());
+		}
+
+		Page<ArticleResponse> articles = articleService.searchArticles(searchType, searchValue, pageable)
+			.map(ArticleResponse::from);
+
+		int totalCount = articleService.getArticleTotalCount();
+		System.out.println("♥♥♥♥♥♥♥♥♥♥ totalCount = " + totalCount);
+
+		result.put("article", articles.getContent());
+		result.put("totalCount", totalCount);
 
 		return result;
 	}
