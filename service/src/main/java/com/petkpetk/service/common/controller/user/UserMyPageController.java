@@ -1,6 +1,5 @@
 package com.petkpetk.service.common.controller.user;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -18,12 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.petkpetk.service.domain.shopping.dto.review.ReviewImageDto;
 import com.petkpetk.service.domain.shopping.dto.review.request.ReviewRegisterRequest;
 import com.petkpetk.service.domain.shopping.dto.review.response.ReviewResponse;
-import com.petkpetk.service.domain.shopping.entity.item.ItemImage;
 import com.petkpetk.service.domain.shopping.service.item.ItemService;
 import com.petkpetk.service.domain.shopping.service.review.ReviewService;
 import com.petkpetk.service.domain.user.dto.request.UserUpdateRequest;
 import com.petkpetk.service.domain.user.dto.security.UserAccountPrincipal;
-import com.petkpetk.service.domain.user.entity.ProfileImage;
 import com.petkpetk.service.domain.user.service.UserAccountService;
 
 import lombok.RequiredArgsConstructor;
@@ -64,16 +61,9 @@ public class UserMyPageController {
 	public String reviewHistory(Model model, Authentication authentication) {
 		String email = authentication.getName();
 		List<ReviewResponse> reviewList = reviewService.getUserReviewList(email);
-		List<Long> itemIds = new ArrayList<>();
-
-		for (ReviewResponse review : reviewList) {
-			itemIds.add(review.getItem().getId());
-		}
-
-		List<ItemImage> itemImageUrls = itemService.finditemImageUrls(itemIds);
+		System.out.println("====================== reviewList = " + reviewList);
 
 		model.addAttribute("reviewList", reviewList);
-		model.addAttribute("itemImageUrls", itemImageUrls);
 		model.addAttribute("newReview", new ReviewRegisterRequest());
 
 		return "my-page/user/userReviewHistory";

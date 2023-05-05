@@ -40,28 +40,6 @@ function checkPhoneNumber() {
 }
 
 var errorMessage = document.getElementById("errorMessage");
-function checkSpace(str, title, event) {
-    if(str.value.search(/\s/) !== -1) {
-        errorMessage.innerHTML= title + "은/는 공백을 포함할 수 없습니다."
-        errorMessage.scrollIntoView({ behavior: "smooth", block: "start" });
-        str.focus();
-        return false; // 스페이스가 있는 경우
-    }else{
-        return true; // 스페이스 없는 경우
-    }
-}
-
-function checkNull(str,title , event){
-    if (str.value == null || str.value == "") {
-        errorMessage.innerHTML = title + "을/를 입력해주세요.";
-        errorMessage.scrollIntoView({behavior: "smooth", block: "start"});
-        str.focus();
-        return false;
-    } else {
-        return true;
-    }
-
-}
 
 var JoinForm = document.getElementById("JoinForm");
 JoinForm.addEventListener("submit", function (event) {
@@ -75,24 +53,51 @@ JoinForm.addEventListener("submit", function (event) {
     var phoneNumber = document.getElementById("phoneNumber");
     var password = document.getElementById("password");
     var re_password = document.getElementById("re-password");
-    var zipCode = document.getElementById("zipCode");
     var detailAddress = document.getElementById("detailAddress");
 
-    checkSpace(email, "이메일", event);
-    checkSpace(businessName, "상호명", event);
-    checkSpace(businessNumber, "사업코드", event);
-    checkSpace(phoneNumber, "전화번호", event);
-    checkSpace(password, "비밀번호", event);
 
-    checkNull(name,"이름", event);
-    checkNull(nickName,"닉네임", event);
-    checkNull(businessName,"상호명", event);
-    checkNull(businessNumber,"사업코드", event);
-    checkNull(phoneNumber,"전화번호", event);
-    checkNull(password,"비밀번호", event);
-    checkNull(re_password,"비밀번호 확인란", event);
-    checkNull(zipCode,"주소", event);
-    checkNull(detailAddress,"상세 주소", event);
+    if ($("#name").val() == "") {
+        errorMessage.innerHTML = "이름을 입력해주세요.";
+        errorMessage.scrollIntoView({behavior: "smooth", block: "start"});
+        name.focus();
+        return false;
+    }
+    if ($("#businessName").val() == "") {
+        errorMessage.innerHTML = "상호명을 입력해주세요.";
+        errorMessage.scrollIntoView({behavior: "smooth", block: "start"});
+        businessName.focus();
+        return false;
+    }
+    if ($("#businessNumber").val() == "") {
+        errorMessage.innerHTML = "사업코드를 입력해주세요.";
+        errorMessage.scrollIntoView({behavior: "smooth", block: "start"});
+        businessNumber.focus();
+        return false;
+    }
+    if ($("#phoneNumber").val() == "") {
+        errorMessage.innerHTML = "전화번호를 입력해주세요.";
+        errorMessage.scrollIntoView({behavior: "smooth", block: "start"});
+        phoneNumber.focus();
+        return false;
+    }
+
+    if ($("#password").val() == "") {
+        errorMessage.innerHTML = "비밀번호를 입력해주세요.";
+        errorMessage.scrollIntoView({behavior: "smooth", block: "start"});
+        password.focus();
+        return false;
+    }
+    if ($("#zipCode").val() == "") {
+        errorMessage.innerHTML = "주소를 입력해주세요.";
+        errorMessage.scrollIntoView({behavior: "smooth", block: "start"});
+        return false;
+    }
+    if ($("#detailAddress").val() == "") {
+        errorMessage.innerHTML = "상세주소를 입력해주세요.";
+        errorMessage.scrollIntoView({behavior: "smooth", block: "start"});
+        detailAddress.focus();
+        return false;
+    }
 
     if (password.value.length < 8 || password.value.length > 16) {
         errorMessage.innerHTML = "비밀번호는 8자 이상 16자 이하입니다.";
@@ -101,13 +106,22 @@ JoinForm.addEventListener("submit", function (event) {
         return false;
     }
 
+    if ($("#password").val() != $("#re-password").val() && $("#password").val() != "") {
+        errorMessage.innerHTML = "비밀번호가 일치하지 않습니다.";
+        errorMessage.scrollIntoView({behavior: "smooth", block: "start"});
+        re_password.focus();
+        return false;
+    }
+
     if ($("#checkEmail").val() == "") {
         alert("이메일을 확인해주세요.");
+        email.scrollIntoView({behavior: "smooth", block: "start"});
         return false;
     }
 
     if ($("#checkNickName").val() == "") {
         alert("닉네임을 확인해주세요.");
+        nickName.scrollIntoView({behavior: "smooth", block: "start"});
         return false;
     }
 

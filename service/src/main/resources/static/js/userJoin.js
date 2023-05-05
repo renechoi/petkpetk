@@ -42,29 +42,6 @@ function checkPhoneNumber() {
 
 var errorMessage = document.getElementById("errorMessage");
 
-function checkSpace(str, title, event) {
-    if(str.value.search(/\s/) !== -1) {
-        errorMessage.innerHTML= title + "은/는 공백을 포함할 수 없습니다."
-        errorMessage.scrollIntoView({ behavior: "smooth", block: "start" });
-        str.focus();
-        return false; // 스페이스가 있는 경우
-    }else{
-        return true; // 스페이스 없는 경우
-    }
-}
-
-function checkNull(str, title, event) {
-    if (str.value == null || str.value == "") {
-        errorMessage.innerHTML = title + "을/를 입력해주세요.";
-        errorMessage.scrollIntoView({behavior: "smooth", block: "start"});
-        str.focus();
-        return false;
-    } else {
-        return true;
-    }
-
-}
-
 var JoinForm = document.getElementById("JoinForm");
 JoinForm.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -73,24 +50,46 @@ JoinForm.addEventListener("submit", function (event) {
     var name = document.getElementById("name");
     var nickName = document.getElementById("nickName");
     var password = document.getElementById("password");
-    var re_password = document.getElementById("re-password");
-    var zipCode = document.getElementById("zipCode");
     var detailAddress = document.getElementById("detailAddress");
+    var re_password = document.getElementById("re-password");
 
-    checkSpace(email, "이메일", event);
-    checkSpace(password, "비밀번호", event);
 
-    checkNull(name, "이름", event);
-    checkNull(nickName, "닉네임", event);
-    checkNull(password, "비밀번호", event);
-    checkNull(re_password, "비밀번호 확인란", event);
-    checkNull(zipCode, "주소", event);
-    checkNull(detailAddress, "상세 주소", event);
+    if ($("#name").val() == "") {
+        errorMessage.innerHTML = "이름을 입력해주세요.";
+        errorMessage.scrollIntoView({behavior: "smooth", block: "start"});
+        name.focus();
+        return false;
+    }
+
+    if ($("#password").val() == "") {
+        errorMessage.innerHTML = "비밀번호를 입력해주세요.";
+        errorMessage.scrollIntoView({behavior: "smooth", block: "start"});
+        password.focus();
+        return false;
+    }
+    if ($("#zipCode").val() == "") {
+        errorMessage.innerHTML = "주소를 입력해주세요.";
+        errorMessage.scrollIntoView({behavior: "smooth", block: "start"});
+        return false;
+    }
+    if ($("#detailAddress").val() == "") {
+        errorMessage.innerHTML = "상세주소를 입력해주세요.";
+        errorMessage.scrollIntoView({behavior: "smooth", block: "start"});
+        detailAddress.focus();
+        return false;
+    }
 
     if (password.value.length < 8 || password.value.length > 16) {
         errorMessage.innerHTML = "비밀번호는 8자 이상 16자 이하입니다.";
         errorMessage.scrollIntoView({behavior: "smooth", block: "start"});
         password.focus();
+        return false;
+    }
+
+    if ($("#password").val() != $("#re-password").val() && $("#password").val() != "") {
+        errorMessage.innerHTML = "비밀번호가 일치하지 않습니다.";
+        errorMessage.scrollIntoView({behavior: "smooth", block: "start"});
+        re_password.focus();
         return false;
     }
 

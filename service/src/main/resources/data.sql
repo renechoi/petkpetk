@@ -1,3 +1,4 @@
+
 INSERT INTO user_account
 (created_at,created_by,modified_at,modified_by,deleted_yn,email, password, name, nickname, zip_code, address1, address2, address_etc, oauth2_provider_info, roles, phone_number, business_name, business_number)
 VALUES
@@ -361,3 +362,33 @@ insert into article_hashtag(article_id, hashtag_id) VALUES
 (32,15),
 (31,14),
 (30,13);
+
+
+insert into orders(created_at, created_by, deleted_yn, modified_at, modified_by, order_count, order_status, sale_percent, sale_price) VALUES
+(NOW(),'테스트 유저1','N', now(),'테스트 유저1',4,'ORDER',0.0,0),
+(NOW(),'테스트 유저2','N', now(),'테스트 유저2',1,'ORDER',0.0,0),
+(NOW(),'테스트 유저3','N', now(),'테스트 유저3',1,'ORDER',0.0,0),
+(NOW(),'테스트 유저4','N', now(),'테스트 유저4',1,'ORDER',0.0,0),
+(NOW(),'테스트 유저5','N', now(),'테스트 유저5',1,'ORDER',0.0,0),
+(NOW(),'테스트 유저6','N', now(),'테스트 유저6',1,'ORDER',0.0,0),
+(NOW(),'테스트 유저7','N', now(),'테스트 유저7',1,'ORDER',0.0,0),
+(NOW(),'테스트 유저8','N', now(),'테스트 유저8',1,'ORDER',0.0,0),
+(NOW(),'테스트 유저9','N', now(),'테스트 유저9',1,'ORDER',0.0,0),
+(NOW(),'테스트 유저10','N', now(),'테스트 유저10',1,'ORDER',0.0,0),
+(NOW(),'테스트 유저11','N', now(),'테스트 유저11',1,'ORDER',0.0,0),
+(NOW(),'테스트 유저12','N', now(),'테스트 유저12',1,'ORDER',0.0,0)   ;
+
+
+insert into order_item( created_at, created_by, deleted_yn, modified_at, modified_by, order_count, order_price, order_status) VALUES
+(NOW(),'테스트 유저1','N', now(),'테스트 유저1',4,10000,'ORDER'),
+(NOW(),'테스트 유저2','N', now(),'테스트 유저2',3,10000,'ORDER'),
+(NOW(),'테스트 유저3','N', now(),'테스트 유저3',4,10000,'ORDER'),
+(NOW(),'테스트 유저4','N', now(),'테스트 유저4',1,10000,'ORDER'),
+(NOW(),'테스트 유저5','N', now(),'테스트 유저5',2,10000,'ORDER'),
+(NOW(),'테스트 유저6','N', now(),'테스트 유저6',5,10000,'ORDER'),
+(NOW(),'테스트 유저7','N', now(),'테스트 유저7',6,10000,'ORDER'),
+(NOW(),'테스트 유저8','N', now(),'테스트 유저8',2,10000,'ORDER'),
+(NOW(),'테스트 유저9','N', now(),'테스트 유저9',2,10000,'ORDER'),
+(NOW(),'테스트 유저10','N', now(),'테스트 유저10',1,10000,'ORDER'),
+(NOW(),'테스트 유저11','N', now(),'테스트 유저11',1,10000,'ORDER'),
+(NOW(),'테스트 유저12','N', now(),'테스트 유저12',4,10000,'ORDER');

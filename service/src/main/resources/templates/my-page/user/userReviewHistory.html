@@ -22,7 +22,8 @@
         <a th:if="${review.item.deletedYn.equals('N')}" th:href="@{'/item/'+${review.item.id}}">
             <div id="OneReviewItemBox" style="display: flex">
                 <div id="itemRepresentativeImage">
-                    <img id="itemImage" th:each="itemImageUrl , status : ${itemImageUrls}" th:if="${review.item.id == itemImageUrl.item.id && itemImageUrl.imageUrl != null}" th:src="${itemImageUrl.imageUrl}">
+                    <img id="itemImage" th:unless="${review.getItemImageUrl().equals('itemDeleted')}"  th:src="${review.getItemImageUrl()}">
+                    <div id="noneItem" th:if="${review.getItemImageUrl().equals('itemDeleted')}">이미지 없음</div>
                 </div>
                 <div id="itemDetail">
                     <div style="display: flex" class="itemNameZone">
@@ -41,7 +42,8 @@
             <div id="OneReviewItemBox" style="display: flex; position: relative;">
                 <div class="white" style="position: absolute"></div>
                 <div id="itemRepresentativeImage">
-                    <img id="deletedItemImage" th:each="itemImageUrl , status : ${itemImageUrls}" th:if="${review.item.id == itemImageUrl.item.id && itemImageUrl.imageUrl != null}" th:src="${itemImageUrl.imageUrl}">
+                    <img id="itemImage" th:unless="${review.getItemImageUrl().equals('itemDeleted')}"  th:src="${review.getItemImageUrl()}">
+                    <div id="noneItem" th:if="${review.getItemImageUrl().equals('itemDeleted')}">이미지 없음</div>
                 </div>
                 <div id="itemDetail">
                     <div style="display: flex" class="itemNameZone">
