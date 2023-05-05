@@ -2,6 +2,7 @@ package com.petkpetk.service.domain.shopping.dto.item;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -68,7 +69,12 @@ public class ItemDto {
 
 
 	public static ItemDto from(Item item){
-		return EntityAndDtoConverter.convertToDto(item, ItemDto.class);
+		ItemDto itemDto = EntityAndDtoConverter.convertToDto(item, ItemDto.class);
+		itemDto.setUserAccountDto(UserAccountDto.from(item.getUserAccount()));
+		itemDto.setItemImageDtos(
+			item.getImages().stream().map(ItemImageDto::from).collect(Collectors.toList())
+		);
+		return itemDto;
 	}
 
 	public Item toEntity(List<ItemImage> images) {
