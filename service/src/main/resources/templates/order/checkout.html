@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>주문/결제 페이지</title>
+</head>
+<body>
+<h1>주문/결제 페이지</h1>
+<form method="post" action="/order" th:object="${item}">
+    <!-- 주문자 정보 입력 -->
+    <h2>주문자 정보</h2>
+    <div>
+        <label for="orderName">이름</label>
+        <input type="text" id="orderName" name="orderName" required>
+    </div>
+    <div>
+        <label for="orderEmail">이메일</label>
+        <input type="email" id="orderEmail" name="orderEmail" required>
+    </div>
+
+    <!-- 배송지 정보 입력 -->
+    <h2>배송지 정보</h2>
+    <div>
+        <label for="shippingName">배송지명</label>
+        <input type="text" id="shippingName" name="shippingName" required>
+    </div>
+    <div>
+        <label for="recipientName">받는사람</label>
+        <input type="text" id="recipientName" name="recipientName" required>
+    </div>
+    <div>
+        <label for="contactNumber">연락처</label>
+        <input type="tel" id="contactNumber" name="contactNumber" required>
+    </div>
+    <div>
+        <label for="shippingAddress">주소</label>
+        <textarea id="shippingAddress" name="shippingAddress" rows="3" required></textarea>
+    </div>
+
+    <!-- 상품 정보 렌더링 -->
+    <h2>상품 정보</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>상품명</th>
+            <th>상품설명</th>
+            <th>상품이미지</th>
+            <th>상품가격</th>
+            <th>수량</th>
+        </tr>
+        </thead>
+        <div th:each="checkoutDto: ${item.getCheckoutDtos()}" >
+
+        <tbody>
+            <td th:text="${checkoutDto.itemName}"></td>
+            <td th:text="${checkoutDto.itemDetail}"></td>
+
+            <td>
+            <div th:each="itemImg : ${checkoutDto.itemImageDtos}" class="text-center imgCenter">
+                <img th:src="${itemImg.imageUrl}" class="rounded mgb-15"
+                     width="30"></div>
+            </td>
+
+            <td th:text="${checkoutDto.price}"></td>
+            <td th:text="${checkoutDto.orderCount}"></td>
+        </tbody>
+
+        </div>
+
+    </table>
+
+    <!-- 결제 수단 입력 -->
+    <h2>결제 수단</h2>
+    <div>
+        <label for="paymentMethod">결제 수단</label>
+        <select id="paymentMethod" name="paymentMethod" required>
+            <option value="">-- 선택 --</option>
+            <option value="credit_card">신용카드</option>
+            <option value="bank_transfer">계좌이체</option>
+            <option value="paypal">PayPal</option>
+            <!-- 추가적인 결제 수단을 이곳에 추가할 수 있음 -->
+        </select>
+    </div>
+
+    <!-- 최종 결제 버튼 -->
+    <div>
+        <button type="submit">최종 결제하기</button>
+    </div>
+</form>
+</body>
+</html>
