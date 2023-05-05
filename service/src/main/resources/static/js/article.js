@@ -20,9 +20,6 @@ imagesInput.addEventListener('change', function() {
     }
 });
 
-
-
-
 const hashtagInput = document.getElementById('hashtag');
 hashtagInput.addEventListener('focus', addHashtagSymbol);
 hashtagInput.addEventListener('keydown', handleHashtagInput);
@@ -72,3 +69,4 @@ function isInValidKey(key) {
     return /^[!@$%^&*()_+,.\-=/<>?;':"|}{\[\]\\]+$/.test(key) || notAllowedKeys.includes(key);
 }
 
+var num = 1

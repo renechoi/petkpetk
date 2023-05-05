@@ -43,7 +43,7 @@ public class ArticleController {
 	 */
 	@GetMapping
 	public String articles(@RequestParam(required = false, name = "searchType") SearchType searchType,
-		@RequestParam(required = false) String searchValue, @PageableDefault(size = 10) Pageable pageable, Model model,
+		@RequestParam(required = false) String searchValue, @PageableDefault(size = 12) Pageable pageable, Model model,
 		@RequestParam(required = false, defaultValue = "createdAt") String sort) {
 		if (sort.equals("hit")) {
 			pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("hit").descending());
@@ -56,6 +56,11 @@ public class ArticleController {
 			.map(ArticleResponse::from);
 		List<Integer> pageBars = paginationService.getPageBars(pageable.getPageNumber(), articles.getTotalPages());
 
+		int totalCount = articleService.getArticleTotalCount();
+
+		System.out.println("♥♥♥♥♥♥♥♥♥ totalCount = " + totalCount);
+
+		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("articles", articles);
 		model.addAttribute("pageBars", pageBars);
 		model.addAttribute("searchTypes", SearchType.values());

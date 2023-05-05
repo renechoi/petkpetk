@@ -141,23 +141,7 @@
 
         </div>
     </div>
-    <div th:fragment="noticeSeach" id="noticeSeach">
-        <div class="NoticeSearchZone" id="NoticeSearchZone">
 
-            <div class="noticeBox flex">
-                <img class="noticeDog" th:src="@{/images/notice-dog.png}" title="공지사항 바로가기">
-                <div class="noticeZone flex">
-                    <a href="" title="메인 공지">여기는 공지사항</a>
-                </div>
-            </div>
-            <form id="searchForm" th:action="@{/}" method="get">
-                <div class="searchZone">
-                    <input type="text" name="searchQuery" maxlength="40" autocomplete="off">
-                    <input type="submit" value="검색">
-                </div>
-            </form>
-            <hr>
-        </div>
     </div>
 </div>
 </html>

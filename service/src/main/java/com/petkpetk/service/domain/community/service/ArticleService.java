@@ -128,4 +128,5 @@ public class ArticleService {
 		return hashtagRepository.findAllHashtagNames();
 	}
 
+	public int getArticleTotalCount() {return  articleRepository.findAll().size();}
 }
