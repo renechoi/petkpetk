@@ -214,31 +214,6 @@ function deleteProfile() {
     userProfileImage.setAttribute("src", "/images/basicProfile.png");
 }
 
-function checkNick() {
-    var checkNickTxt = document.getElementById("checkNickTxt");
-    $.ajax({
-        url: "/api/checkNickName",
-        type: "post",
-        data : {
-            nickName : $("#newNickName").val(),
-            email: $("#userEmail").val()
-        },
-        dataType: "json",
-        success: function (sameNick) {
-            console.log(sameNick);
-            if (sameNick == true) {
-                checkNickTxt.textContent = "중복 된 닉네임입니다.";
-                checkNickTxt.style.color = "#ff3b57";
-                $("#checkNickName").val("");
-            } else {
-                checkNickTxt.textContent = "사용 가능한 닉네임입니다.";
-                checkNickTxt.style.color = "#9a9f73";
-                $("#checkNickName").val(1);
-            }
-        }
-
-    })
-}
 
 
 function checkNick() {

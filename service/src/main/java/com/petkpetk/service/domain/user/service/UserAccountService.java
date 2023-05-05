@@ -161,8 +161,4 @@ public class UserAccountService {
 	private Optional<UserAccount> findByEmail(String email) {
 		return userAccountRepository.findByEmail(email);
 	}
-
-	public Optional<UserAccount> searchUserByNickName(String nickName) {
-		return userAccountRepository.findByNickname(nickName);
-	}
 }
