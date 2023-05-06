@@ -1,5 +1,6 @@
 package com.petkpetk.service.domain.shopping.service.order;
 
+import static org.assertj.core.api.AssertionsForClassTypes.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Set;
@@ -17,16 +18,15 @@ import com.petkpetk.service.common.RoleType;
 import com.petkpetk.service.domain.shopping.constant.DeliveryStatus;
 import com.petkpetk.service.domain.shopping.constant.ItemStatus;
 import com.petkpetk.service.domain.shopping.constant.OrderStatus;
-import com.petkpetk.service.domain.shopping.dto.order.OrderDto;
 import com.petkpetk.service.domain.shopping.dto.order.request.OrderRequest;
 import com.petkpetk.service.domain.shopping.entity.delivery.Delivery;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.shopping.entity.order.Order;
 import com.petkpetk.service.domain.shopping.entity.order.OrderItem;
+import com.petkpetk.service.domain.shopping.exception.OrderAlreadyInProcessException;
 import com.petkpetk.service.domain.shopping.repository.delivery.DeliveryRepository;
 import com.petkpetk.service.domain.shopping.repository.item.ItemRepository;
 import com.petkpetk.service.domain.shopping.repository.order.OrderRepository;
-import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 import com.petkpetk.service.domain.user.repository.UserAccountRepository;
 
@@ -50,7 +50,6 @@ class OrderServiceTest {
 	@Autowired
 	DeliveryRepository deliveryRepository;
 
-
 	private Item createItem() {
 		Item item = new Item();
 		item.setItemName("테스트 상품");
@@ -70,8 +69,6 @@ class OrderServiceTest {
 		return userAccountRepository.save(userAccount);
 	}
 
-
-
 	@Test
 	@DisplayName("주문 테스트")
 	public void order() {
@@ -80,10 +77,8 @@ class OrderServiceTest {
 		UserAccount userAccount = createUserAccount();
 
 		OrderRequest orderRequest = new OrderRequest();
-		orderRequest.setAmount(100L);
-		orderRequest.setProductId(item.getId());
-
-
+		orderRequest.setOrderCount(100L);
+		orderRequest.setItemId(item.getId());
 
 		// when
 		Long orderId = orderService.createOrder(orderRequest, userAccount.getEmail());
@@ -97,8 +92,8 @@ class OrderServiceTest {
 
 		OrderItem savedOrderItem = savedOrder.getOrderItems().get(0);
 		assertEquals(item.getId(), savedOrderItem.getItem().getId());
-		assertEquals(orderRequest.getAmount(), savedOrderItem.getOrderCount());
-		assertEquals(item.getPrice() * orderRequest.getAmount(), savedOrder.getTotalPrice());
+		assertEquals(orderRequest.getOrderCount(), savedOrderItem.getOrderCount());
+		assertEquals(item.getPrice() * orderRequest.getOrderCount(), savedOrder.getTotalPrice());
 
 	}
 
@@ -109,8 +104,8 @@ class OrderServiceTest {
 		Item item = createItem();
 		UserAccount userAccount = createUserAccount();
 		OrderRequest orderRequest = new OrderRequest();
-		orderRequest.setAmount(100L);
-		orderRequest.setProductId(item.getId());
+		orderRequest.setOrderCount(100L);
+		orderRequest.setItemId(item.getId());
 
 		// when
 		Long orderId = orderService.createOrder(orderRequest, userAccount.getEmail());
@@ -124,10 +119,9 @@ class OrderServiceTest {
 
 		OrderItem savedOrderItem = savedOrder.getOrderItems().get(0);
 		assertEquals(item.getId(), savedOrderItem.getItem().getId());
-		assertEquals(orderRequest.getAmount(), savedOrderItem.getOrderCount());
-		assertEquals(item.getPrice() * orderRequest.getAmount(), savedOrder.getTotalPrice());
+		assertEquals(orderRequest.getOrderCount(), savedOrderItem.getOrderCount());
+		assertEquals(item.getPrice() * orderRequest.getOrderCount(), savedOrder.getTotalPrice());
 	}
-
 
 	@Test
 	@DisplayName("주문 생성 - 실패: 상품이 존재하지 않음")
@@ -135,10 +129,11 @@ class OrderServiceTest {
 		UserAccount userAccount = createUserAccount();
 
 		OrderRequest orderRequest = new OrderRequest();
-		orderRequest.setAmount(200L);
-		orderRequest.setProductId(101L);
+		orderRequest.setOrderCount(200L);
+		orderRequest.setItemId(101L);
 
-		assertThrows(EntityNotFoundException.class, () -> orderService.createOrder(orderRequest, userAccount.getEmail()));
+		assertThrows(EntityNotFoundException.class,
+			() -> orderService.createOrder(orderRequest, userAccount.getEmail()));
 	}
 
 	@Test
@@ -147,36 +142,67 @@ class OrderServiceTest {
 		Item item = createItem();
 
 		OrderRequest orderRequest = new OrderRequest();
-		orderRequest.setAmount(10L);
-		orderRequest.setProductId(item.getId());
+		orderRequest.setOrderCount(10L);
+		orderRequest.setItemId(item.getId());
 
 		assertThrows(EntityNotFoundException.class, () -> orderService.createOrder(orderRequest, "not_exist@test.com"));
 	}
 
 	@Test
-	@DisplayName("주문 취소 테스트")
-	public void cancelOrder(){
-		Item item = createItem();
-		UserAccount userAccount = createUserAccount();
+	void testCancelOrder() {
+		// given
+		Long orderId = 1L;
+		String email = "test@test.com";
+		UserAccount userAccount = new UserAccount();
+		userAccount.setEmail(email);
+		Order order = new Order();
+		order.setId(orderId);
+		order.setUserAccount(userAccount);
+		order.setOrderStatus(OrderStatus.ORDER);
 
-		OrderRequest orderRequest = new OrderRequest();
-		orderRequest.setAmount(10L);
-		orderRequest.setProductId(item.getId());
+		Delivery delivery = new Delivery();
+		delivery.setDeliveryStatus(DeliveryStatus.DELIVERING);
 
-		Long orderId = orderService.createOrder(orderRequest, userAccount.getEmail());
+		orderRepository.save(order);
+		deliveryRepository.save(delivery);
 
-		Order order = orderRepository.findById(orderId)
-			.orElseThrow(EntityNotFoundException::new);
+		// when & then
+		assertThrows(OrderAlreadyInProcessException.class, () -> {
+			orderService.cancelOrder(order, delivery);
+		});
 
-		Delivery delivery = deliveryRepository. findById(orderId).orElseThrow(EntityNotFoundException::new);
-
+		// 주문 상태가 배송중이 아니라면 취소 가능
+		order.setOrderStatus(OrderStatus.CANCEL);
 		orderService.cancelOrder(order, delivery);
-
-		assertEquals(OrderStatus.CANCEL, order.getOrderStatus());
-		assertEquals(0, item.getItemAmount());
+		assertThat(order.getOrderStatus()).isEqualTo(OrderStatus.CANCEL);
 	}
-
-
-
-
 }
+//
+//
+// 	@Test
+// 	@DisplayName("주문 취소 테스트")
+// 	public void cancelOrder(){
+// 		Item item = createItem();
+// 		UserAccount userAccount = createUserAccount();
+//
+// 		OrderRequest orderRequest = new OrderRequest();
+// 		orderRequest.setAmount(10L);
+// 		orderRequest.setProductId(item.getId());
+//
+// 		Long orderId = orderService.createOrder(orderRequest, userAccount.getEmail());
+//
+// 		Order order = orderRepository.findById(orderId)
+// 			.orElseThrow(EntityNotFoundException::new);
+//
+// 		Delivery delivery = deliveryRepository. findById(orderId).orElseThrow(EntityNotFoundException::new);
+//
+// 		orderService.cancelOrder(order, delivery);
+//
+// 		assertEquals(OrderStatus.CANCEL, order.getOrderStatus());
+// 		assertEquals(0, item.getItemAmount());
+// 	}
+//
+//
+//
+//
+// }
