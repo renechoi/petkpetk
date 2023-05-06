@@ -104,18 +104,22 @@ input[type="checkbox"]:checked + label {
 }
 
 .articleTitle {
-    font-size: 17px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 140px;
+    max-width: 200px;
     font-weight: bold;
+    font-size: 16px;
+    white-space: nowrap;
 }
-
 .oneArticleBox:hover .articleTitle {
     text-decoration: underline;
 }
 
 .articleContentBox {
     min-height: 90px;
-    max-height: 170px;
-    padding: 10px;
+    max-height: 300px;
+    padding: 30px 20px 15px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -149,7 +153,9 @@ input[type="checkbox"]:checked + label {
 }
 
 .hashTagBox {
+    display: flex;
     margin-top: 5px;
+    flex-wrap: wrap;
 }
 
 span.hashTag {
@@ -204,4 +210,45 @@ img#postCat {
     bottom: 205px;
     right: 61px;
     z-index: 150;
+}
+
+
+.articleLikes {
+    color: #ff2644;
+}
+
+.userInfoBox {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    align-items: flex-end;
+}
+
+.registerTime {
+    font-size: 14px;
+    color: #c7b6b6;
+}
+
+.articleHit {
+    text-align: right;
+    color: #c7b6b6;
+    font-size: 14px;
+}
+
+.userNickName {
+    min-width: 100px;
+    max-width: 160px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.hashTaging {
+    margin-bottom: 6px;
+}
+
+@media screen and (max-width: 880px) {
+    .registerTime {
+        font-size: 12px;
+    }
 }

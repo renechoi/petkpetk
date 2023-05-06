@@ -63,8 +63,17 @@ function getMoreArticles() {
             var article = result['article'];
             var totalCount = result['totalCount'];
 
+
             for (let i = 0; i < article.length; i++) {
                 console.log(article[i]);
+                const date = new Date(article[i].createdAt);
+                const year = date.getFullYear();
+                const month = date.getMonth() + 1;
+                const day = date.getDate();
+                const hour = date.getHours();
+                const minute = date.getMinutes();
+
+                const createdAt = `${year}-${month}-${day} ${hour}:${minute}`;
 
                 if (i % 3 == 0) {
 
@@ -76,18 +85,32 @@ function getMoreArticles() {
                     }
 
                     content += "<div class='articleContentBox'>"+
-                                        "<div class='articleTitle'>"+article[i].title+"</div>"+
-                                        "<div class='articleContent'>" +
-                                            "<div class='contentDetail'>"+article[i].content+"</div>"+
+                                        "<div>" +
+                                            "<div class='userInfoBox'>" +
+                                                "<div class='userNickName'>닉네임</div>"+
+                                                "<div class='registerTime'>"+createdAt+"</div>"+
+                                            "</div>"+
+                                            "<div style='display: flex; justify-content: space-between;'>" +
+                                                "<div class='articleTitle'>"+article[i].title+"</div>"+
+                                                "<div class='articleLikes'>♥546</div>"+
+                                            "</div>"+
+                                            "<div class='articleContent'>" +
+                                                "<div class='contentDetail'>"+article[i].content+"</div>"+
+                                            "</div>"+
                                         "</div>";
 
                     if (article[i].hashtags != null) {
                         content += "<div class='hashTagBox'>";
                         for (let j = 0; j < article[i].hashtags.length; j++) {
-                            content += "<span class='hashTag'>"+article[i].hashtags[j]+"</span>";
+                            content += "<div class='hashTaging'><span class='hashTag'>"+article[i].hashtags[j]+"</span></div>";
                         }
                         content += "</div>";
                     }
+                    if (article[i].hit == null) {
+                        article[i].hit = 0;
+                    }
+
+                    content += "<div class='articleHit'>조회수 "+article[i].hit+"</div>";
 
                     content += "</div></a></div></div>";
 
@@ -103,18 +126,32 @@ function getMoreArticles() {
                     }
 
                     content += "<div class='articleContentBox'>"+
+                        "<div>" +
+                        "<div class='userInfoBox'>" +
+                        "<div class='userNickName'>닉네임</div>"+
+                        "<div class='registerTime'>"+createdAt+"</div>"+
+                        "</div>"+
+                        "<div style='display: flex; justify-content: space-between;'>" +
                         "<div class='articleTitle'>"+article[i].title+"</div>"+
+                        "<div class='articleLikes'>♥546</div>"+
+                        "</div>"+
                         "<div class='articleContent'>" +
                         "<div class='contentDetail'>"+article[i].content+"</div>"+
+                        "</div>"+
                         "</div>";
 
                     if (article[i].hashtags != null) {
                         content += "<div class='hashTagBox'>";
                         for (let j = 0; j < article[i].hashtags.length; j++) {
-                            content += "<span class='hashTag'>"+article[i].hashtags[j]+"</span>";
+                            content += "<div class='hashTaging'><span class='hashTag'>"+article[i].hashtags[j]+"</span></div>";
                         }
                         content += "</div>";
                     }
+                    if (article[i].hit == null) {
+                        article[i].hit = 0;
+                    }
+
+                    content += "<div class='articleHit'>조회수 "+article[i].hit+"</div>";
 
                     content += "</div></a></div></div>";
 
@@ -129,18 +166,32 @@ function getMoreArticles() {
                     }
 
                     content += "<div class='articleContentBox'>"+
+                        "<div>" +
+                        "<div class='userInfoBox'>" +
+                        "<div class='userNickName'>닉네임</div>"+
+                        "<div class='registerTime'>"+createdAt+"</div>"+
+                        "</div>"+
+                        "<div style='display: flex; justify-content: space-between;'>" +
                         "<div class='articleTitle'>"+article[i].title+"</div>"+
+                        "<div class='articleLikes'>♥546</div>"+
+                        "</div>"+
                         "<div class='articleContent'>" +
                         "<div class='contentDetail'>"+article[i].content+"</div>"+
+                        "</div>"+
                         "</div>";
 
                     if (article[i].hashtags != null) {
                         content += "<div class='hashTagBox'>";
                         for (let j = 0; j < article[i].hashtags.length; j++) {
-                            content += "<span class='hashTag'>"+article[i].hashtags[j]+"</span>";
+                            content += "<div class='hashTaging'><span class='hashTag'>"+article[i].hashtags[j]+"</span></div>";
                         }
                         content += "</div>";
                     }
+                    if (article[i].hit == null) {
+                        article[i].hit = 0;
+                    }
+
+                    content += "<div class='articleHit'>조회수 "+article[i].hit+"</div>";
 
                     content += "</div></a></div></div>";
 

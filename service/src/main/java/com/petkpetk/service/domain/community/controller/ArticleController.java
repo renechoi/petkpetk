@@ -20,8 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.petkpetk.service.domain.community.constatnt.SearchType;
 import com.petkpetk.service.domain.community.dto.ArticleDto;
+import com.petkpetk.service.domain.community.dto.request.ArticleCommentPostRequest;
 import com.petkpetk.service.domain.community.dto.request.ArticlePostRequest;
+import com.petkpetk.service.domain.community.dto.response.ArticleCommentResponse;
 import com.petkpetk.service.domain.community.dto.response.ArticleResponse;
+import com.petkpetk.service.domain.community.service.ArticleCommentService;
 import com.petkpetk.service.domain.community.service.ArticleService;
 import com.petkpetk.service.domain.community.service.PaginationService;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
@@ -35,6 +38,7 @@ import lombok.RequiredArgsConstructor;
 public class ArticleController {
 
 	private final ArticleService articleService;
+	private final ArticleCommentService articleCommentService;
 	private final PaginationService paginationService;
 
 	/**
@@ -72,8 +76,11 @@ public class ArticleController {
 	@GetMapping("/{articleId}")
 	public String article(@PathVariable Long articleId, Model model) {
 		ArticleResponse article = ArticleResponse.from(articleService.searchArticle(articleId));
+		List<ArticleCommentResponse> articleCommentResponse = articleCommentService.findCommentList(articleId);
 
 		model.addAttribute("article", article);
+		model.addAttribute("commentList", articleCommentResponse);
+		model.addAttribute("articleCommentPostRequest", new ArticleCommentPostRequest());
 		model.addAttribute("lastArticleId", articleService.getArticleLastId());
 		model.addAttribute("searchTypeHashtag", SearchType.HASHTAG);
 
