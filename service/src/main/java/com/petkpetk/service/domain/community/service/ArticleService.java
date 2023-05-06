@@ -71,7 +71,6 @@ public class ArticleService {
 		return articleRepository.findAll(pageable).map(this::convertToDto);
 	}
 
-	@Transactional(readOnly = true)
 	public ArticleDto searchArticle(Long articleId) {
 		Article article = articleRepository.findById(articleId).orElseThrow(ArticleNotFoundException::new);
 		article.setHit(article.getHit() + 1);
@@ -129,4 +128,5 @@ public class ArticleService {
 		return hashtagRepository.findAllHashtagNames();
 	}
 
+	public int getArticleTotalCount() {return  articleRepository.findAll().size();}
 }

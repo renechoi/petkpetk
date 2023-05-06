@@ -37,6 +37,10 @@ public class ImageLocalRepository<T extends PetkpetkImage> {
 	}
 
 	public void delete(T petkpetkImage) {
+		if (petkpetkImage.getOriginalName().equals("defaultProfile.jpeg")){
+			return;
+		}
+
 		try {
 			new File(createPath(petkpetkImage)).delete();
 		} catch (URISyntaxException e) {

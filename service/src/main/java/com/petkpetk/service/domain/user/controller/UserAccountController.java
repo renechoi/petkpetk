@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.petkpetk.service.domain.shopping.service.item.ItemService;
-import com.petkpetk.service.domain.shopping.service.review.ReviewService;
 import com.petkpetk.service.domain.user.dto.request.UserSignupRequest;
 import com.petkpetk.service.domain.user.service.UserAccountService;
 
@@ -36,7 +34,4 @@ public class UserAccountController {
 		userAccountService.save(userSignupRequest);
 		return "/login";
 	}
-
-
 }
-

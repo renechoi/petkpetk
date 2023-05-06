@@ -261,11 +261,13 @@ function showNewProfileBox() {
     newProfileBox.style.display = "flex";
     changeProfileBtn.style.display = "none";
 }
+
 function cancelNewProfile() {
     var newProfileBox = document.getElementById("newProfileBox");
     var changeProfileBtn = document.getElementById("changeProfileBtn");
     var originalProfile = document.getElementById("originalProfile");
     var userProfileImage = document.getElementById("userProfileImage");
+    $("#isProfileDeleted").val(false);
 
     userProfileImage.setAttribute("src", originalProfile.value);
     newProfileBox.style.display = "none";
@@ -274,10 +276,8 @@ function cancelNewProfile() {
 
 function deleteProfile() {
     var userProfileImage = document.getElementById("userProfileImage");
-    var uniqueImageName = document.getElementById("uniqueImageName");
-    if (uniqueImageName) {
-        uniqueImageName.value = "이미지삭제"
-    }
+    $("#isProfileDeleted").val(true);
+
     userProfileImage.setAttribute("src", "/images/basicProfile.png");
 
 }

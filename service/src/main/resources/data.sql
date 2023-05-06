@@ -98,6 +98,62 @@ INSERT INTO item_image (created_at,created_by,modified_at,modified_by,deleted_yn
                                                                                       (now(),'페크페크', now(),'페크페크','N', 'abcde-18KakaoTalk_Photo_2023-01-05-22-29-06.jpeg', 'KakaoTalk_Photo_2023-01-05-22-29-06.jpeg', '/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg', 'N',10);
 
 
+
+insert into review(created_at, created_by, modified_at, modified_by, deleted_yn, content, likes, rating, item_id, user_account_id) values
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용1',10,5,1,1),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용2',10,5,1,2),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용3',10,5,1,3),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용4',10,5,2,4),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용5',10,5,2,5),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용6',10,5,2,6),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용7',10,5,3,7),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용8',10,5,3,1),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용9',10,5,4,2),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용10',10,5,4,3),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용11',10,5,5,4),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용12',10,5,5,5),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용13',10,5,6,6),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용14',10,5,6,7),
+(now(),'페크페크', now(),'페크페크','N','리뷰 테스트 내용15',10,5,7,8);
+
+insert into review_image(created_at, created_by, modified_at, modified_by,deleted_yn,  image_url, original_name, unique_name, review_id) values
+(now(),'페크페크', now(),'페크페크','N','/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','ab4.jpeg',3),
+(now(),'페크페크', now(),'페크페크','N','/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','ab5.jpeg',4),
+(now(),'페크페크', now(),'페크페크','N','/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','ab6.jpeg',5),
+(now(),'페크페크', now(),'페크페크','N','/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','ab7.jpeg',5),
+(now(),'페크페크', now(),'페크페크','N','/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','ab8.jpeg',6),
+(now(),'페크페크', now(),'페크페크','N','/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','ab9.jpeg',6),
+(now(),'페크페크', now(),'페크페크','N','/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','ab10.jpeg',6),
+(now(),'페크페크', now(),'페크페크','N','/images/item/KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','KakaoTalk_Photo_2023-01-05-22-29-06.jpeg','ab11.jpeg',7);
+
+insert into review_likes(review_id, user_account_id) VALUES
+(1,1),
+(2,1),
+(3,1),
+(4,2),
+(5,2),
+(6,2),
+(7,2),
+(1,3);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 insert into article( created_at, created_by,  modified_at, modified_by, deleted_yn, category_type, title, content, hit, user_account_id) VALUES
 (now(),'테스트 유저', now(),'테스트 유저1','N','DOG', '테스트용 타이틀입니다1', '테스트용 내용입니다1', 0, 1),
 (now(),'테스트 유저', now(),'테스트 유저2','N','DOG', '테스트용 타이틀입니다2', '테스트용 내용입니다2', 1, 1),

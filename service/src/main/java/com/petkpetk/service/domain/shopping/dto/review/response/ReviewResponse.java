@@ -72,6 +72,7 @@ public class ReviewResponse {
 	public static ReviewResponse from(Review review) {
 		ReviewResponse reviewResponse = EntityAndDtoConverter.convertToDto(review, ReviewResponse.class);
 		reviewResponse.setReviewImageDtos(review.getImages().stream().map(ReviewImageDto::from).collect(Collectors.toList()));
+		reviewResponse.setUserAccountDto(UserAccountDto.from(review.getUserAccount()));
 		return reviewResponse;
 	}
 

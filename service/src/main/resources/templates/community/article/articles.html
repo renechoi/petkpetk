@@ -1,143 +1,142 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>게시글 목록 조회하기</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/article-basic.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/article.css}">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/layout}">
 
-</head>
-<body>
-<h1>게시글 목록</h1>
-<form action="#" method="get">
-    <div>
-        <label for="searchType">Search Type:</label>
-        <select id="searchType" name="searchType">
-            <option th:each="type : ${searchTypes}" th:if="${type != type.CATEGORY}" th:value="${type}"
-                    th:text="${type}"></option>
-        </select>
-    </div>
-    <div>
-        <label for="searchValue">Search Value:</label>
-        <input type="text" id="searchValue" name="searchValue" value=""/>
-    </div>
-    <div>
-        <button type="submit">Search</button>
-    </div>
-</form>
+<th:block layout:fragment="css">
+    <link th:href="@{/css/article.css}" rel="stylesheet">
+    <link th:href="@{/css/NoticeSearch.css}" rel="stylesheet">
+</th:block>
 
 
-<div>
-    <form onchange="sortArticles()">
-        <label>
-            <input type="radio" name="sort" value="createdAt" checked> 최신순
-        </label>
-        <label>
-            <input type="radio" name="sort" value="hit"> 인기순
-        </label>
-    </form>
+<div layout:fragment="noticeSeach" id="noticeSeach">
+    <div class="NoticeSearchZone" id="NoticeSearchZone">
+
+        <div class="noticeBox flex">
+            <img class="noticeDog" th:src="@{/images/notice-dog.png}" title="공지사항 바로가기">
+            <div class="noticeZone flex">
+                <a href="" title="메인 공지">여기는 공지사항</a>
+            </div>
+        </div>
+        <form id="articleSearchForm" th:action="@{#}" method="get">
+            <div class="searchZone">
+                <select id="searchType" name="searchType">
+                    <option th:each="type : ${searchTypes}" th:if="${type != type.CATEGORY}"
+                            th:value="${type}"
+                            th:text="${type.description}"></option>
+                </select>
+                <input type="text" id="searchValue" name="searchValue" value="" autocomplete="off"/>
+                <button type="submit" id="searchBtn">검색</button>
+            </div>
+        </form>
+    </div>
 </div>
 
+<div layout:fragment="content" id="articleContainer">
+    <input type="hidden" id="totalCount" th:value="${totalCount}">
+    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+        <div id="categoryBox" style="display: flex;">
+            <div th:each="category : ${T(com.petkpetk.service.common.CategoryType).values()}" >
+                <input type="checkbox" name="category" th:id="${'category_' + category}"
+                       th:value="${category}"/>
+                <label th:for="${'category_' + category}" th:text="${category.description}"class="categoryChecking"></label>
+            </div>
+            <input type="hidden" id="category-search-type"
+                   th:value="${T(com.petkpetk.service.domain.community.constatnt.SearchType).CATEGORY}">
+            <button id="category-apply">적용</button>
+        </div>
 
-<div>
-    <label th:each="category : ${T(com.petkpetk.service.common.CategoryType).values()}">
-        <input type="checkbox" name="category" th:id="${'category_' + category}" th:value="${category}"/>
-        <label th:for="${'category_' + category}" th:text="${category.description}"></label>
-    </label>
-    <input type="hidden" id="category-search-type"
-           th:value="${T(com.petkpetk.service.domain.community.constatnt.SearchType).CATEGORY}">
-    <button id="category-apply">적용</button>
+        <div id="searchLine">
+            <form onchange="sortArticles()">
+                <input id="latestOrder" type="radio" name="sort" value="createdAt" checked>
+                <label for="latestOrder">
+                    최신순
+                </label>
+                <input id="popularityOrder" type="radio" name="sort" value="hit">
+                <label for="popularityOrder">
+                    인기순
+                </label>
+            </form>
+        </div>
+    </div>
+
+    <div style="width: 100%; display: flex; flex-wrap: wrap; justify-content: space-around;">
+            <div style="width: 32%" id="articleLine1">
+                <div th:each="article, status : ${articles}" th:with="num = ${status.index+1}">
+                    <div th:if="${num%3 == 1}" class="oneArticleBox">
+                        <a th:href="@{/community/articles/__${article.id}__}">
+                            <img class="articleFirstImage" th:if="${not #lists.isEmpty(article.rawImages)}" th:src="${article.rawImages.get(0).getName()}">
+                            <div class="articleContentBox">
+                                <div>
+                                    <div class="articleTitle" th:text="${article.title}"></div>
+                                    <div class="articleContent">
+                                        <div class="contentDetail" th:text="${article.content}"></div>
+                                    </div>
+                                </div>
+                                <div class="hashTagBox" th:if="${not #lists.isEmpty(article.hashtags)}">
+                                    <span class="hashTag" th:each="hashtag : ${article.hashtags}" th:text="${hashtag}"></span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div style="width: 32%" id="articleLine2">
+                <div th:each="article, status : ${articles}" th:with="num = ${status.index+1}">
+                    <div th:if="${num%3 == 2}" class="oneArticleBox">
+                        <a th:href="@{/community/articles/__${article.id}__}">
+                            <img class="articleFirstImage" th:if="${not #lists.isEmpty(article.rawImages)}" th:src="${article.rawImages.get(0).getName()}">
+                            <div class="articleContentBox">
+                                <div>
+                                    <div class="articleTitle" th:text="${article.title}"></div>
+                                    <div class="articleContent">
+                                        <div class="contentDetail" th:text="${article.content}"></div>
+                                    </div>
+                                </div>
+                                <div class="hashTagBox" th:if="${not #lists.isEmpty(article.hashtags)}">
+                                    <span class="hashTag" th:each="hashtag : ${article.hashtags}" th:text="${hashtag}"></span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div style="width: 32%" id="articleLine3">
+                <div th:each="article, status : ${articles}" th:with="num = ${status.index+1}" >
+                    <div th:if="${num%3 == 0}" class="oneArticleBox">
+                        <a th:href="@{/community/articles/__${article.id}__}">
+                            <img class="articleFirstImage" th:if="${not #lists.isEmpty(article.rawImages)}" th:src="${article.rawImages.get(0).getName()}">
+                            <div class="articleContentBox">
+                                <div>
+                                    <div class="articleTitle" th:text="${article.title}"></div>
+                                    <div class="articleContent">
+                                        <div class="contentDetail" th:text="${article.content}"></div>
+                                    </div>
+                                </div>
+                                <div class="hashTagBox" th:if="${not #lists.isEmpty(article.hashtags)}">
+                                    <span class="hashTag" th:each="hashtag : ${article.hashtags}" th:text="${hashtag}"></span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+
+    <div style="display: flex; justify-content: space-around;">
+        <div id="getMoreBtn" onclick="getMoreArticles()" style="display: none;">더보기</div>
+    </div>
+
+    <div sec:authorize="hasAnyAuthority('ROLE_USER')">
+        <img id="postCat" src="/images/postCat.png" style="display: none;">
+        <a th:href="@{/community/articles/post}" title="글쓰기"><div id="postBtn"><img src="/images/HyeJin.png" onmouseover="showPost()" onmouseout="showPost()"></div></a>
+    </div>
 </div>
-
-
-<table>
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Author</th>
-        <th>Title</th>
-        <th>Content</th>
-        <th>Hashtags</th>
-        <th>CreatedAt</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="article : ${articles}">
-        <td th:text="${article.id}"></td>
-        <td th:text="${article.name}"></td>
-        <td>
-            <a th:text="${article.title}" th:href="@{/community/articles/__${article.id}__}"></a>
-        </td>
-        <td th:text="${article.content}"></td>
-        <td>
-            <span th:each="hashtag : ${article.hashtags}">
-                <span th:text="${hashtag}"></span>
-                <span th:unless="${hashtagStat.last}">, </span>
-            </span>
-        </td>
-        <td class="date" th:text="${#temporals.format(article.createdAt, 'yyyy.MM.dd HH:mm')}"></td>
-
-    </tr>
-    </tbody>
-</table>
-
-
-<div>
-    <nav>
-        <ul class="pagination" id="pagination">
-
-
-            <a class="page-link"
-               th:text="'&laquo;'"
-               th:href="@{/community/articles(page=0,searchType=${param.searchType},searchValue=${param.searchValue},sort=${param.sort})}"
-               aria-label="First"
-               title="첫 페이지로 이동">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-
-
-            <li class="page-item">
-                <a class="page-link"
-                   th:text="'previous'"
-                   th:href="@{/community/articles(page=${articles.number - 1}, searchType=${param.searchType}, searchValue=${param.searchValue})}"
-                   th:classappend="${articles.number <= 0} ? ' disabled' : ''"
-                   aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li th:classappend="${pageNumber == articles.number} ? ' active' : ''" th:each="pageNumber : ${pageBars}">
-                <a class="page-link"
-                   th:text="${pageNumber + 1}"
-                   th:href="@{/community/articles(page=${pageNumber}, searchType=${param.searchType}, searchValue=${param.searchValue})}">
-                    <span th:text="${pageNumber + 1}"></span>
-                </a>
-            </li>
-            <li class="page-item">
-                <a class="page-link"
-                   th:text="'next'"
-                   th:href="@{/community/articles(page=${articles.number + 1}, searchType=${param.searchType}, searchValue=${param.searchValue})}"
-                   th:classappend="${articles.number >= articles.totalPages - 1} ? ' disabled' : ''"
-                   aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-
-            <a class="page-link"
-               th:text="'&raquo;'"
-               th:href="@{/community/articles(page=${articles.totalPages - 1},searchType=${param.searchType},searchValue=${param.searchValue},sort=${param.sort})}"
-               aria-label="Last"
-               title="마지막 페이지로 이동">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </ul>
-    </nav>
-
-</div>
-
-<script src="/js/articles.js"></script>
-</body>
+<th:block layout:fragment="script">
+    <script th:inline="javascript" th:src="@{/js/articles.js}"></script>
+</th:block>
 </html>
 
 

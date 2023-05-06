@@ -61,8 +61,8 @@ public class ItemController {
 
 	// 상품 등록
 	@PostMapping("/new")
-	public String registerItem(@Valid ItemRegisterRequest itemRegisterRequest, Authentication authentication, @AuthenticationPrincipal
-		UserAccountPrincipal userAccountPrincipal) {
+	public String registerItem(@Valid ItemRegisterRequest itemRegisterRequest,
+		@AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal) {
 		itemRegisterRequest.setTotalRating(5.0);
 		itemService.registerItem(
 			ItemDto.from(itemRegisterRequest, userAccountPrincipal.toDto()));
@@ -84,7 +84,7 @@ public class ItemController {
 			UserAccountDto userAccount = userAccountService.searchUserDto(email);
 			HashMap<String, String> hashMap;
 			hashMap = reviewLikesService.findHistoryLikeByUser(userAccount.getId());
-			model.addAttribute("reviewHashMap",hashMap);
+			model.addAttribute("reviewHashMap", hashMap);
 		}
 		List<ReviewResponse> reviewList = reviewService.getReviewList(itemId);
 
@@ -132,7 +132,8 @@ public class ItemController {
 		itemUpdateRequest.setImages(rawImages);
 		IntStream.range(0, imageNames.size())
 			.filter(i -> !imageNames.get(i).equals("첨부파일"))
-			.forEach(i -> itemUpdateRequest.getItemImageDtos().add(ItemImageDto.of(imageNames.get(i), uniqueImageNames.get(i))));
+			.forEach(i -> itemUpdateRequest.getItemImageDtos()
+				.add(ItemImageDto.of(imageNames.get(i), uniqueImageNames.get(i))));
 
 		ItemResponse itemResponse = itemService.updateItem(itemUpdateRequest);
 		model.addAttribute("item", itemResponse);
