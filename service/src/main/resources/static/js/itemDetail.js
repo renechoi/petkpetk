@@ -360,6 +360,18 @@ function cancelNewReview() {
 
 }
 
+
+
+function handleOrderButtonClick(event) {
+    event.preventDefault();
+    redirectLoginPage();
+}
+
+function redirectLoginPage() {
+    alert("먼저 로그인을 해주세요");
+    window.location.href = '/login';
+}
+
 function getOrderItemId(){
     $("#orderItemId").val($("#itemId").val());
 }

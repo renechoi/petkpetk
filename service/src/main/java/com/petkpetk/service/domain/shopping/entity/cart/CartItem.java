@@ -24,6 +24,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "cart_item")
+
 public class CartItem {
 
     @Id
@@ -51,4 +52,6 @@ public class CartItem {
     public static CartItem of(Cart cart, Item item, Long cartItemCount) {
         return new CartItem(cart, item, cartItemCount);
     }
+
+
 }
