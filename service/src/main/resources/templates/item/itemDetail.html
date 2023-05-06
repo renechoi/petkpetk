@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      layout:decorate="/layout/layout">
+      layout:decorate="/layout/layout"
+>
 
 
 <th:block layout:fragment="css">
@@ -29,88 +30,6 @@
             $("#totalPrice").html(totalPrice);
         }
 
-        // function order() {
-        //     console.log("order")
-        //     let token = $("meta[name='_csrf']").attr("content");
-        //     let header = $("meta[name='_csrf_header']").attr("content");
-        //
-        //     let url = "/order";
-        //     let paramData = {
-        //         itemId: $("#itemId").val(),
-        //         orderCount: $("#orderCount").val()
-        //     };
-        //
-        //     let param = JSON.stringify(paramData);
-        //
-        //     $.ajax({
-        //         url: url,
-        //         type: "POST",
-        //         contentType: "application/json",
-        //         data: param,
-        //         beforeSend: function (xhr) {
-        //             /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
-        //             xhr.setRequestHeader(header, token);
-        //         },
-        //         dataType: "json",
-        //         cache: false,
-        //         success: function (result, status) {
-        //             alert("주문이 완료 되었습니다.");
-        //             location.href = '/';
-        //         },
-        //         error: function (jqXHR, status, error) {
-        //
-        //             if (jqXHR.status == '401') {
-        //                 alert('로그인 후 이용해주세요');
-        //                 location.href = '/members/login';
-        //             } else {
-        //                 alert(jqXHR.responseText);
-        //             }
-        //
-        //         }
-        //     });
-        // }
-
-        // function addCart() {
-        //     var token = $("meta[name='_csrf']").attr("content");
-        //     var header = $("meta[name='_csrf_header']").attr("content");
-        //
-        //     var url = "/cart";
-        //     var paramData = {
-        //         itemId: $("#itemId").val(),
-        //         itemCount: $("#orderCount").val()
-        //     };
-
-        //
-        //     var param = JSON.stringify(paramData);
-        //
-        //     $.ajax({
-        //         url: url,
-        //         type: "POST",
-        //         contentType: "application/json",
-        //         data: param,
-        //         beforeSend: function (xhr) {
-        //             /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
-        //             xhr.setRequestHeader(header, token);
-        //         },
-        //         dataType: "json",
-        //         cache: false,
-        //         success: function (result, status) {
-        //             alert("상품을 장바구니에 담았습니다.");
-        //             location.href = '/';
-        //         },
-        //         error: function (jqXHR, status, error) {
-        //
-        //             if (jqXHR.status == '401') {
-        //                 alert('로그인 후 이용해주세요');
-        //                 location.href = '/members/login';
-        //             } else {
-        //                 alert(jqXHR.responseText);
-        //             }
-        //
-        //         }
-        //     });
-        // }
-
     </script>
 </th:block>
 
@@ -120,81 +39,75 @@
     <div id="itemDetailContainer" class="itemDetailContainer">
 
 
-
         <form id="orderForm" class="orderForm" role="form" method="post" th:action="@{/checkout}">
-        <input type="hidden" id="itemId" th:value="${item.id}">
-<!--            todo : order.checkoutDtos의 첫번째 checkoutDto에 item.id를 매핑해야 합니다. -->
-<!--            <input type="hidden" id="orderItems" th:each="${order.checkoutDtos}" >-->
-<!--            <input type="hidden" id="orderItems" th:each="checkoutDto, dtoIndex : ${order.checkoutDtos}" th:field="*{checkoutDtos[__${dtoIndex.index}__].itemId}" th:value="${item.id}">-->
+            <input type="hidden" id="itemId" th:value="${item.id}">
             <input type="hidden" id="orderItems" th:field="*{order.checkoutDtos[0].itemId}" th:value="${item.id}">
-
+            <input type="hidden" id="cartItem" th:field="${cart.itemId}" th:value="${item.id}">
 
             <div id="BuyBox" class="d-flex">
-            <div class="repImgDiv">
-                <img th:each="itemImg : ${item.itemImageDtos}" th:if="${itemImg.representativeImageYn.equals('Y')}"
-                     id="itemDetailMainImg" th:src="${itemImg.imageUrl}"
-                     class="rounded repImg "
-                     th:alt="${itemImg.getUniqueName}">
-            </div>
-            <div class="wd50">
-                <div class="SellStatus_ItemName">
-            <span id="Selling"
-                  th:if="${item.itemStatus eq T(com.petkpetk.service.domain.shopping.constant.ItemStatus).SELL}"
-                  class="badge badge-primary mgb-15 statusClass">
-            </span>
-                    <span id="SoldOut"
-                          th:unless="${item.itemStatus eq T(com.petkpetk.service.domain.shopping.constant.ItemStatus).SELL}"
-                          class="badge btn-danger mgb-15 statusClass">
-                품절
-            </span>
-                    <div id="SellingName" class="itemDetailName" th:text="${item.itemName}"
-                         th:if="${item.itemStatus eq T(com.petkpetk.service.domain.shopping.constant.ItemStatus).SELL}"></div>
-                    <div id="SoldOutName" class="itemDetailName" th:text="${item.itemName}"
-                         th:unless="${item.itemStatus eq T(com.petkpetk.service.domain.shopping.constant.ItemStatus).SELL}"></div>
+                <div class="repImgDiv">
+                    <img th:each="itemImg : ${item.itemImageDtos}" th:if="${itemImg.representativeImageYn.equals('Y')}"
+                         id="itemDetailMainImg" th:src="${itemImg.imageUrl}"
+                         class="rounded repImg "
+                         th:alt="${itemImg.getUniqueName}">
                 </div>
-
-                <div class="chooseProduct">
-                    <div class="h4 text-danger text-left cost">
-                        <input type="hidden" th:value="${item.price}" id="price" name="price">
-                        <span class="OriginalCost" th:text="${item.originalPrice}+'원'">원가격</span><span id="discountRate"
-                                                                                                       th:text="'('+${#numbers.formatDecimal(item.discountRate*100,0,0)}+'%)'"></span><span
-                            id="cost" th:text="${item.price}"></span><span
-                            style="font-size: 20px; position: relative; bottom: 3px; margin-left: 1px;"
-                            class="won">원</span>
+                <div class="wd50">
+                    <div class="SellStatus_ItemName">
+                <span id="Selling"
+                      th:if="${item.itemStatus eq T(com.petkpetk.service.domain.shopping.constant.ItemStatus).SELL}"
+                      class="badge badge-primary mgb-15 statusClass">
+                </span>
+                        <span id="SoldOut"
+                              th:unless="${item.itemStatus eq T(com.petkpetk.service.domain.shopping.constant.ItemStatus).SELL}"
+                              class="badge btn-danger mgb-15 statusClass">품절 </span>
+                        <div id="SellingName" class="itemDetailName" th:text="${item.itemName}"
+                             th:if="${item.itemStatus eq T(com.petkpetk.service.domain.shopping.constant.ItemStatus).SELL}"></div>
+                        <div id="SoldOutName" class="itemDetailName" th:text="${item.itemName}"
+                             th:unless="${item.itemStatus eq T(com.petkpetk.service.domain.shopping.constant.ItemStatus).SELL}"></div>
                     </div>
-                    <div class="input-group w-50 ChooseAmountBox">
-                        <div class="totalFlexBox">
-                            <span class="totalText">총</span>
-                            <span id="totalPrice" th:text="${item.price}"></span>
-                            <span class="totalWon"> 원</span>
-                        </div>
-                        <div class="addBtn">
-                            <input type="button" id="minusAmount" value="◀" onclick="minusCount()">
-                            <input type="text" name="orderCount" id="orderCount"
-                                   class="form-control" value="1" min="1"
-                                   th:field="${order.checkoutDtos[0].orderCount}"
-                                   readonly>
 
-                            <input type="button" id="plusAmount" value="▶" onclick="plusCount()">
+                    <div class="chooseProduct">
+                        <div class="h4 text-danger text-left cost">
+                            <input type="hidden" th:value="${item.price}" id="price" name="price">
+                            <span class="OriginalCost" th:text="${item.originalPrice}+'원'">원가격</span><span
+                                id="discountRate"
+                                th:text="'('+${#numbers.formatDecimal(item.discountRate*100,0,0)}+'%)'"></span><span
+                                id="cost" th:text="${item.price}"></span><span
+                                style="font-size: 20px; position: relative; bottom: 3px; margin-left: 1px;"
+                                class="won">원</span>
                         </div>
+                        <div class="input-group w-50 ChooseAmountBox">
+                            <div class="totalFlexBox">
+                                <span class="totalText">총</span>
+                                <span id="totalPrice" th:text="${item.price}"></span>
+                                <span class="totalWon"> 원</span>
+                            </div>
+                            <div class="addBtn">
+                                <input type="button" id="minusAmount" value="◀" onclick="minusCount()">
+                                <input type="text" name="orderCount" id="orderCount"
+                                       class="form-control" value="1" min="1"
+                                       th:field="${order.checkoutDtos[0].orderCount}"
+                                       readonly>
 
+                                <input type="button" id="plusAmount" value="▶" onclick="plusCount()">
+                            </div>
+
+                        </div>
                     </div>
-                </div>
-                <hr class="my-4">
+                    <hr class="my-4">
 
 
-                <div th:if="${item.itemStatus eq T(com.petkpetk.service.domain.shopping.constant.ItemStatus).SELL}"
-                     class="text-right lastOrderTurn">
-                    <button type="button" class="btn btn-light border border-primary btn-lg getCart"
-                            onclick="addCart()">
-                        장바구니 담기
-                    </button>
-                    <button type="submit" class="btn btn-primary btn-lg getOrder" onclick="getOrderItemId()">
-                        바로구매
-                    </button>
-                </div>
+                    <div th:if="${item.itemStatus eq T(com.petkpetk.service.domain.shopping.constant.ItemStatus).SELL}"
+                         class="text-right lastOrderTurn">
+                        <button type="button" class="btn btn-light border border-primary btn-lg getCart"
+                                onclick="addCart()">
+                            장바구니 담기
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-lg getOrder" onclick="getOrderItemId()">
+                            바로구매
+                        </button>
+                    </div>
 
-                <!--                <div> todo: 장바구니 모달창 구현 </div>-->
 
                     <div th:unless="${item.itemStatus eq T(com.petkpetk.service.domain.shopping.constant.ItemStatus).SELL}"
                          class="text-right lastOrderTurn">
@@ -207,9 +120,41 @@
                         </button>
                     </div>
 
-            </div>
 
-        </div>
+
+
+
+                    <div class="modal" id="cart-result-modal" tabindex="-1" role="dialog" aria-labelledby="cart-result-modal-title" aria-hidden="true">
+                        <div class="modal-overlay"></div>
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="cart-result-modal-title">장바구니 결과</h5>
+                                    <button type="button" class="close"  aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p id="message"></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary">쇼핑 계속하기</button>
+                                    <button type="button" class="btn btn-primary" onclick="location.href='/cart'">장바구니 가기</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+                </div>
+            </div>
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         </form>
 
