@@ -39,15 +39,11 @@ public class OrderController {
 	public String order(@Valid OrderRequest orderRequest, Model model,
 		@AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal){
 
-
-
 		//todo : 결제 기능 구현
-
 		Long orderId = orderService.createOrder(orderRequest, userAccountPrincipal.getEmail());
 
 		return "payment/complete";
 	}
-
 
 
 	@PostMapping("/{orderId}/cancel")
@@ -73,6 +69,5 @@ public class OrderController {
 
 		return "order/user/orderList";
 	}
-	
-	
+
 }

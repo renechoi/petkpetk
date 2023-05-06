@@ -1,11 +1,5 @@
 package com.petkpetk.service.domain.shopping.dto.order;
 
-import java.time.LocalDateTime;
-
-import javax.persistence.GeneratedValue;
-
-import org.springframework.data.annotation.Id;
-
 import com.petkpetk.service.domain.shopping.constant.OrderStatus;
 import com.petkpetk.service.domain.shopping.entity.order.OrderItem;
 
@@ -23,10 +17,8 @@ public class OrderItemDto {
 	private String itemName;
 	private Long orderCount;
 	private Long orderPrice;
-
 	private Long orderId;
 	private String imageUrl;
-
 	private Long userId;
 	private Long productId;
 	private OrderStatus orderStatus;

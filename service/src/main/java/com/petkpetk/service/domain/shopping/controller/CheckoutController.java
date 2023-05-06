@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/checkout")
 public class CheckoutController {
@@ -23,13 +22,8 @@ public class CheckoutController {
 
 	@PostMapping("")
 	public String checkout(@Valid CheckoutRequest checkoutRequest, Model model){
-		//todo : item 찾아오기
 		model.addAttribute("item", orderService.createCheckOut(checkoutRequest));
 		return "order/checkout";
 	}
 
-
-
-	
-	
 }
