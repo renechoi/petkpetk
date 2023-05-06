@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.Where;
+
 import com.petkpetk.service.common.AuditingFields;
 import com.petkpetk.service.domain.shopping.constant.DeliveryStatus;
 import com.petkpetk.service.domain.shopping.entity.order.Order;
@@ -29,6 +31,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Where(clause = "deleted_yn='N'")
 public class Delivery extends AuditingFields {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

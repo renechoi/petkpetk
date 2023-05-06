@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.petkpetk.service.common.AuditingFields;
 import com.petkpetk.service.common.PetkpetkImage;
-import com.petkpetk.service.config.converter.EntityAndDtoConverter;
 import com.petkpetk.service.domain.shopping.dto.item.ItemImageDto;
 import com.petkpetk.service.domain.user.dto.security.UserAccountPrincipal;
 
