@@ -7,6 +7,7 @@ import java.util.stream.IntStream;
 import javax.validation.Valid;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,16 +18,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.petkpetk.service.domain.shopping.dto.cart.request.CartItemRequest;
 import com.petkpetk.service.domain.shopping.dto.item.ItemDto;
 import com.petkpetk.service.domain.shopping.dto.item.ItemImageDto;
 import com.petkpetk.service.domain.shopping.dto.item.request.ItemRegisterRequest;
 import com.petkpetk.service.domain.shopping.dto.item.response.ItemResponse;
+import com.petkpetk.service.domain.shopping.dto.order.CheckoutDto;
+import com.petkpetk.service.domain.shopping.dto.order.request.CheckoutRequest;
 import com.petkpetk.service.domain.shopping.dto.review.request.ReviewRegisterRequest;
 import com.petkpetk.service.domain.shopping.dto.review.response.ReviewResponse;
 import com.petkpetk.service.domain.shopping.service.item.ItemService;
 import com.petkpetk.service.domain.shopping.service.review.ReviewService;
 import com.petkpetk.service.domain.shopping.service.review.likes.ReviewLikesService;
-import com.petkpetk.service.domain.user.entity.UserAccount;
+import com.petkpetk.service.domain.user.dto.UserAccountDto;
+import com.petkpetk.service.domain.user.dto.security.UserAccountPrincipal;
 import com.petkpetk.service.domain.user.service.UserAccountService;
 
 import lombok.RequiredArgsConstructor;
@@ -57,10 +62,11 @@ public class ItemController {
 
 	// 상품 등록
 	@PostMapping("/new")
-	public String registerItem(@Valid ItemRegisterRequest itemRegisterRequest, Authentication authentication) {
+	public String registerItem(@Valid ItemRegisterRequest itemRegisterRequest,
+		@AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal) {
 		itemRegisterRequest.setTotalRating(5.0);
 		itemService.registerItem(
-			ItemDto.from(itemRegisterRequest, userAccountService.getCurrentPrincipal(authentication)));
+			ItemDto.from(itemRegisterRequest, userAccountPrincipal.toDto()));
 		return "redirect:/";
 	}
 
@@ -68,7 +74,7 @@ public class ItemController {
 	@GetMapping("/{itemId}")
 	public String itemDetail(Model model, @PathVariable("itemId") Long itemId, Authentication authentication) {
 		ItemResponse itemResponse = itemService.getItemDetail(itemId);
-		UserAccount itemUser = userAccountService.searchUser(itemResponse.getUserAccount().getEmail()).get();
+		UserAccountDto itemUser = userAccountService.searchUserDto(itemResponse.getUserAccountDto().getEmail());
 
 		System.out.println("itemUser = " + itemUser);
 
@@ -76,14 +82,16 @@ public class ItemController {
 		if (authentication != null && authentication.isAuthenticated()) {
 			email = authentication.getName();
 			model.addAttribute("userEmail", email);
-			UserAccount userAccount = userAccountService.searchUser(email).get();
+			UserAccountDto userAccount = userAccountService.searchUserDto(email);
 			HashMap<String, String> hashMap;
 			hashMap = reviewLikesService.findHistoryLikeByUser(userAccount.getId());
-			model.addAttribute("reviewHashMap",hashMap);
+			model.addAttribute("reviewHashMap", hashMap);
 		}
 		List<ReviewResponse> reviewList = reviewService.getReviewList(itemId);
 
 		model.addAttribute("item", itemResponse);
+		model.addAttribute("order",new CheckoutRequest(List.of(new CheckoutDto(itemResponse.getId()))));
+		model.addAttribute("cart", new CartItemRequest());
 		model.addAttribute("itemUser", itemUser);
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("reviewDtos", new ReviewRegisterRequest());
@@ -126,7 +134,8 @@ public class ItemController {
 		itemUpdateRequest.setImages(rawImages);
 		IntStream.range(0, imageNames.size())
 			.filter(i -> !imageNames.get(i).equals("첨부파일"))
-			.forEach(i -> itemUpdateRequest.getItemImageDtos().add(ItemImageDto.of(imageNames.get(i), uniqueImageNames.get(i))));
+			.forEach(i -> itemUpdateRequest.getItemImageDtos()
+				.add(ItemImageDto.of(imageNames.get(i), uniqueImageNames.get(i))));
 
 		ItemResponse itemResponse = itemService.updateItem(itemUpdateRequest);
 		model.addAttribute("item", itemResponse);

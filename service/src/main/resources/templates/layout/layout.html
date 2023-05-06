@@ -8,21 +8,25 @@
     <!-- CSS only -->
     <link th:href="@{/css/header.css}" rel="stylesheet">
     <link th:href="@{/css/footer.css}" rel="stylesheet">
-    <link th:href="@{/css/NoticeSearch.css}" rel="stylesheet">
     <link th:rel="icon" th:href="@{/images/icon.png}">
     <th:block layout:fragment="css"></th:block>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+
+
 </head>
 <body>
 <div th:replace="fragments/header::header"></div>
-<div th:replace="fragments/header::noticeSeach"></div>
+<div layout:fragment="noticeSeach"></div>
 <div layout:fragment="content"></div>
 <div th:replace="fragments/footer::footer"></div>
 
 <!-- JS, Popper.js, and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <th:block layout:fragment="script"></th:block>
 <script type="text/javascript" th:src="@{/js/menubar.js}"></script>
 <script type="text/javascript" th:src="@{/js/header.js}"></script>
-<script type="text/javascript" th:src="@{/js/ShowUpNoticeZone.js}"></script>
 </body>
 </html>

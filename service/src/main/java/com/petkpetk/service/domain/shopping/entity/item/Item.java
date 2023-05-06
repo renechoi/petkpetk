@@ -1,6 +1,11 @@
 package com.petkpetk.service.domain.shopping.entity.item;
 
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,17 +17,27 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import com.petkpetk.service.common.AuditingFields;
+import com.petkpetk.service.config.converter.EntityAndDtoConverter;
+import com.petkpetk.service.domain.community.entity.Article;
 import com.petkpetk.service.domain.shopping.constant.ItemStatus;
+import com.petkpetk.service.domain.shopping.dto.item.ItemDto;
+import com.petkpetk.service.domain.shopping.dto.item.ItemImageDto;
 import com.petkpetk.service.domain.shopping.dto.item.request.ItemRegisterRequest;
 import com.petkpetk.service.domain.shopping.dto.item.response.ItemResponse;
+import com.petkpetk.service.domain.shopping.entity.cart.Cart;
+import com.petkpetk.service.domain.shopping.entity.cart.CartItem;
 import com.petkpetk.service.domain.shopping.exception.OutOfStockException;
+import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 
 import lombok.Getter;
@@ -107,8 +122,17 @@ public class Item extends AuditingFields {
 	}
 
 	public static Item of(String itemName, Long originalPrice, Double discountRate, Long price, Long itemAmount, String itemDetail, ItemStatus itemStatus,
-		List<ItemImage> images, UserAccount userAccount, Double totalRating) {
-		return new Item(itemName,originalPrice,discountRate, (long)(originalPrice - originalPrice*discountRate), itemAmount, itemDetail, itemStatus, images, userAccount, totalRating);
+		List<ItemImage> images, UserAccountDto userAccountDto, Double totalRating) {
+		return new Item(itemName,originalPrice,discountRate, (long)(originalPrice - originalPrice*discountRate), itemAmount, itemDetail, itemStatus, images, userAccountDto.toEntity(), totalRating);
+	}
+
+	public static Item from(ItemDto itemDto){
+		Item item = EntityAndDtoConverter.convertToEntity(itemDto, Item.class);
+		List<ItemImage> itemImages = itemDto.getItemImageDtos().stream().map(ItemImage::from).collect(
+			Collectors.toList());
+		item.addImages(itemImages);
+		return item;
+
 	}
 
 	private List<ItemImage> setRepresentativeImage(List<ItemImage> images) {
@@ -150,6 +174,18 @@ public class Item extends AuditingFields {
 		this.itemAmount += itemAmount;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Item item = (Item)o;
+		return Objects.equals(id, item.id);
+	}
 
-
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
 }

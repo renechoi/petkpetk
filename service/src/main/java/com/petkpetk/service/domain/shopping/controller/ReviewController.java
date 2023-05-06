@@ -19,7 +19,7 @@ import com.petkpetk.service.domain.shopping.dto.review.request.ReviewRegisterReq
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.shopping.service.item.ItemService;
 import com.petkpetk.service.domain.shopping.service.review.ReviewService;
-import com.petkpetk.service.domain.user.entity.UserAccount;
+import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.service.UserAccountService;
 
 import lombok.RequiredArgsConstructor;
@@ -41,9 +41,9 @@ public class ReviewController {
 
 		String email = authentication.getName();
 		Item item = itemService.getItem(itemId);
-		UserAccount userAccount = userAccountService.searchUser(email).get();
+		UserAccountDto userAccount = userAccountService.searchUserDto(email);
 
-		reviewRegisterRequest.setUserAccount(userAccount);
+		reviewRegisterRequest.setUserAccountDto(userAccount);
 		reviewRegisterRequest.setItem(item);
 		reviewRegisterRequest.setLikes(0L);
 

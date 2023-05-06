@@ -14,9 +14,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
+
 import com.petkpetk.service.common.AuditingFields;
 import com.petkpetk.service.domain.shopping.dto.review.response.ReviewResponse;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
+import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 
 import lombok.Getter;
@@ -30,6 +33,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @Entity
+@Where(clause = "deleted_yn='N'")
 public class Review extends AuditingFields {
 
 	@Id
@@ -82,14 +86,14 @@ public class Review extends AuditingFields {
 		this.rating = rating;
 	}
 
-	public static Review of(Item item, UserAccount userAccount, String content, Long likes, List<ReviewImage> images, Double rating) {
-		return new Review(item, userAccount, content, likes, images, rating);
+	public static Review of(Item item, UserAccountDto userAccountDto, String content, Long likes, List<ReviewImage> images, Double rating) {
+		return new Review(item, userAccountDto.toEntity(), content, likes, images, rating);
 	}
 
 	public void updateReview(ReviewResponse reviewResponse) {
 		this.item = reviewResponse.getItem();
 		this.content = reviewResponse.getContent();
-		this.userAccount = reviewResponse.getUserAccount();
+		this.userAccount = reviewResponse.getUserAccountDto().toEntity();
 		this.likes = reviewResponse.getLikes();
 	}
 

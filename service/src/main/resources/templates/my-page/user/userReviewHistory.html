@@ -22,7 +22,8 @@
         <a th:if="${review.item.deletedYn.equals('N')}" th:href="@{'/item/'+${review.item.id}}">
             <div id="OneReviewItemBox" style="display: flex">
                 <div id="itemRepresentativeImage">
-                    <img id="itemImage" th:each="itemImageUrl , status : ${itemImageUrls}" th:if="${review.item.id == itemImageUrl.item.id && itemImageUrl.imageUrl != null}" th:src="${itemImageUrl.imageUrl}">
+                    <img id="itemImage" th:unless="${review.getItemImageUrl().equals('itemDeleted')}"  th:src="${review.getItemImageUrl()}">
+                    <div id="noneItem" th:if="${review.getItemImageUrl().equals('itemDeleted')}">이미지 없음</div>
                 </div>
                 <div id="itemDetail">
                     <div style="display: flex" class="itemNameZone">
@@ -41,7 +42,8 @@
             <div id="OneReviewItemBox" style="display: flex; position: relative;">
                 <div class="white" style="position: absolute"></div>
                 <div id="itemRepresentativeImage">
-                    <img id="deletedItemImage" th:each="itemImageUrl , status : ${itemImageUrls}" th:if="${review.item.id == itemImageUrl.item.id && itemImageUrl.imageUrl != null}" th:src="${itemImageUrl.imageUrl}">
+                    <img id="itemImage" th:unless="${review.getItemImageUrl().equals('itemDeleted')}"  th:src="${review.getItemImageUrl()}">
+                    <div id="noneItem" th:if="${review.getItemImageUrl().equals('itemDeleted')}">이미지 없음</div>
                 </div>
                 <div id="itemDetail">
                     <div style="display: flex" class="itemNameZone">
@@ -76,7 +78,7 @@
                         <div class="likes" th:text="'❤ '+${review.likes}"></div>
                     </div>
                     <div id="modifyBtns">
-                        <form method="post" th:action="@{'/user/delete/'+${review.item.id}+'/'+${review.getId()}}">
+                        <form method="post" th:action="@{'/user/my-page/delete/'+${review.item.id}+'/'+${review.getId()}}">
                             <input  th:class="'modifyBtn modifyBtn'+${review.id}" th:if="${review.item.deletedYn.equals('N')}" type="button" value="수정" th:onclick="'showModifyBox('+${review.id}+')'">
                             <input th:class="'modifyBtn modifyBtn'+${review.id}" type="submit" value="삭제">
                         </form>
@@ -95,7 +97,7 @@
             </div>
 
             <div th:id="'modifyReview'+${review.id}" style="display: none;">
-                <form method="post" th:action="@{'/user/modify/'+${review.item.id}+'/'+${review.id}}" th:object="${newReview}" enctype="multipart/form-data">
+                <form method="post" th:action="@{'/user/my-page/modify/'+${review.item.id}+'/'+${review.id}}" th:object="${newReview}" enctype="multipart/form-data">
                     <input type="hidden" th:field="*{rating}" th:id="'newRating'+${review.id}" th:value="${review.rating}">
                     <input type="hidden" th:id="'oldRating'+${review.id}" th:value="${review.rating}">
                     <div id="starZone">

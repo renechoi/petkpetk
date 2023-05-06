@@ -19,6 +19,7 @@ import com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo;
 import com.petkpetk.service.domain.shopping.constant.ItemStatus;
 import com.petkpetk.service.domain.shopping.dto.item.ItemDto;
 import com.petkpetk.service.domain.shopping.service.item.ItemService;
+import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.entity.ProfileImage;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 import com.petkpetk.service.domain.user.entity.embedded.Address;
@@ -51,7 +52,7 @@ class ItemServiceTest {
 			Address.of("34589", "서울특별시 광진구", "자바동", "기타"), ProfileImage.of("/images/item/test.jpg"),
 			OAuth2ProviderInfo.NAVER, Set.of(RoleType.USER));
 		ItemDto itemDto =
-			ItemDto.of("개껌", 1000L, 20.0, 10000L, 100L, "사람 간식으로 좋은", ItemStatus.SELL, null, userAccount, 10.0);
+			ItemDto.of("개껌", 1000L, 20.0, 10000L, 100L, "사람 간식으로 좋은", ItemStatus.SELL, null, UserAccountDto.from(userAccount), 10.0);
 
 		String filePath = "C:\\KYE\\sample-project\\src\\main\\resources\\static\\img\\cat.png";
 

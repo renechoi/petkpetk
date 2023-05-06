@@ -7,9 +7,7 @@
 <div >
     <div th:fragment="header" id="headerZone">
         <div>
-            <a th:href="@{#}"><img id="topDog" class="topDog" th:src="@{/images/topDog(1).png}"
-                                   onmouseover="movingTopDog()"
-                                   onmouseout="stopTopDog()" title="TOP"></a>
+            <a th:href="@{#}"><img id="topDog" class="topDog" th:src="@{/images/topDog(1).png}" onmouseover="movingTopDog()" onmouseout="stopTopDog()" title="TOP"></a>
         </div>
 
         <div class="head">
@@ -42,46 +40,47 @@
             <div class="logIn" sec:authorize="hasAnyAuthority('ROLE_USER')">
                 <ul class="flex justifyContent topList">
                     <li class="log"><a th:href="@{/logout}">로그아웃</a></li>
-                    <li onmouseleave="hideMenu()">
-                            <a th:href="@{/user/information}">
-                                <div class="profile Pone" onmouseover="showMenu()">
+                    <li >
+                            <a th:href="@{/user/my-page/information}">
+                                <div class="profile Pone" onmouseover="showMenu()" onmouseleave="hideMenu()">
                                     <img class="userProfile" th:src="@{/images/pinkMoala.png}">
+                                    <div id="topHoverMenu" class="topHoverMenu">
+                                        <img class="ladder" th:src="@{/images/ladder.png}">
+                                        <ul class="menuBox">
+                                            <li class="nickName" th:text="${#authentication.getPrincipal().getNickname()}">내 닉네임</li>
+                                            <li class="menus"><a th:href="@{/user/my-page/information}">마이 페이지</a></li>
+                                            <li class="menus"><a th:href="@{/cart}">장바구니</a></li>
+                                            <li class="menus"><a th:href="@{/user/order/orders}">구매 내역</a></li>
+                                            <li class="menus"><a th:href="@{/QnA}">QnA</a></li>
+                                            <li class="menus"><a th:href="@{/logout}">로그아웃</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </a>
-                        <div id="topHoverMenu" class="topHoverMenu">
-                            <img class="ladder" th:src="@{/images/ladder.png}">
-                            <ul class="menuBox">
-                                <li class="nickName" th:text="${#authentication.getPrincipal().getNickname()}">내 닉네임</li>
-                                <li class="menus"><a th:href="@{/user/information}">마이 페이지</a></li>
-                                <li class="menus"><a th:href="@{/cart}">장바구니</a></li>
-                                <li class="menus"><a th:href="@{/order}">구매 이력</a></li>
-                                <li class="menus"><a th:href="@{/QnA}">QnA</a></li>
-                                <li class="menus"><a th:href="@{/logout}">로그아웃</a></li>
-                            </ul>
-                        </div>
                     </li>
                 </ul>
             </div>
             <div class="logIn" sec:authorize="hasAnyAuthority('ROLE_SELLER')">
                 <ul class="flex justifyContent topList">
                     <li class="log"><a th:href="@{/logout}">로그아웃</a></li>
-                    <li onmouseleave="hideMenu()">
-                            <a  th:href="@{/seller/information}">
-                                <div class="profile Pone" onmouseover="showMenu()">
+                    <li >
+                            <a  th:href="@{/seller/my-page/information}">
+                                <div class="profile Pone" onmouseover="showMenu()" onmouseleave="hideMenu()">
                                     <img class="userProfile" th:src="@{/images/pinkMoala.png}">
+                                    <div id="topHoverMenu" class="topHoverMenu">
+                                        <img class="ladder" th:src="@{/images/ladder.png}">
+                                        <ul class="menuBox">
+                                            <li class="nickName" th:text="${#authentication.getPrincipal().getNickname()}">내 닉네임</li>
+                                            <li class="menus"><a th:href="@{/seller/my-page/information}">사업 정보</a></li>
+                                            <li class="menus"><a th:href="@{/seller/my-page/item-manage}">상품 관리</a></li>
+                                            <li class="menus"><a>주문 상태</a></li>
+                                            <li class="menus"><a th:href="@{/QnA}">QnA</a></li>
+                                            <li class="menus"><a th:href="@{/logout}">로그아웃</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </a>
-                        <div id="topHoverMenu" class="topHoverMenu">
-                            <img class="ladder" th:src="@{/images/ladder.png}">
-                            <ul class="menuBox">
-                                <li class="nickName" th:text="${#authentication.getPrincipal().getNickname()}">내 닉네임</li>
-                                <li class="menus"><a th:href="@{/seller/information}">사업 정보</a></li>
-                                <li class="menus"><a th:href="@{/seller/item-manage}">상품 관리</a></li>
-                                <li class="menus"><a>주문 상태</a></li>
-                                <li class="menus"><a th:href="@{/QnA}">QnA</a></li>
-                                <li class="menus"><a th:href="@{/logout}">로그아웃</a></li>
-                            </ul>
-                        </div>
+
                     </li>
                 </ul>
             </div>
@@ -92,18 +91,17 @@
             <nav>
                 <ul class="mainMenu">
                     <li><a th:href="@{/}">쇼핑</a></li>
-                    <li><a>커뮤니티</a></li>
+                    <li><a th:href="@{/community/articles}">커뮤니티</a></li>
                     <li><a>ABOUT</a></li>
                 </ul>
             </nav>
         </div>
-        <div id="main" class="flex justifyContent main"
-             sec:authorize="isAuthenticated()" onmouseover="hideMenu()">
+        <div id="main" class="flex justifyContent main" sec:authorize="isAuthenticated()">
             <a th:href="@{/}"><img class="logo-img" th:src="@{/images/PetkPetk-logo_Kor.png}"></a>
             <nav>
                 <ul class="mainMenu">
                     <li><a th:href="@{/}">쇼핑</a></li>
-                    <li><a>커뮤니티</a></li>
+                    <li><a th:href="@{/community/articles}">커뮤니티</a></li>
                     <li><a>ABOUT</a></li>
                 </ul>
             </nav>
@@ -118,18 +116,18 @@
         <div id="midiMenu" class="midiMenu">
             <ul id="midi">
                 <a th:href="@{/}"><li>쇼핑 <span>Shopping</span></li></a>
-                <a><li>커뮤니티 <span>Community</span></li></a>
+                <a th:href="@{/community/articles}"><li>커뮤니티 <span>Community</span></li></a>
                 <a><li>ABOUT</li></a>
                 <a><li>QnA</li></a>
                 <div class="line"></div>
                 <!------------------------------ if user == null ------------------------------>
-                <a th:href="@{/seller/information}"><li sec:authorize="hasAnyAuthority('ROLE_SELLER')">사업 정보 <span>My Page</span></li></a>
-                <a th:href="@{/seller/item-manage}"><li sec:authorize="hasAnyAuthority('ROLE_SELLER')">상품 관리 <span>Manage Products</span></li></a>
+                <a th:href="@{/seller/my-page/information}"><li sec:authorize="hasAnyAuthority('ROLE_SELLER')">사업 정보 <span>My Page</span></li></a>
+                <a th:href="@{/seller/my-page/item-manage}"><li sec:authorize="hasAnyAuthority('ROLE_SELLER')">상품 관리 <span>Manage Products</span></li></a>
                 <a><li sec:authorize="hasAnyAuthority('ROLE_SELLER')">주문 관리 <span>Manage Orders</span></li></a>
                 <a><li sec:authorize="hasAnyAuthority('ROLE_SELLER')">정산 <span>Calculate</span></li></a>
 
-                <a th:href="@{/user/information}"><li sec:authorize="hasAnyAuthority('ROLE_USER')">마이 페이지 <span>My Page</span></li></a>
-                <a th:href="@{/order}"><li sec:authorize="hasAnyAuthority('ROLE_USER')">구매 이력 <span>purchase history</span></li></a>
+                <a th:href="@{/user/my-page/information}"><li sec:authorize="hasAnyAuthority('ROLE_USER')">마이 페이지 <span>My Page</span></li></a>
+                <a th:href="@{/order}"><li sec:authorize="hasAnyAuthority('ROLE_USER')">구매 내역 <span>purchase history</span></li></a>
                 <a th:href="@{/cart}"><li sec:authorize="!hasAnyAuthority('ROLE_ADMIN', 'ROLE_SELLER')">장바구니 <span>Cart</span></li></a>
 
 
@@ -143,23 +141,7 @@
 
         </div>
     </div>
-    <div th:fragment="noticeSeach" id="noticeSeach">
-        <div class="NoticeSearchZone" id="NoticeSearchZone">
 
-            <div class="noticeBox flex">
-                <img class="noticeDog" th:src="@{/images/notice-dog.png}" title="공지사항 바로가기">
-                <div class="noticeZone flex">
-                    <a href="" title="메인 공지">여기는 공지사항</a>
-                </div>
-            </div>
-            <form id="searchForm" th:action="@{/}" method="get">
-                <div class="searchZone">
-                    <input type="text" name="searchQuery" maxlength="40" autocomplete="off">
-                    <input type="submit" value="검색">
-                </div>
-            </form>
-            <hr>
-        </div>
     </div>
 </div>
 </html>

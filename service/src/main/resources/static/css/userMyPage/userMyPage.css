@@ -1,6 +1,11 @@
 div#userMyPage {
     width: 100%;
 }
+input::-webkit-inner-spin-button {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
 
 .MyPageTitle {
     font-size: 23px;
@@ -232,7 +237,6 @@ input#cancelNewPass:hover {
     object-fit: cover;
 }
 .changeProfile{
-    margin-left: 40px;
     height: 38px;
     width: 100px;
     margin-bottom: 8px;
@@ -326,4 +330,9 @@ input.deleteProfile:hover{
     border: 1px solid #ff5d72;
     background-color: #fff3f3;
     color: #ff5d72;
+}
+div#textBox {
+    height: 20px;
+    font-size: 13px;
+    padding: 5px 2px;
 }

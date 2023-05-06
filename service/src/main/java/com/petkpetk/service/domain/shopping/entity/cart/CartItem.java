@@ -1,6 +1,9 @@
 package com.petkpetk.service.domain.shopping.entity.cart;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,61 +17,38 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "cart_item")
 public class CartItem {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cart_item_id")
+    private Long id;
 
-	@ManyToOne
-	@JoinColumn(name = "cart_id")
-	private Cart cart;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
 
-	@ManyToOne
-	@JoinColumn(name = "item_id")
-	private Item item;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "item_id")
+    private Item item;
 
-	private Long itemCount;
+    @Column(name = "cart_item_count")
+    private Long cartItemCount;
 
-	// private List<OrderItemDto> orderItemList = new ArrayList<>();
-	//
+    public CartItem(Cart cart, Item item, Long cartItemCount) {
+        this.cart = cart;
+        this.item = item;
+        this.cartItemCount = cartItemCount;
+    }
 
-	private Long totalPrice;
-
-	public CartItem(Cart cart, Item item, Long itemCount, Long totalPrice) {
-		this.cart = cart;
-		this.item = item;
-		this.itemCount = itemCount;
-		this.totalPrice = totalPrice;
-	}
-
-
-	public static CartItem of(Cart cart, Item item, Long itemCount, Long totalPrice) {
-		return new CartItem(cart, item, itemCount,totalPrice);
-	}
-
-	public static CartItem createCartItem(Cart cart, Item item, Long itemCount, Long totalPrice) {
-		return CartItem.of(cart,item,itemCount, totalPrice);
-	}
-
-	public void addItemCount(Long itemCount){
-		this.itemCount += itemCount;
-	}
-
-	public void updateCount(Long itemCount){
-		this.itemCount = itemCount;
-	}
-
+    public static CartItem of(Cart cart, Item item, Long cartItemCount) {
+        return new CartItem(cart, item, cartItemCount);
+    }
 }
-
-
-

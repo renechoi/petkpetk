@@ -46,12 +46,10 @@ class UserAccountServiceTest2 {
 		userAccountDto.setEmail(email);
 
 		// when
-		Optional<UserAccount> optionalUserAccount = userAccountService.searchUser(userAccountDto.getEmail());
+		UserAccountDto optionalUserAccount = userAccountService.searchUserDto(userAccountDto.getEmail());
 
 		// then
-		assertTrue(optionalUserAccount.isPresent());
-		UserAccount userAccount = optionalUserAccount.get();
-		assertEquals("user@user.com", userAccount.getEmail());
+		assertEquals("user@user.com", optionalUserAccount.getEmail());
 	}
 
 	@DisplayName("실제 db 테스트 - 이메일이 db에 없는 경우 빈 Optional을 반환한다")
@@ -63,10 +61,9 @@ class UserAccountServiceTest2 {
 		userAccountDto.setEmail(email);
 
 		// when
-		Optional<UserAccount> optionalUserAccount = userAccountService.searchUser(userAccountDto.getEmail());
+		UserAccountDto optionalUserAccount = userAccountService.searchUserDto(userAccountDto.getEmail());
 
 		// then
-		assertFalse(optionalUserAccount.isPresent());
 	}
 
 	@DisplayName("실제 db 테스트 - 정상 회원가입을 테스트 한다")
@@ -82,9 +79,7 @@ class UserAccountServiceTest2 {
 		userAccountService.save(userSignupRequest);
 
 		// then
-		Optional<UserAccountDto> optionalUserAccountDto = userAccountService.searchUserDto("newuser@user.com");
-		assertTrue(optionalUserAccountDto.isPresent());
-		UserAccountDto userAccountDto = optionalUserAccountDto.get();
+		UserAccountDto userAccountDto = userAccountService.searchUserDto("newuser@user.com");
 		assertEquals("newuser@user.com", userAccountDto.getEmail());
 		assertEquals("password", userAccountDto.getPassword());
 		assertEquals("새로운 유저", userAccountDto.getName());
@@ -120,12 +115,10 @@ class UserAccountServiceTest2 {
 
 
 		// when
-		userAccountService.update(userUpdateRequest);
+		userAccountService.update(userUpdateRequest, false);
 
 		// then
-		Optional<UserAccountDto> optionalUserAccountDto = userAccountService.searchUserDto(email);
-		assertTrue(optionalUserAccountDto.isPresent());
-		UserAccountDto userAccountDto = optionalUserAccountDto.get();
+		UserAccountDto userAccountDto = userAccountService.searchUserDto(email);
 		assertEquals("user@user.com", userAccountDto.getEmail());
 		assertEquals("new_password", userAccountDto.getPassword());
 		assertEquals("새로운 유저", userAccountDto.getName());

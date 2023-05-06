@@ -1,4 +1,4 @@
-package com.petkpetk.service.domain.shopping.controller;
+package com.petkpetk.service.common;
 
 import java.util.Optional;
 
@@ -13,6 +13,8 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.petkpetk.service.domain.shopping.dto.item.ItemSearchDto;
 import com.petkpetk.service.domain.shopping.dto.item.MainItemDto;
@@ -34,24 +36,27 @@ public class MainController {
     @GetMapping("/")
     public String main(ItemSearchDto itemSearchDto, Optional<Integer> page, Model model) {
 
-        PageRequest pageRequest = PageRequest.of(page.orElse(0), 12);
+        PageRequest pageRequest = PageRequest.of(page.orElse(0),12);
         Page<MainItemDto> items = itemService.getMainItemPage(itemSearchDto, pageRequest);
 
-        System.out.println("◆◆◆◆◆◆◆◆◆◆◆◆◆◆ pageRequest = " + pageRequest);
-        System.out.println("◆◆◆◆◆◆◆◆◆◆◆◆◆◆ items = " + items);
-        items.stream().forEach(System.out::println);
+        Long itemCount = itemService.getItemCount();
 
         System.out.println("itemSearchDto = " + itemSearchDto);
 
+        model.addAttribute("itemCount", itemCount);
         model.addAttribute("items", items);
         model.addAttribute("itemSearchDto", itemSearchDto);
-        model.addAttribute("maxPage", 5);
         return "main";
 
     }
 
     @GetMapping("/login")
     public String loginPage() {
+        return "/login";
+    }
+
+    @PostMapping("/login")
+    public String loginPageForwarded() {
         return "/login";
     }
 

@@ -33,7 +33,7 @@ public class OrderItem extends AuditingFields {
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="item_id")
+	@JoinColumn(name = "item_id")
 	@ToString.Exclude
 	private Item item;
 
@@ -42,9 +42,9 @@ public class OrderItem extends AuditingFields {
 	@ToString.Exclude
 	private Order order;
 
-	private Long orderPrice; // ** 수정
+	private Long orderPrice; // 주문가격
 
-	private Long orderCount; // ** 수정
+	private Long orderCount; // 주문수량
 
 	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;
@@ -58,22 +58,36 @@ public class OrderItem extends AuditingFields {
 	}
 
 	public static OrderItem of(Item item, Order order, Long orderPrice, Long orderCount, OrderStatus orderStatus) {
-		return new OrderItem(item, order,orderPrice,orderCount, orderStatus);
+		return new OrderItem(item, order, orderPrice, orderCount, orderStatus);
 	}
 
-
-	public static OrderItem createOrderItem(Item item, Long stockAmount) {
-		OrderItem orderItem = OrderItem.of(item, null, item.getPrice(),stockAmount,null);
+	public static OrderItem from(Item item, Long stockAmount) {
+		OrderItem orderItem = OrderItem.of(item, null, item.getPrice(), stockAmount, null);
 		item.removeStock(stockAmount);
 		return orderItem;
 	}
 
-	public long getTotalPrice(){
-		return orderPrice * orderCount;
+	/** 주문상품 전체 가격 조회 */
+	public Long getTotalPrice() {
+		return getOrderPrice() * getOrderCount();
 	}
 
-	public void cancel(){
+	public Long getTotalPrice(Item item) {
+		return (long)((getOrderPrice() * getOrderCount()) / (item.getDiscountRate()));
+	}
+
+	/** 주문 취소 */
+	public void cancel() {
 		this.getItem().addStock(orderCount);
 	}
 
+	public static OrderItem createOrderItem(Item item, Long stockAmount, OrderStatus orderStatus) {
+		OrderItem orderItem = OrderItem.of(item, null, item.getPrice(), stockAmount, OrderStatus.ORDER);
+		System.out.println("orderItem = " + orderItem);
+		item.removeStock(stockAmount);
+		return orderItem;
+	}
+
 }
+
+

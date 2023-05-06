@@ -1,5 +1,6 @@
 package com.petkpetk.service.domain.shopping.entity.order;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +16,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Where;
+
 import com.petkpetk.service.common.AuditingFields;
+import com.petkpetk.service.domain.shopping.constant.DeliveryStatus;
 import com.petkpetk.service.domain.shopping.constant.OrderStatus;
+import com.petkpetk.service.domain.shopping.entity.delivery.Delivery;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 
 import lombok.Getter;
@@ -29,9 +36,11 @@ import lombok.ToString;
 @Table(name = "orders")
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString
 @NoArgsConstructor
 @Entity
+@DynamicUpdate
+@Where(clause = "deleted_yn='N'")
 public class Order extends AuditingFields {
 
 	@Id
@@ -44,70 +53,117 @@ public class Order extends AuditingFields {
 	@ToString.Exclude
 	private UserAccount userAccount;
 
-
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	@ToString.Exclude
 	private List<OrderItem> orderItems = new ArrayList<>();
 
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "delivery_id")
+	private Delivery delivery;
+
 	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;
 
-	private Long amount;
+	private Long orderCount;
 	private double salePercent;
 	private Long salePrice;
 
-	public Order(UserAccount userAccount, List<OrderItem> orderItems, Long amount, double salePercent) {
+	public Order(UserAccount userAccount, Delivery delivery, List<OrderItem> orderItems, Long orderCount, double salePercent) {
 		this.userAccount = userAccount;
+		this.delivery = delivery;
 		this.orderItems = orderItems;
-		this.amount = amount;
+		this.orderCount = orderCount;
 		this.salePercent = salePercent;
 	}
 
-	public Order(UserAccount userAccount, List<OrderItem> orderItems, Long amount, Long salePrice) {
+	public Order(UserAccount userAccount, Delivery delivery, List<OrderItem> orderItems, Long orderCount, Long salePrice) {
 		this.userAccount = userAccount;
+		this.delivery = delivery;
 		this.orderItems = orderItems;
-		this.amount = amount;
+		this.orderCount = orderCount;
 		this.salePrice = salePrice;
 	}
 
-	public static Order of(UserAccount userAccount, List<OrderItem> orderItems, Long amount, double salePercent) {
-		return new Order(userAccount, orderItems, amount, salePercent);
+	public static Order of(UserAccount userAccount, Delivery delivery, List<OrderItem> orderItems, Long amount, double salePercent) {
+		return new Order(userAccount, delivery, orderItems, amount, salePercent);
 	}
 
-	public static Order of(UserAccount userAccount, List<OrderItem> orderItems, Long amount, Long salePrice) {
-		return new Order(userAccount, orderItems, amount, salePrice);
+	public static Order of(UserAccount userAccount,Delivery delivery, List<OrderItem> orderItems, Long amount, Long salePrice) {
+		return new Order(userAccount,delivery, orderItems, amount, salePrice);
 	}
 
-	public Order(UserAccount userAccount, OrderStatus orderStatus, List<OrderItem> orderItems) {
+	public Order(UserAccount userAccount,Delivery delivery, OrderStatus orderStatus, List<OrderItem> orderItems) {
 		this.userAccount = userAccount;
+		this.delivery = delivery;
 		this.orderStatus = orderStatus;
 		this.orderItems = orderItems;
 	}
 
-	public void addOrderItem(OrderItem orderItem){
-		orderItems.add(orderItem);
-		orderItem.setOrder(this);
-	}
-
-	public static Order createOrder(UserAccount userAccount, List<OrderItem> orderItems){
+	public static Order from(UserAccount userAccount, List<OrderItem> orderItems) {
 		Order order = new Order();
 		order.setUserAccount(userAccount);
 		order.setOrderStatus(OrderStatus.ORDER);
+		order.createDelivery(Delivery.of(userAccount));
 
 		orderItems.forEach(order::addOrderItem);
 		return order;
 
 	}
 
-	public Long getTotalPrice(){
+	public static Order from(UserAccount userAccount, List<OrderItem> orderItems, OrderStatus orderStatus,
+		Delivery delivery) {
+		Order order = new Order();
+		order.setUserAccount(userAccount);
+		order.setOrderStatus(OrderStatus.ORDER);
+
+		orderItems.forEach(order::addOrderItem);
+		return order;
+	}
+
+	public Long getTotalPrice() {
 		return orderItems.stream().mapToLong(OrderItem::getTotalPrice).sum();
 
 	}
 
-
-	public void cancelOrder(){
-		this.orderStatus = OrderStatus.CANCEL;
-		orderItems.forEach(OrderItem::cancel);
+	public void createDelivery(Delivery delivery) {
+		this.delivery = delivery;
+		delivery.setOrder(this);
 	}
+
+	public void addOrderItem(OrderItem orderItem) {
+		orderItems.add(orderItem);
+		orderItem.setOrder(this);
+	}
+
+	public void cancel() {
+		this.orderStatus = OrderStatus.CANCEL;
+		this.deletedYn = "Y";
+
+	}
+
+	public boolean isDeliveryInProcess(){
+		return delivery.getDeliveryStatus() == DeliveryStatus.DELIVERING || delivery.getDeliveryStatus() == DeliveryStatus.DELIVERY_COMPLETED;
+	}
+
+	public static Order createOrder(UserAccount userAccount,Delivery delivery, List<OrderItem> orderItems) {
+		Order order = new Order();
+		order.setUserAccount(userAccount);
+		order.setOrderStatus(OrderStatus.ORDER);
+		order.setCreatedAt(LocalDateTime.now());
+		order.setDelivery(delivery);
+
+		orderItems.forEach(order::addOrderItem);
+		return order;
+	}
+
+		// public void cancelOrder(){
+		// 	if (delivery.getDeliveryStatus() == DeliveryStatus.DELIVERY_COMPLETED) {
+		// 		throw new RuntimeException("이미 배송완료된 상품은 취소가 불가능합니다.");
+		// 	}
+		// 	this.orderStatus = OrderStatus.CANCEL;
+		// 	orderItems.forEach(OrderItem::cancel);
+		//
+		// }
+
 
 }

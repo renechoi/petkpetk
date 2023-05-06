@@ -137,12 +137,16 @@ public class ItemService {
 		return itemRepository.findById(itemId).orElseThrow(ItemNotFoundException::new);
 	}
 
+
 	private List<ItemImage> findByItemIdOrderByIdAsc(Long id) {
 		return itemImageRepository.findByItemIdOrderByIdAsc(id);
 	}
+	public ItemDto searchItem(Long itemId) {
+		return itemRepository.findById(itemId).map(ItemDto::from).orElseThrow(ItemNotFoundException::new);
+	}
 
-	public Item getItem(Long id) {
-		return itemRepository.findById(id).get();
+	public Item getItem(Long itemId) {
+		return itemRepository.findById(itemId).orElseThrow(ItemNotFoundException::new);
 	}
 
 	public List<Item> getReviewItemList(List<Review> reviewList) {
@@ -162,5 +166,9 @@ public class ItemService {
 			);
 
 		return itemImages;
+	}
+
+	public Long getItemCount() {
+		return itemRepository.getItemCount();
 	}
 }

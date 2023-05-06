@@ -5,6 +5,12 @@ var itemDetailContainer = document.getElementById("itemDetailContainer");
 var userEmail = document.getElementById("userEmail");
 
 
+function setcount(){
+    $("#orderCount").val(1);
+}
+
+setcount();
+
 function minusLike(num, likesNum) {
     clickLikes(num, likesNum, userEmail);
 }
@@ -353,3 +359,66 @@ function cancelNewReview() {
     }
 
 }
+
+function getOrderItemId(){
+    $("#orderItemId").val($("#itemId").val());
+}
+
+
+function addCart(){
+
+    let csrfToken = $('meta[name="_csrf"]').attr('content');
+    let csrfHeader = $('meta[name="_csrf_header"]').attr('content');
+    let headers = {};
+    headers[csrfHeader] = csrfToken;
+    let cartItemRequest = {
+        itemId: $('#itemId').val(),
+        cartItemCount:  $('#orderCount').val()
+    };
+
+
+    $.ajax({
+        url: '/cart',
+        type: 'POST',
+        headers: headers,
+        data: JSON.stringify(cartItemRequest),
+        contentType: 'application/json',
+        success: function (data ) {
+            $('#message').text('장바구니에 담겼습니다.');
+            $('#cart-result-modal').show();
+
+            $('.btn-secondary').on('click', closeModal);
+            $('.close').on('click', closeModal);
+        },
+        error: function (xhr, status, error) {
+            console.error(error);
+            console.log(status);
+            console.log(xhr.responseText);
+            if (xhr.status === 401) {
+                alert('로그인이 필요합니다.');
+                window.location.href = '/login';
+                return;
+            }
+            if (xhr.status === 400) {
+                alert('재고 부족으로 인해 장바구니 담기에 실패하였습니다.');
+                return;
+            }
+            if (xhr.status === 409) {
+                alert('상품이 장바구니에 이미 존재합니다.');
+                return;
+            }
+            alert('잠시 후 다시 시도해주세요.');
+        }
+    });
+}
+
+function closeModal() {
+    $('#cart-result-modal').hide();
+}
+
+$(document).keyup(function(e) {
+    if (e.key === "Escape") { // esc key maps to keycode `27`
+        closeModal();
+    }
+});
+

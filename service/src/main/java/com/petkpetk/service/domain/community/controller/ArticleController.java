@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -36,14 +37,30 @@ public class ArticleController {
 	private final ArticleService articleService;
 	private final PaginationService paginationService;
 
+	/**
+	 * todo : 현재 검색과 정렬을 하는 과정에서 쿼리 파라미터가 그대로 노출된다는 문제가 있다. 추후 리팩토링시 노출하지 않는 방법을 찾아본다.
+	 * e.g. articles?page=0&sort=&searchType=HASHTAG&searchValue=hashtag1
+	 */
 	@GetMapping
-	public String articles(@RequestParam(required = false) SearchType searchType,
-		@RequestParam(required = false) String searchValue,
-		@PageableDefault(size = 7, sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable, Model model) {
+	public String articles(@RequestParam(required = false, name = "searchType") SearchType searchType,
+		@RequestParam(required = false) String searchValue, @PageableDefault(size = 12) Pageable pageable, Model model,
+		@RequestParam(required = false, defaultValue = "createdAt") String sort) {
+		if (sort.equals("hit")) {
+			pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("hit").descending());
+		} else {
+			pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
+				Sort.by("createdAt").descending());
+		}
+
 		Page<ArticleResponse> articles = articleService.searchArticles(searchType, searchValue, pageable)
 			.map(ArticleResponse::from);
 		List<Integer> pageBars = paginationService.getPageBars(pageable.getPageNumber(), articles.getTotalPages());
 
+		int totalCount = articleService.getArticleTotalCount();
+
+		System.out.println("♥♥♥♥♥♥♥♥♥ totalCount = " + totalCount);
+
+		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("articles", articles);
 		model.addAttribute("pageBars", pageBars);
 		model.addAttribute("searchTypes", SearchType.values());
@@ -83,6 +100,14 @@ public class ArticleController {
 		articleService.deleteArticle(articleId);
 
 		return "redirect:/articles";
+	}
+
+	@GetMapping("/hashtags")
+	public String hashtags(Model model) {
+		List<String> hashtags = articleService.getHashtags();
+		model.addAttribute("hashtags", hashtags);
+
+		return "/community/article/hashtags";
 	}
 
 }

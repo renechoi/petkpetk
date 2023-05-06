@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 목록 조회하기</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/article-basic.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/article.css}">
+</head>
+<body>
+
+
+<div th:object="${hashtags}">
+    <div id="hashtags" th:remove="all-but-first">
+        <div th:each="hashtag : ${hashtags}">
+            <a class="text-reset"
+               th:text="${hashtag}"
+               th:href="@{/community/articles(page=0, sort=${param.sort}, searchType=${T(com.petkpetk.service.domain.community.constatnt.SearchType).HASHTAG.name()}, searchValue=${hashtag})}"/>
+        </div>
+    </div>
+</div>
+
+
+</body>

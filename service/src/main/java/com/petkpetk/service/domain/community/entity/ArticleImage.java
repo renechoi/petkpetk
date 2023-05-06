@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Where;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.petkpetk.service.common.AuditingFields;
@@ -28,6 +29,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
+@Where(clause = "deleted_yn='N'")
 @Entity
 public class ArticleImage extends AuditingFields implements PetkpetkImage {
 

@@ -2,6 +2,7 @@ package com.petkpetk.service.domain.community.service;
 
 import static com.petkpetk.service.domain.community.constatnt.SearchType.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.petkpetk.service.common.CategoryType;
 import com.petkpetk.service.domain.community.constatnt.SearchType;
 import com.petkpetk.service.domain.community.dto.ArticleDto;
 import com.petkpetk.service.domain.community.entity.Article;
@@ -33,26 +35,46 @@ public class ArticleService {
 	private final articleImageService articleImageService;
 	private final HashtagRepository hashtagRepository;
 
+	/**
+	 * todo: if문 분기에 대한 추후 리팩토링을 검토해볼 필요가 있다.
+	 * 현재와 같은 수준에서는 if문을 분기하는 방식을 고수하되, 검색 타입이 늘어나는 경우 SearchType enum 클래스와 함수형 인터페이스를 이용해
+	 * 메서드를 던져주는 방식으로 리팩토링을 고려해보자.
+	 */
 	@Transactional(readOnly = true)
 	public Page<ArticleDto> searchArticles(SearchType searchType, String searchValue, Pageable pageable) {
-
-		if (searchValue == null || searchValue.isBlank()) {
-			return articleRepository.findAll(pageable).map(this::convertToDto);
-
-		}
 
 		if (searchType == TITLE) {
 			return articleRepository.findByTitleContaining(searchValue, pageable).map(this::convertToDto);
 		}
-		// todo : 다른 검색 조건에 대한 조회 기능 추가 구현 필요 + 분기를 사용하지 않도록 리팩토링 + 리턴 값 정리
-		return null;
+
+		if (searchType == CONTENT) {
+			return articleRepository.findByContentContaining(searchValue, pageable).map(this::convertToDto);
+		}
+
+		if (searchType == NICKNAME) {
+			return articleRepository.findByUserAccount_NicknameContaining(searchValue, pageable)
+				.map(this::convertToDto);
+		}
+
+		if (searchType == HASHTAG) {
+			return articleRepository.findByHashtagNames(Set.of(searchValue), pageable).map(this::convertToDto);
+		}
+
+		if (searchType == CATEGORY) {
+			Set<CategoryType> categoryTypes = Arrays.stream(searchValue.split(","))
+				.map(value -> CategoryType.valueOf(value.trim()))
+				.collect(Collectors.toSet());
+
+			return articleRepository.findByCategoryTypeIn(categoryTypes, pageable).map(this::convertToDto);
+		}
+
+		return articleRepository.findAll(pageable).map(this::convertToDto);
 	}
 
-	@Transactional(readOnly = true)
 	public ArticleDto searchArticle(Long articleId) {
-		return articleRepository.findById(articleId)
-			.map(this::convertToDto)
-			.orElseThrow(ArticleNotFoundException::new);
+		Article article = articleRepository.findById(articleId).orElseThrow(ArticleNotFoundException::new);
+		article.setHit(article.getHit() + 1);
+		return convertToDto(article);
 	}
 
 	public void saveArticle(ArticleDto articleDto) {
@@ -102,8 +124,9 @@ public class ArticleService {
 		return articleRepository.findTopByOrderByIdDesc().getId();
 	}
 
+	public List<String> getHashtags() {
+		return hashtagRepository.findAllHashtagNames();
+	}
+
+	public int getArticleTotalCount() {return  articleRepository.findAll().size();}
 }
-
-
-
-

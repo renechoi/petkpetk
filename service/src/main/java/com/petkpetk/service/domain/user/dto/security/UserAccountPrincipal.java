@@ -81,7 +81,6 @@ public class UserAccountPrincipal extends AuditingFields implements UserDetails,
 			dto.getBusinessName(), dto.getBusinessNumber());
 	}
 
-	// TODO : RoleType 설정 추후 변경
 	public UserAccountDto toDto() {
 		return UserAccountDto.of(id, email, password, name, nickname, profileImage, address.getAddress(), OAuth2ProviderInfo,
 			roles.stream()

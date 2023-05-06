@@ -5,6 +5,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum OrderStatus {
 	ORDER,
-	CANCEL
-
+	CANCEL,
+	COMPLETE
 }

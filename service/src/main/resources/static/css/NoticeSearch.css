@@ -12,14 +12,14 @@ a{
 
 .NoticeSearchZone{
     display: flex;
-    padding: 10px 200px;
+    padding: 10px 100px;
 }
 
 .noticeBox{
     width: 60%;
 }
 .noticeZone{
-    width: 85%;
+    width: 100%;
     height: 40px;
     background-color: #ffd8dd;
     padding: 10px 20px ;
@@ -37,8 +37,8 @@ a{
 .noticeZone a:hover{
     color: #694c45;
 }
-#searchForm{
-    width: 40%;
+#mainSearchForm, #articleSearchForm{
+    width: 550px;
 }
 .searchZone{
     margin-left: 20px;
@@ -47,7 +47,7 @@ a{
 .searchZone input[type="text"] {
     padding: 0 20px;
     height: 40px;
-    width: calc(80% - 65px);
+    width: calc(90% - 65px);
     outline: none;
     border: 2px solid #e0e0e0;
     border-radius: 20px;
@@ -78,6 +78,39 @@ a{
     animation: twinkle 0.15s linear;
     animation-iteration-count: 4;
     animation-direction: alternate;
+}
+
+input#searchValue {
+    padding: 0 20px;
+    height: 40px;
+    width: calc(72% - 65px);
+    outline: none;
+    border: 2px solid #e0e0e0;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+button#searchBtn {
+    cursor: pointer;
+    border: 2px solid #ff475c;
+    border-radius: 20px;
+    background-color: #FF5F75;
+    height: 40px;
+    width: 65px;
+    outline: none;
+    color: white;
+    font-size: 17px;
+}
+
+select#searchType {
+    border: 2px solid #ffa2ac;
+    height: 40px;
+    border-radius: 20px;
+    text-align: center;
+    cursor: pointer;
+    color: #6f5f5c;
+    font-weight: bold;
+    width: 80px;
 }
 
 @keyframes twinkle {
@@ -119,7 +152,7 @@ a{
         height: 80px;
     }
 
-    #searchForm{
+    #mainSearchForm, #articleSearchForm{
         width: 100%;
         padding: 0 20px;
     }
