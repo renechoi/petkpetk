@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.petkpetk.service.domain.shopping.dto.cart.request.CartItemRequest;
 import com.petkpetk.service.domain.shopping.dto.item.ItemDto;
 import com.petkpetk.service.domain.shopping.dto.item.ItemImageDto;
 import com.petkpetk.service.domain.shopping.dto.item.request.ItemRegisterRequest;
@@ -90,6 +91,7 @@ public class ItemController {
 
 		model.addAttribute("item", itemResponse);
 		model.addAttribute("order",new CheckoutRequest(List.of(new CheckoutDto(itemResponse.getId()))));
+		model.addAttribute("cart", new CartItemRequest());
 		model.addAttribute("itemUser", itemUser);
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("reviewDtos", new ReviewRegisterRequest());

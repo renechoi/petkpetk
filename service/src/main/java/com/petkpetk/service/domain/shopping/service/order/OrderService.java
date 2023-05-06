@@ -17,7 +17,9 @@ import com.petkpetk.service.domain.shopping.constant.OrderStatus;
 import com.petkpetk.service.domain.shopping.dto.order.OrderDto;
 import com.petkpetk.service.domain.shopping.dto.order.OrderHistoryDto;
 import com.petkpetk.service.domain.shopping.dto.order.OrderItemDto;
+import com.petkpetk.service.domain.shopping.dto.order.request.CheckoutRequest;
 import com.petkpetk.service.domain.shopping.dto.order.request.OrderRequest;
+import com.petkpetk.service.domain.shopping.dto.order.response.CheckoutResponse;
 import com.petkpetk.service.domain.shopping.entity.delivery.Delivery;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.shopping.entity.item.ItemImage;
@@ -27,7 +29,9 @@ import com.petkpetk.service.domain.shopping.exception.OrderAlreadyInProcessExcep
 import com.petkpetk.service.domain.shopping.repository.item.ItemImageRepository;
 import com.petkpetk.service.domain.shopping.repository.item.ItemRepository;
 import com.petkpetk.service.domain.shopping.repository.order.OrderRepository;
+import com.petkpetk.service.domain.shopping.service.item.ItemService;
 import com.petkpetk.service.domain.user.entity.UserAccount;
+import com.petkpetk.service.domain.user.entity.embedded.Address;
 import com.petkpetk.service.domain.user.repository.UserAccountRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -40,6 +44,7 @@ public class OrderService {
 	private final OrderRepository orderRepository;
 
 	private final ItemRepository itemRepository;
+	private final ItemService itemService;
 	private final ItemImageRepository itemImageRepository;
 	private final UserAccountRepository userAccountRepository;
 
@@ -49,9 +54,8 @@ public class OrderService {
 	/** 주문 */
 	public Long createOrder(OrderRequest orderRequest, String email) {
 		// 엔티티 조회
-		Item item = itemRepository.findById(orderRequest.getProductId()).orElseThrow(EntityNotFoundException::new);
+		Item item = itemService.getItem(orderRequest.getItemId());
 		UserAccount userAccount = userAccountRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
-
 
 		// 주문상품 생성
 		List<OrderItem> orderItems = Collections.singletonList(OrderItem.from(item, item.getItemAmount()));
@@ -70,7 +74,7 @@ public class OrderService {
 		UserAccount userAccount = findUserAccountByEmail(email);
 		List<OrderItem> orderItems = createOrderItems(orderDtoList, OrderStatus.ORDER);
 
-		Order order = Order.createOrder(userAccount, orderItems);
+		Order order = Order.createOrder(userAccount,new Delivery(Address.of("123","서울시","금천구","가산동")), orderItems);
 		Order savedOrder = orderRepository.save(order);
 		return savedOrder.getId();
 	}
@@ -78,9 +82,10 @@ public class OrderService {
 	private List<OrderItem> createOrderItems(List<OrderDto> orderDtoList, OrderStatus orderStatus) {
 		return orderDtoList.stream()
 			.map(orderDto -> {
-				Item item = itemRepository.findById(orderDto.getProductId())
+				Item item = itemRepository.findById(orderDto.getItemId())
 					.orElseThrow(EntityNotFoundException::new);
-				return OrderItem.createOrderItem(item, orderDto.getAmount(),OrderStatus.ORDER);
+				return OrderItem.createOrderItem(item, orderDto.getOrderCount(),  OrderStatus.ORDER);
+
 			})
 			.collect(Collectors.toList());
 	}
@@ -101,10 +106,18 @@ public class OrderService {
 	/** 주문 검색 **/
 	public List<OrderDto> searchOrders(String userAccountName, LocalDateTime startDate, LocalDateTime endDate, OrderStatus status) {
 		List<Order> orders = orderRepository.searchOrders(userAccountName, startDate, endDate, status);
+
+		for (Order order:orders) {
+			System.out.println( "******************* 주문 검색 주문 아이템s 테스트 " + order);
+		}
+
+
 		return orders.stream()
 			.map(OrderDto::fromEntity)
 			.collect(Collectors.toList());
 	}
+
+	/** 주문 유효성 검사 */
 	@Transactional(readOnly = true)
 	public boolean validateOrder(Long orderId, String email) {
 		UserAccount currentUser = findUserAccountByEmail(email);
@@ -150,4 +163,11 @@ public class OrderService {
 		return new OrderItemDto(orderItem, imageUrl);
 	}
 
+	public CheckoutResponse createCheckOut(CheckoutRequest checkoutRequest) {
+		checkoutRequest.getCheckoutDtos()
+			.forEach(checkoutDto -> checkoutDto.update(itemService.searchItem(checkoutDto.getItemId())));
+
+		return CheckoutResponse.of(checkoutRequest.getCheckoutDtos());
+
+	}
 }

@@ -64,34 +64,37 @@ public class Order extends AuditingFields {
 	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;
 
-	private Long amount;
+	private Long orderCount;
 	private double salePercent;
 	private Long salePrice;
 
-	public Order(UserAccount userAccount, List<OrderItem> orderItems, Long amount, double salePercent) {
+	public Order(UserAccount userAccount, Delivery delivery, List<OrderItem> orderItems, Long orderCount, double salePercent) {
 		this.userAccount = userAccount;
+		this.delivery = delivery;
 		this.orderItems = orderItems;
-		this.amount = amount;
+		this.orderCount = orderCount;
 		this.salePercent = salePercent;
 	}
 
-	public Order(UserAccount userAccount, List<OrderItem> orderItems, Long amount, Long salePrice) {
+	public Order(UserAccount userAccount, Delivery delivery, List<OrderItem> orderItems, Long orderCount, Long salePrice) {
 		this.userAccount = userAccount;
+		this.delivery = delivery;
 		this.orderItems = orderItems;
-		this.amount = amount;
+		this.orderCount = orderCount;
 		this.salePrice = salePrice;
 	}
 
-	public static Order of(UserAccount userAccount, List<OrderItem> orderItems, Long amount, double salePercent) {
-		return new Order(userAccount, orderItems, amount, salePercent);
+	public static Order of(UserAccount userAccount, Delivery delivery, List<OrderItem> orderItems, Long amount, double salePercent) {
+		return new Order(userAccount, delivery, orderItems, amount, salePercent);
 	}
 
-	public static Order of(UserAccount userAccount, List<OrderItem> orderItems, Long amount, Long salePrice) {
-		return new Order(userAccount, orderItems, amount, salePrice);
+	public static Order of(UserAccount userAccount,Delivery delivery, List<OrderItem> orderItems, Long amount, Long salePrice) {
+		return new Order(userAccount,delivery, orderItems, amount, salePrice);
 	}
 
-	public Order(UserAccount userAccount, OrderStatus orderStatus, List<OrderItem> orderItems) {
+	public Order(UserAccount userAccount,Delivery delivery, OrderStatus orderStatus, List<OrderItem> orderItems) {
 		this.userAccount = userAccount;
+		this.delivery = delivery;
 		this.orderStatus = orderStatus;
 		this.orderItems = orderItems;
 	}
@@ -100,6 +103,7 @@ public class Order extends AuditingFields {
 		Order order = new Order();
 		order.setUserAccount(userAccount);
 		order.setOrderStatus(OrderStatus.ORDER);
+		order.createDelivery(Delivery.of(userAccount));
 
 		orderItems.forEach(order::addOrderItem);
 		return order;
@@ -111,7 +115,6 @@ public class Order extends AuditingFields {
 		Order order = new Order();
 		order.setUserAccount(userAccount);
 		order.setOrderStatus(OrderStatus.ORDER);
-		order.createDelivery(Delivery.of(userAccount));
 
 		orderItems.forEach(order::addOrderItem);
 		return order;
@@ -135,17 +138,19 @@ public class Order extends AuditingFields {
 	public void cancel() {
 		this.orderStatus = OrderStatus.CANCEL;
 		this.deletedYn = "Y";
+
 	}
 
 	public boolean isDeliveryInProcess(){
 		return delivery.getDeliveryStatus() == DeliveryStatus.DELIVERING || delivery.getDeliveryStatus() == DeliveryStatus.DELIVERY_COMPLETED;
 	}
 
-	public static Order createOrder(UserAccount userAccount, List<OrderItem> orderItems) {
+	public static Order createOrder(UserAccount userAccount,Delivery delivery, List<OrderItem> orderItems) {
 		Order order = new Order();
 		order.setUserAccount(userAccount);
 		order.setOrderStatus(OrderStatus.ORDER);
 		order.setCreatedAt(LocalDateTime.now());
+		order.setDelivery(delivery);
 
 		orderItems.forEach(order::addOrderItem);
 		return order;
