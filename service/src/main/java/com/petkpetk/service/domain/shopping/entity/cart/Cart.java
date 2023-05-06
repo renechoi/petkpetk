@@ -22,6 +22,7 @@ import com.petkpetk.service.common.AuditingFields;
 import com.petkpetk.service.domain.community.entity.Hashtag;
 import com.petkpetk.service.domain.shopping.dto.item.ItemDto;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
+import com.petkpetk.service.domain.shopping.exception.StockAlreadyInCartException;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 
@@ -33,7 +34,6 @@ import lombok.ToString;
 
 @Getter
 @Setter
-// @ToString(callSuper = true)
 @NoArgsConstructor
 @Entity
 @AllArgsConstructor
@@ -50,12 +50,6 @@ public class Cart  extends AuditingFields {
 
 	private Long totalPrice;
 
-	@ToString.Exclude
-	@JoinTable(name = "cart_item", joinColumns = @JoinColumn(name = "cart_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	private Set<Item> items = new LinkedHashSet<>();
-
-
 	private Cart(UserAccount userAccount) {
 		this.userAccount = userAccount;
 	}
@@ -64,8 +58,4 @@ public class Cart  extends AuditingFields {
 		return new Cart(userAccountDto.toEntity());
 	}
 
-	public void addItem(Item item) {
-		this.items.add(item);
-		item.getCarts().add(this);
-	}
 }
