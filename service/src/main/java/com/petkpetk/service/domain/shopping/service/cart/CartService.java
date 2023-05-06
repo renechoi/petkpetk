@@ -1,13 +1,17 @@
 package com.petkpetk.service.domain.shopping.service.cart;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.petkpetk.service.domain.shopping.dto.cart.request.CartItemRequest;
 import com.petkpetk.service.domain.shopping.dto.item.ItemDto;
 import com.petkpetk.service.domain.shopping.entity.cart.Cart;
+import com.petkpetk.service.domain.shopping.entity.cart.CartItem;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.shopping.exception.StockAlreadyInCartException;
+import com.petkpetk.service.domain.shopping.repository.cart.CartItemRepository;
 import com.petkpetk.service.domain.shopping.repository.cart.CartRepository;
 import com.petkpetk.service.domain.shopping.service.item.ItemService;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
@@ -23,21 +27,22 @@ public class CartService {
 	private final ItemService itemService;
 	private final UserAccountService userAccountService;
 	private final CartRepository cartRepository;
+	private final CartItemRepository cartItemRepository;
 
 	public void addCartItems(CartItemRequest cartItemRequest, String email) {
 
 		Item item = itemService.getItem(cartItemRequest.getItemId());
 		UserAccountDto userAccountDto = userAccountService.searchUserDto(email);
-
 		Cart cart = cartRepository.findByUserAccountId(userAccountDto.getId()).orElse(Cart.of(userAccountDto));
 
-		if (!cart.getItems().isEmpty() && cart.getItems().stream().anyMatch(itemInCart -> itemInCart.equals(item))){
+		if (cartItemRepository.findByCartIdAndItemId(cart.getId(), item.getId()).isPresent() ) {
 			throw new StockAlreadyInCartException();
 		}
 
-		cart.addItem(item);
-		cartRepository.save(cart);
+		CartItem cartItem = CartItem.of(cart, item, cartItemRequest.getCartItemCount());
+		cartItemRepository.save(cartItem);
 	}
+
 
 
 	// public Long addCartItems(CartItemRequest cartItemRequest, String email) {

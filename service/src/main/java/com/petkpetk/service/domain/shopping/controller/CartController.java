@@ -52,6 +52,7 @@ public class CartController {
 		} catch (StockAlreadyInCartException e) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
 		} catch (Exception e){
+			System.out.println("e = " + e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("잠시 후 다시 시도해주세요.");
 		}
 	}

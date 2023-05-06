@@ -1,5 +1,6 @@
 package com.petkpetk.service.domain.shopping.entity.item;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
@@ -34,6 +35,7 @@ import com.petkpetk.service.domain.shopping.dto.item.ItemImageDto;
 import com.petkpetk.service.domain.shopping.dto.item.request.ItemRegisterRequest;
 import com.petkpetk.service.domain.shopping.dto.item.response.ItemResponse;
 import com.petkpetk.service.domain.shopping.entity.cart.Cart;
+import com.petkpetk.service.domain.shopping.entity.cart.CartItem;
 import com.petkpetk.service.domain.shopping.exception.OutOfStockException;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.entity.UserAccount;
@@ -89,11 +91,6 @@ public class Item extends AuditingFields {
 	@OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
 	@ToString.Exclude
 	private List<ItemImage> images;
-
-	@ManyToMany(mappedBy = "items")
-	@ToString.Exclude
-	private Set<Cart> carts = new LinkedHashSet<>();
-
 
 	private List<ItemImage> addImages(List<ItemImage> images) {
 		images.forEach(image -> image.mapWith(this));
