@@ -53,6 +53,7 @@ const main = document.querySelector(".main");
 const main2 = document.querySelector(".main2");
 const NS = document.querySelector(".NoticeSearchZone");
 const ADC = document.querySelector(".articleDetailContainer");
+const APC = document.querySelector(".articlePostContainer");
 
 window.addEventListener("scroll", () => {
     var width = window.innerWidth;
@@ -68,6 +69,10 @@ window.addEventListener("scroll", () => {
             ADC.classList.add("jumped2");
             ADC.classList.remove("jumped1");
         }
+        if (APC) {
+            APC.classList.add("jumped2");
+            APC.classList.remove("jumped1");
+        }
 
     } else if (window.scrollY > headerHeight && width > 880) {
         main.classList.add('fixed');
@@ -80,6 +85,10 @@ window.addEventListener("scroll", () => {
             ADC.classList.remove("jumped2")
             ADC.classList.add("jumped1");
         }
+        if (APC) {
+            APC.classList.remove("jumped2")
+            APC.classList.add("jumped1");
+        }
 
     } else {
         if (NS) {
@@ -89,6 +98,10 @@ window.addEventListener("scroll", () => {
         if (ADC) {
             ADC.classList.remove("jumped2")
             ADC.classList.remove("jumped1");
+        }
+        if (APC) {
+            APC.classList.remove("jumped2")
+            APC.classList.remove("jumped1");
         }
         main.classList.remove('fixed');
         main2.classList.remove('fixed');

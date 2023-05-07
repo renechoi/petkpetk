@@ -14,6 +14,7 @@ imagesInput.addEventListener('change', function() {
             reader.onload = function() {
                 const img = document.createElement('img');
                 img.src = reader.result;
+                img.classList.add("articleImages");
                 imagesPreview.appendChild(img);
             }
         }
@@ -70,3 +71,37 @@ function isInValidKey(key) {
 }
 
 var num = 1
+
+
+function checkHashTag() {
+    if ($("#hashtag").val()=="#") {
+        $("#hashtag").val("");
+    }
+}
+
+$("#countText").text($("#content").val().length+'/5000');
+
+function countText() {
+    $("#countText").text($("#content").val().length+'/5000');
+
+    if ($("#content").val().length > 5000) {
+        $("#content").css("background-color", "#ffebeb");
+        $("#countText").css("color", "red");
+    } else {
+        $("#content").css("background-color", "white");
+        $("#countText").css("color", "#856868");
+    }
+}
+
+var articlePostForm = document.getElementById("articlePostForm");
+
+articlePostForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    if ($("#content").val().length > 5000) {
+        alert("내용은 5000자 이하로 입력해주세요.")
+        return false;
+    }
+
+    articlePostForm.submit();
+});
