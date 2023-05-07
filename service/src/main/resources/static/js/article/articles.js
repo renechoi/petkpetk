@@ -219,6 +219,11 @@ function showMoreBtn(totalCount) {
     } else {
         getMoreBtn.style.display = "none";
     }
+
+    if (oneArticleBoxs.length < 12) {
+        getMoreBtn.style.display = "none";
+    }
+
 }
 
 showMoreBtn($("#totalCount").val());

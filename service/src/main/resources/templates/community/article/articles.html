@@ -35,6 +35,17 @@
 
 <div layout:fragment="content" id="articleContainer">
     <input type="hidden" id="totalCount" th:value="${totalCount}">
+
+    <div th:object="${hashtags}">
+        <div id="hashtags" th:remove="all-but-first">
+            <div class="hashTagsBox" th:each="hashtag : ${hashtags}">
+                <a class="text-reset"
+                   th:text="'#'+${hashtag}"
+                   th:href="@{/community/articles(page=0, sort=${param.sort}, searchType=${T(com.petkpetk.service.domain.community.constatnt.SearchType).HASHTAG.name()}, searchValue=${hashtag})}"/>
+            </div>
+        </div>
+    </div>
+
     <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
         <div id="categoryBox" style="display: flex;">
             <div th:each="category : ${T(com.petkpetk.service.common.CategoryType).values()}" >
@@ -81,8 +92,8 @@
                                         <div class="contentDetail" th:text="${article.content}"></div>
                                     </div>
                                 </div>
-                                <div class="hashTagBox" th:if="${not #lists.isEmpty(article.hashtags)}">
-                                    <div class="hashTaging"><span class="hashTag" th:each="hashtag : ${article.hashtags}" th:text="${hashtag}"></span></div>
+                                <div class="hashTagBox" th:if="${not #lists.isEmpty(article.hashtags)}" style="display: flex; flex-wrap: wrap;">
+                                    <div class="hashTaging" th:each="hashtag : ${article.hashtags}"><span class="hashTag"  th:text="'#'+${hashtag}"></span></div>
                                 </div>
                                 <div class="articleHit">
                                     <div th:if="${article.hit != null}" class="articleHit" th:text="'조회수 '+${article.hit}"></div>
@@ -112,8 +123,8 @@
                                         <div class="contentDetail" th:text="${article.content}"></div>
                                     </div>
                                 </div>
-                                <div class="hashTagBox" th:if="${not #lists.isEmpty(article.hashtags)}">
-                                    <div class="hashTaging"><span class="hashTag" th:each="hashtag : ${article.hashtags}" th:text="${hashtag}"></span></div>
+                                <div class="hashTagBox" th:if="${not #lists.isEmpty(article.hashtags)}" style="display: flex; flex-wrap: wrap;">
+                                    <div class="hashTaging" th:each="hashtag : ${article.hashtags}"><span class="hashTag"  th:text="'#'+${hashtag}"></span></div>
                                 </div>
                                 <div class="articleHit">
                                     <div th:if="${article.hit != null}" class="articleHit" th:text="'조회수 '+${article.hit}"></div>
@@ -143,8 +154,8 @@
                                         <div class="contentDetail" th:text="${article.content}"></div>
                                     </div>
                                 </div>
-                                <div class="hashTagBox" th:if="${not #lists.isEmpty(article.hashtags)}">
-                                    <div class="hashTaging"><span class="hashTag" th:each="hashtag : ${article.hashtags}" th:text="${hashtag}"></span></div>
+                                <div class="hashTagBox" th:if="${not #lists.isEmpty(article.hashtags)}" style="display: flex; flex-wrap: wrap;">
+                                    <div class="hashTaging" th:each="hashtag : ${article.hashtags}"><span class="hashTag"  th:text="'#'+${hashtag}"></span></div>
                                 </div>
                                 <div class="articleHit">
                                     <div th:if="${article.hit != null}" class="articleHit" th:text="'조회수 '+${article.hit}"></div>
