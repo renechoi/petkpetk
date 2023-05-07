@@ -59,11 +59,11 @@ public class ArticleController {
 		Page<ArticleResponse> articles = articleService.searchArticles(searchType, searchValue, pageable)
 			.map(ArticleResponse::from);
 		List<Integer> pageBars = paginationService.getPageBars(pageable.getPageNumber(), articles.getTotalPages());
-
+		List<String> hashtags = articleService.getHashtags();
 		int totalCount = articleService.getArticleTotalCount();
 
-		System.out.println("♥♥♥♥♥♥♥♥♥ totalCount = " + totalCount);
 
+		model.addAttribute("hashtags", hashtags);
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("articles", articles);
 		model.addAttribute("pageBars", pageBars);
@@ -109,12 +109,5 @@ public class ArticleController {
 		return "redirect:/articles";
 	}
 
-	@GetMapping("/hashtags")
-	public String hashtags(Model model) {
-		List<String> hashtags = articleService.getHashtags();
-		model.addAttribute("hashtags", hashtags);
-
-		return "/community/article/hashtags";
-	}
 
 }
