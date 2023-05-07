@@ -1,13 +1,18 @@
 package com.petkpetk.admin.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.petkpetk.admin.dto.AdminAccountDto;
 import com.petkpetk.admin.dto.request.AdminSignupRequest;
+import com.petkpetk.admin.dto.response.AdminAccountWaitingsResponse;
 import com.petkpetk.admin.entity.AdminAccount;
+import com.petkpetk.admin.exception.AdminAccountNotFoundException;
 import com.petkpetk.admin.exception.EmailDuplicateException;
 import com.petkpetk.admin.repository.AdminAccountRepository;
 
@@ -15,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AdminAccountService {
 
 	private final AdminAccountRepository adminAccountRepository;
@@ -37,4 +43,27 @@ public class AdminAccountService {
 	public boolean checkEmailDuplicate(String email) {
 		return !adminAccountRepository.existsByEmail(email);
 	}
+
+	public void approve(Long id) {
+		AdminAccount adminAccount = adminAccountRepository.findById(id)
+			.orElseThrow(AdminAccountNotFoundException::new);
+		adminAccount.approve();
+		// adminAccountRepository.save(adminAccount);
+	}
+
+	public AdminAccountWaitingsResponse getAdminRegisterWaitings() {
+		List<AdminAccountDto> adminAccounts = adminAccountRepository.findAdminAccountByApprovedFalse().stream().map(
+			AdminAccountDto::fromEntity).collect(
+			Collectors.toList());
+
+		return AdminAccountWaitingsResponse.of(adminAccounts);
+
+	}
+
+	public AdminAccountDto getAdminAccount(Long id) {
+		return adminAccountRepository.findById(id).map(AdminAccountDto::fromEntity).orElseThrow(AdminAccountNotFoundException::new);
+	}
 }
+
+
+

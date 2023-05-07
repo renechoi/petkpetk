@@ -57,12 +57,14 @@ public class AdminAccount extends AuditingFields implements Serializable {
 	@Convert(converter = RoleTypeConverter.class)
 	private Set<RoleType> roles = new LinkedHashSet<>();
 
+	private boolean approved;
+
 	public static AdminAccount of(String email, String password, String name, Set<RoleType> roles) {
-		return new AdminAccount(null, email,password,name,roles);
+		return new AdminAccount(null, email,password,name,roles, false);
 	}
 
 	public static AdminAccount of(Long id, String email, String password, String name, Set<RoleType> roles) {
-		return new AdminAccount(id, email,password,name,roles);
+		return new AdminAccount(id, email,password,name,roles, false);
 	}
 
 	public AdminAccount encodePassword(PasswordEncoder passwordEncoder) {
@@ -81,6 +83,10 @@ public class AdminAccount extends AuditingFields implements Serializable {
 			this.createdBy = this.getName();
 			this.modifiedBy = this.getName();
 		}
+	}
+
+	public void approve() { // 승인 메서드 추가
+		this.approved = true;
 	}
 
 	@Override
