@@ -2,10 +2,8 @@ function sortArticles() {
     const sortValue = $('input[name="sort"]:checked').val();
     $.ajax({
         type: 'GET', url: generateSortUrl(sortValue), dataType: 'html', success: function (data) {
-            const articles = $(data).find('tbody').html();
-            const pagination = $(data).find('.pagination').html();
-            $('tbody').html(articles);
-            $('.pagination').html(pagination);
+            const articles = $(data).find('#articleList').html();
+            $('#articleList').html(articles);
         }
     });
 }
@@ -22,10 +20,8 @@ $("#category-apply").on("click", function () {
 
     $.ajax({
         type: "GET", url: generateSearchUrl(searchType.value, searchValue), dataType: "html", success: function (data) {
-            const articles = $(data).find('tbody').html();
-            const pagination = $(data).find('.pagination').html();
-            $('tbody').html(articles);
-            $('.pagination').html(pagination);
+            const articles = $(data).find('#articleList').html();
+            $('#articleList').html(articles);
         }
     });
 });
