@@ -1,5 +1,6 @@
 package com.petkpetk.service.domain.shopping.entity.item;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -16,6 +17,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -45,14 +47,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Table(name = "item")
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 @NoArgsConstructor
+@Table(name = "item", indexes = {@Index(columnList = "item_id"), @Index(columnList = "createdAt"), @Index(columnList = "createdBy")})
 @Entity
 @DynamicUpdate
-public class Item extends AuditingFields {
+public class Item extends AuditingFields implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
