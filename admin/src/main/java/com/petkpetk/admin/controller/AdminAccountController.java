@@ -2,8 +2,14 @@ package com.petkpetk.admin.controller;
 
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,8 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.petkpetk.admin.dto.request.AdminSignupRequest;
 import com.petkpetk.admin.dto.response.AdminAccountResponse;
-import com.petkpetk.admin.dto.response.AdminAccountWaitingsResponse;
-import com.petkpetk.admin.dto.response.UserAccountResponse;
+import com.petkpetk.admin.dto.security.AdminAccountPrincipal;
 import com.petkpetk.admin.service.AdminAccountService;
 import com.petkpetk.admin.service.EmailService;
 
@@ -32,6 +37,17 @@ public class AdminAccountController {
 	@GetMapping("/login")
 	public String admin() {
 		return "admin-account/login";
+	}
+
+	@GetMapping("/logout")
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		if (authentication != null) {
+			new SecurityContextLogoutHandler().logout(request, response, authentication);
+		}
+
+		return "redirect:/login";
 	}
 
 	@GetMapping("/register")
@@ -75,6 +91,25 @@ public class AdminAccountController {
 		return true;
 	}
 
+	@GetMapping("/forgot-password")
+	public String forgotPassword(){
+		return "admin-account/forgot-password";
+	}
+
+	@ResponseBody
+	@PostMapping("/forgot-password")
+	public boolean checkEmailExist(@RequestParam String email){
+		return !adminAccountService.checkEmailDuplicate(email);
+	}
+
+	@ResponseBody
+	@PostMapping("/new-password")
+	public boolean newPassword(String email,
+		@RequestParam String previousPassword, @RequestParam String newPassword){
+
+		return adminAccountService.newPassword(email, previousPassword, newPassword);
+	}
+
 
 	@ResponseBody
 	@PostMapping("/send-verification-code")
@@ -95,6 +130,12 @@ public class AdminAccountController {
 	@PostMapping("/check-email")
 	public boolean checkEmailDuplicate(@RequestParam String email) {
 		return adminAccountService.checkEmailDuplicate(email);
+	}
+
+	@ResponseBody
+	@PostMapping("/check-password")
+	public boolean checkPasswordMatch(@RequestParam String password, @AuthenticationPrincipal AdminAccountPrincipal adminAccountPrincipal ) {
+		return adminAccountService.checkPasswordMatch(password, adminAccountPrincipal);
 	}
 
 }

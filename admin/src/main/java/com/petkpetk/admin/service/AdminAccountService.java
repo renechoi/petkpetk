@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.petkpetk.admin.dto.AdminAccountDto;
 import com.petkpetk.admin.dto.request.AdminSignupRequest;
 import com.petkpetk.admin.dto.response.AdminAccountWaitingsResponse;
+import com.petkpetk.admin.dto.security.AdminAccountPrincipal;
 import com.petkpetk.admin.entity.AdminAccount;
 import com.petkpetk.admin.exception.AdminAccountNotFoundException;
 import com.petkpetk.admin.exception.EmailDuplicateException;
@@ -44,11 +45,24 @@ public class AdminAccountService {
 		return !adminAccountRepository.existsByEmail(email);
 	}
 
+	public boolean newPassword(String email, String previousPassword, String newPassword) {
+		AdminAccount adminAccount = adminAccountRepository.findByEmail(email)
+			.orElseThrow(AdminAccountNotFoundException::new);
+
+		if(!adminAccount.checkPassword(previousPassword, passwordEncoder)){
+			return false;
+		};
+
+		adminAccount.setPassword(newPassword);
+		adminAccount.encodePassword(passwordEncoder);
+
+		return true;
+	}
+
 	public void approve(Long id) {
 		AdminAccount adminAccount = adminAccountRepository.findById(id)
 			.orElseThrow(AdminAccountNotFoundException::new);
 		adminAccount.approve();
-		// adminAccountRepository.save(adminAccount);
 	}
 
 	public AdminAccountWaitingsResponse getAdminRegisterWaitings() {
@@ -57,12 +71,20 @@ public class AdminAccountService {
 			Collectors.toList());
 
 		return AdminAccountWaitingsResponse.of(adminAccounts);
-
 	}
 
 	public AdminAccountDto getAdminAccount(Long id) {
 		return adminAccountRepository.findById(id).map(AdminAccountDto::fromEntity).orElseThrow(AdminAccountNotFoundException::new);
 	}
+
+	public boolean checkPasswordMatch(String password, AdminAccountPrincipal adminAccountPrincipal) {
+		AdminAccount adminAccount = adminAccountRepository.findByEmail(adminAccountPrincipal.getEmail())
+			.orElseThrow(AdminAccountNotFoundException::new);
+
+		return adminAccount.checkPassword(password, passwordEncoder);
+	}
+
+
 }
 
 
