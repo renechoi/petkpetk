@@ -27,7 +27,8 @@ public class ArticleCommentDto {
 		return new ArticleComment(
 			this.getArticleDto().toEntity(),
 			this.getUserAccountDto().toEntity(),
-			this.getContent()
+			this.getContent(),
+			this.getParentCommentId()
 		);
 	}
 

@@ -7,4 +7,5 @@ public class ArticleCommentPostRequest {
 	private String userEmail;
 	private Long articleId;
 	private String content;
+	private Long parentCommentId;
 }

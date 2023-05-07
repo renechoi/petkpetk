@@ -31,6 +31,9 @@ public class ArticleCommentService {
 		ArticleCommentDto articleCommentDto = new ArticleCommentDto();
 		UserAccountDto userAccountDto = userAccountService.searchUserDto(articleCommentPostRequest.getUserEmail());
 		ArticleDto articleDto =articleService.searchArticle(articleCommentPostRequest.getArticleId());
+		if (articleCommentPostRequest.getParentCommentId()!=null) {
+			articleCommentDto.setParentCommentId(articleCommentPostRequest.getParentCommentId());
+		}
 		articleCommentDto.setArticleDto(articleDto);
 		articleCommentDto.setUserAccountDto(userAccountDto);
 		articleCommentDto.setContent(articleCommentPostRequest.getContent());
