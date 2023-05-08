@@ -4,19 +4,14 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
-import java.util.Optional;
 import java.util.Set;
 
-import javax.persistence.EntityExistsException;
-
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.annotation.Import;
@@ -26,11 +21,11 @@ import org.springframework.test.context.ActiveProfiles;
 import com.petkpetk.admin.config.constant.RoleType;
 import com.petkpetk.admin.config.converter.EntityAndDtoConverter;
 import com.petkpetk.admin.config.security.PasswordEncoderConfig;
-import com.petkpetk.admin.dto.AdminAccountDto;
 import com.petkpetk.admin.dto.request.AdminSignupRequest;
 import com.petkpetk.admin.entity.AdminAccount;
 import com.petkpetk.admin.exception.EmailDuplicateException;
 import com.petkpetk.admin.repository.AdminAccountRepository;
+import com.petkpetk.admin.service.admin.AdminAccountService;
 
 @ActiveProfiles("test")
 @DisplayName("AdminAccountService 테스트")
