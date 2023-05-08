@@ -38,7 +38,7 @@
 
     <div th:object="${hashtags}">
         <div id="hashtags" th:remove="all-but-first">
-            <div class="hashTagsBox" th:each="hashtag : ${hashtags}">
+            <div class="hashTagsBox" th:each="hashtag, status : ${hashtags}" th:if="${status.index < 9}">
                 <a class="text-reset"
                    th:text="'#'+${hashtag}"
                    th:href="@{/community/articles(page=0, sort=${param.sort}, searchType=${T(com.petkpetk.service.domain.community.constatnt.SearchType).HASHTAG.name()}, searchValue=${hashtag})}"/>

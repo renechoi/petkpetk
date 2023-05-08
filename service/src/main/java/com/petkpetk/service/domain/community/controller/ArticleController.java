@@ -56,12 +56,15 @@ public class ArticleController {
 				Sort.by("createdAt").descending());
 		}
 
+		if (searchValue != null) {
+			articleService.setHashTahHit(searchValue);
+		}
+
 		Page<ArticleResponse> articles = articleService.searchArticles(searchType, searchValue, pageable)
 			.map(ArticleResponse::from);
 		List<Integer> pageBars = paginationService.getPageBars(pageable.getPageNumber(), articles.getTotalPages());
 		List<String> hashtags = articleService.getHashtags();
 		int totalCount = articleService.getArticleTotalCount();
-
 
 		model.addAttribute("hashtags", hashtags);
 		model.addAttribute("totalCount", totalCount);

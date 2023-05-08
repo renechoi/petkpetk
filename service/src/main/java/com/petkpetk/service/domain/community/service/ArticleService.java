@@ -129,4 +129,10 @@ public class ArticleService {
 	}
 
 	public int getArticleTotalCount() {return  articleRepository.findAll().size();}
+
+	public void setHashTahHit(String searchValue) {
+		Hashtag hashtag = hashtagRepository.findByHashtagName(searchValue);
+		hashtag.setHit(hashtag.getHit()+1L);
+		hashtagRepository.flush();
+	}
 }
