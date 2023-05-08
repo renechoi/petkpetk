@@ -113,7 +113,7 @@
                         </div>
                     </div>
 
-                    <div class="anonymous" sec:authorize="isAuthenticated()">-->
+                    <div class="anonymous" sec:authorize="isAuthenticated()">
                         <div th:if="${item.itemStatus eq T(com.petkpetk.service.domain.shopping.constant.ItemStatus).SELL}"
                              class="text-right lastOrderTurn">
                             <button type="button" class="btn btn-light border border-primary btn-lg getCart"
