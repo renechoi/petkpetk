@@ -1,13 +1,9 @@
 package com.petkpetk.service.domain.shopping.dto.order.request;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
-import com.petkpetk.service.domain.shopping.dto.cart.CartItemDto;
-import com.petkpetk.service.domain.shopping.dto.cart.CartPriceInfo;
+import com.petkpetk.service.domain.shopping.dto.priceInfo.ItemPriceInfo;
 import com.petkpetk.service.domain.shopping.dto.cart.response.CartItemResponse;
 import com.petkpetk.service.domain.shopping.dto.order.CheckoutDto;
 
@@ -19,7 +15,9 @@ import lombok.NoArgsConstructor;
 public class CheckoutRequest {
 
 	private List<CheckoutDto> checkoutDtos;
-	private CartPriceInfo cartPriceInfo = new CartPriceInfo();
+	// private CheckoutDto checkoutDto;
+	private ItemPriceInfo itemPriceInfo = new ItemPriceInfo();
+
 
 	public CheckoutRequest(List<CheckoutDto> checkoutDtos) {
 		this.checkoutDtos = checkoutDtos;
@@ -27,8 +25,20 @@ public class CheckoutRequest {
 
 	public CheckoutRequest(CartItemResponse cartItemResponse){
 		this.checkoutDtos = cartItemResponse.getItems().stream()
-			.map(cartItemDto -> new CheckoutDto(cartItemDto.getId(), cartItemDto.getCartItemCount()))
+			.map(cartItemDto -> CheckoutDto.of(cartItemDto.getId(), cartItemDto.getCartItemCount()))
 			.collect(Collectors.toList());
-		this.cartPriceInfo = cartItemResponse.getCartPriceInfo();
+		this.itemPriceInfo = cartItemResponse.getItemPriceInfo();
 	}
+
+	// // totalPrice 가 50000원 이상이면 무료배송을 적용하도록 하고, 그렇지 않으면 2500원의 배송비를 부과
+	// public Long getDeliveryPrice() {
+	// 	if (totalPrice >= 50000) {
+	// 		return 0L;
+	// 	} else {
+	// 		return 2500L;
+	// 	}
+	// }
+
+	// public Long getPointDiscount() {
+	// }
 }

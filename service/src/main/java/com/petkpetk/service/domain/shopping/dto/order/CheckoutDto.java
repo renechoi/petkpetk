@@ -28,6 +28,8 @@ public class CheckoutDto {
 	private List<ItemImageDto> itemImageDtos = new ArrayList<>();
 	private Long orderCount = 0L;
 
+
+
 	public void update(ItemDto itemDto) {
 		this.itemName =   itemDto.getItemName();
 		this.originalPrice = itemDto.getOriginalPrice();
@@ -38,11 +40,19 @@ public class CheckoutDto {
 		this.itemImageDtos = itemDto.getItemImageDtos();
 	}
 
-	public CheckoutDto(Long itemId) {
+	public static CheckoutDto of(Long id) {
+		return new CheckoutDto(id);
+	}
+
+	public static CheckoutDto of(Long id, Long cartItemCount) {
+		return new CheckoutDto(id, cartItemCount);
+	}
+
+	private CheckoutDto(Long itemId) {
 		this.itemId = itemId;
 	}
 
-	public CheckoutDto(Long itemId, Long orderCount) {
+	private CheckoutDto(Long itemId, Long orderCount) {
 		this.itemId = itemId;
 		this.orderCount = orderCount;
 	}
