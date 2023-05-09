@@ -28,14 +28,12 @@
         </div>
     </div>
     <hr>
-    <div class="articleContent" th:utext="${article.content}"></div>
-
-    <div class="articleImages" th:if="${article.rawImages != null}">
-        <div th:each="image : ${article.rawImages}">
+    <div class="articleContent">
+        <div th:utext="${article.content}"></div>
+        <div class="imagesBox" th:if="${not #lists.isEmpty(article.rawImages)}" th:each="image : ${article.rawImages}">
             <img id="article-image" class="article-image"  th:src="${image.getName()}" alt="image error" >
         </div>
     </div>
-
 
     <div class="hashtags" style="display: flex;">
             <div style="display: flex;" th:each="hashtag : ${article.hashtags}">
