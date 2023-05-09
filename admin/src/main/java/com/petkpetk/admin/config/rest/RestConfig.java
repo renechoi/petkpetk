@@ -7,6 +7,7 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.web.client.RestTemplate;
 
 import com.petkpetk.admin.entity.AdminAccount;
+import com.petkpetk.admin.entity.QnaAnswer;
 import com.petkpetk.admin.entity.ShoppingNotice;
 
 @Configuration
@@ -18,6 +19,8 @@ public class RestConfig {
 			config
 				.exposeIdsFor(AdminAccount.class)
 				.exposeIdsFor(ShoppingNotice.class)
+				.exposeIdsFor(QnaAnswer.class)
+
 		);
 	}
 
