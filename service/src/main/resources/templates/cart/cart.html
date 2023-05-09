@@ -43,7 +43,7 @@
         <br>
         <br>
 
-        <div th:unless="${cartItems.getCartPriceInfo()==null}">
+        <div th:unless="${cartItems.getItemPriceInfo()==null}">
             <table>
                 <thead>
                 <tr>
@@ -55,16 +55,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                <td th:text="${cartItems.getCartPriceInfo().getTotalPrice()}"></td>
-                <td th:text="${cartItems.getCartPriceInfo().getDeliveryPrice()}"></td>
-                <td th:text="${cartItems.getCartPriceInfo().getTotalDiscountPrice()}"></td>
-                <td th:text="${cartItems.getCartPriceInfo().getPaymentPrice()}"></td>
+                <td th:text="${cartItems.getItemPriceInfo().getTotalPrice()}"></td>
+                <td th:text="${cartItems.getItemPriceInfo().getDeliveryPrice()}"></td>
+                <td th:text="${cartItems.getItemPriceInfo().getItemTotalDiscount()}"></td>
+                <td th:text="${cartItems.getItemPriceInfo().getPaymentPrice()}"></td>
                 </tbody>
             </table>
-            <input type="hidden"  th:field="*{order.cartPriceInfo.totalPrice}">
-            <input type="hidden"  th:field="*{order.cartPriceInfo.deliveryPrice}">
-            <input type="hidden"  th:field="*{order.cartPriceInfo.paymentPrice}">
-            <input type="hidden"  th:field="*{order.cartPriceInfo.totalDiscountPrice}">
+            <input type="hidden"  th:field="*{order.itemPriceInfo.totalPrice}">
+            <input type="hidden"  th:field="*{order.itemPriceInfo.deliveryPrice}">
+            <input type="hidden"  th:field="*{order.itemPriceInfo.paymentPrice}">
+            <input type="hidden"  th:field="*{order.itemPriceInfo.itemTotalDiscount}">
         </div>
 
 
