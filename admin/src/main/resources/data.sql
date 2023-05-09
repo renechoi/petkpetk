@@ -25,3 +25,28 @@ values
 (now(),'admin@admin.com','N',now(),'admin@admin.com', '11번째 공지사항입니다', '123'),
 (now(),'admin@admin.com','N',now(),'admin@admin.com', '12번째 공지사항입니다', '123');
 
+
+
+insert into faq_category(created_at, created_by, deleted_yn, modified_at, modified_by, name, description)
+values
+    (now(),'admin@admin.com','N',now(),'admin@admin.com','INQUIRY','이용문의'),
+    (now(),'admin@admin.com','N',now(),'admin@admin.com','PAYMENT','결재/영수증'),
+    (now(),'admin@admin.com','N',now(),'admin@admin.com','DELIVERY','배송 관련'),
+    (now(),'admin@admin.com','N',now(),'admin@admin.com','COUPON/POINT','쿠폰/포인트'),
+    (now(),'admin@admin.com','N',now(),'admin@admin.com','CANCEL','취소/환불'),
+    (now(),'admin@admin.com','N',now(),'admin@admin.com','RETURN','반품/교환'),
+    (now(),'admin@admin.com','N',now(),'admin@admin.com','USER','로그인/회원정보'),
+    (now(),'admin@admin.com','N',now(),'admin@admin.com','OTHERS','서비스/기타');
+
+insert into faq( created_at, created_by, deleted_yn, modified_at, modified_by,  title, content, faq_category_id)
+values
+    (now(),'admin@admin.com','N',now(),'admin@admin.com','쇼핑몰 이용 어떻게 하나요?', '이용문의 내용 1', 1),
+    (now(),'admin@admin.com','N',now(),'admin@admin.com','커뮤니티 이용 어떻게 하나요?', '이용문의 내용 2', 1),
+    (now(),'admin@admin.com','N',now(),'admin@admin.com','결제 어떻게 하나요?', '결제문의 내용 1', 2),
+    (now(),'admin@admin.com','N',now(),'admin@admin.com','주문 내역 확인 어떻게 하나요?', '결제문의 내용 2', 2),
+    (now(),'admin@admin.com','N',now(),'admin@admin.com','배송비는 얼마인가요?', '배송문의 내용 1', 3),
+    (now(),'admin@admin.com','N',now(),'admin@admin.com','쿠폰 어떻게 쓰나요?', '쿠폰문의 내용 1', 4),
+    (now(),'admin@admin.com','N',now(),'admin@admin.com','주문 취소는 어떻게 하나요?', '취소문의 내용 1', 5),
+    (now(),'admin@admin.com','N',now(),'admin@admin.com','반품 어떻게 하나요?', '반품문의 내용 1', 6),
+    (now(),'admin@admin.com','N',now(),'admin@admin.com','회원탈퇴 후 재가입이 가능한가요?', '회원문의 내용 1', 7),
+    (now(),'admin@admin.com','N',now(),'admin@admin.com','인기 게시글 기준이 무엇인가요?', '서비스 기타 문의 내용 1', 8);
