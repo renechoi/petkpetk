@@ -57,7 +57,7 @@ public class ItemController {
 	@GetMapping("/new")
 	public String registerItem(Model model) {
 		model.addAttribute("item", new ItemRegisterRequest());
-		return "/item/itemApply";
+		return "item/itemApply";
 	}
 
 	// 상품 등록

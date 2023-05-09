@@ -37,7 +37,7 @@ public class ImageLocalRepository<T extends PetkpetkImage> {
 	}
 
 	public void delete(T petkpetkImage) {
-		if (petkpetkImage.getOriginalName().equals("defaultProfile.jpeg")){
+		if (petkpetkImage.getOriginalName().equals("defaultProfile.png")){
 			return;
 		}
 

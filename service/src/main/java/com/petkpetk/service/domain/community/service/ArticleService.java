@@ -132,7 +132,10 @@ public class ArticleService {
 
 	public void setHashTahHit(String searchValue) {
 		Hashtag hashtag = hashtagRepository.findByHashtagName(searchValue);
-		hashtag.setHit(hashtag.getHit()+1L);
-		hashtagRepository.flush();
+
+		if (hashtag != null) {
+			hashtag.setHit(hashtag.getHit()+1L);
+			hashtagRepository.flush();
+		}
 	}
 }

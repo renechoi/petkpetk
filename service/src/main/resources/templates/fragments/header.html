@@ -43,7 +43,8 @@
                     <li >
                             <a th:href="@{/user/my-page/information}">
                                 <div class="profile Pone" onmouseover="showMenu()" onmouseleave="hideMenu()">
-                                    <img class="userProfile" th:src="@{/images/pinkMoala.png}">
+                                    <img class="userProfile" th:if="${#authentication.getPrincipal().getProfileImage.imageUrl != null}" th:src="${#authentication.getPrincipal().getProfileImage.imageUrl}">
+                                    <img class="userProfile" th:unless="${#authentication.getPrincipal().getProfileImage.imageUrl != null}" th:src="@{/images/basicProfile.png}">
                                     <div id="topHoverMenu" class="topHoverMenu">
                                         <img class="ladder" th:src="@{/images/ladder.png}">
                                         <ul class="menuBox">
@@ -66,7 +67,8 @@
                     <li >
                             <a  th:href="@{/seller/my-page/information}">
                                 <div class="profile Pone" onmouseover="showMenu()" onmouseleave="hideMenu()">
-                                    <img class="userProfile" th:src="@{/images/pinkMoala.png}">
+                                    <img class="userProfile" th:if="${#authentication.getPrincipal().getProfileImage.imageUrl != null}" th:src="${#authentication.getPrincipal().getProfileImage.imageUrl}">
+                                    <img class="userProfile" th:unless="${#authentication.getPrincipal().getProfileImage.imageUrl != null}" th:src="@{/images/basicProfile.png}">
                                     <div id="topHoverMenu" class="topHoverMenu">
                                         <img class="ladder" th:src="@{/images/ladder.png}">
                                         <ul class="menuBox">
@@ -92,7 +94,7 @@
                 <ul class="mainMenu">
                     <li><a th:href="@{/}">쇼핑</a></li>
                     <li><a th:href="@{/community/articles}">커뮤니티</a></li>
-                    <li><a>ABOUT</a></li>
+                    <li><a th:href="@{/about/notice}">ABOUT</a></li>
                 </ul>
             </nav>
         </div>
@@ -102,7 +104,7 @@
                 <ul class="mainMenu">
                     <li><a th:href="@{/}">쇼핑</a></li>
                     <li><a th:href="@{/community/articles}">커뮤니티</a></li>
-                    <li><a>ABOUT</a></li>
+                    <li><a th:href="@{/about/notice}">ABOUT</a></li>
                 </ul>
             </nav>
         </div>
@@ -117,7 +119,7 @@
             <ul id="midi">
                 <a th:href="@{/}"><li>쇼핑 <span>Shopping</span></li></a>
                 <a th:href="@{/community/articles}"><li>커뮤니티 <span>Community</span></li></a>
-                <a><li>ABOUT</li></a>
+                <a th:href="@{/about/notice}"><li>ABOUT</li></a>
                 <a><li>QnA</li></a>
                 <div class="line"></div>
                 <!------------------------------ if user == null ------------------------------>

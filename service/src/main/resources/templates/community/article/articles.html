@@ -76,13 +76,14 @@
             <div style="width: 31%" id="articleLine1">
                 <div th:each="article, status : ${articles}" th:with="num = ${status.index+1}">
                     <div th:if="${num%3 == 1}" class="oneArticleBox">
+                        <input type="hidden" class="articles" th:value="${article.createdAt}">
                         <a th:href="@{/community/articles/__${article.id}__}">
                             <img class="articleFirstImage" th:if="${not #lists.isEmpty(article.rawImages)}" th:src="${article.rawImages.get(0).getName()}">
                             <div class="articleContentBox">
                                 <div>
                                     <div class="userInfoBox">
                                         <div class="userNickName">닉네임</div>
-                                        <div class="registerTime" th:text="${#temporals.format(article.createdAt,'yyyy-M-d HH:mm')}"></div>
+                                        <div class="registerTime" th:id="'createdAt'+${num}"></div>
                                     </div>
                                     <div style="display: flex; justify-content: space-between;">
                                         <div class="articleTitle" th:text="${article.title}"></div>
@@ -107,12 +108,13 @@
             <div style="width: 31%" id="articleLine2">
                 <div th:each="article, status : ${articles}" th:with="num = ${status.index+1}">
                     <div th:if="${num%3 == 2}" class="oneArticleBox">
+                        <input type="hidden" class="articles" th:value="${article.createdAt}">
                         <a th:href="@{/community/articles/__${article.id}__}">
                             <img class="articleFirstImage" th:if="${not #lists.isEmpty(article.rawImages)}" th:src="${article.rawImages.get(0).getName()}">
                             <div class="articleContentBox">
                                 <div class="userInfoBox">
                                     <div class="userNickName">닉네임</div>
-                                    <div class="registerTime" th:text="${#temporals.format(article.createdAt,'yyyy-M-d HH:mm')}"></div>
+                                    <div class="registerTime" th:id="'createdAt'+${num}"></div>
                                 </div>
                                 <div>
                                     <div style="display: flex; justify-content: space-between;">
@@ -138,13 +140,14 @@
             <div style="width: 31%" id="articleLine3">
                 <div th:each="article, status : ${articles}" th:with="num = ${status.index+1}" >
                     <div th:if="${num%3 == 0}" class="oneArticleBox">
+                        <input type="hidden" class="articles" th:value="${article.createdAt}">
                         <a th:href="@{/community/articles/__${article.id}__}">
                             <img class="articleFirstImage" th:if="${not #lists.isEmpty(article.rawImages)}" th:src="${article.rawImages.get(0).getName()}">
                             <div class="articleContentBox">
                                 <div>
                                     <div class="userInfoBox">
                                         <div class="userNickName">닉네임</div>
-                                        <div class="registerTime" th:text="${#temporals.format(article.createdAt,'yyyy-M-d HH:mm')}"></div>
+                                        <div class="registerTime" th:id="'createdAt'+${num}"></div>
                                     </div>
                                     <div style="display: flex; justify-content: space-between;">
                                         <div class="articleTitle" th:text="${article.title}"></div>
