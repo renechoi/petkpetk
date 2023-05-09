@@ -17,4 +17,6 @@ public class ArticlePostRequest {
 	private String rawHashtags;
 	private List<MultipartFile> rawImages = new ArrayList<>();
 	private CategoryType categoryType;
+	private Long hit = 0L;
+
 }

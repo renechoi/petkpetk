@@ -60,7 +60,7 @@ public class ArticleDto {
 	public Article toEntity(UserAccount userAccount, List<ArticleImage> articleImages) {
 		Article article = EntityAndDtoConverter.convertToEntity(this, Article.class);
 		article.setUserAccount(userAccount);
-		article.addImages(articleImages);
+		if(articleImages!=null) article.addImages(articleImages);
 		article.addHashtags(this.getRawHashtags());
 		return article;
 	}

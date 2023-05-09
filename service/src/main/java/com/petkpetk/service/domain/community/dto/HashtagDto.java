@@ -19,6 +19,7 @@ public class HashtagDto {
 	private Long id;
 	private String hashtagName;
 	private Set<Article> articles = new LinkedHashSet<>();
+	private Long hit;
 
 	public static HashtagDto from(Hashtag hashtag) {
 		return EntityAndDtoConverter.convertToDto(hashtag, HashtagDto.class);
