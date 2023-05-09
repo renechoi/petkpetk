@@ -5,7 +5,7 @@
       layout:decorate="~{layout/layout}">
 
 <th:block layout:fragment="css">
-    <link th:href="@{/css/article.css}" rel="stylesheet">
+    <link th:href="@{/css/article/article.css}" rel="stylesheet">
     <link th:href="@{/css/NoticeSearch.css}" rel="stylesheet">
 </th:block>
 
@@ -35,6 +35,17 @@
 
 <div layout:fragment="content" id="articleContainer">
     <input type="hidden" id="totalCount" th:value="${totalCount}">
+
+    <div th:object="${hashtags}">
+        <div id="hashtags" th:remove="all-but-first">
+            <div class="hashTagsBox" th:each="hashtag, status : ${hashtags}" th:if="${status.index < 9}">
+                <a class="text-reset"
+                   th:text="'#'+${hashtag}"
+                   th:href="@{/community/articles(page=0, sort=${param.sort}, searchType=${T(com.petkpetk.service.domain.community.constatnt.SearchType).HASHTAG.name()}, searchValue=${hashtag})}"/>
+            </div>
+        </div>
+    </div>
+
     <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
         <div id="categoryBox" style="display: flex;">
             <div th:each="category : ${T(com.petkpetk.service.common.CategoryType).values()}" >
@@ -61,61 +72,94 @@
         </div>
     </div>
 
-    <div style="width: 100%; display: flex; flex-wrap: wrap; justify-content: space-around;">
-            <div style="width: 32%" id="articleLine1">
+    <div id="articleList" style="width: 100%; display: flex; flex-wrap: wrap; justify-content: space-around;">
+            <div style="width: 31%" id="articleLine1">
                 <div th:each="article, status : ${articles}" th:with="num = ${status.index+1}">
                     <div th:if="${num%3 == 1}" class="oneArticleBox">
                         <a th:href="@{/community/articles/__${article.id}__}">
                             <img class="articleFirstImage" th:if="${not #lists.isEmpty(article.rawImages)}" th:src="${article.rawImages.get(0).getName()}">
                             <div class="articleContentBox">
                                 <div>
-                                    <div class="articleTitle" th:text="${article.title}"></div>
+                                    <div class="userInfoBox">
+                                        <div class="userNickName">닉네임</div>
+                                        <div class="registerTime" th:text="${#temporals.format(article.createdAt,'yyyy-M-d HH:mm')}"></div>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <div class="articleTitle" th:text="${article.title}"></div>
+                                        <div class="articleLikes">♥234</div>
+                                    </div>
                                     <div class="articleContent">
                                         <div class="contentDetail" th:text="${article.content}"></div>
                                     </div>
                                 </div>
-                                <div class="hashTagBox" th:if="${not #lists.isEmpty(article.hashtags)}">
-                                    <span class="hashTag" th:each="hashtag : ${article.hashtags}" th:text="${hashtag}"></span>
+                                <div class="hashTagBox" th:if="${not #lists.isEmpty(article.hashtags)}" style="display: flex; flex-wrap: wrap;">
+                                    <div class="hashTaging" th:each="hashtag : ${article.hashtags}"><span class="hashTag"  th:text="'#'+${hashtag}"></span></div>
+                                </div>
+                                <div class="articleHit">
+                                    <div th:if="${article.hit != null}" class="articleHit" th:text="'조회수 '+${article.hit}"></div>
+                                    <div th:unless="${article.hit != null}" class="articleHit">조회수 0</div>
                                 </div>
                             </div>
                         </a>
                     </div>
                 </div>
             </div>
-            <div style="width: 32%" id="articleLine2">
+            <div style="width: 31%" id="articleLine2">
                 <div th:each="article, status : ${articles}" th:with="num = ${status.index+1}">
                     <div th:if="${num%3 == 2}" class="oneArticleBox">
                         <a th:href="@{/community/articles/__${article.id}__}">
                             <img class="articleFirstImage" th:if="${not #lists.isEmpty(article.rawImages)}" th:src="${article.rawImages.get(0).getName()}">
                             <div class="articleContentBox">
+                                <div class="userInfoBox">
+                                    <div class="userNickName">닉네임</div>
+                                    <div class="registerTime" th:text="${#temporals.format(article.createdAt,'yyyy-M-d HH:mm')}"></div>
+                                </div>
                                 <div>
-                                    <div class="articleTitle" th:text="${article.title}"></div>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <div class="articleTitle" th:text="${article.title}"></div>
+                                            <div class="articleLikes">♥444</div>
+                                    </div>
                                     <div class="articleContent">
                                         <div class="contentDetail" th:text="${article.content}"></div>
                                     </div>
                                 </div>
-                                <div class="hashTagBox" th:if="${not #lists.isEmpty(article.hashtags)}">
-                                    <span class="hashTag" th:each="hashtag : ${article.hashtags}" th:text="${hashtag}"></span>
+                                <div class="hashTagBox" th:if="${not #lists.isEmpty(article.hashtags)}" style="display: flex; flex-wrap: wrap;">
+                                    <div class="hashTaging" th:each="hashtag : ${article.hashtags}"><span class="hashTag"  th:text="'#'+${hashtag}"></span></div>
+                                </div>
+                                <div class="articleHit">
+                                    <div th:if="${article.hit != null}" class="articleHit" th:text="'조회수 '+${article.hit}"></div>
+                                    <div th:unless="${article.hit != null}" class="articleHit">조회수 0</div>
                                 </div>
                             </div>
                         </a>
                     </div>
                 </div>
             </div>
-            <div style="width: 32%" id="articleLine3">
+            <div style="width: 31%" id="articleLine3">
                 <div th:each="article, status : ${articles}" th:with="num = ${status.index+1}" >
                     <div th:if="${num%3 == 0}" class="oneArticleBox">
                         <a th:href="@{/community/articles/__${article.id}__}">
                             <img class="articleFirstImage" th:if="${not #lists.isEmpty(article.rawImages)}" th:src="${article.rawImages.get(0).getName()}">
                             <div class="articleContentBox">
                                 <div>
-                                    <div class="articleTitle" th:text="${article.title}"></div>
+                                    <div class="userInfoBox">
+                                        <div class="userNickName">닉네임</div>
+                                        <div class="registerTime" th:text="${#temporals.format(article.createdAt,'yyyy-M-d HH:mm')}"></div>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <div class="articleTitle" th:text="${article.title}"></div>
+                                            <div class="articleLikes">♥555</div>
+                                    </div>
                                     <div class="articleContent">
                                         <div class="contentDetail" th:text="${article.content}"></div>
                                     </div>
                                 </div>
-                                <div class="hashTagBox" th:if="${not #lists.isEmpty(article.hashtags)}">
-                                    <span class="hashTag" th:each="hashtag : ${article.hashtags}" th:text="${hashtag}"></span>
+                                <div class="hashTagBox" th:if="${not #lists.isEmpty(article.hashtags)}" style="display: flex; flex-wrap: wrap;">
+                                    <div class="hashTaging" th:each="hashtag : ${article.hashtags}"><span class="hashTag"  th:text="'#'+${hashtag}"></span></div>
+                                </div>
+                                <div class="articleHit">
+                                    <div th:if="${article.hit != null}" class="articleHit" th:text="'조회수 '+${article.hit}"></div>
+                                    <div th:unless="${article.hit != null}" class="articleHit">조회수 0</div>
                                 </div>
                             </div>
                         </a>
@@ -135,7 +179,7 @@
     </div>
 </div>
 <th:block layout:fragment="script">
-    <script th:inline="javascript" th:src="@{/js/articles.js}"></script>
+    <script th:inline="javascript" th:src="@{/js/article/articles.js}"></script>
 </th:block>
 </html>
 

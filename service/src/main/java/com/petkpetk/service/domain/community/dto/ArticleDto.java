@@ -68,4 +68,9 @@ public class ArticleDto {
 	public static ArticleDto fromEntity(Article article) {
 		return EntityAndDtoConverter.convertToDto(article, ArticleDto.class);
 	}
+
+	public Article toEntity() {
+		Article article = EntityAndDtoConverter.convertToEntity(this, Article.class);
+		return article;
+	}
 }
