@@ -5,16 +5,18 @@
     </div>
     <div class="card-body">
         <div style="display: flex; justify-content: flex-end">
-            <a href="/management/faq/register">
-            <button> FAQ 작성</button>
-            </a>
+            <div >
+                <a href="/management/faq/register">
+                    <button class="btn btn-outline-secondary"> FAQ 작성</button>
+                </a>
+            </div>
+            <div class="faq-button" style="margin-left: 15px">
+                <a>
+                    <button class="btn btn-outline-secondary" onclick="registerCategory()"> 카테고리 등록</button>
+                </a>
+            </div>
         </div>
-        <br>
-        <div style="display: flex; justify-content: flex-end">
-        <a>
-            <button onclick="registerCategory()"> 카테고리 등록</button>
-        </a>
-    </div>
+
 
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

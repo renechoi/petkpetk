@@ -7,6 +7,7 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.web.client.RestTemplate;
 
 import com.petkpetk.service.domain.user.entity.UserAccount;
+import com.petkpetk.service.domain.user.entity.UserAsk;
 
 @Configuration
 public class DataRestConfig {
@@ -16,6 +17,7 @@ public class DataRestConfig {
         return RepositoryRestConfigurer.withConfig((config, cors) ->
                 config
                         .exposeIdsFor(UserAccount.class)
+                    .exposeIdsFor(UserAsk.class)
         );
     }
 
