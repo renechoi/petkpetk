@@ -50,8 +50,7 @@ public class UserAsk extends AuditingFields {
 	private String phoneNumber;
 	private String agree;
 
-	@Enumerated(EnumType.STRING)
-	private QnACategory qnACategory;
+	private String qnaCategory;
 
 	@Enumerated(EnumType.STRING)
 	private AnswerStatus answerStatus = AnswerStatus.ANSWERING; //Todo:: 관리자가 답변하면 AnswerStatus.ANSWERED 로 바꿔줘야한다.

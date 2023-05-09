@@ -50,3 +50,13 @@ values
     (now(),'admin@admin.com','N',now(),'admin@admin.com','반품 어떻게 하나요?', '반품문의 내용 1', 6),
     (now(),'admin@admin.com','N',now(),'admin@admin.com','회원탈퇴 후 재가입이 가능한가요?', '회원문의 내용 1', 7),
     (now(),'admin@admin.com','N',now(),'admin@admin.com','인기 게시글 기준이 무엇인가요?', '서비스 기타 문의 내용 1', 8);
+
+
+
+insert into qna_answer(created_at, created_by, deleted_yn, modified_at, modified_by, answer, user_ask_id) VALUES
+(now(),'admin@admin.com','N',now(),'admin@admin.com', '이 글은 답변 내용입니다.', 1),
+(now(),'admin@admin.com','N',now(),'admin@admin.com', '이 글은 답변 내용입니다.', 2),
+(now(),'admin@admin.com','N',now(),'admin@admin.com', '이 글은 답변 내용입니다.', 3),
+(now(),'admin@admin.com','N',now(),'admin@admin.com', '이 글은 답변 내용입니다.', 4),
+(now(),'admin@admin.com','N',now(),'admin@admin.com', '이 글은 답변 내용입니다.', 5),
+(now(),'admin@admin.com','N',now(),'admin@admin.com', '이 글은 답변 내용입니다.', 6);

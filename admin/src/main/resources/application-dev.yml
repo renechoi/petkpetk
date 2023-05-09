@@ -41,6 +41,11 @@ spring:
     init:
       mode: always
 
+  data:
+    rest:
+      base-path: /api
+      detection-strategy: all
+
   mail:
     host: smtp.gmail.com
     port: 587
