@@ -17,6 +17,12 @@ public class LocalProperty {
 	@Value("${itemImageLocation}")
 	private String itemLocalStorage;
 
+	@Value("${kakaoPaymentTestCid}")
+	private String kakaoPaymentCid;
+
+	@Value("${kakaoPaymentAdminKey}")
+	private String kakaoPaymentAdminKey;
+
 	public static LocalProperty getInstance() {
 		return ApplicationContextProvider.getApplicationContext().getBean(LocalProperty.class);
 	}

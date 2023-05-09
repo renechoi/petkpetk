@@ -15,6 +15,7 @@
 <p th:text ="${#authentication.isAuthenticated()}"></p>
 <p th:text ="${#authentication.getPrincipal()}"></p>
 <p th:text ="${#authentication.principal}"></p>
+<img th:src="${#authentication.getPrincipal().getProfileImage.imageUrl}">
 
 
 <div th:if="${#authentication.principal}">

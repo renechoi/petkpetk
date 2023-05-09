@@ -99,3 +99,7 @@ spring:
 
 itemImageLocation: ${LOCAL_ITEM_IMAGE_STORAGE}
 uploadPath: ${LOCAL_ITEM_IMAGE_UPLOAD_PATH}
+
+
+kakaoPaymentTestCid: "TC0ONETIME"
+kakaoPaymentAdminKey: ${KAKAO_PAYMENT_ADMIN_KEY}

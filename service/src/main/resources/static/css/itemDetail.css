@@ -147,6 +147,7 @@ input.removeImage:hover {
 }
 
 .itemDetailName {
+    text-align: left;
     cursor: default;
     font-size: 26px;
 }

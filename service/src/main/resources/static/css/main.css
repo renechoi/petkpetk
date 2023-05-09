@@ -73,11 +73,7 @@ a .productOneBlock:hover {
     padding: 2px 10px;
 }
 
-.productName {
-    padding: 2px 10px 2px 10px;
-    position: relative;
-    top: 5px;
-}
+
 
 
 
@@ -101,12 +97,21 @@ a .productOneBlock:hover {
     bottom: 2px;
 }
 
+.itemTitle {
+    padding: 4px 10px;
+    max-height: 53px;
+}
+
 .productName {
-    text-underline: #886860;
-    height: 53px;
     color: #3A1D1D;
-    padding-top: 8px;
     font-size: 18px;
+    position: relative;
+    top: 5px;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    word-break: break-all;
     overflow: hidden;
     text-overflow: ellipsis;
 }

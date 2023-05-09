@@ -19,13 +19,15 @@ $("#category-apply").on("click", function () {
     const searchType = document.getElementById("category-search-type");
 
     $.ajax({
-        type: "GET", url: generateSearchUrl(searchType.value, searchValue), dataType: "html", success: function (data) {
+        type: "GET",
+        url: generateSearchUrl(searchType.value, searchValue),
+        dataType: "html",
+        success: function (data) {
             const articles = $(data).find('#articleList').html();
             $('#articleList').html(articles);
         }
     });
 });
-
 
 
 function generateSortUrl(sortValue) {
@@ -44,16 +46,17 @@ function generateSearchUrl(searchType, searchValue) {
 }
 
 var num = 1;
+
 function getMoreArticles() {
     $.ajax({
-        url : "/api/articles",
+        url: "/api/articles",
         type: "post",
-        data : {
-            page : num,
-            searchType : $("#searchType").val(),
-            searchValue : $("#searchValue").val()
+        data: {
+            page: num,
+            searchType: $("#searchType").val(),
+            searchValue: $("#searchValue").val()
         },
-        dataType : "json",
+        dataType: "json",
         success: function (result) {
             console.log("가져옴");
             var article = result['article'];
@@ -61,85 +64,57 @@ function getMoreArticles() {
 
 
             for (let i = 0; i < article.length; i++) {
-                console.log(article[i]);
-                const date = new Date(article[i].createdAt);
-                const year = date.getFullYear();
-                const month = date.getMonth() + 1;
-                const day = date.getDate();
-                const hour = date.getHours();
-                const minute = date.getMinutes();
+                const articleDateTime = moment(article[i].createdAt);
+                const articleDays = moment().diff(articleDateTime, 'days');
 
-                const createdAt = `${year}-${month}-${day} ${hour}:${minute}`;
+                let dateDiffText = '';
+
+                if (articleDays === 0) {
+                    // 오늘 날짜인 경우
+                    dateDiffText = '오늘';
+                } else if (articleDays === 1) {
+                    // 1일 전인 경우
+                    dateDiffText = '1일 전';
+                } else if (articleDays <= 3) {
+                    // 2일 전 ~ 3일 전인 경우
+                    dateDiffText = `${articleDays}일 전`;
+                } else if (articleDays < 365) {
+                    // 1년 이내인 경우
+                    dateDiffText = `${articleDateTime.format('M월 D일')}`;
+                } else {
+                    // 1년 이상인 경우
+                    dateDiffText = `${articleDateTime.format('YYYY년 M월 D일')}`;
+                }
+                let createdAt = dateDiffText;
 
                 if (i % 3 == 0) {
 
                     var content = "";
-                    content += "<div><div class='oneArticleBox'><a href='/community/articles/"+article[i].id+"'>";
+                    content += "<div><div class='oneArticleBox'><a href='/community/articles/" + article[i].id + "'>";
 
                     if (article[i].rawImages != null) {
-                        content+="<img class='articleFirstImage' src='"+article[i].rawImages[0]+"'>";
+                        content += "<img class='articleFirstImage' src='" + article[i].rawImages[0] + "'>";
                     }
 
-                    content += "<div class='articleContentBox'>"+
-                                        "<div>" +
-                                            "<div class='userInfoBox'>" +
-                                                "<div class='userNickName'>닉네임</div>"+
-                                                "<div class='registerTime'>"+createdAt+"</div>"+
-                                            "</div>"+
-                                            "<div style='display: flex; justify-content: space-between;'>" +
-                                                "<div class='articleTitle'>"+article[i].title+"</div>"+
-                                                "<div class='articleLikes'>♥546</div>"+
-                                            "</div>"+
-                                            "<div class='articleContent'>" +
-                                                "<div class='contentDetail'>"+article[i].content+"</div>"+
-                                            "</div>"+
-                                        "</div>";
-
-                    if (article[i].hashtags != null) {
-                        content += "<div class='hashTagBox'>";
-                        for (let j = 0; j < article[i].hashtags.length; j++) {
-                            content += "<div class='hashTaging'><span class='hashTag'>"+article[i].hashtags[j]+"</span></div>";
-                        }
-                        content += "</div>";
-                    }
-                    if (article[i].hit == null) {
-                        article[i].hit = 0;
-                    }
-
-                    content += "<div class='articleHit'>조회수 "+article[i].hit+"</div>";
-
-                    content += "</div></a></div></div>";
-
-
-
-                    $("#articleLine1").append(content);
-                }else if (i % 3 == 1) {
-                    var content = "";
-                    content += "<div><div class='oneArticleBox'><a href='/community/articles/"+article[i].id+"'>";
-
-                    if (article[i].rawImages != null) {
-                        content+="<img class='articleFirstImage' src='"+article[i].rawImages[0]+"'>";
-                    }
-
-                    content += "<div class='articleContentBox'>"+
+                    content += "<div class='articleContentBox'>" +
                         "<div>" +
                         "<div class='userInfoBox'>" +
-                        "<div class='userNickName'>닉네임</div>"+
-                        "<div class='registerTime'>"+createdAt+"</div>"+
-                        "</div>"+
+                        "<div class='userNickName'>닉네임</div>" +
+                        "<div class='registerTime'>" + createdAt + "</div>" +
+                        "</div>" +
                         "<div style='display: flex; justify-content: space-between;'>" +
-                        "<div class='articleTitle'>"+article[i].title+"</div>"+
-                        "<div class='articleLikes'>♥546</div>"+
-                        "</div>"+
+                        "<div class='articleTitle'>" + article[i].title + "</div>" +
+                        "<div class='articleLikes'>♥546</div>" +
+                        "</div>" +
                         "<div class='articleContent'>" +
-                        "<div class='contentDetail'>"+article[i].content+"</div>"+
-                        "</div>"+
+                        "<div class='contentDetail'>" + article[i].content + "</div>" +
+                        "</div>" +
                         "</div>";
 
                     if (article[i].hashtags != null) {
                         content += "<div class='hashTagBox'>";
                         for (let j = 0; j < article[i].hashtags.length; j++) {
-                            content += "<div class='hashTaging'><span class='hashTag'>"+article[i].hashtags[j]+"</span></div>";
+                            content += "<div class='hashTaging'><span class='hashTag'>" + article[i].hashtags[j] + "</span></div>";
                         }
                         content += "</div>";
                     }
@@ -147,39 +122,79 @@ function getMoreArticles() {
                         article[i].hit = 0;
                     }
 
-                    content += "<div class='articleHit'>조회수 "+article[i].hit+"</div>";
+                    content += "<div class='articleHit'>조회수 " + article[i].hit + "</div>";
+
+                    content += "</div></a></div></div>";
+
+
+                    $("#articleLine1").append(content);
+                } else if (i % 3 == 1) {
+                    var content = "";
+                    content += "<div><div class='oneArticleBox'><a href='/community/articles/" + article[i].id + "'>";
+
+                    if (article[i].rawImages != null) {
+                        content += "<img class='articleFirstImage' src='" + article[i].rawImages[0] + "'>";
+                    }
+
+                    content += "<div class='articleContentBox'>" +
+                        "<div>" +
+                        "<div class='userInfoBox'>" +
+                        "<div class='userNickName'>닉네임</div>" +
+                        "<div class='registerTime'>" + createdAt + "</div>" +
+                        "</div>" +
+                        "<div style='display: flex; justify-content: space-between;'>" +
+                        "<div class='articleTitle'>" + article[i].title + "</div>" +
+                        "<div class='articleLikes'>♥546</div>" +
+                        "</div>" +
+                        "<div class='articleContent'>" +
+                        "<div class='contentDetail'>" + article[i].content + "</div>" +
+                        "</div>" +
+                        "</div>";
+
+                    if (article[i].hashtags != null) {
+                        content += "<div class='hashTagBox'>";
+                        for (let j = 0; j < article[i].hashtags.length; j++) {
+                            content += "<div class='hashTaging'><span class='hashTag'>" + article[i].hashtags[j] + "</span></div>";
+                        }
+                        content += "</div>";
+                    }
+                    if (article[i].hit == null) {
+                        article[i].hit = 0;
+                    }
+
+                    content += "<div class='articleHit'>조회수 " + article[i].hit + "</div>";
 
                     content += "</div></a></div></div>";
 
                     $("#articleLine2").append(content);
 
-                } else if(i % 3 == 2) {
+                } else if (i % 3 == 2) {
                     var content = "";
-                    content += "<div><div class='oneArticleBox'><a href='/community/articles/"+article[i].id+"'>";
+                    content += "<div><div class='oneArticleBox'><a href='/community/articles/" + article[i].id + "'>";
 
                     if (article[i].rawImages != null) {
-                        content+="<img class='articleFirstImage' src='"+article[i].rawImages[0]+"'>";
+                        content += "<img class='articleFirstImage' src='" + article[i].rawImages[0] + "'>";
                     }
 
-                    content += "<div class='articleContentBox'>"+
+                    content += "<div class='articleContentBox'>" +
                         "<div>" +
                         "<div class='userInfoBox'>" +
-                        "<div class='userNickName'>닉네임</div>"+
-                        "<div class='registerTime'>"+createdAt+"</div>"+
-                        "</div>"+
+                        "<div class='userNickName'>닉네임</div>" +
+                        "<div class='registerTime'>" + createdAt + "</div>" +
+                        "</div>" +
                         "<div style='display: flex; justify-content: space-between;'>" +
-                        "<div class='articleTitle'>"+article[i].title+"</div>"+
-                        "<div class='articleLikes'>♥546</div>"+
-                        "</div>"+
+                        "<div class='articleTitle'>" + article[i].title + "</div>" +
+                        "<div class='articleLikes'>♥546</div>" +
+                        "</div>" +
                         "<div class='articleContent'>" +
-                        "<div class='contentDetail'>"+article[i].content+"</div>"+
-                        "</div>"+
+                        "<div class='contentDetail'>" + article[i].content + "</div>" +
+                        "</div>" +
                         "</div>";
 
                     if (article[i].hashtags != null) {
                         content += "<div class='hashTagBox'>";
                         for (let j = 0; j < article[i].hashtags.length; j++) {
-                            content += "<div class='hashTaging'><span class='hashTag'>"+article[i].hashtags[j]+"</span></div>";
+                            content += "<div class='hashTaging'><span class='hashTag'>" + article[i].hashtags[j] + "</span></div>";
                         }
                         content += "</div>";
                     }
@@ -187,7 +202,7 @@ function getMoreArticles() {
                         article[i].hit = 0;
                     }
 
-                    content += "<div class='articleHit'>조회수 "+article[i].hit+"</div>";
+                    content += "<div class='articleHit'>조회수 " + article[i].hit + "</div>";
 
                     content += "</div></a></div></div>";
 
@@ -227,3 +242,37 @@ function showMoreBtn(totalCount) {
 }
 
 showMoreBtn($("#totalCount").val());
+
+var articlesList = document.getElementsByClassName("articles");
+
+for (let i = 0; i < articlesList.length; i++) {
+    console.log(articlesList.item(i).value);
+
+    const articleDateTime = moment(articlesList[i].value);
+    const articleDays = moment().diff(articleDateTime, 'days');
+
+    let dateDiffText = '';
+
+    if (articleDays === 0) {
+        // 오늘 날짜인 경우
+        dateDiffText = '오늘';
+    } else if (articleDays === 1) {
+        // 1일 전인 경우
+        dateDiffText = '1일 전';
+    } else if (articleDays <= 3) {
+        // 2일 전 ~ 3일 전인 경우
+        dateDiffText = `${articleDays}일 전`;
+    } else if (articleDays < 365) {
+        // 1년 이내인 경우
+        dateDiffText = `${articleDateTime.format('M월 D일')}`;
+    } else {
+        // 1년 이상인 경우
+        dateDiffText = `${articleDateTime.format('YYYY년 M월 D일')}`;
+    }
+
+    $('#createdAt' + (i + 1)).text(dateDiffText);
+}
+
+
+
+

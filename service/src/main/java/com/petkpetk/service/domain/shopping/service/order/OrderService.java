@@ -14,13 +14,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.petkpetk.service.domain.shopping.constant.OrderStatus;
-import com.petkpetk.service.domain.shopping.dto.order.CheckoutPriceInfo;
 import com.petkpetk.service.domain.shopping.dto.order.OrderDto;
 import com.petkpetk.service.domain.shopping.dto.order.OrderHistoryDto;
 import com.petkpetk.service.domain.shopping.dto.order.OrderItemDto;
 import com.petkpetk.service.domain.shopping.dto.order.request.CheckoutRequest;
 import com.petkpetk.service.domain.shopping.dto.order.request.OrderRequest;
 import com.petkpetk.service.domain.shopping.dto.order.response.CheckoutResponse;
+import com.petkpetk.service.domain.shopping.dto.priceInfo.CheckoutPriceInfo;
 import com.petkpetk.service.domain.shopping.entity.delivery.Delivery;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.shopping.entity.item.ItemImage;
@@ -30,7 +30,6 @@ import com.petkpetk.service.domain.shopping.exception.OrderAlreadyInProcessExcep
 import com.petkpetk.service.domain.shopping.repository.item.ItemImageRepository;
 import com.petkpetk.service.domain.shopping.repository.item.ItemRepository;
 import com.petkpetk.service.domain.shopping.repository.order.OrderRepository;
-import com.petkpetk.service.domain.shopping.service.PriceCalculationService;
 import com.petkpetk.service.domain.shopping.service.item.ItemService;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 import com.petkpetk.service.domain.user.entity.embedded.Address;
@@ -49,7 +48,6 @@ public class OrderService {
 	private final ItemService itemService;
 	private final ItemImageRepository itemImageRepository;
 	private final UserAccountRepository userAccountRepository;
-	private final PriceCalculationService priceCalculationService;
 
 	// TODO : 주문하기, 주문수정(부분), 주문취소
 
@@ -170,9 +168,9 @@ public class OrderService {
 		checkoutRequest.getCheckoutDtos()
 			.forEach(checkoutDto -> checkoutDto.update(itemService.searchItem(checkoutDto.getItemId())));
 
-		CheckoutPriceInfo checkoutPriceInfo = priceCalculationService.createCheckoutPriceInfo(checkoutRequest.getCartPriceInfo(),0L,0L);
-
-		return CheckoutResponse.of(checkoutRequest.getCheckoutDtos(), checkoutPriceInfo);
-
+		return CheckoutResponse.of(checkoutRequest.getCheckoutDtos(), CheckoutPriceInfo.of(checkoutRequest));
 	}
+
+
+
 }
