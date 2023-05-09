@@ -18,7 +18,7 @@ package com.petkpetk.admin.controller;// package com.petkpetk.admin.controller;
 //
 // import com.petkpetk.admin.config.converter.EntityAndDtoConverter;
 // import com.petkpetk.admin.config.security.PasswordEncoderConfig;
-// import com.petkpetk.admin.service.AdminAccountService;
+// import com.petkpetk.admin.service.admin.AdminAccountService;
 //
 // @ActiveProfiles("test")
 // @DisplayName("AdminAccountController 테스트")
