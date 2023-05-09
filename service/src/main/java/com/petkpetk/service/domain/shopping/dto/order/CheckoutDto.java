@@ -2,7 +2,9 @@ package com.petkpetk.service.domain.shopping.dto.order;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+import com.petkpetk.service.domain.shopping.dto.cart.CartItemDto;
 import com.petkpetk.service.domain.shopping.dto.item.ItemDto;
 import com.petkpetk.service.domain.shopping.dto.item.ItemImageDto;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
@@ -26,6 +28,8 @@ public class CheckoutDto {
 	private List<ItemImageDto> itemImageDtos = new ArrayList<>();
 	private Long orderCount = 0L;
 
+
+
 	public void update(ItemDto itemDto) {
 		this.itemName =   itemDto.getItemName();
 		this.originalPrice = itemDto.getOriginalPrice();
@@ -36,7 +40,20 @@ public class CheckoutDto {
 		this.itemImageDtos = itemDto.getItemImageDtos();
 	}
 
-	public CheckoutDto(Long itemId) {
+	public static CheckoutDto of(Long id) {
+		return new CheckoutDto(id);
+	}
+
+	public static CheckoutDto of(Long id, Long cartItemCount) {
+		return new CheckoutDto(id, cartItemCount);
+	}
+
+	private CheckoutDto(Long itemId) {
 		this.itemId = itemId;
+	}
+
+	private CheckoutDto(Long itemId, Long orderCount) {
+		this.itemId = itemId;
+		this.orderCount = orderCount;
 	}
 }

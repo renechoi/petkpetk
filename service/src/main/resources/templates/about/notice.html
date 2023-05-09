@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layout/aboutLayout">
+
+<head>
+  <title>페크페크 - 공지사항</title>
+</head>
+
+<th:block layout:fragment="css">
+  <link th:href="@{/css/about/notice.css}" rel="stylesheet">
+</th:block>
+
+<div layout:fragment="content" id="noticeContainer">
+</div>
+</html>

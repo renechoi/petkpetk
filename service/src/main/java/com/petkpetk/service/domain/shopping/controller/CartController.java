@@ -1,5 +1,7 @@
 package com.petkpetk.service.domain.shopping.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -11,7 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.petkpetk.service.domain.shopping.dto.cart.CartDetailDto;
 import com.petkpetk.service.domain.shopping.dto.cart.request.CartItemRequest;
+import com.petkpetk.service.domain.shopping.dto.cart.response.CartItemResponse;
+import com.petkpetk.service.domain.shopping.dto.order.CheckoutDto;
+import com.petkpetk.service.domain.shopping.dto.order.request.CheckoutRequest;
 import com.petkpetk.service.domain.shopping.exception.OutOfStockException;
 import com.petkpetk.service.domain.shopping.exception.StockAlreadyInCartException;
 import com.petkpetk.service.domain.shopping.service.cart.CartService;
@@ -28,11 +34,12 @@ public class CartController {
 
 	private final CartService cartService;
 
+
 	@GetMapping("")
 	public String cartItems(@AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal, Model model) {
-		// List<CartDetailDto> cartItems = cartService.car(userAccountPrincipal.getEmail());
-
-		// model.addAttribute("cartItems", cartItems);
+		CartItemResponse cartItemResponse = cartService.getCartItems(userAccountPrincipal.getEmail());
+		model.addAttribute("order",new CheckoutRequest(cartItemResponse));
+		model.addAttribute("cartItems", cartItemResponse);
 		return "cart/cart";
 	}
 
@@ -56,6 +63,9 @@ public class CartController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("잠시 후 다시 시도해주세요.");
 		}
 	}
+
+
+
 
 
 

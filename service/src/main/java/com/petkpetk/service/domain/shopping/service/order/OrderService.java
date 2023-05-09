@@ -20,6 +20,7 @@ import com.petkpetk.service.domain.shopping.dto.order.OrderItemDto;
 import com.petkpetk.service.domain.shopping.dto.order.request.CheckoutRequest;
 import com.petkpetk.service.domain.shopping.dto.order.request.OrderRequest;
 import com.petkpetk.service.domain.shopping.dto.order.response.CheckoutResponse;
+import com.petkpetk.service.domain.shopping.dto.priceInfo.CheckoutPriceInfo;
 import com.petkpetk.service.domain.shopping.entity.delivery.Delivery;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.shopping.entity.item.ItemImage;
@@ -167,7 +168,9 @@ public class OrderService {
 		checkoutRequest.getCheckoutDtos()
 			.forEach(checkoutDto -> checkoutDto.update(itemService.searchItem(checkoutDto.getItemId())));
 
-		return CheckoutResponse.of(checkoutRequest.getCheckoutDtos());
-
+		return CheckoutResponse.of(checkoutRequest.getCheckoutDtos(), CheckoutPriceInfo.of(checkoutRequest));
 	}
+
+
+
 }

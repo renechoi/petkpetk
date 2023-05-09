@@ -1,21 +1,15 @@
 package com.petkpetk.service.config.security;
 
-import java.util.Arrays;
-
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.petkpetk.service.config.exception.PetkpetkServerException;
 import com.petkpetk.service.domain.user.dto.security.UserAccountPrincipal;
-import com.petkpetk.service.domain.user.exception.UserNotFoundException;
 import com.petkpetk.service.domain.user.service.SocialUserAccountService;
 import com.petkpetk.service.domain.user.service.UserAccountService;
 
@@ -35,7 +29,7 @@ public class SecurityConfig {
 				auth -> auth.requestMatchers(PathRequest.toStaticResources().atCommonLocations())
 					.permitAll()
 					.mvcMatchers("/", "/user/**", "/error/**", "/login", "/seller/sign-up", "/seller/**", "/admin/**",
-						"/test/**", "item/**", "/community/**", "/order/**", "/cart/**").permitAll()
+						"/test/**", "item/**", "/community/**", "/order/**", "/cart/**", "/about/**").permitAll()
 					.mvcMatchers("/api/**", "/explorer").permitAll()
 
 					.anyRequest()

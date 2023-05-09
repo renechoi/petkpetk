@@ -8,4 +8,5 @@ import com.petkpetk.service.domain.community.entity.Hashtag;
 public interface HashtagRepository
 	extends JpaRepository<Hashtag, Long>, HashtagRepositoryCustom, QuerydslPredicateExecutor<Hashtag> {
 
+	Hashtag findByHashtagName(String searchValue);
 }

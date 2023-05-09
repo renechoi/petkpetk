@@ -1,12 +1,16 @@
 package com.petkpetk.service.domain.shopping.service.cart;
 
-import java.util.Optional;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.petkpetk.service.domain.shopping.dto.cart.CartItemDto;
 import com.petkpetk.service.domain.shopping.dto.cart.request.CartItemRequest;
-import com.petkpetk.service.domain.shopping.dto.item.ItemDto;
+import com.petkpetk.service.domain.shopping.dto.cart.response.CartItemResponse;
+import com.petkpetk.service.domain.shopping.dto.priceInfo.ItemPriceInfo;
 import com.petkpetk.service.domain.shopping.entity.cart.Cart;
 import com.petkpetk.service.domain.shopping.entity.cart.CartItem;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
@@ -42,6 +46,27 @@ public class CartService {
 		CartItem cartItem = CartItem.of(cart, item, cartItemRequest.getCartItemCount());
 		cartItemRepository.save(cartItem);
 	}
+
+	public CartItemResponse getCartItems(String email) {
+		UserAccountDto userAccountDto = userAccountService.searchUserDto(email);
+		Cart cart = cartRepository.findCartByUserAccountId(userAccountDto.getId());
+
+		if (cart==null) {
+			return CartItemResponse.of();
+		}
+
+		List<CartItem> cartItems = cartItemRepository.findByCartId(cart.getId());
+
+		Set<CartItemDto> cartItemDtos = cartItems.stream()
+			.map(CartItemDto::from)
+			.collect(Collectors.toUnmodifiableSet());
+
+		ItemPriceInfo itemPriceInfo = ItemPriceInfo.of(cartItemDtos, 0L, 0L, 0L, 0L);
+
+		return CartItemResponse.of(cartItemDtos, itemPriceInfo);
+	}
+
+
 
 
 

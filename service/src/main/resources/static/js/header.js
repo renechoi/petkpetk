@@ -3,7 +3,9 @@ var NoticeSearchZone = document.getElementById("NoticeSearchZone");
 
 
 if (width < 880) {
-    NoticeSearchZone.style.display = "block";
+    if (NoticeSearchZone) {
+        NoticeSearchZone.style.display = "block";
+    }
 }
 
 
@@ -50,6 +52,8 @@ const headerHeight = head.getBoundingClientRect().height;
 const main = document.querySelector(".main");
 const main2 = document.querySelector(".main2");
 const NS = document.querySelector(".NoticeSearchZone");
+const ADC = document.querySelector(".articleDetailContainer");
+const APC = document.querySelector(".articlePostContainer");
 
 window.addEventListener("scroll", () => {
     var width = window.innerWidth;
@@ -57,19 +61,51 @@ window.addEventListener("scroll", () => {
     if (window.scrollY > headerHeight && width < 880) {
         main.classList.add('fixed');
         main2.classList.add('fixed');
-        NS.classList.add("jumped2")
-        NS.classList.remove("jumped1");
+        if (NS) {
+            NS.classList.add("jumped2");
+            NS.classList.remove("jumped1");
+        }
+        if (ADC) {
+            ADC.classList.add("jumped2");
+            ADC.classList.remove("jumped1");
+        }
+        if (APC) {
+            APC.classList.add("jumped2");
+            APC.classList.remove("jumped1");
+        }
+
     } else if (window.scrollY > headerHeight && width > 880) {
         main.classList.add('fixed');
         main2.classList.add('fixed');
-        NS.classList.remove("jumped2")
-        NS.classList.add("jumped1");
-    } else {
+        if (NS) {
+            NS.classList.remove("jumped2")
+            NS.classList.add("jumped1");
+        }
+        if (ADC) {
+            ADC.classList.remove("jumped2")
+            ADC.classList.add("jumped1");
+        }
+        if (APC) {
+            APC.classList.remove("jumped2")
+            APC.classList.add("jumped1");
+        }
 
+    } else {
+        if (NS) {
+            NS.classList.remove("jumped1")
+            NS.classList.remove("jumped2")
+        }
+        if (ADC) {
+            ADC.classList.remove("jumped2")
+            ADC.classList.remove("jumped1");
+        }
+        if (APC) {
+            APC.classList.remove("jumped2")
+            APC.classList.remove("jumped1");
+        }
         main.classList.remove('fixed');
-        NS.classList.remove("jumped1")
         main2.classList.remove('fixed');
-        NS.classList.remove("jumped2")
+
     }
 });
 

@@ -48,7 +48,7 @@
                         <!-- 제목은 2줄 이하로 되도록 글씨 길이 정해두기 -->
                         <li class="productName_Status">
                             <span class="productStatus" th:if="${item.itemStatus eq T(com.petkpetk.service.domain.shopping.constant.ItemStatus).SOLD_OUT}">품절</span>
-                            <span class="productName" th:text="${item.itemName}" th:title="${item.itemName}">제목</span>
+                            <div class="itemTitle"><span class="productName" th:text="${item.itemName}" th:title="${item.itemName}">제목</span></div>
                         </li>
                         <li class="productDetail" th:text="${item.itemDetail}" title="상품 내용">내용</li>
                         <li class="productStar">
