@@ -4,8 +4,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -83,7 +81,15 @@ public class Article extends AuditingFields {
 	@Enumerated(EnumType.STRING)
 	private CategoryType categoryType;
 
+	public void updateHit() {
+		this.hit += 1;
+	}
+
 	public void addImages(List<ArticleImage> images) {
+		if (images.isEmpty()) {
+			this.articleImages = null;
+			return;
+		}
 		setRepresentativeImage(images).forEach(image -> image.mapWith(this));
 		this.articleImages = images;
 	}
@@ -93,29 +99,8 @@ public class Article extends AuditingFields {
 		return images;
 	}
 
-	/**
-	 * rawHashtags 의 예시는 다음과 같다.
-	 * "#123 #12345 #hashtag #example #해시태그는 #이렇게 #구성되어 #있다"
-	 * <p>
-	 * 해시태그를 추출하기 위한 정규식 (?<=\\s|^)#[\\p{L}0-9_]+는 다음과 같은 구성으로 이루어져 있다.
-	 * <p>
-	 * (?<=\\s|^) : 전방탐색(lookbehind)을 사용하여 공백 또는 문자열의 시작 부분(^)이 해시태그(#) 앞에 있는 경우에만 해시태그를 추출한다.
-	 * # : 해시태그 기호(#)를 나타낸다.
-	 * [\\p{L}0-9_]+ : 해시태그 이름으로 사용될 수 있는 문자열을 나타낸다.
-	 * [\\p{L}0-9_] : 유니코드 문자(영어, 한글 등), 숫자, 언더스코어(_) 중 하나를 나타낸다.
-	 * + : 1개 이상의 문자열이 나타날 수 있다.
-	 *
-	 * @param rawHashtags
-	 */
-	public void addHashtags(String rawHashtags) {
-		String hashtagRegex = "(?<=\\s|^)#[\\p{L}0-9_]+";
-
-		this.hashtags = Pattern.compile(hashtagRegex)
-			.matcher(rawHashtags)
-			.results()
-			.map(matchResult -> matchResult.group().substring(1))
-			.map(Hashtag::of)
-			.collect(Collectors.toCollection(LinkedHashSet::new));
+	public void addHashtags(Set<Hashtag> hashtags) {
+		this.hashtags = hashtags;
 	}
 
 	@Override

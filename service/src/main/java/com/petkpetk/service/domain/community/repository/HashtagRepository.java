@@ -9,4 +9,6 @@ public interface HashtagRepository
 	extends JpaRepository<Hashtag, Long>, HashtagRepositoryCustom, QuerydslPredicateExecutor<Hashtag> {
 
 	Hashtag findByHashtagName(String searchValue);
+
+	boolean existsByHashtagName(String hashtagName);
 }

@@ -61,4 +61,8 @@ public class Hashtag extends AuditingFields {
 	public static Hashtag of(String hashtagName, Article article) {
 		return new Hashtag(hashtagName, article);
 	}
+
+	public void updateHit() {
+		this.hit += 1;
+	}
 }

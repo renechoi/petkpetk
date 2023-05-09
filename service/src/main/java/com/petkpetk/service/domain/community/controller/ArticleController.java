@@ -56,10 +56,6 @@ public class ArticleController {
 				Sort.by("createdAt").descending());
 		}
 
-		if (searchValue != null) {
-			articleService.setHashTahHit(searchValue);
-		}
-
 		Page<ArticleResponse> articles = articleService.searchArticles(searchType, searchValue, pageable)
 			.map(ArticleResponse::from);
 		List<Integer> pageBars = paginationService.getPageBars(pageable.getPageNumber(), articles.getTotalPages());
@@ -111,6 +107,4 @@ public class ArticleController {
 
 		return "redirect:/articles";
 	}
-
-
 }
