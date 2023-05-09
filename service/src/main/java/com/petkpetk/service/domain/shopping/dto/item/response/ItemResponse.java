@@ -4,15 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 import com.petkpetk.service.config.converter.EntityAndDtoConverter;
 import com.petkpetk.service.domain.shopping.constant.ItemStatus;
 import com.petkpetk.service.domain.shopping.dto.item.ItemImageDto;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
-import com.petkpetk.service.domain.user.entity.UserAccount;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,28 +20,15 @@ import lombok.NoArgsConstructor;
 public class ItemResponse {
 	private Long id;
 
-	@NotBlank(message = "상품명을 입력해주세요.")
 	private String itemName;
-
 	private Long originalPrice;
-
 	private Double discountRate;
-
-	@NotNull(message = "가격을 입력해주세요.")
 	private Long price;
-
-	@NotNull(message = "재고량을 입력해주세요.")
 	private Long itemAmount;
-
-	@NotBlank(message = "상품 정보를 입력해주세요.")
 	private String itemDetail;
-
 	private ItemStatus itemStatus;
-
 	private UserAccountDto userAccountDto;
-
 	private Double totalRating;
-
 	private List<ItemImageDto> itemImageDtos = new ArrayList<>();
 
 	public Item toEntity() {
