@@ -73,7 +73,8 @@ public class ArticleService {
 
 	public ArticleDto searchArticle(Long articleId) {
 		Article article = articleRepository.findById(articleId).orElseThrow(ArticleNotFoundException::new);
-		article.setHit(article.getHit() + 1);
+		System.out.println("=========================== article = " + article);
+		article.setHit(article.getHit() + 1L);
 		return convertToDto(article);
 	}
 

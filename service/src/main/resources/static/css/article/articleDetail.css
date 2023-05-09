@@ -343,3 +343,11 @@ img.childCommentLadder {
     background-color: #ffffffd6;
     margin-top: 10px;
 }
+
+.imagesBox {
+    width: 100%;
+}
+
+.article-image {
+    width: 100%;
+}

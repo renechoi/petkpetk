@@ -143,8 +143,8 @@
                                     <input type="hidden" th:class="${'fileName'+review.id+num}" name="uniqueImageNames" th:value="${not #strings.isEmpty(reviewImageDto.uniqueName)}?${reviewImageDto.uniqueName} : '첨부파일'">
 
                                     <label th:for="${'reviewFile'+review.id+num}" class="reviewFilesLable" th:text="${'이미지 업로드'}"></label>
-                                    <input type="file" th:id="${'reviewFile'+review.id+num}" name="images" th:onchange="'getFileName('+${review.id}+','+${num}+')'">
-                                    <input class="removeImage" type="button" value="삭제" th:onclick="'removeImage('+${review.id}+','+${num}+')'">
+                                    <input type="file" th:id="${'reviewFile'+review.id+num}" name="images" th:onchange="'getFileName(\''+${review.id}+''+${num}+'\')'">
+                                    <input class="removeImage" type="button" value="삭제" th:onclick="'removeImage(\''+${review.id}+''+${num}+'\')'">
                                 </div>
                             </div>
                             <div id="reviewNullImageBox" th:each="num : ${#numbers.sequence(review.reviewImageDtos.size()+1, 5)}">
@@ -152,8 +152,8 @@
                                     <input th:class="${'fileName'+review.id+num+' fileName'}" value="첨부파일" readonly>
 
                                     <label th:for="${'reviewFile'+review.id+num}" class="reviewFilesLable" th:text="${'이미지 업로드'}"></label>
-                                    <input type="file" th:id="${'reviewFile'+review.id+num}" name="images" th:onchange="'getFileName('+${review.id}+','+${num}+')'">
-                                    <input class="removeImage" type="button" value="삭제" th:onclick="'removeImage('+${review.id}+','+${num}+')'">
+                                    <input type="file" th:id="${'reviewFile'+review.id+num}" name="images" th:onchange="'getFileName(\''+${review.id}+''+${num}+'\')'">
+                                    <input class="removeImage" type="button" value="삭제" th:onclick="'removeImage(\''+${review.id}+''+${num}+'\')'">
                                 </div>
                             </div>
                         </div>
@@ -166,8 +166,8 @@
 
 
                                 <label th:for="${'reviewFile'+review.id+num}" class="reviewFilesLable" th:text="${'이미지 업로드'}"></label>
-                                <input type="file" th:id="${'reviewFile'+review.id+num}" name="images" th:onchange="'getFileName('+${review.id}+','+${num}+')'">
-                                <input class="removeImage" type="button" value="삭제" th:onclick="'removeImage('+${review.id}+','+${num}+')'">
+                                <input type="file" th:id="${'reviewFile'+review.id+num}" name="images" th:onchange="'getFileName(\''+${review.id}+''+${num}+'\')'">
+                                <input class="removeImage" type="button" value="삭제" th:onclick="'removeImage(\''+${review.id}+''+${num}+'\''">
                             </div>
                         </div>
                     </div>
