@@ -18,9 +18,11 @@ import com.petkpetk.service.common.AuditingFields;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Getter
+@Setter
 @ToString(callSuper = true)
 @Table(indexes = {
 	@Index(columnList = "hashtagName", unique = true),
@@ -37,6 +39,7 @@ public class Hashtag extends AuditingFields {
 	@Column(name = "hashtag_id", length = 10)
 	private Long id;
 	private String hashtagName;
+	private Long hit = 0L;
 
 	@ToString.Exclude
 	@ManyToMany(mappedBy = "hashtags")

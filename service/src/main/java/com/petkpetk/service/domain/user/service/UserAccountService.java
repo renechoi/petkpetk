@@ -48,7 +48,7 @@ public class UserAccountService {
 	}
 
 	private ProfileImage createProfileImage(MultipartFile multipartFile) {
-		return multipartFile.isEmpty() ? ProfileImage.of("defaultProfile.jpeg", "defaultProfile.jpeg") :
+		return multipartFile.isEmpty() ? ProfileImage.of("defaultProfile.png", "defaultProfile.png") :
 			ImageConverter.of(ProfileImage::from)
 				.convertToImage(multipartFile);
 	}
@@ -92,7 +92,7 @@ public class UserAccountService {
 			userAccount.update(userUpdateRequest);
 			profileImageRepository.delete(previousImage);
 			imageLocalRepository.delete(previousImage);
-			userAccount.addImage(ProfileImage.of("defaultProfile.jpeg", "defaultProfile.jpeg"));
+			userAccount.addImage(ProfileImage.of("defaultProfile.png", "defaultProfile.png"));
 			return;
 		}
 
@@ -158,7 +158,9 @@ public class UserAccountService {
 		return userAccountRepository.findByEmail(email).isPresent();
 	}
 
-	private Optional<UserAccount> findByEmail(String email) {
+	public Optional<UserAccount> findByEmail(String email) {
 		return userAccountRepository.findByEmail(email);
 	}
+
+
 }

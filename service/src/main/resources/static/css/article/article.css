@@ -104,8 +104,13 @@ input[type="checkbox"]:checked + label {
 }
 
 .articleTitle {
-    font-size: 17px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 140px;
+    max-width: 200px;
     font-weight: bold;
+    font-size: 16px;
+    white-space: nowrap;
 }
 
 .oneArticleBox:hover .articleTitle {
@@ -114,8 +119,8 @@ input[type="checkbox"]:checked + label {
 
 .articleContentBox {
     min-height: 90px;
-    max-height: 170px;
-    padding: 10px;
+    max-height: 300px;
+    padding: 30px 20px 15px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -149,7 +154,9 @@ input[type="checkbox"]:checked + label {
 }
 
 .hashTagBox {
+    display: flex;
     margin-top: 5px;
+    flex-wrap: wrap;
 }
 
 span.hashTag {
@@ -192,6 +199,7 @@ div#postBtn {
     cursor: pointer;
     z-index: 150;
 }
+
 #postBtn img {
     width: 100%;
     height: 100%;
@@ -204,4 +212,112 @@ img#postCat {
     bottom: 205px;
     right: 61px;
     z-index: 150;
+}
+
+
+.articleLikes {
+    color: #ff2644;
+}
+
+.userInfoBox {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    align-items: flex-end;
+}
+
+.registerTime {
+    font-size: 14px;
+    color: #c7b6b6;
+}
+
+.articleHit {
+    text-align: right;
+    color: #c7b6b6;
+    font-size: 14px;
+}
+
+.userNickName {
+    min-width: 100px;
+    max-width: 160px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.hashTaging {
+    margin-bottom: 6px;
+}
+
+@media screen and (max-width: 880px) {
+    .registerTime {
+        font-size: 12px;
+    }
+}
+
+#hashtags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 27px;
+    padding: 0 30px;
+}
+
+#hashtags a {
+    color: white;
+    padding: 4px 11px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+.hashTagsBox:nth-child(odd) a{
+    animation: changingColorOdd 5s infinite linear;
+}
+.hashTagsBox:nth-child(even) a{
+    animation: changingColorEven 5s infinite linear;
+}
+@keyframes changingColorOdd{
+    0%{
+        background-color: #ffaab6;
+    }
+    50%{
+        background-color: #ff92a1;
+    }
+    100%{
+        background-color: #ffaab6;
+    }
+}
+@keyframes changingColorEven{
+    0%{
+        background-color: #ff92a1;
+    }
+    50%{
+        background-color: #ffaab6;
+    }
+    100%{
+        background-color: #ff92a1;
+    }
+}
+
+#hashtags a:hover{
+    background-color: #ff8496;
+}
+
+.hashTagsBox:hover {
+    animation: twinkleHashtag 0.15s linear;
+    animation-iteration-count: 4;
+    animation-direction: alternate;
+}
+
+@keyframes twinkleHashtag {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(4deg);
+    }
+}
+
+.hashTagsBox {
+    margin: 7px 9px;
 }
