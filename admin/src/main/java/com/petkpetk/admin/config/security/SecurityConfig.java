@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.petkpetk.admin.dto.security.AdminAccountPrincipal;
-import com.petkpetk.admin.service.AdminAccountService;
+import com.petkpetk.admin.service.admin.AdminAccountService;
 
 import lombok.RequiredArgsConstructor;
 

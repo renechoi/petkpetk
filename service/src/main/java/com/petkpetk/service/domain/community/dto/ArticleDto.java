@@ -60,12 +60,17 @@ public class ArticleDto {
 	public Article toEntity(UserAccount userAccount, List<ArticleImage> articleImages) {
 		Article article = EntityAndDtoConverter.convertToEntity(this, Article.class);
 		article.setUserAccount(userAccount);
-		article.addImages(articleImages);
+		if(articleImages!=null) article.addImages(articleImages);
 		article.addHashtags(this.getRawHashtags());
 		return article;
 	}
 
 	public static ArticleDto fromEntity(Article article) {
 		return EntityAndDtoConverter.convertToDto(article, ArticleDto.class);
+	}
+
+	public Article toEntity() {
+		Article article = EntityAndDtoConverter.convertToEntity(this, Article.class);
+		return article;
 	}
 }

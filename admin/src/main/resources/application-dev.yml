@@ -41,6 +41,11 @@ spring:
     init:
       mode: always
 
+  data:
+    rest:
+      base-path: /api
+      detection-strategy: all
+
   mail:
     host: smtp.gmail.com
     port: 587
@@ -60,3 +65,7 @@ spring:
 
 
 project.petkpetk.url: http://localhost:8080
+
+imgurClientId: f9a9f290bb048ce
+
+imgurClientSecret: 0aa6083f7e29ad47e02d4620423aa5e1f2e853d2

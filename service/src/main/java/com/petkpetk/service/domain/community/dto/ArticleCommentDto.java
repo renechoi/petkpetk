@@ -3,6 +3,7 @@ package com.petkpetk.service.domain.community.dto;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import com.petkpetk.service.domain.community.entity.ArticleComment;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
 
 import lombok.AllArgsConstructor;
@@ -21,4 +22,14 @@ public class ArticleCommentDto {
 	private String content;
 	private Long parentCommentId;
 	private Set<ArticleCommentDto> childComments = new LinkedHashSet<>();
+
+	public ArticleComment toEntity() {
+		return new ArticleComment(
+			this.getArticleDto().toEntity(),
+			this.getUserAccountDto().toEntity(),
+			this.getContent(),
+			this.getParentCommentId()
+		);
+	}
+
 }

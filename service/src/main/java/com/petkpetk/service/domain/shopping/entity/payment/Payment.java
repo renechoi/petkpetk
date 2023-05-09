@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.Where;
+
 import com.petkpetk.service.common.AuditingFields;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.user.entity.UserAccount;
@@ -25,6 +27,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Where(clause = "deleted_yn='N'")
 public class Payment extends AuditingFields {
 
 	@Id

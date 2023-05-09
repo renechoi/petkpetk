@@ -33,6 +33,9 @@ public enum StatusCode {
 
 	// 결제
 
+	PAY_CANCEL("결제 진행 중 취소되었습니다."),
+	PAY_FAILED("결제가 실패되었습니다."),
+
 	//QnA 게시글 & 댓글
 
 	//상품 리뷰

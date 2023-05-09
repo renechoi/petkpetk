@@ -73,7 +73,8 @@ public class ArticleService {
 
 	public ArticleDto searchArticle(Long articleId) {
 		Article article = articleRepository.findById(articleId).orElseThrow(ArticleNotFoundException::new);
-		article.setHit(article.getHit() + 1);
+		System.out.println("=========================== article = " + article);
+		article.setHit(article.getHit() + 1L);
 		return convertToDto(article);
 	}
 
@@ -129,4 +130,13 @@ public class ArticleService {
 	}
 
 	public int getArticleTotalCount() {return  articleRepository.findAll().size();}
+
+	public void setHashTahHit(String searchValue) {
+		Hashtag hashtag = hashtagRepository.findByHashtagName(searchValue);
+
+		if (hashtag != null) {
+			hashtag.setHit(hashtag.getHit()+1L);
+			hashtagRepository.flush();
+		}
+	}
 }

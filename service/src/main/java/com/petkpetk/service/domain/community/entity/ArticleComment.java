@@ -44,11 +44,22 @@ public class ArticleComment extends AuditingFields {
 	@ManyToOne
 	private UserAccount userAccount;
 
+	@Column(nullable = false)
 	private String content;
+
 	private Long parentCommentId;
 
 	@ToString.Exclude
 	@OrderBy("createdAt ASC")
 	@OneToMany(mappedBy = "parentCommentId", cascade = CascadeType.ALL)
 	private Set<ArticleComment> childComments = new LinkedHashSet<>();
+
+	public ArticleComment(Article article, UserAccount userAccount, String content, Long parentCommentId) {
+		this.article = article;
+		this.userAccount = userAccount;
+		this.content = content;
+		this.parentCommentId = parentCommentId;
+	}
+
+
 }

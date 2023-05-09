@@ -209,3 +209,17 @@ var reviewCount = document.getElementById("reviewCount");
 if (BigOneReviewBoxs.length>0) {
     reviewCount.innerHTML = "총 리뷰 갯수 ("+BigOneReviewBoxs.length + ")";
 }
+
+
+function getFileName(num) {
+    var fileName = $("#reviewFile" + num).val();
+    var cleanName = fileName.substring(12);
+    $(".fileName" + num).val(cleanName);
+}
+
+function removeImage(num) {
+    console.log(num);
+
+    $("#reviewFile" + num).val(null);
+    $(".fileName" + num).val('첨부파일');
+}
