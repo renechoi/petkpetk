@@ -1,5 +1,7 @@
 package com.petkpetk.admin.controller.management;
 
+import static com.petkpetk.admin.dto.api.ResponseDTO.*;
+
 import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.petkpetk.admin.dto.api.ResponseDTO;
 import com.petkpetk.admin.dto.response.ItemResponse;
 import com.petkpetk.admin.service.management.ItemManagementService;
 
@@ -40,9 +43,9 @@ public class ItemManagementController {
 	}
 
 	@PostMapping("/{id}")
-	public ResponseEntity<String> delete(@PathVariable String id) {
+	public ResponseDTO<String> delete(@PathVariable String id) {
 		itemManagementService.deleteItem(id);
-		return ResponseEntity.ok("삭제 성공");
+		return ok("삭제 성공");
 
 	}
 }
