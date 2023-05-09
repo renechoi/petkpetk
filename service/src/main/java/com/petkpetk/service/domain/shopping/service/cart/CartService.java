@@ -8,16 +8,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.petkpetk.service.domain.shopping.dto.cart.CartItemDto;
-import com.petkpetk.service.domain.shopping.dto.cart.CartPriceInfo;
 import com.petkpetk.service.domain.shopping.dto.cart.request.CartItemRequest;
 import com.petkpetk.service.domain.shopping.dto.cart.response.CartItemResponse;
+import com.petkpetk.service.domain.shopping.dto.priceInfo.ItemPriceInfo;
 import com.petkpetk.service.domain.shopping.entity.cart.Cart;
 import com.petkpetk.service.domain.shopping.entity.cart.CartItem;
 import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.shopping.exception.StockAlreadyInCartException;
 import com.petkpetk.service.domain.shopping.repository.cart.CartItemRepository;
 import com.petkpetk.service.domain.shopping.repository.cart.CartRepository;
-import com.petkpetk.service.domain.shopping.service.PriceCalculationService;
 import com.petkpetk.service.domain.shopping.service.item.ItemService;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.service.UserAccountService;
@@ -31,7 +30,6 @@ public class CartService {
 
 	private final ItemService itemService;
 	private final UserAccountService userAccountService;
-	private final PriceCalculationService priceCalculationService;
 	private final CartRepository cartRepository;
 	private final CartItemRepository cartItemRepository;
 
@@ -63,11 +61,9 @@ public class CartService {
 			.map(CartItemDto::from)
 			.collect(Collectors.toUnmodifiableSet());
 
+		ItemPriceInfo itemPriceInfo = ItemPriceInfo.of(cartItemDtos, 0L, 0L, 0L, 0L);
 
-
-		CartPriceInfo cartPriceInfo = priceCalculationService.createCartPriceInfo(cartItemDtos, 0L, 0L);
-
-		return CartItemResponse.of(cartItemDtos,cartPriceInfo);
+		return CartItemResponse.of(cartItemDtos, itemPriceInfo);
 	}
 
 
