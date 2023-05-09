@@ -14,6 +14,7 @@ import com.petkpetk.service.config.converter.EntityAndDtoConverter;
 import com.petkpetk.service.domain.community.dto.request.ArticlePostRequest;
 import com.petkpetk.service.domain.community.entity.Article;
 import com.petkpetk.service.domain.community.entity.ArticleImage;
+import com.petkpetk.service.domain.community.entity.Hashtag;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 
@@ -57,11 +58,11 @@ public class ArticleDto {
 		return articleDto;
 	}
 
-	public Article toEntity(UserAccount userAccount, List<ArticleImage> articleImages) {
+	public Article toEntity(UserAccount userAccount, List<ArticleImage> articleImages, Set<Hashtag> hashtags) {
 		Article article = EntityAndDtoConverter.convertToEntity(this, Article.class);
 		article.setUserAccount(userAccount);
-		if(articleImages!=null) article.addImages(articleImages);
-		article.addHashtags(this.getRawHashtags());
+		article.addImages(articleImages);
+		article.addHashtags(hashtags);
 		return article;
 	}
 
@@ -70,7 +71,6 @@ public class ArticleDto {
 	}
 
 	public Article toEntity() {
-		Article article = EntityAndDtoConverter.convertToEntity(this, Article.class);
-		return article;
+		return EntityAndDtoConverter.convertToEntity(this, Article.class);
 	}
 }

@@ -3,8 +3,10 @@ package com.petkpetk.service.domain.community.service;
 import static com.petkpetk.service.domain.community.constatnt.SearchType.*;
 
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
@@ -40,7 +42,7 @@ public class ArticleService {
 	 * 현재와 같은 수준에서는 if문을 분기하는 방식을 고수하되, 검색 타입이 늘어나는 경우 SearchType enum 클래스와 함수형 인터페이스를 이용해
 	 * 메서드를 던져주는 방식으로 리팩토링을 고려해보자.
 	 */
-	@Transactional(readOnly = true)
+	@Transactional
 	public Page<ArticleDto> searchArticles(SearchType searchType, String searchValue, Pageable pageable) {
 
 		if (searchType == TITLE) {
@@ -57,10 +59,11 @@ public class ArticleService {
 		}
 
 		if (searchType == HASHTAG) {
+			hashtagRepository.findByHashtagName(searchValue).updateHit();
 			return articleRepository.findByHashtagNames(Set.of(searchValue), pageable).map(this::convertToDto);
 		}
 
-		if (searchType == CATEGORY) {
+		if (searchType == CATEGORY && !searchValue.isEmpty()) {
 			Set<CategoryType> categoryTypes = Arrays.stream(searchValue.split(","))
 				.map(value -> CategoryType.valueOf(value.trim()))
 				.collect(Collectors.toSet());
@@ -73,8 +76,7 @@ public class ArticleService {
 
 	public ArticleDto searchArticle(Long articleId) {
 		Article article = articleRepository.findById(articleId).orElseThrow(ArticleNotFoundException::new);
-		System.out.println("=========================== article = " + article);
-		article.setHit(article.getHit() + 1L);
+		article.updateHit();
 		return convertToDto(article);
 	}
 
@@ -82,10 +84,13 @@ public class ArticleService {
 		UserAccount userAccount = userAccountRepository.findByEmail(articleDto.getUserAccountDto().getEmail())
 			.orElseThrow(ArticleNotFoundException::new);
 
-		List<ArticleImage> images = articleImageService.convertToImages(articleDto);
+		List<ArticleImage> images = articleImageService.convertToImages(articleDto.getRawImages());
 
-		articleRepository.save(articleDto.toEntity(userAccount, images));
+		Set<Hashtag> hashtags = extractHashtags(articleDto.getRawHashtags()).stream()
+			.filter(hashtag -> !hashtagRepository.existsByHashtagName(hashtag.getHashtagName()))
+			.collect(Collectors.toUnmodifiableSet());
 
+		articleRepository.save(articleDto.toEntity(userAccount, images, hashtags));
 		articleImageService.uploadImages(articleDto, images);
 	}
 
@@ -129,14 +134,33 @@ public class ArticleService {
 		return hashtagRepository.findAllHashtagNames();
 	}
 
-	public int getArticleTotalCount() {return  articleRepository.findAll().size();}
-
-	public void setHashTahHit(String searchValue) {
-		Hashtag hashtag = hashtagRepository.findByHashtagName(searchValue);
-
-		if (hashtag != null) {
-			hashtag.setHit(hashtag.getHit()+1L);
-			hashtagRepository.flush();
-		}
+	public int getArticleTotalCount() {
+		return articleRepository.findAll().size();
 	}
+
+	/**
+	 * rawHashtags 의 예시는 다음과 같다.
+	 * "#123 #12345 #hashtag #example #해시태그는 #이렇게 #구성되어 #있다"
+	 * <p>
+	 * 해시태그를 추출하기 위한 정규식 (?<=\\s|^)#[\\p{L}0-9_]+는 다음과 같은 구성으로 이루어져 있다.
+	 * <p>
+	 * (?<=\\s|^) : 전방탐색(lookbehind)을 사용하여 공백 또는 문자열의 시작 부분(^)이 해시태그(#) 앞에 있는 경우에만 해시태그를 추출한다.
+	 * # : 해시태그 기호(#)를 나타낸다.
+	 * [\\p{L}0-9_]+ : 해시태그 이름으로 사용될 수 있는 문자열을 나타낸다.
+	 * [\\p{L}0-9_] : 유니코드 문자(영어, 한글 등), 숫자, 언더스코어(_) 중 하나를 나타낸다.
+	 * + : 1개 이상의 문자열이 나타날 수 있다.
+	 *
+	 * @param rawHashtags
+	 */
+	public LinkedHashSet<Hashtag> extractHashtags(String rawHashtags) {
+		String hashtagRegex = "(?<=\\s|^)#[\\p{L}0-9_]+";
+
+		return Pattern.compile(hashtagRegex)
+			.matcher(rawHashtags)
+			.results()
+			.map(matchResult -> matchResult.group().substring(1))
+			.map(Hashtag::of)
+			.collect(Collectors.toCollection(LinkedHashSet::new));
+	}
+
 }

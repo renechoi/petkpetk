@@ -23,8 +23,8 @@ public class articleImageService {
 	private final ArticleImageRepository articleImageRepository;
 	private final ImageLocalRepository<ArticleImage> articleImageLocalRepository;
 
-	public List<ArticleImage> convertToImages(ArticleDto articleDto) {
-		return ImageConverter.of(ArticleImage::from).convertToImages(articleDto.getRawImages());
+	public List<ArticleImage> convertToImages(List<MultipartFile> rawImages) {
+		return ImageConverter.of(ArticleImage::from).convertToImages(rawImages);
 	}
 
 	public void uploadImages(ArticleDto articleDto, List<ArticleImage> images) {
