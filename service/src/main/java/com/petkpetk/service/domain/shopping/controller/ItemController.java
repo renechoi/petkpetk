@@ -90,7 +90,7 @@ public class ItemController {
 		List<ReviewResponse> reviewList = reviewService.getReviewList(itemId);
 
 		model.addAttribute("item", itemResponse);
-		model.addAttribute("order",new CheckoutRequest(List.of(new CheckoutDto(itemResponse.getId()))));
+		model.addAttribute("order",new CheckoutRequest(List.of(CheckoutDto.of(itemResponse.getId()))));
 		model.addAttribute("cart", new CartItemRequest());
 		model.addAttribute("itemUser", itemUser);
 		model.addAttribute("reviewList", reviewList);
