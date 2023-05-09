@@ -234,6 +234,7 @@ div#askOneBox {
     border: 2px solid #fae1e1;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: 20px;
 }
 
 .askContentBox {
