@@ -103,7 +103,7 @@
                 <div class="oldAddressInfo">주소</div>
                 <!--        <textarea id="shippingAddress" name="shippingAddress" rows="3" required></textarea>-->
                 <textarea id="oldShippingAddress" name="shippingAddress" rows="3"
-                          th:text="${'('+user.address.zipCode+') '+user.address.address1+' '+user.address.address2+' '+user.address.addressEtc+''}"
+                          th:text="${'('+user.address.address.zipCode+') '+user.address.address.address1+' '+user.address.address.address2+' '+user.address.address.addressEtc+''}"
                           readonly></textarea>
             </div>
         </div>
@@ -171,7 +171,7 @@
 
             <div style="display: flex; align-items: center;">
                 <div class="payInfo">총 상품 금액</div>
-                <div class="deliveryPrice" th:text="*{checkoutPriceInfo.deliveryPrice}"></div>
+                <div class="deliveryPrice" th:text="*{checkoutPriceInfo.totalPrice}"></div>
             </div>
 
             <div style="display: flex; align-items: center;">
