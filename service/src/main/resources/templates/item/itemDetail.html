@@ -80,6 +80,7 @@
                                 <div class="totalFlexBox">
                                     <span class="totalText">총</span>
                                     <span id="totalPrice" th:text="${item.price}"></span>
+                                    <input type="hidden" id="priceInfoTotalPrice" th:field="${order.itemPriceInfo.totalPrice}">
                                     <span class="totalWon"> 원</span>
                                 </div>
                                 <div class="addBtn">
@@ -122,7 +123,7 @@
                                 </button>
 
                                 <button type="submit" class="btn btn-primary btn-lg getOrder"
-                                        onclick="getOrderItemId()">
+                                        onclick="proceedCheckout()">
                                     바로구매
                                 </button>
 

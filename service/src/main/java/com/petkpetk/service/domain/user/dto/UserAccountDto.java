@@ -56,7 +56,14 @@ public class UserAccountDto {
 		this.businessNumber = businessNumber;
 	}
 
+	public UserAccountDto(Set<RoleType> roles) {
+		this.roles =roles;
+	}
+
 	public static UserAccountDto from(UserAccountPrincipal userAccountPrincipal) {
+		if (userAccountPrincipal ==null) {
+			return UserAccountDto.of(Set.of(RoleType.ANONYMOUS));
+		}
 		UserAccountDto userAccountDto = EntityAndDtoConverter.convertToDto(userAccountPrincipal, UserAccountDto.class);
 		userAccountDto.setRoles(Set.of(RoleType.USER));
 		return userAccountDto;
@@ -83,6 +90,10 @@ public class UserAccountDto {
 		String phoneNumber, String businessName, String businessNumber) {
 		return new UserAccountDto(id, email, password, name, nickname, profileImage, address, OAuth2ProviderInfo, roles,
 			phoneNumber, businessName, businessNumber);
+	}
+
+	public static UserAccountDto of(Set<RoleType> roles){
+		return new UserAccountDto(roles);
 	}
 
 }

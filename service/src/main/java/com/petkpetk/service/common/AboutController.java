@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.dto.request.UserAskRequest;
 import com.petkpetk.service.domain.user.dto.security.UserAccountPrincipal;
 import com.petkpetk.service.domain.user.service.UserAskService;
@@ -36,8 +37,7 @@ public class AboutController {
 
 	@PostMapping("/askPost")
 	public String askPost(UserAskRequest userAskRequest, @AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal) {
-		//Todo:: 비회원 유저도 문의사항을 넣을 수 있다. 회원이 문의 사항을 넣으면 유저 정보도 같이 저장된다.
-		userAskService.saveAsk(userAskRequest, userAccountPrincipal);
+		userAskService.saveAsk(userAskRequest, UserAccountDto.from(userAccountPrincipal));
 		return "redirect:/about/ask";
 	}
 

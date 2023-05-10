@@ -158,9 +158,7 @@ public class UserAccountService {
 		return userAccountRepository.findByEmail(email).isPresent();
 	}
 
-	public Optional<UserAccount> findByEmail(String email) {
+	private Optional<UserAccount> findByEmail(String email) {
 		return userAccountRepository.findByEmail(email);
 	}
-
-
 }

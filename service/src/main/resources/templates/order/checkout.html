@@ -103,7 +103,7 @@
                 <div class="oldAddressInfo">주소</div>
                 <!--        <textarea id="shippingAddress" name="shippingAddress" rows="3" required></textarea>-->
                 <textarea id="oldShippingAddress" name="shippingAddress" rows="3"
-                          th:text="${'('+user.address.zipCode+') '+user.address.address1+' '+user.address.address2+' '+user.address.addressEtc+''}"
+                          th:text="${'('+user.address.address.zipCode+') '+user.address.address.address1+' '+user.address.address.address2+' '+user.address.address.addressEtc+''}"
                           readonly></textarea>
             </div>
         </div>
@@ -135,42 +135,17 @@
         </div>
 
 
-
-
-<!--         결제정보 테이블 구현 -->
-<!--        <table>-->
-<!--            <tr>-->
-<!--                <td><strong>결제금액</strong></td>-->
-<!--                <td></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td>총 상품 금액</td>-->
-<!--                <td th:text="*{checkoutPriceInfo.totalPrice}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td>배송비</td>-->
-<!--                <td th:text="*{checkoutPriceInfo.deliveryPrice}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td>쿠폰 사용</td>-->
-<!--                <td th:text="*{checkoutPriceInfo.couponDiscount}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td>포인트 사용</td>-->
-<!--                <td th:text="*{checkoutPriceInfo.pointDiscount}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td><strong>최종 결제금액</strong></td>-->
-<!--                <td><strong id="finalPaymentPrice"-->
-<!--                            th:text="*{checkoutPriceInfo.finalPaymentPrice}"></strong></td>-->
-<!--            </tr>-->
-<!--        </table>-->
-
         <div id="payInformationBox">
             <h2>결제 정보</h2>
 
             <div style="display: flex; align-items: center;">
                 <div class="payInfo">총 상품 금액</div>
+                <div class="totalPrice" th:text="*{checkoutPriceInfo.totalPrice}"></div>
+            </div>
+
+            <div style="display: flex; align-items: center;">
+                <div class="payInfo">배송비</div>
+                <div class="deliveryPrice" th:text="*{checkoutPriceInfo.deliveryPrice}"></div>
                 <div class="totalPrice" th:text="*{checkoutPriceInfo.totalPrice}"></div>
             </div>
 
@@ -223,6 +198,7 @@
             <input type="hidden" id="paymentItemName" th:field="${payment.itemName}">
             <input type="hidden" id="paymentFinalPaymentPrice"
                    th:field="${payment.finalPaymentPrice}">
+
 
             <input type="hidden" id="finalPaymentPrice" th:value="*{checkoutPriceInfo.finalPaymentPrice}">
             <input type="submit" id="finalPaymentPriceBtn" th:value="*{checkoutPriceInfo.finalPaymentPrice+'원 주문'}">

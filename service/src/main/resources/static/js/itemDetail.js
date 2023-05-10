@@ -372,6 +372,11 @@ function redirectLoginPage() {
     window.location.href = '/login';
 }
 
+function proceedCheckout(){
+    $("#priceInfoTotalPrice").val($("#totalPrice").text());
+    getOrderItemId();
+}
+
 function getOrderItemId(){
     $("#orderItemId").val($("#itemId").val());
 }

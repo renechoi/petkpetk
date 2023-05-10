@@ -32,7 +32,7 @@ public class CheckoutController {
 		CheckoutResponse checkoutResponse = orderService.createCheckOut(checkoutRequest);
 		model.addAttribute("item", checkoutResponse);
 		model.addAttribute("payment", new PaymentRequest());
-		model.addAttribute("user", userAccountService.findByEmail(userAccountPrincipal.getEmail()).orElseThrow(UserNotFoundException::new));
+		model.addAttribute("user", userAccountPrincipal);
 
 		return "order/checkout";
 	}
