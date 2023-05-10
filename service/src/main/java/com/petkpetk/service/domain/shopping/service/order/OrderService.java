@@ -166,7 +166,7 @@ public class OrderService {
 
 	public CheckoutResponse createCheckOut(CheckoutRequest checkoutRequest) {
 		checkoutRequest.getCheckoutDtos()
-			.forEach(checkoutDto -> checkoutDto.update(itemService.searchItem(checkoutDto.getItemId())));
+			.forEach(checkoutDto -> checkoutDto.update(itemService.searchItemWithItemImageIsRepresentative(checkoutDto.getItemId())));
 
 		return CheckoutResponse.of(checkoutRequest.getCheckoutDtos(), CheckoutPriceInfo.of(checkoutRequest));
 	}
