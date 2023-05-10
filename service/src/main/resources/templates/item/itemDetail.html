@@ -253,9 +253,8 @@
                                       method="post" th:if="${review.getUserAccountDto.email.equals(userEmail)}">
                                     <input type="hidden" th:id="'modifyId'+${number}"
                                            th:class="'reviewList['+${number}+']'">
+                                    <input class="modify reviewBtn" type="button" value="수정" th:onclick="'showReviewModal('+${review.getId()}+', '+${item.id}+')'">
                                     <input class="delete reviewBtn" type="submit" value="삭제">
-                                    <input class="modify reviewBtn" type="button" value="수정"
-                                           th:onclick="'showReviewModal('+${review.getId()}+', '+${item.id}+')'">
                                 </form>
                             </div>
                         </div>
