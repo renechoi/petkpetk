@@ -20,6 +20,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,6 +43,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Table(indexes = {@Index(columnList = "email"), @Index(columnList = "createdAt"), @Index(columnList = "createdBy")})
 @Entity
+@Where(clause = "deleted_yn='N'")
 public class UserAccount extends AuditingFields implements Serializable {
 
 	//Todo: 칼럼 length 제한 설정

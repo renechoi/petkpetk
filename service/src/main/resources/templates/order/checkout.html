@@ -119,7 +119,7 @@
                         <img class="itemImage" src="/images/HyeJin.png">
                     </div>
                     <div class="itemDetailBox">
-                        <div class="itemName" id="itemName" th:text="${itemInfo.itemName}"></div>
+                        <div class="itemName" th:text="${itemInfo.itemName}"></div>
                         <div id="chooseAmount">
                             <div class="itemPrice" style="display: flex;">
                                 <div class="originalPrice" th:text="${itemInfo.originalPrice}"></div>
@@ -137,7 +137,7 @@
 
 
 
-        <!-- 결제정보 테이블 구현 -->
+<!--         결제정보 테이블 구현 -->
 <!--        <table>-->
 <!--            <tr>-->
 <!--                <td><strong>결제금액</strong></td>-->
@@ -171,6 +171,11 @@
 
             <div style="display: flex; align-items: center;">
                 <div class="payInfo">총 상품 금액</div>
+                <div class="totalPrice" th:text="*{checkoutPriceInfo.totalPrice}"></div>
+            </div>
+
+            <div style="display: flex; align-items: center;">
+                <div class="payInfo">배송비</div>
                 <div class="deliveryPrice" th:text="*{checkoutPriceInfo.deliveryPrice}"></div>
             </div>
 
@@ -199,7 +204,7 @@
 
         <!-- 결제 수단 입력 -->
         <h2>결제 수단</h2>
-        <div style="display: flex; align-items">
+        <div style="display: flex; align-items: center;">
             <div class="paymentMethod">결제 수단</div>
             <select id="paymentMethod" name="paymentMethod">
                 <!--            <select id="paymentMethod" name="paymentMethod" required>-->
@@ -219,7 +224,8 @@
             <input type="hidden" id="paymentFinalPaymentPrice"
                    th:field="${payment.finalPaymentPrice}">
 
-            <input type="submit" id="finalPaymentPrice" th:value="*{checkoutPriceInfo.finalPaymentPrice+'원 주문하기'}">
+            <input type="hidden" id="finalPaymentPrice" th:value="*{checkoutPriceInfo.finalPaymentPrice}">
+            <input type="submit" id="finalPaymentPriceBtn" th:value="*{checkoutPriceInfo.finalPaymentPrice+'원 주문'}">
         </div>
 
     </div>

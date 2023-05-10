@@ -1,3 +1,17 @@
+if ($("img.userProfile").attr("src") != $("#userProfileImage").attr("src")) {
+    $("img.userProfile").attr("src", $("#userProfileImage").attr("src"));
+
+}
+
+if ($("#userProfileImage").attr("src") != "/images/basicProfile.png") {
+    $.ajax({
+        url:"/api/setUserPrincipalProfile",
+        success: function () {
+        }
+    })
+}
+
+
 function openNewInfoBox() {
     var originalInformation = document.getElementById("originalInformation");
     var newUserInformationForm = document.getElementById("newUserInformationForm");
@@ -118,9 +132,8 @@ newInfoForm.addEventListener('submit', function (event) {
         alert("닉네임을 확인해주세요.");
         return false;
     }
+
     newInfoForm.submit();
-
-
 });
 
 $("#newNickName").on("keyup", function () {

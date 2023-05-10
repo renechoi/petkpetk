@@ -1,14 +1,14 @@
-// $("#paymentItemName").val($("#itemName").val());
-// $("#paymentFinalPaymentPrice").val($("#finalPaymentPrice").val());
+function mapPaymentRequest() {
+    console.log("check")
+    $("#paymentItemName").val($(".itemName").text());
+    $("#paymentFinalPaymentPrice").val($("#finalPaymentPrice").text());
+}
 
 mapPaymentRequest();
 
 
-function mapPaymentRequest() {
-    console.log("check")
-    $("#paymentItemName").val($("#itemName").text());
-    $("#paymentFinalPaymentPrice").val($("#finalPaymentPrice").text());
-}
+// ============================================================
+
 
 $("#getNewAddress").on("click", function () {
     $("#newAddress").css("display", "block");

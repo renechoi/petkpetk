@@ -34,22 +34,6 @@ public class CheckoutController {
 		model.addAttribute("payment", new PaymentRequest());
 		model.addAttribute("user", userAccountService.findByEmail(userAccountPrincipal.getEmail()).orElseThrow(UserNotFoundException::new));
 
-		// CheckoutRequest checkoutRequest = new CheckoutRequest(checkoutDto);
-		// CheckoutResponse checkoutResponse = orderService.createCheckOut(checkoutRequest);
-		// model.addAttribute("item", checkoutResponse);
-		// model.addAttribute("checkoutPriceInfo", checkoutResponse.getCheckoutPriceInfo());
-		// return "order/checkout";
-
-
-
-		// 주문 정보
-		// model.addAttribute("item", checkoutResponse);
-		// // 결제 정보
-		// model.addAttribute("payment", checkoutResponse.getCheckoutPriceInfo());
-		//
-		// // 배송 정보
-		// model.addAttribute("delivery", checkoutResponse.getCheckoutPriceInfo().getDeliveryPrice());
-
 		return "order/checkout";
 	}
 
