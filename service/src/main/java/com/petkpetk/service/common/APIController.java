@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ import com.petkpetk.service.domain.shopping.dto.item.MainItemDto;
 import com.petkpetk.service.domain.shopping.service.item.ItemService;
 import com.petkpetk.service.domain.shopping.service.review.ReviewService;
 import com.petkpetk.service.domain.shopping.service.review.likes.ReviewLikesService;
+import com.petkpetk.service.domain.user.dto.security.UserAccountPrincipal;
 import com.petkpetk.service.domain.user.service.UserAccountService;
 
 import lombok.RequiredArgsConstructor;
@@ -76,20 +78,24 @@ public class APIController {
 
 	@RequestMapping("/articles")
 	@ResponseBody
-	public Map<String, Object> getArticles(@RequestParam(required = false, name = "searchType") SearchType searchType,
-		@RequestParam(required = false) String searchValue, @PageableDefault(size = 12) Pageable pageable, Model model,
+	public Map<String, Object> getArticles(
+		@RequestParam(required = false, name = "searchType") SearchType searchType,
+		@RequestParam(required = false) String searchValue,
+		@PageableDefault(size = 12) Pageable pageable, Model model,
 		@RequestParam(required = false, defaultValue = "createdAt") String sort) {
 
 		Map<String, Object> result = new HashMap<>();
 
 		if (sort.equals("hit")) {
-			pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("hit").descending());
+			pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
+				Sort.by("hit").descending());
 		} else {
 			pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
 				Sort.by("createdAt").descending());
 		}
 
-		Page<ArticleResponse> articles = articleService.searchArticles(searchType, searchValue, pageable)
+		Page<ArticleResponse> articles = articleService.searchArticles(searchType, searchValue,
+				pageable)
 			.map(ArticleResponse::from);
 
 		int totalCount = articleService.getArticleTotalCount();
@@ -117,6 +123,12 @@ public class APIController {
 	@ResponseBody
 	public boolean checkNickname(String nickname, String email) {
 		return userAccountService.isNicknameDuplicate(nickname, email);
+	}
+
+	@RequestMapping("/setUserPrincipalProfile")
+	public boolean setUserPrincipalProfile(@AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal) {
+		 userAccountPrincipal.setProfileImage(userAccountService.getUserProfile(userAccountPrincipal));
+		 return true;
 	}
 
 }

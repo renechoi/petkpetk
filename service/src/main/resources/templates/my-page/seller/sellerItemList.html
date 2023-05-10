@@ -55,12 +55,12 @@
                 <thead>
                 <tr>
                     <td class="imgTd"></td>
-                    <td>상품번호</td>
+                    <td style="width: 100px;">상품번호</td>
                     <td>상품명</td>
-                    <td>상태</td>
-                    <td>등록자</td>
+                    <td style="width: 100px;">상태</td>
+                    <td style="width: 100px;">등록자</td>
                     <td class="resigteredAt">등록일</td>
-                    <td></td>
+                    <td style="max-width: 120px"></td>
                 </tr>
                 </thead>
                 <tbody>
@@ -68,7 +68,7 @@
                     <td><img class="productImg" th:src="${item.imageUrl}" th:alt="${item.itemName}">
                     </td>
                     <td th:text="${item.id}"></td>
-                    <td>
+                    <td style="text-align: left">
                         <a th:href="'/item/'+${item.id}" th:text="${item.itemName}"></a>
                     </td>
                     <td th:if="${item.itemStatus eq T(com.petkpetk.service.domain.shopping.constant.ItemStatus).SELL}"
@@ -77,9 +77,11 @@
                         th:text="품절" style="color: #ff415a">
                     <td th:text="${item.createdBy}"></td>
                     <td th:text="${#temporals.format(item.registeredAt, 'yyyy-MM-dd HH:mm')}"></td>
-                    <td>
-                        <a th:href="'/item/modify/'+${item.id}"><input id="itemModify" type="button" value="수정"></a>
-                        <a th:href="'/item/delete/'+${item.id}"><input id="itemDelete" type="button" value="삭제"></a>
+                    <td >
+                        <div style="display: flex; justify-content: center;">
+                            <a th:href="'/item/modify/'+${item.id}"><input id="itemModify" type="button" value="수정"></a>
+                            <a th:href="'/item/delete/'+${item.id}"><input id="itemDelete" type="button" value="삭제"></a>
+                        </div>
                     </td>
                 </tr>
                 </tbody>

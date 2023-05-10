@@ -1,4 +1,15 @@
+if ($("img.userProfile").attr("src") != $("#userProfileImage").attr("src")) {
+    $("img.userProfile").attr("src", $("#userProfileImage").attr("src"));
 
+}
+
+if ($("#userProfileImage").attr("src") != "/images/basicProfile.png") {
+    $.ajax({
+        url:"/api/setUserPrincipalProfile",
+        success: function () {
+        }
+    })
+}
 
 function openNewInfoBox() {
     var originalInformation = document.getElementById("originalInformation");

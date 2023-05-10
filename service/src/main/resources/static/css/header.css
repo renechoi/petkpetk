@@ -46,6 +46,10 @@ ul {
     color: white;
 }
 
+.menuBox a li {
+
+}
+
 .createBusiness {
     display: flex;
 }
@@ -207,7 +211,7 @@ hr {
 }
 
 
-ul.menuBox li a {
+ul.menuBox a li  {
     text-decoration: none;
     color: #60423b;
 }
