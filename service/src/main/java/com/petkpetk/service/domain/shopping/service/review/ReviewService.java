@@ -27,6 +27,7 @@ import com.petkpetk.service.domain.shopping.repository.item.ItemImageRepository;
 import com.petkpetk.service.domain.shopping.repository.item.ItemRepository;
 import com.petkpetk.service.domain.shopping.repository.review.ReviewImageRepository;
 import com.petkpetk.service.domain.shopping.repository.review.ReviewRepository;
+import com.petkpetk.service.domain.shopping.repository.review.likes.ReviewLikesRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,6 +36,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ReviewService {
 
+	private final ReviewLikesRepository reviewLikesRepository;
 	private final ReviewRepository reviewRepository;
 	private final ReviewImageRepository reviewImageRepository;
 	private final ItemRepository itemRepository;
@@ -52,18 +54,7 @@ public class ReviewService {
 		IntStream.range(0, images.size())
 			.forEach(image -> imageLocalRepository.save(images.get(image), reviewDto.getRawImages().get(image)));
 
-		List<Review> reviewList = reviewRepository.findAllByItem_Id(reviewDto.getItem().getId());
-		final Double[] totalRating = {0.0};
-
-		reviewList.stream()
-			.forEach(review -> {
-				totalRating[0] +=review.getRating();
-			});
-
-		Double rating = totalRating[0]/(double)reviewList.size();
-		rating = (Math.round(rating * 2) / 2.0);
-		Item item =itemRepository.findById(reviewDto.getItem().getId()).get();
-		item.setTotalRating(rating);
+		setItemRating(reviewDto.getItem().getId());
 	}
 
 	public List<ReviewResponse> getReviewList(Long itemId) {
@@ -99,24 +90,15 @@ public class ReviewService {
 		Long itemId = review.getItem().getId();
 		review.setDeletedYn("Y");
 
+		reviewLikesRepository.deleteAllByReviewId(reviewId);
+
 		List<ReviewImage> reviewImages = reviewImageRepository.findByReviewIdOrderByIdAsc(reviewId);
 		reviewImages.forEach(reviewImage -> reviewImage.setDeletedYn("Y"));
 
 		imageLocalRepository.deleteFiles(reviewImages);
 
 
-		List<Review> reviewList = reviewRepository.findAllByItem_Id(itemId);
-		final Double[] totalRating = {0.0};
-
-		reviewList.stream()
-			.forEach(reviews -> {
-				totalRating[0] +=reviews.getRating();
-			});
-
-		Double rating = totalRating[0]/(double)reviewList.size();
-		rating =(Math.round(rating * 2) / 2.0);
-		Item item =itemRepository.findById(itemId).get();
-		item.setTotalRating(rating);
+		setItemRating(itemId);
 
 	}
 
@@ -157,22 +139,7 @@ public class ReviewService {
 		review.setContent(reviewRegisterRequest.getContent());
 		review.setRating(reviewRegisterRequest.getRating());
 
-		List<Review> reviewList = reviewRepository.findAllByItem_Id(itemId);
-		final Double[] totalRating = {0.0};
-
-		reviewList.stream()
-			.forEach(reviews -> {
-				totalRating[0] +=reviews.getRating();
-			});
-
-		Double rating = totalRating[0]/reviewList.size();
-
-		System.out.println("rating = " + rating);
-		rating = (Math.round(rating * 2) / 2.0);
-		System.out.println("rating = " + rating);
-
-		Item item =itemRepository.findById(itemId).get();
-		item.setTotalRating(rating);
+		setItemRating(itemId);
 
 		return ReviewResponse.from(review);
 	}
@@ -215,5 +182,28 @@ public class ReviewService {
 		return reviewResponses;
 	}
 
+	private void setItemRating(Long itemId) {
+		List<Review> reviewList = reviewRepository.findAllByItem_Id(itemId);
+		double totalRating = 0.0;
+
+		for (Review review : reviewList) {
+			totalRating += review.getRating();
+		}
+
+		double averageRating = totalRating / reviewList.size();
+		double rating = Math.round(averageRating * 2) / 2.0;
+
+		if (rating % 1 != 0) {
+			rating = Math.floor(rating) + 0.5;
+		}
+		rating = Math.min(rating, 5.0);
+
+		Item item = itemRepository.findById(itemId).orElse(null);
+
+		if (item != null) {
+			item.setTotalRating(rating);
+			itemRepository.flush();
+		}
+	}
 
 }
