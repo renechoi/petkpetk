@@ -95,7 +95,7 @@ public class ArticleController {
 
 		articleService.saveArticle(ArticleDto.from(articlePostRequest, UserAccountDto.from(userAccountPrincipal)));
 
-		return "redirect:/";
+		return "redirect:/community/articles";
 	}
 
 	@PostMapping("/{articleId}/delete")
