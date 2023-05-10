@@ -1,7 +1,6 @@
 function mapPaymentRequest() {
     console.log("check")
     $("#paymentItemName").val($(".itemName").text());
-    $("#paymentFinalPaymentPrice").val($("#finalPaymentPrice").val());
 }
 
 mapPaymentRequest();

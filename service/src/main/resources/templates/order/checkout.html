@@ -140,6 +140,11 @@
 
             <div style="display: flex; align-items: center;">
                 <div class="payInfo">총 상품 금액</div>
+                <div class="totalPrice" th:text="*{checkoutPriceInfo.totalPrice}"></div>
+            </div>
+
+            <div style="display: flex; align-items: center;">
+                <div class="payInfo">배송비</div>
                 <div class="deliveryPrice" th:text="*{checkoutPriceInfo.deliveryPrice}"></div>
                 <div class="totalPrice" th:text="*{checkoutPriceInfo.totalPrice}"></div>
             </div>
@@ -194,7 +199,8 @@
             <input type="hidden" id="paymentFinalPaymentPrice"
                    th:field="${payment.finalPaymentPrice}">
 
-            <input  id="finalPaymentPrice" th:value="*{checkoutPriceInfo.finalPaymentPrice}">
+
+            <input type="hidden" id="finalPaymentPrice" th:value="*{checkoutPriceInfo.finalPaymentPrice}">
             <input type="submit" id="finalPaymentPriceBtn" th:value="*{checkoutPriceInfo.finalPaymentPrice+'원 주문'}">
         </div>
 
