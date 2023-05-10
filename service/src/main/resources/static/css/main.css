@@ -81,12 +81,15 @@ a .productOneBlock:hover {
     border: 1px solid red;
     background-color: red;
     border-radius: 3px;
-    padding: 1px 7px;
     font-size: 10px;
     color: white;
-    margin: 0 -10px 0 10px;
     position: relative;
-    top: 2px;
+    top: 7px;
+    height: 15px;
+    min-width: 15%;
+    margin-right: 2px;
+    text-align: center;
+    line-height: 14px;
 }
 
 
@@ -107,7 +110,8 @@ a .productOneBlock:hover {
     font-size: 18px;
     position: relative;
     top: 5px;
-    height: 42px;
+    height: 50px;
+    min-width: 80%;
 
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -219,7 +223,8 @@ span.discountRate {
     }
 
     .productName {
-        font-size: 16px;
+        font-size: 18px;
+        height: 47px;
     }
 
     .star {
@@ -230,6 +235,16 @@ span.discountRate {
         bottom: 2px;
         font-size: 12px;
     }
+
+    .productPrice {
+        font-size: 18px;
+    }
+
+    .discountRate {
+        font-size: 17px;
+    }
+
+
 }
 
 @media screen and (max-width: 1000px) {
@@ -255,56 +270,58 @@ span.discountRate {
 
     }
 
-
-}
-
-@media screen and (max-width: 880px) {
-    .mainContainer a {
-        width: 32%;
-        min-width: 180px;
-        margin: 10px calc((100% - (32% * 3)) / 6);
-    }
-
-    .searchResultString {
-        max-width: 70%;
-    }
-
-    .productPicture {
-        width: 100%;
-        height: 170px;
-    }
-
-}
-
-@media screen and (max-width: 700px) {
-    .searchResultString {
-        max-width: 75%;
-        margin-top: 20px;
-    }
-
-    .mainContainer {
-        padding: 0 5% 0 10%;
-
-    }
-
-    .mainContainer a {
-        width: 45%;
-        margin: 15px calc((100% - (48% * 2)) / 4);
-    }
-
-    .productPicture {
-        width: 100%;
-        height: 170px;
-    }
-
-}
-
-@media screen and (max-width: 560px) {
-
-    .searchResultString {
-        max-width: 90%;
-        margin-top: 20px;
+    .discountRate {
         font-size: 15px;
+    }
+
+    @media screen and (max-width: 880px) {
+        .mainContainer a {
+            width: 32%;
+            min-width: 180px;
+            margin: 10px calc((100% - (32% * 3)) / 6);
+        }
+
+        .searchResultString {
+            max-width: 70%;
+        }
+
+        .productPicture {
+            width: 100%;
+            height: 170px;
+        }
+
+    }
+
+    @media screen and (max-width: 700px) {
+        .searchResultString {
+            max-width: 75%;
+            margin-top: 20px;
+        }
+
+        .mainContainer {
+            padding: 0 5% 0 10%;
+
+        }
+
+        .mainContainer a {
+            width: 45%;
+            margin: 15px calc((100% - (48% * 2)) / 4);
+        }
+
+        .productPicture {
+            width: 100%;
+            height: 170px;
+        }
+
+    }
+
+    @media screen and (max-width: 560px) {
+
+        .searchResultString {
+            max-width: 90%;
+            margin-top: 20px;
+            font-size: 15px;
+        }
     }
 }
 
