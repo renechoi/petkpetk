@@ -12,4 +12,7 @@ public interface ReviewLikesRepository extends JpaRepository<ReviewLikes, Long> 
 	ReviewLikes findByUserAccountAndReview(UserAccount userAccount, Review review);
 
 	List<ReviewLikes> findAllByUserAccount(UserAccount userAccount);
+
+
+	void deleteAllByReviewId(Long reviewId);
 }

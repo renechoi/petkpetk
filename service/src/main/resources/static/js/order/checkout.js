@@ -68,6 +68,14 @@ checkOutForm.addEventListener("submit", function (event) {
         return false;
     }
 
+    if ($("#oldAddress").css("display") == "none") {
+        if ($("#detailAddress").val() == "") {
+            alert("상세 주소를 적어주세요.");
+            return false;
+        }
+        $("input[name='shippingAddress']").val('('+$("#zipCode").val()+') '+ $("#addr").val() + ' ' + $("#detailAddress").val() + ' ' + $("#extraAddress").val());
+    }
+
     if ($("input[name='shippingAddress']").val() == "") {
         alert("배송지 정보를 확인해주세요.");
         return false;
@@ -78,12 +86,15 @@ checkOutForm.addEventListener("submit", function (event) {
         return false;
     }
 
+
+
+
     checkOutForm.submit();
 });
 
 
 // 전체 동의 체크박스가 클릭될 때
-$('#all-agreements').click(function (event) {
+$('#all-agreements').click(function () {
     if (this.checked) {
         // 전체 동의 체크박스가 체크된 경우
         // 모든 체크박스를 체크하고 all-agreements도 체크
@@ -97,7 +108,7 @@ $('#all-agreements').click(function (event) {
     }
 });
 
-$('.checking').click(function (event) {
+$('.checking').click(function () {
     if ($('.checking:checked').length === $('.checking').length) {
         // 모든 체크박스가 체크된 경우 all-agreements도 체크
         $('#all-agreements').prop('checked', true);
