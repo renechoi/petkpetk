@@ -617,6 +617,7 @@ textarea#reviewModalContent {
 
 
 .itemDetailZone {
+    text-align: center;
     background-color: #ffecec;
     padding: 30px;
     border-radius: 5px;
