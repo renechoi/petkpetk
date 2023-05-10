@@ -1,20 +1,26 @@
 package com.petkpetk.service.domain.user.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Where;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.petkpetk.service.common.AuditingFields;
+import com.petkpetk.service.common.RoleType;
 import com.petkpetk.service.domain.user.constant.AnswerStatus;
 import com.petkpetk.service.domain.user.constant.QnACategory;
 
@@ -55,4 +61,21 @@ public class UserAsk extends AuditingFields {
 	@Enumerated(EnumType.STRING)
 	private AnswerStatus answerStatus = AnswerStatus.ANSWERING; //Todo:: 관리자가 답변하면 AnswerStatus.ANSWERED 로 바꿔줘야한다.
 
+	public void mapUserAccount(UserAccount userAccount) {
+		if (userAccount.getRoles().stream().anyMatch(roleType -> roleType.equals(RoleType.ANONYMOUS))){
+			this.userAccount= null;
+			return;
+		}
+		this.userAccount = userAccount;
+	}
+
+	@PrePersist
+	public void anonymousSetup() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication == null || "anonymousUser".equals(authentication.getName())
+		) {
+			this.createdBy = "anonymousUser";
+			this.modifiedBy = "anonymousUser";
+		}
+	}
 }

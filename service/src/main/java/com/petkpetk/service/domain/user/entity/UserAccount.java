@@ -26,9 +26,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.petkpetk.service.common.AuditingFields;
+import com.petkpetk.service.config.converter.EntityAndDtoConverter;
 import com.petkpetk.service.config.converter.RoleTypeConverter;
 import com.petkpetk.service.common.RoleType;
 import com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo;
+import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.dto.request.UserUpdateRequest;
 import com.petkpetk.service.domain.user.entity.embedded.Address;
 
@@ -117,6 +119,10 @@ public class UserAccount extends AuditingFields implements Serializable {
 	public static UserAccount of(String email, String password, String name, String nickname,ProfileImage profileImage, Address address,
 		 OAuth2ProviderInfo OAuth2ProviderInfo, Set<RoleType> roles,  String phoneNumber, String businessName, String businessNumber) {
 		return new UserAccount(email, password, name, nickname, profileImage, address, OAuth2ProviderInfo, roles, phoneNumber, businessName, businessNumber);
+	}
+
+	public static UserAccount from(UserAccountDto userAccountDto) {
+		return EntityAndDtoConverter.convertToEntity(userAccountDto, UserAccount.class);
 	}
 
 	private ProfileImage mapImage(ProfileImage profile) {
