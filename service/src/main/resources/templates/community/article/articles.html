@@ -82,7 +82,7 @@
                             <div class="articleContentBox">
                                 <div>
                                     <div class="userInfoBox">
-                                        <div class="userNickName">닉네임</div>
+                                        <div class="userNickName" th:text="${article.name}"></div>
                                         <div class="registerTime" th:id="'createdAt'+${num}"></div>
                                     </div>
                                     <div style="display: flex; justify-content: space-between;">
@@ -113,7 +113,7 @@
                             <img class="articleFirstImage" th:if="${not #lists.isEmpty(article.rawImages)}" th:src="${article.rawImages.get(0).getName()}">
                             <div class="articleContentBox">
                                 <div class="userInfoBox">
-                                    <div class="userNickName">닉네임</div>
+                                    <div class="userNickName" th:text="${article.name}"></div>
                                     <div class="registerTime" th:id="'createdAt'+${num}"></div>
                                 </div>
                                 <div>
@@ -146,8 +146,9 @@
                             <div class="articleContentBox">
                                 <div>
                                     <div class="userInfoBox">
-                                        <div class="userNickName">닉네임</div>
+                                        <div class="userNickName" th:text="${article.name}" ></div>
                                         <div class="registerTime" th:id="'createdAt'+${num}"></div>
+
                                     </div>
                                     <div style="display: flex; justify-content: space-between;">
                                         <div class="articleTitle" th:text="${article.title}"></div>

@@ -94,13 +94,13 @@ public class Article extends AuditingFields {
 		this.articleImages = images;
 	}
 
+	public void addHashtags(Set<Hashtag> hashtags) {
+		this.hashtags = hashtags;
+	}
+
 	private List<ArticleImage> setRepresentativeImage(List<ArticleImage> images) {
 		images.get(0).setRepresentativeImageYn("Y");
 		return images;
-	}
-
-	public void addHashtags(Set<Hashtag> hashtags) {
-		this.hashtags = hashtags;
 	}
 
 	@Override

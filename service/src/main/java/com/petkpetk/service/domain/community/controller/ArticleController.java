@@ -46,16 +46,13 @@ public class ArticleController {
 	 * e.g. articles?page=0&sort=&searchType=HASHTAG&searchValue=hashtag1
 	 */
 	@GetMapping
-	public String articles(@RequestParam(required = false, name = "searchType") SearchType searchType,
-		@RequestParam(required = false) String searchValue, @PageableDefault(size = 12) Pageable pageable, Model model,
+	public String articles(
+		@RequestParam(required = false, name = "searchType") SearchType searchType,
+		@RequestParam(required = false) String searchValue,
+		@PageableDefault(size = 12) Pageable pageable, Model model,
 		@RequestParam(required = false, defaultValue = "createdAt") String sort) {
-		if (sort.equals("hit")) {
-			pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("hit").descending());
-		} else {
-			pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
-				Sort.by("createdAt").descending());
-		}
 
+		pageable = getPageable(pageable, sort);
 		Page<ArticleResponse> articles = articleService.searchArticles(searchType, searchValue, pageable)
 			.map(ArticleResponse::from);
 		List<Integer> pageBars = paginationService.getPageBars(pageable.getPageNumber(), articles.getTotalPages());
@@ -106,5 +103,15 @@ public class ArticleController {
 		articleService.deleteArticle(articleId);
 
 		return "redirect:/articles";
+	}
+
+	private Pageable getPageable(Pageable pageable, String sort) {
+		if (sort.equals("hit")) {
+			pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("hit").descending());
+		} else {
+			pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
+				Sort.by("createdAt").descending());
+		}
+		return pageable;
 	}
 }

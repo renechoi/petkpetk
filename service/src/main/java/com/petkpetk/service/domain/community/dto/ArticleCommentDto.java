@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ArticleCommentDto {
-	// todo : 구현
 
 	private Long id;
 	private ArticleDto articleDto;

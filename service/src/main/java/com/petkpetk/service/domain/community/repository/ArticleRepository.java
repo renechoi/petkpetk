@@ -18,19 +18,9 @@ public interface ArticleRepository
 
 	Page<Article> findByContentContaining(String content, Pageable pageable);
 
-	Page<Article> findByCategoryTypeContaining(String category, Pageable pageable);
-
-	Page<Article> findByCategoryType(CategoryType categoryType, Pageable pageable);
-
 	Page<Article> findByCategoryTypeIn(Set<CategoryType> categoryTypes, Pageable pageable);
 
 	Page<Article> findByUserAccount_NicknameContaining(String nickname, Pageable pageable);
 
 	Article findTopByOrderByIdDesc();
-
-	Page<Article> findAllByOrderByCreatedAtDesc(Pageable pageable);
-
-	List<Article> findAllByOrderByLikesDesc(Pageable pageable);
-
-	Page<Article> findAllByOrderByHitAsc(Pageable pageable);
 }

@@ -60,6 +60,4 @@ public class ArticleComment extends AuditingFields {
 		this.content = content;
 		this.parentCommentId = parentCommentId;
 	}
-
-
 }

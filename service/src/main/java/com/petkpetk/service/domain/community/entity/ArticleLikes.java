@@ -50,6 +50,4 @@ public class ArticleLikes extends AuditingFields {
 	public static ArticleLikes of(UserAccount userAccount, Article article){
 		return new ArticleLikes(userAccount, article);
 	}
-
-
 }
