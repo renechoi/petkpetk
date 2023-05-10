@@ -135,37 +135,6 @@
         </div>
 
 
-
-
-<!--         결제정보 테이블 구현 -->
-<!--        <table>-->
-<!--            <tr>-->
-<!--                <td><strong>결제금액</strong></td>-->
-<!--                <td></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td>총 상품 금액</td>-->
-<!--                <td th:text="*{checkoutPriceInfo.totalPrice}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td>배송비</td>-->
-<!--                <td th:text="*{checkoutPriceInfo.deliveryPrice}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td>쿠폰 사용</td>-->
-<!--                <td th:text="*{checkoutPriceInfo.couponDiscount}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td>포인트 사용</td>-->
-<!--                <td th:text="*{checkoutPriceInfo.pointDiscount}"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td><strong>최종 결제금액</strong></td>-->
-<!--                <td><strong id="finalPaymentPrice"-->
-<!--                            th:text="*{checkoutPriceInfo.finalPaymentPrice}"></strong></td>-->
-<!--            </tr>-->
-<!--        </table>-->
-
         <div id="payInformationBox">
             <h2>결제 정보</h2>
 
@@ -225,7 +194,7 @@
             <input type="hidden" id="paymentFinalPaymentPrice"
                    th:field="${payment.finalPaymentPrice}">
 
-            <input type="hidden" id="finalPaymentPrice" th:value="*{checkoutPriceInfo.finalPaymentPrice}">
+            <input  id="finalPaymentPrice" th:value="*{checkoutPriceInfo.finalPaymentPrice}">
             <input type="submit" id="finalPaymentPriceBtn" th:value="*{checkoutPriceInfo.finalPaymentPrice+'원 주문'}">
         </div>
 
