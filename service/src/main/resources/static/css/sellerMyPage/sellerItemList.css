@@ -1,5 +1,6 @@
 #sellerItemList {
     width: 100%;
+    min-width: 880px;
 }
 
 .MyPageTitle {
@@ -155,11 +156,11 @@ tbody a:hover {
 }
 
 .resigteredAt {
-    width: 220px;
+    width: 150px;
 }
 
 .imgTd {
-    width: 140px;
+    width: 120px;
 }
 
 input#itemModify {
@@ -170,6 +171,7 @@ input#itemModify {
     border-radius: 5px;
     background-color: #ffffff8c;
     color: #ff9494;
+    margin: 0 5px;
 }
 input#itemDelete{
     width: 50px;

@@ -107,6 +107,7 @@ a .productOneBlock:hover {
     font-size: 18px;
     position: relative;
     top: 5px;
+    height: 42px;
 
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -244,6 +245,8 @@ span.discountRate {
 
     .productName {
         font-size: 15px;
+        height: 39px;
+
     }
 
     .productPicture {
@@ -258,6 +261,7 @@ span.discountRate {
 @media screen and (max-width: 880px) {
     .mainContainer a {
         width: 32%;
+        min-width: 180px;
         margin: 10px calc((100% - (32% * 3)) / 6);
     }
 

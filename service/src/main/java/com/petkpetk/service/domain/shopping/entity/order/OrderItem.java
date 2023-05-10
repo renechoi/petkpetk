@@ -38,7 +38,7 @@ public class OrderItem extends AuditingFields {
 	private Item item;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "orders_id")
+	@JoinColumn(name = "order_id")
 	@ToString.Exclude
 	private Order order;
 

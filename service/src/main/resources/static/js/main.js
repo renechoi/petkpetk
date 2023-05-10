@@ -2,22 +2,26 @@ let itemsCount;
 let items = 2;
 let num = 1;
 
-function showMoreBtn(totalItemCount, num) {
+function showMoreBtn(totalItemCount) {
     var divs = document.querySelectorAll('.mainContainer div');
     var moreBtn = document.getElementById("moreBtn");
 
-    if (divs.length >= 12*num && divs.length != $("#itemCount").val()) {
 
+    if ($("#itemCount").val() > 12) {
         moreBtn.style.display = "inline";
+    } else {
+        moreBtn.style.display = "none";
     }
+
     if (totalItemCount != null) {
         if (divs.length == totalItemCount) {
             moreBtn.style.display = "none";
         }
     }
+
 }
 
-showMoreBtn(null, 1);
+showMoreBtn(null);
 
 
 
@@ -108,7 +112,7 @@ function getItems() {
                     $(".mainContainer").append(content);
                 }
             }
-            showMoreBtn(totalItemCount, num);
+            showMoreBtn(totalItemCount);
             num++;
         }
     })
