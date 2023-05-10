@@ -77,7 +77,7 @@ public class ArticleImage extends AuditingFields implements PetkpetkImage {
 	}
 
 	private String createImageUrl() {
-		return IMAGE_SERVER_LOCATION + uniqueName;
+		return IMAGE_SERVER_LOCATION.getServerLocation() + uniqueName;
 	}
 
 	private static String createUniqueName(MultipartFile rawImage) {
