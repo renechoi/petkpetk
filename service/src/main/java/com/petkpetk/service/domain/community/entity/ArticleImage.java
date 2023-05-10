@@ -1,5 +1,7 @@
 package com.petkpetk.service.domain.community.entity;
 
+import static com.petkpetk.service.config.properties.ServerProperty.*;
+
 import java.util.Objects;
 import java.util.UUID;
 
@@ -75,7 +77,7 @@ public class ArticleImage extends AuditingFields implements PetkpetkImage {
 	}
 
 	private String createImageUrl() {
-		return "/images/item/" + uniqueName;
+		return IMAGE_SERVER_LOCATION + uniqueName;
 	}
 
 	private static String createUniqueName(MultipartFile rawImage) {

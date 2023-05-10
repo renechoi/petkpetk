@@ -103,29 +103,6 @@ public class ArticleService {
 		articleImageService.deleteImagesByArticle(articleId);
 	}
 
-	private void deleteHashtagsByArticle(Article article) {
-		Set<Long> hashtagIds = article.getHashtags()
-			.stream()
-			.map(Hashtag::getId)
-			.collect(Collectors.toUnmodifiableSet());
-		hashtagIds.forEach(this::deleteHashtagByArticle);
-	}
-
-	private void deleteHashtagByArticle(Long hashtagId) {
-		Hashtag hashtag = hashtagRepository.getReferenceById(hashtagId);
-		if (hashtag.getArticles().stream().allMatch(this::isArticleDeleted)) {
-			hashtagRepository.delete(hashtag);
-		}
-	}
-
-	private ArticleDto convertToDto(Article article) {
-		return ArticleDto.from(article, articleImageService.convertToRawImages(article.getArticleImages()));
-	}
-
-	private boolean isArticleDeleted(Article article) {
-		return articleRepository.getReferenceById(article.getId()).getDeletedYn().equals("Y");
-	}
-
 	public Long getArticleLastId() {
 		return articleRepository.findTopByOrderByIdDesc().getId();
 	}
@@ -149,8 +126,6 @@ public class ArticleService {
 	 * [\\p{L}0-9_]+ : 해시태그 이름으로 사용될 수 있는 문자열을 나타낸다.
 	 * [\\p{L}0-9_] : 유니코드 문자(영어, 한글 등), 숫자, 언더스코어(_) 중 하나를 나타낸다.
 	 * + : 1개 이상의 문자열이 나타날 수 있다.
-	 *
-	 * @param rawHashtags
 	 */
 	public LinkedHashSet<Hashtag> extractHashtags(String rawHashtags) {
 		String hashtagRegex = "(?<=\\s|^)#[\\p{L}0-9_]+";
@@ -163,4 +138,26 @@ public class ArticleService {
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 	}
 
+	private void deleteHashtagsByArticle(Article article) {
+		Set<Long> hashtagIds = article.getHashtags()
+			.stream()
+			.map(Hashtag::getId)
+			.collect(Collectors.toUnmodifiableSet());
+		hashtagIds.forEach(this::deleteHashtagByArticle);
+	}
+
+	private void deleteHashtagByArticle(Long hashtagId) {
+		Hashtag hashtag = hashtagRepository.getReferenceById(hashtagId);
+		if (hashtag.getArticles().stream().allMatch(this::isArticleDeleted)) {
+			hashtagRepository.delete(hashtag);
+		}
+	}
+
+	private ArticleDto convertToDto(Article article) {
+		return ArticleDto.from(article, articleImageService.convertToRawImages(article.getArticleImages()));
+	}
+
+	private boolean isArticleDeleted(Article article) {
+		return articleRepository.getReferenceById(article.getId()).getDeletedYn().equals("Y");
+	}
 }

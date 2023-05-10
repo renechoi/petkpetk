@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ArticleLikesDto {
 
-	// todo : 구현
 	private Long id;
 	private UserAccountDto userAccountDto;
 	private ArticleDto articleDto;

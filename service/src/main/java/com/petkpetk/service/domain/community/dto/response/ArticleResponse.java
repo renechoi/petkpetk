@@ -13,12 +13,13 @@ import com.petkpetk.service.common.CategoryType;
 import com.petkpetk.service.config.converter.EntityAndDtoConverter;
 import com.petkpetk.service.domain.community.dto.ArticleDto;
 import com.petkpetk.service.domain.community.dto.HashtagDto;
+import com.petkpetk.service.domain.user.dto.UserAccountDto;
 
 import lombok.Data;
 
 @Data
 public class ArticleResponse {
-	// todo : 좋아요를 추가한다
+
 	private Long id;
 	private String name;
 	private String email;
