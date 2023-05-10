@@ -131,7 +131,7 @@ public class ArticleService {
 	}
 
 	public List<String> getHashtags() {
-		return hashtagRepository.findAllHashtagNames();
+		return hashtagRepository.findAllByOrderByHitDescHashtagName();
 	}
 
 	public int getArticleTotalCount() {

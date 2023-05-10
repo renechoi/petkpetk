@@ -15,7 +15,7 @@ public class HashtagRepositoryCustomImpl implements HashtagRepositoryCustom {
 	}
 
 	@Override
-	public List<String> findAllHashtagNames() {
+	public List<String> findAllByOrderByHitDescHashtagName() {
 		QHashtag hashtag = QHashtag.hashtag;
 
 		return queryFactory.select(hashtag.hashtagName).from(hashtag).orderBy(hashtag.hashtagName.asc()).fetch();
