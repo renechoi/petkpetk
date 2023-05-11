@@ -8,6 +8,8 @@
 <h1>User Account</h1>
 
 
+<a href="error/404.html">에러페이지</a>
+<a href="/test/error">테스트에러</a>
 
 <p th:text ="${#authentication}"></p>
 <p th:text ="${#authentication.getName()}"></p>
@@ -15,7 +17,6 @@
 <p th:text ="${#authentication.isAuthenticated()}"></p>
 <p th:text ="${#authentication.getPrincipal()}"></p>
 <p th:text ="${#authentication.principal}"></p>
-<img th:src="${#authentication.getPrincipal().getProfileImage.imageUrl}">
 
 
 <div th:if="${#authentication.principal}">
