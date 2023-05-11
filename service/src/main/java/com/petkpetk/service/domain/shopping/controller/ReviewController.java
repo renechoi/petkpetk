@@ -56,8 +56,6 @@ public class ReviewController {
 
 	@PostMapping("/delete/{itemId}/{reviewId}")
 	public String deleteReview(@PathVariable Long itemId, @PathVariable Long reviewId) {
-		System.out.println("itemId = " + itemId);
-		System.out.println("reviewId = " + reviewId);
 		reviewService.deleteReview(reviewId);
 		return "redirect:/item/" + itemId;
 	}
@@ -71,17 +69,7 @@ public class ReviewController {
 		@RequestParam(value = "uniqueImageNames", required = false) List<String> uniqueImageNames
 	) {
 
-		for (MultipartFile imagename : rawImages) {
-			System.out.println("imagename.getOriginalFilename() = " + imagename.getOriginalFilename());
-			System.out.println("imagename.getName() = " + imagename.getName());
-			System.out.println("=====================================================");
-		}
-
-		System.out.println("rawImages = " + rawImages);
-		System.out.println("uniqueImageNames = " + uniqueImageNames);
-
 		reviewRegisterRequest.setImages(rawImages);
-		System.out.println("reviewRegisterRequest = " + reviewRegisterRequest);
 
 		IntStream.range(0, imageNames.size())
 			.filter(i -> !imageNames.get(i).equals("첨부파일"))

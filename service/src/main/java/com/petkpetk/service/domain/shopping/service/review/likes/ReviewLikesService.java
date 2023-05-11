@@ -39,7 +39,6 @@ public class ReviewLikesService {
 		UserAccount userAccount = userAccountRepository.findByEmail(userEmail).get();
 		Review review = reviewRepository.findById(reviewId).get();
 		ReviewLikes likes = reviewLikesRepository.findByUserAccountAndReview(userAccount, review);
-		System.out.println("================================== likes = " + likes);
 		reviewLikesRepository.deleteById(likes.getId());
 
 	}

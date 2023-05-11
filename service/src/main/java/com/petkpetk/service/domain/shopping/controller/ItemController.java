@@ -76,8 +76,6 @@ public class ItemController {
 		ItemResponse itemResponse = itemService.getItemDetail(itemId);
 		UserAccountDto itemUser = userAccountService.searchUserDto(itemResponse.getUserAccountDto().getEmail());
 
-		System.out.println("itemUser = " + itemUser);
-
 		String email = "";
 		if (authentication != null && authentication.isAuthenticated()) {
 			email = authentication.getName();

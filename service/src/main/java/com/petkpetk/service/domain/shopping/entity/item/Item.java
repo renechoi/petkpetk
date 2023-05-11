@@ -158,8 +158,6 @@ public class Item extends AuditingFields implements Serializable {
 	}
 
 	public void removeStock(Long itemAmount) {
-		System.out.println("itemAmount = " + itemAmount);
-		System.out.println("this.itemAmount = " + this.itemAmount);
 
 		if (this.itemAmount < itemAmount) {
 			throw new OutOfStockException("상품의 재고가 부족합니다 (현재 재고 수량 : " + this.itemAmount + ")");

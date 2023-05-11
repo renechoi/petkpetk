@@ -50,10 +50,6 @@ public class SecurityConfig {
 					@Override
 					public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 						AuthenticationException exception) throws IOException, ServletException {
-						System.out.println("exception = " + exception);
-						System.out.println("exception = " + exception.getMessage());
-						System.out.println("response = " + response);
-
 					}
 				})
 				.failureUrl("/login")

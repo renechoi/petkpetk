@@ -99,7 +99,6 @@ public class APIController {
 			.map(ArticleResponse::from);
 
 		int totalCount = articleService.getArticleTotalCount();
-		System.out.println("♥♥♥♥♥♥♥♥♥♥ totalCount = " + totalCount);
 
 		result.put("article", articles.getContent());
 		result.put("totalCount", totalCount);

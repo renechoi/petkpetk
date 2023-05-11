@@ -41,8 +41,6 @@ public class MainController {
 
         Long itemCount = itemService.getItemCount();
 
-        System.out.println("itemSearchDto = " + itemSearchDto);
-
         model.addAttribute("itemCount", itemCount);
         model.addAttribute("items", items);
         model.addAttribute("itemSearchDto", itemSearchDto);

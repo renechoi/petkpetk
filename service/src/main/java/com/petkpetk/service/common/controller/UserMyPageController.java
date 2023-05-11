@@ -67,7 +67,6 @@ public class UserMyPageController {
 	public String reviewHistory(Model model, Authentication authentication) {
 		String email = authentication.getName();
 		List<ReviewResponse> reviewList = reviewService.getUserReviewList(email);
-		System.out.println("====================== reviewList = " + reviewList);
 
 		model.addAttribute("reviewList", reviewList);
 		model.addAttribute("newReview", new ReviewRegisterRequest());
@@ -84,17 +83,7 @@ public class UserMyPageController {
 		@RequestParam(value = "uniqueImageNames", required = false) List<String> uniqueImageNames
 	) {
 
-		for (MultipartFile imagename : rawImages) {
-			System.out.println("imagename.getOriginalFilename() = " + imagename.getOriginalFilename());
-			System.out.println("imagename.getName() = " + imagename.getName());
-			System.out.println("=====================================================");
-		}
-
-		System.out.println("rawImages = " + rawImages);
-		System.out.println("uniqueImageNames = " + uniqueImageNames);
-
 		reviewRegisterRequest.setImages(rawImages);
-		System.out.println("reviewRegisterRequest = " + reviewRegisterRequest);
 
 		IntStream.range(0, imageNames.size())
 			.filter(i -> !imageNames.get(i).equals("첨부파일"))
@@ -114,8 +103,6 @@ public class UserMyPageController {
 
 	@PostMapping("/delete/{itemId}/{reviewId}")
 	public String deleteReview(@PathVariable Long itemId, @PathVariable Long reviewId) {
-		System.out.println("itemId = " + itemId);
-		System.out.println("reviewId = " + reviewId);
 		reviewService.deleteReview(reviewId);
 		return "redirect:/user/my-page/reviewHistory";
 	}
@@ -125,7 +112,6 @@ public class UserMyPageController {
 		@AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal) {
 		List<ArticleDto> article =articleService.getUserArticle(userAccountPrincipal);
 		List<ArticleCommentDto> articleComment =articleCommentService.getUserComment(userAccountPrincipal);
-		System.out.println("====================== articleComment = " + articleComment);
 		model.addAttribute("articleList", article);
 		model.addAttribute("commentList", articleComment);
 		return "my-page/user/userCommunityHistory";

@@ -36,13 +36,11 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 	}
 
 	private BooleanExpression searchSellStatusEq(ItemStatus searchSellStatus) {
-		System.out.println("◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈ searchSellStatus. = " + searchSellStatus);
 
 		return searchSellStatus == null ? null : QItem.item.itemStatus.eq(searchSellStatus);
 	}
 
 	private BooleanExpression regDtsAfter(String searchDateType) {
-		System.out.println("◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈ searchDateType. = " + searchDateType);
 		LocalDateTime dateTime = now();
 
 		if (StringUtils.equals("all", searchDateType) || searchDateType == null) {
@@ -61,8 +59,6 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 	}
 
 	private BooleanExpression searchByLike(String searchBy, String searchQuery) {
-		System.out.println("◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈ searchBy. = " + searchBy);
-		System.out.println("◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈◈ searchQuery. = " + searchQuery);
 
 		if (StringUtils.equals("itemName", searchBy)) {
 
@@ -189,8 +185,6 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize())
 			.fetch();
-
-		System.out.println("content = " + content);
 
 		long total = queryFactory
 			.select(Wildcard.count)

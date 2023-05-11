@@ -83,7 +83,6 @@ public class OrderItem extends AuditingFields {
 
 	public static OrderItem createOrderItem(Item item, Long stockAmount, OrderStatus orderStatus) {
 		OrderItem orderItem = OrderItem.of(item, null, item.getPrice(), stockAmount, OrderStatus.ORDER);
-		System.out.println("orderItem = " + orderItem);
 		item.removeStock(stockAmount);
 		return orderItem;
 	}

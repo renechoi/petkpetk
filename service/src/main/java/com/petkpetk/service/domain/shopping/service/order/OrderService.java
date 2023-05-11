@@ -108,11 +108,6 @@ public class OrderService {
 	public List<OrderDto> searchOrders(String userAccountName, LocalDateTime startDate, LocalDateTime endDate, OrderStatus status) {
 		List<Order> orders = orderRepository.searchOrders(userAccountName, startDate, endDate, status);
 
-		for (Order order:orders) {
-			System.out.println( "******************* 주문 검색 주문 아이템s 테스트 " + order);
-		}
-
-
 		return orders.stream()
 			.map(OrderDto::fromEntity)
 			.collect(Collectors.toList());
