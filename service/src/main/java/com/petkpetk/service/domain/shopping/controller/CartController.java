@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.petkpetk.service.domain.shopping.dto.cart.request.CartItemRequest;
+import com.petkpetk.service.domain.shopping.dto.cart.request.CartItemRegisterRequest;
+import com.petkpetk.service.domain.shopping.dto.cart.request.CartItemUpdateRequest;
 import com.petkpetk.service.domain.shopping.dto.cart.response.CartItemResponse;
 import com.petkpetk.service.domain.shopping.dto.order.request.CheckoutRequest;
 import com.petkpetk.service.domain.shopping.exception.OutOfStockException;
@@ -33,28 +34,41 @@ public class CartController {
 	@GetMapping("")
 	public String cartItems(@AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal, Model model) {
 		CartItemResponse cartItemResponse = cartService.getCartItems(userAccountPrincipal.getEmail());
-		model.addAttribute("order",new CheckoutRequest(cartItemResponse));
+		model.addAttribute("order", new CheckoutRequest(cartItemResponse));
 		model.addAttribute("cartItems", cartItemResponse);
 		return "cart/cart";
 	}
 
-	@PostMapping(value = "")
 	@ResponseBody
-	public ResponseEntity<?> cartItems(@RequestBody  CartItemRequest cartItemRequest,
+	@PostMapping(value = "")
+	public ResponseEntity<?> cartItems(@RequestBody CartItemRegisterRequest cartItemRegisterRequest,
 		@AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal) {
 		if (userAccountPrincipal == null) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
 
 		try {
-			cartService.addCartItems(cartItemRequest, userAccountPrincipal.getEmail());
+			cartService.addCartItems(cartItemRegisterRequest, userAccountPrincipal.getEmail());
 			return ResponseEntity.ok().body(true);
 		} catch (OutOfStockException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		} catch (StockAlreadyInCartException e) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-		} catch (Exception e){
+		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("잠시 후 다시 시도해주세요.");
 		}
+	}
+
+	@ResponseBody
+	@PostMapping("/update")
+	public ResponseEntity<?> updateCart(@RequestBody CartItemUpdateRequest cartItemUpdateRequest,
+		@AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal) {
+
+		try {
+			cartService.updateCart(cartItemUpdateRequest, userAccountPrincipal.getEmail());
+		} catch (OutOfStockException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+		return ResponseEntity.ok().build();
 	}
 }

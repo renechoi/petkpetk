@@ -30,13 +30,13 @@ public class CartItemDto {
 			cartItem.getItem().getItemName(),
 			cartItem.getItem().getImages(),
 			cartItem.getItem().getOriginalPrice(),
-			(int)(cartItem.getItem().getDiscountRate() * 100),
+			(int)(cartItem.getItem().getDiscountRate() * 100 / 100),
 			cartItem.getItem().getPrice(),
 			cartItem.getCartItemCount()
 		);
 	}
 
-	public Long getPrice(){
+	public Long getSumPrice(){
 		return price * cartItemCount;
 	}
 }
