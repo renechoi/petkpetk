@@ -38,9 +38,9 @@ public class KakaoPayService {
 		parameters.add("quantity", "1");
 		parameters.add("total_amount", paymentRequest.getFinalPaymentPrice());
 		parameters.add("tax_free_amount", "10");
-		parameters.add("approval_url", "http://localhost:8082/payment/success");
-		parameters.add("cancel_url", "http://localhost:8082/payment/cancel");
-		parameters.add("fail_url", "http://localhost:8082/payment/fail");
+		parameters.add("approval_url", LocalProperty.getInstance().getLocalServerPort() +"/payment/success");
+		parameters.add("cancel_url", LocalProperty.getInstance().getLocalServerPort() +"/payment/cancel");
+		parameters.add("fail_url", LocalProperty.getInstance().getLocalServerPort() + "/payment/fail");
 
 		// 파라미터, 헤더
 		HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, this.getHeaders());
