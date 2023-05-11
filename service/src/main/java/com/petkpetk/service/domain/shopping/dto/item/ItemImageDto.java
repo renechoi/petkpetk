@@ -20,6 +20,9 @@ public class ItemImageDto {
 
 	private String representativeImageYn;
 
+
+
+
 	public ItemImageDto(String uniqueName, String originalName,String imageUrl, String representativeImageYn) {
 		this.uniqueName = uniqueName;
 		this.originalName = originalName;

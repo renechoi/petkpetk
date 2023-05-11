@@ -1,6 +1,5 @@
 package com.petkpetk.service.domain.shopping.dto.cart;
 
-import java.awt.*;
 import java.util.List;
 
 import com.petkpetk.service.domain.shopping.entity.cart.CartItem;
