@@ -31,7 +31,7 @@ public class KakaoPayService {
 
 		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
 		parameters.add("cid", cid);
-		parameters.add("partner_order_id", "가맹점 주문 번호");
+		parameters.add("partner_order_id", "페크페크 가입 사업자");
 		parameters.add("partner_user_id", "가맹점 회원 ID");
 		parameters.add("item_name", paymentRequest.getItemName());
 		parameters.add("quantity", "1");
@@ -55,7 +55,7 @@ public class KakaoPayService {
 		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
 		parameters.add("cid", cid);
 		parameters.add("tid", kakaoReady.getTid());
-		parameters.add("partner_order_id", "가맹점 주문 번호");
+		parameters.add("partner_order_id", "페크페크 가입 사업자");
 		parameters.add("partner_user_id", "가맹점 회원 ID");
 		parameters.add("pg_token", pgToken);
 

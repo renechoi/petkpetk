@@ -31,7 +31,7 @@ public class ItemPriceInfo {
 
 	private static Long calculateTotalPrice(Set<CartItemDto> cartItemDtos) {
 		return cartItemDtos.stream()
-			.mapToLong(CartItemDto::getPrice)
+			.mapToLong(CartItemDto::getSumPrice)
 			.sum();
 	}
 

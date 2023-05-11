@@ -11,4 +11,7 @@ public class OutOfStockException extends  PetkpetkServerException{
 		super(statusCode);
 	}
 
+	public OutOfStockException() {
+		super();
+	}
 }

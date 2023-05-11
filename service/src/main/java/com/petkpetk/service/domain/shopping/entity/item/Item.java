@@ -153,6 +153,10 @@ public class Item extends AuditingFields implements Serializable {
 		this.itemAmount += itemAmount;
 	}
 
+	public boolean isOutOfStock(Long itemAmount){
+		return this.itemAmount < itemAmount;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
