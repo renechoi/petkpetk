@@ -3,6 +3,11 @@ profile-name: "dev"
 server:
   port: ${SERVER_PORT}
 
+local:
+  server:
+    port: "http://localhost:${SERVER_PORT}"
+
+
 management:
   endpoints:
     web:
