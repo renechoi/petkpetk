@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,7 +68,12 @@ public class CartService {
 		return CartItemResponse.of(cartItemDtos, itemPriceInfo);
 	}
 
+	public void updateCartItemCount(Long cartItemId, Long cartItemCount) {
+		CartItem cartItem = cartItemRepository.findById(cartItemId)
+			.orElseThrow(EntityNotFoundException::new);
 
+		cartItem.updateCount(cartItemCount);
+	}
 
 
 

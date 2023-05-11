@@ -60,7 +60,7 @@
                 <td th:text="${num}"></td>
                 <td class="contentHover">
                     <a th:href="@{'/community/articles/'+${comment.articleDto.id}}">
-                        <div th:text="${comment.content}"></div>
+                        <div class="commentContent" th:text="${comment.content}"></div>
                     </a>
                 </td>
                 <td class="CommentModifiedAt" th:id="'commentModifiedAt'+${num}"></td>

@@ -23,6 +23,11 @@ public class LocalProperty {
 	@Value("${kakaoPaymentAdminKey}")
 	private String kakaoPaymentAdminKey;
 
+	@Value("${SERVER_PORT}")
+	private String ServerPort;
+
+	private final String LocalServerPort = "http://localhost:" + ServerPort;
+
 	public static LocalProperty getInstance() {
 		return ApplicationContextProvider.getApplicationContext().getBean(LocalProperty.class);
 	}
