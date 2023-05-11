@@ -141,8 +141,15 @@ public class ItemService {
 	private List<ItemImage> findByItemIdOrderByIdAsc(Long id) {
 		return itemImageRepository.findByItemIdOrderByIdAsc(id);
 	}
+
 	public ItemDto searchItem(Long itemId) {
 		return itemRepository.findById(itemId).map(ItemDto::from).orElseThrow(ItemNotFoundException::new);
+	}
+
+	public ItemDto searchItemWithItemImageIsRepresentative(Long itemId) {
+		return itemRepository.findItemWithRepresentativeImageById(itemId)
+			.map(ItemDto::from)
+			.orElseThrow(ItemNotFoundException::new);
 	}
 
 	public Item getItem(Long itemId) {
@@ -158,7 +165,7 @@ public class ItemService {
 		return itemList;
 	}
 
-	public List<ItemImage> finditemImageUrls(List<Long> itemIds) {
+	public List<ItemImage> findItemImageUrls(List<Long> itemIds) {
 		List<ItemImage> itemImages = new ArrayList<>();
 		IntStream.range(0, (itemIds.size()))
 			.forEach( i ->

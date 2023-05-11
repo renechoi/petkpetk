@@ -1,5 +1,6 @@
 package com.petkpetk.service.domain.shopping.dto.review;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,6 @@ import com.petkpetk.service.domain.shopping.entity.item.Item;
 import com.petkpetk.service.domain.shopping.entity.review.Review;
 import com.petkpetk.service.domain.shopping.entity.review.ReviewImage;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
-import com.petkpetk.service.domain.user.entity.UserAccount;
 
 import lombok.Data;
 
@@ -23,6 +23,7 @@ public class ReviewDto {
 	private Item item;
 	private UserAccountDto userAccountDto;
 	private Double rating;
+	private LocalDateTime createdAt;
 
 	private List<MultipartFile> rawImages = new ArrayList<>();
 	private List<ReviewImageDto> reviewImageDtos = new ArrayList<>();

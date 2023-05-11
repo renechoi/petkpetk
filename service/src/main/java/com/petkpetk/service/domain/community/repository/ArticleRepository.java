@@ -23,4 +23,6 @@ public interface ArticleRepository
 	Page<Article> findByUserAccount_NicknameContaining(String nickname, Pageable pageable);
 
 	Article findTopByOrderByIdDesc();
+
+	List<Article> findAllByUserAccountIdOrderByIdDesc(Long userAccountId);
 }

@@ -35,11 +35,11 @@ function handleHashtagInput(event) {
     const message = hashtagInput.parentNode.querySelector('.error-message');
     if (isInValidKey(event.key)) {
         if (!message) {
-            const newMessage = document.createElement('div');
-            newMessage.classList.add('error-message');
-            newMessage.textContent = '해시태그에 특수문자는 입력할 수 없습니다.';
-            newMessage.style.color = 'red';
-            hashtagInput.parentNode.append(newMessage, hashtagInput.nextSibling);
+            let newMessage = "";
+            $("#error-hashtag").addClass('error-message');
+            newMessage = '해시태그에 특수문자는 입력할 수 없습니다.';
+            $("#error-hashtag").css("color", "#ff7f7f");
+            $("#error-hashtag").text(newMessage);
             event.preventDefault();
         }
         event.preventDefault();
@@ -47,11 +47,11 @@ function handleHashtagInput(event) {
             hashtagInput.value += ' #';
         event.preventDefault();
     } else if (event.key === '#' && hashtagInput.value.endsWith('#')) {
-        const newMessage = document.createElement('div');
-        newMessage.classList.add('error-message');
-        newMessage.textContent = '해시태그는 중복할 수 없습니다.';
-        newMessage.style.color = 'red';
-        hashtagInput.parentNode.append(newMessage, hashtagInput.nextSibling);
+        let newMessage = "";
+        $("#error-hashtag").addClass('error-message');
+        newMessage = '해시태그는 중복할 수 없습니다.';
+        $("#error-hashtag").css("color", "#ff7f7f");
+        $("#error-hashtag").text(newMessage);
         event.preventDefault();
     } else if (event.key === '#' ) {
         hashtagInput.value += ' #';

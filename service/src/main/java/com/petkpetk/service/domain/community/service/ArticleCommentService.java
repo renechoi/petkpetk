@@ -13,6 +13,7 @@ import com.petkpetk.service.domain.community.dto.response.ArticleCommentResponse
 import com.petkpetk.service.domain.community.entity.ArticleComment;
 import com.petkpetk.service.domain.community.repository.ArticleCommentRepository;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
+import com.petkpetk.service.domain.user.dto.security.UserAccountPrincipal;
 import com.petkpetk.service.domain.user.service.UserAccountService;
 
 import lombok.RequiredArgsConstructor;
@@ -62,5 +63,12 @@ public class ArticleCommentService {
 		articleComment.setContent(articleCommentPostRequest.getContent());
 
 		articleCommentRepository.flush();
+	}
+
+	public List<ArticleCommentDto> getUserComment(UserAccountPrincipal userAccountPrincipal) {
+		List<ArticleCommentDto> articleCommentDtoList = new ArrayList<>();
+		List<ArticleComment> articleCommentList = articleCommentRepository.findAllByUserAccountIdOrderByIdDesc(userAccountPrincipal.getId());
+		articleCommentList.forEach(articleComment -> articleCommentDtoList.add(ArticleCommentDto.from(articleComment)));
+		return articleCommentDtoList;
 	}
 }
