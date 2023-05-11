@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.petkpetk.service.domain.community.dto.ArticleCommentDto;
+import com.petkpetk.service.domain.community.dto.ArticleDto;
+import com.petkpetk.service.domain.community.service.ArticleCommentService;
+import com.petkpetk.service.domain.community.service.ArticleService;
 import com.petkpetk.service.domain.shopping.dto.review.ReviewImageDto;
 import com.petkpetk.service.domain.shopping.dto.review.request.ReviewRegisterRequest;
 import com.petkpetk.service.domain.shopping.dto.review.response.ReviewResponse;
@@ -31,6 +35,8 @@ import lombok.RequiredArgsConstructor;
 public class UserMyPageController {
 
 	private final UserAccountService userAccountService;
+	private final ArticleService articleService;
+	private final ArticleCommentService articleCommentService;
 	private final ReviewService reviewService;
 	private final ItemService itemService;
 	@PostMapping("/update")
@@ -103,7 +109,6 @@ public class UserMyPageController {
 				}
 			);
 		reviewService.modifyReview(reviewRegisterRequest, reviewId);
-
 		return "redirect:/user/my-page/reviewHistory";
 	}
 
@@ -113,5 +118,16 @@ public class UserMyPageController {
 		System.out.println("reviewId = " + reviewId);
 		reviewService.deleteReview(reviewId);
 		return "redirect:/user/my-page/reviewHistory";
+	}
+
+	@GetMapping("/communityHistory")
+	public String communityHistory(Model model,
+		@AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal) {
+		List<ArticleDto> article =articleService.getUserArticle(userAccountPrincipal);
+		List<ArticleCommentDto> articleComment =articleCommentService.getUserComment(userAccountPrincipal);
+		System.out.println("====================== articleComment = " + articleComment);
+		model.addAttribute("articleList", article);
+		model.addAttribute("commentList", articleComment);
+		return "my-page/user/userCommunityHistory";
 	}
 }

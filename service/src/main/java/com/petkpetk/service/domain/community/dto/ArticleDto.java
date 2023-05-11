@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -36,6 +37,8 @@ public class ArticleDto {
 	private Set<HashtagDto> hashtagDtos = new LinkedHashSet<>();
 	private String rawHashtags;
 	private List<MultipartFile> rawImages = new ArrayList<>();
+	private String representativeImageUrl;
+	private Long commentCount;
 	private List<ArticleImageDto> articleImages;
 	private CategoryType categoryType;
 	private LocalDateTime createdAt;
@@ -67,7 +70,14 @@ public class ArticleDto {
 	}
 
 	public static ArticleDto fromEntity(Article article) {
-		return EntityAndDtoConverter.convertToDto(article, ArticleDto.class);
+		ArticleDto articleDto = EntityAndDtoConverter.convertToDto(article, ArticleDto.class);
+		Optional<ArticleImage> representativeImage = article.getArticleImages().stream()
+			.filter(i -> i != null && i.getRepresentativeImageYn().equals("Y"))
+			.findAny();
+		if (representativeImage.isPresent()) {
+			articleDto.setRepresentativeImageUrl(representativeImage.get().getImageUrl());
+		}
+		return articleDto;
 	}
 
 	public Article toEntity() {
