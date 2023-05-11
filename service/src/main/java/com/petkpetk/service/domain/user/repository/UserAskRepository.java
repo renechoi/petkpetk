@@ -10,6 +10,6 @@ import com.petkpetk.service.domain.user.entity.UserAsk;
 
 public interface UserAskRepository extends JpaRepository<UserAsk, Long> {
 
-	@Query("select u from UserAsk u where u.userAccount.id = ?1 order by u.id")
-	List<UserAskDto> findAllByUserAccountId(Long userAccountId);
+	List<UserAsk> findAllByUserAccountIdOrderById(Long userAccountId);
 }
+

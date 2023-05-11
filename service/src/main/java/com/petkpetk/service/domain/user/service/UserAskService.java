@@ -1,6 +1,7 @@
 package com.petkpetk.service.domain.user.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +29,8 @@ public class UserAskService {
 		userAskRepository.save(userAsk);
 	}
 
-	public List<UserAskDto> getUserAskList(UserAccountPrincipal userAccountPrincipal) {
-		return userAskRepository.findAllByUserAccountId(userAccountPrincipal.getId());
+	public List<UserAskDto> getUserAsks(UserAccountPrincipal userAccountPrincipal) {
+		return userAskRepository.findAllByUserAccountIdOrderById(userAccountPrincipal.getId()).stream().map(UserAskDto::from).collect(
+			Collectors.toList());
 	}
 }

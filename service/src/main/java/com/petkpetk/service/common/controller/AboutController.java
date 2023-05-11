@@ -31,7 +31,7 @@ public class AboutController {
 	@GetMapping("/ask")
 	public String askView(Model model, @AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal) {
 		model.addAttribute("ask",
-			userAccountPrincipal == null ? null : userAskService.getUserAskList(userAccountPrincipal));
+			userAccountPrincipal == null ? null : userAskService.getUserAsks(userAccountPrincipal));
 		model.addAttribute("askRequest", new UserAskRequest());
 		return "about/ask";
 	}

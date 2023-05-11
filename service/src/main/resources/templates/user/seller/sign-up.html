@@ -88,7 +88,7 @@
             <div class="title">참고항목</div>
             <input type="text" th:field="*{address.addressEtc}" id="extraAddress" placeholder="참고항목" name="addretc" readonly>
 
-            <input type="hidden" th:value="${T(com.petkpetk.service.common.RoleType).SELLER}" name="roles">
+            <input type="hidden" th:value="${T(com.petkpetk.service.domain.user.constant.RoleType).SELLER}" name="roles">
             <br>
             <input type="submit" value="가입하기">
             <br>

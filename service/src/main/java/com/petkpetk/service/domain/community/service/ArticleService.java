@@ -112,7 +112,7 @@ public class ArticleService {
 	}
 
 	public List<String> getHashtags() {
-		return hashtagRepository.findAllByOrderByHitDescHashtagName();
+		return hashtagRepository.findAllByOrderByHitDesc();
 	}
 
 	public int getArticleTotalCount() {

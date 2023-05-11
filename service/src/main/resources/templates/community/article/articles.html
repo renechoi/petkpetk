@@ -48,7 +48,7 @@
 
     <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
         <div id="categoryBox" style="display: flex;">
-            <div th:each="category : ${T(com.petkpetk.service.common.CategoryType).values()}" >
+            <div th:each="category : ${T(com.petkpetk.service.domain.community.constatnt.CategoryType).values()}" >
                 <input type="checkbox" name="category" th:id="${'category_' + category}"
                        th:value="${category}"/>
                 <label th:for="${'category_' + category}" th:text="${category.description}"class="categoryChecking"></label>

@@ -13,7 +13,7 @@
                 <div class="form-group categoryBox">
                     <select id="category" th:field="*{categoryType}" required="required">
                         <option value="" disabled selected>카테고리 선택</option>
-                        <option th:each="category : ${T(com.petkpetk.service.common.CategoryType).values()}"
+                        <option th:each="category : ${T(com.petkpetk.service.domain.community.constatnt.CategoryType).values()}"
                                 th:value="${#strings.toString(category)}" th:text="${category.description}">
                         </option>
                     </select>
