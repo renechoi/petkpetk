@@ -39,6 +39,7 @@
                 <div id="hashTagTitle">해시태그</div>
                 <input type="text" id="hashtag" placeholder=" #해시태그" th:field="*{rawHashtags}" autocomplete="off" onblur="checkHashTag()">
             </div>
+            <p id="error-hashtag"></p>
             <div style="display: flex; justify-content: flex-end;">
                 <button id="article-post-submit" type="submit" class="btn btn-primary">등록</button>
             </div>

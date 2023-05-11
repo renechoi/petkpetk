@@ -178,3 +178,9 @@ div#countText {
     background-color: #ffffffb3;
     border-radius: 5px;
 }
+
+p#error-hashtag {
+    padding: 5px 2px;
+    font-size: 14px;
+    text-align: right;
+}
