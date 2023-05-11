@@ -5,6 +5,7 @@ import static com.petkpetk.service.domain.community.constatnt.SearchType.*;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -87,7 +88,7 @@ public class ArticleService {
 		List<ArticleImage> images = articleImageService.convertToImages(articleDto.getRawImages());
 
 		Set<Hashtag> hashtags = extractHashtags(articleDto.getRawHashtags()).stream()
-			.filter(hashtag -> !hashtagRepository.existsByHashtagName(hashtag.getHashtagName()))
+			.map(hashtag -> hashtagRepository.findOptionalByHashtagName(hashtag.getHashtagName()).orElse(hashtag))
 			.collect(Collectors.toUnmodifiableSet());
 
 		articleRepository.save(articleDto.toEntity(userAccount, images, hashtags));
