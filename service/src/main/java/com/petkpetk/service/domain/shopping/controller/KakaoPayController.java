@@ -37,7 +37,6 @@ public class KakaoPayController {
 	public ResponseEntity afterPayRequest(@RequestParam("pg_token") String pgToken) {
 
 		KakaoApproveResponse kakaoApprove = kakaoPayService.approveResponse(pgToken);
-
 		return new ResponseEntity<>(kakaoApprove, HttpStatus.OK);
 	}
 
