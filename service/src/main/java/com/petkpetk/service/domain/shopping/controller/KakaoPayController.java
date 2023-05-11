@@ -6,8 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.petkpetk.service.common.StatusCode;
+import com.petkpetk.service.domain.shopping.dto.payment.KakaoApproveResponse;
 import com.petkpetk.service.domain.shopping.dto.payment.KakaoCancelResponse;
 import com.petkpetk.service.domain.shopping.dto.payment.PaymentRequest;
 import com.petkpetk.service.domain.shopping.exception.CancellationInProgressException;
@@ -27,6 +29,19 @@ public class KakaoPayController {
 	public String readyToKakaoPay(PaymentRequest paymentRequest) {
 		 return String.format("redirect:%s", kakaoPayService.kakaoPayReady(paymentRequest).getNext_redirect_pc_url());
 	}
+
+	/**
+	 * 결제 성공
+	 */
+	@GetMapping("/success")
+	public ResponseEntity afterPayRequest(@RequestParam("pg_token") String pgToken) {
+
+		KakaoApproveResponse kakaoApprove = kakaoPayService.approveResponse(pgToken);
+
+		return new ResponseEntity<>(kakaoApprove, HttpStatus.OK);
+	}
+
+
 
 	/**
 	 * 결제 진행 중 취소
