@@ -65,13 +65,23 @@ function getMoreArticles() {
 
             for (let i = 0; i < article.length; i++) {
                 const articleDateTime = moment(article[i].createdAt);
+                const articleMinutes = moment().diff(articleDateTime, 'minutes');
+                const articleHours = moment().diff(articleDateTime, 'hours');
                 const articleDays = moment().diff(articleDateTime, 'days');
 
                 let dateDiffText = '';
 
-                if (articleDays === 0) {
-                    // 오늘 날짜인 경우
-                    dateDiffText = '오늘';
+                if (articleMinutes < 1) {
+                    // 1분 이내인 경우
+                    const articleSeconds = moment().diff(articleDateTime, 'seconds');
+                    dateDiffText = `${articleSeconds}초 전`;
+                }else if (articleHours < 1) {
+                    // 1시간 이내인 경우
+                    const articleMinutes = moment().diff(articleDateTime, 'minutes');
+                    dateDiffText = `${articleMinutes}분 전`;
+                } else if (articleDays < 1) {
+                    // 24시간 이내인 경우
+                    dateDiffText = `${articleHours}시간 전`;
                 } else if (articleDays === 1) {
                     // 1일 전인 경우
                     dateDiffText = '1일 전';
@@ -249,13 +259,23 @@ for (let i = 0; i < articlesList.length; i++) {
     console.log(articlesList.item(i).value);
 
     const articleDateTime = moment(articlesList[i].value);
+    const articleMinutes = moment().diff(articleDateTime, 'minutes');
+    const articleHours = moment().diff(articleDateTime, 'hours');
     const articleDays = moment().diff(articleDateTime, 'days');
 
     let dateDiffText = '';
 
-    if (articleDays === 0) {
-        // 오늘 날짜인 경우
-        dateDiffText = '오늘';
+    if (articleMinutes < 1) {
+        // 1분 이내인 경우
+        const articleSeconds = moment().diff(articleDateTime, 'seconds');
+        dateDiffText = `${articleSeconds}초 전`;
+    }else if (articleHours < 1) {
+        // 1시간 이내인 경우
+        const articleMinutes = moment().diff(articleDateTime, 'minutes');
+        dateDiffText = `${articleMinutes}분 전`;
+    } else if (articleDays < 1) {
+        // 24시간 이내인 경우
+        dateDiffText = `${articleHours}시간 전`;
     } else if (articleDays === 1) {
         // 1일 전인 경우
         dateDiffText = '1일 전';

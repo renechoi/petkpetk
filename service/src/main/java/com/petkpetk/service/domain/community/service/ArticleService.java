@@ -2,10 +2,10 @@ package com.petkpetk.service.domain.community.service;
 
 import static com.petkpetk.service.domain.community.constatnt.SearchType.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -22,8 +22,10 @@ import com.petkpetk.service.domain.community.entity.Article;
 import com.petkpetk.service.domain.community.entity.ArticleImage;
 import com.petkpetk.service.domain.community.entity.Hashtag;
 import com.petkpetk.service.domain.community.exception.ArticleNotFoundException;
+import com.petkpetk.service.domain.community.repository.ArticleCommentRepository;
 import com.petkpetk.service.domain.community.repository.ArticleRepository;
 import com.petkpetk.service.domain.community.repository.HashtagRepository;
+import com.petkpetk.service.domain.user.dto.security.UserAccountPrincipal;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 import com.petkpetk.service.domain.user.repository.UserAccountRepository;
 
@@ -35,6 +37,7 @@ import lombok.RequiredArgsConstructor;
 public class ArticleService {
 	private final ArticleRepository articleRepository;
 	private final UserAccountRepository userAccountRepository;
+	private final ArticleCommentRepository articleCommentRepository;
 	private final articleImageService articleImageService;
 	private final HashtagRepository hashtagRepository;
 
@@ -139,6 +142,14 @@ public class ArticleService {
 			.collect(Collectors.toCollection(LinkedHashSet::new));
 	}
 
+	public List<ArticleDto> getUserArticle(UserAccountPrincipal userAccountPrincipal) {
+		List<ArticleDto> articleDtoList = new ArrayList<>();
+		List<Article> articleList =articleRepository.findAllByUserAccountIdOrderByIdDesc(userAccountPrincipal.getId());
+		articleList.forEach(article -> articleDtoList.add(ArticleDto.fromEntity(article)));
+		articleDtoList.forEach(article -> article.setCommentCount(articleCommentRepository.findCountArticleId(article.getId())));
+		return articleDtoList;
+	}
+
 	private void deleteHashtagsByArticle(Article article) {
 		Set<Long> hashtagIds = article.getHashtags()
 			.stream()
@@ -161,4 +172,6 @@ public class ArticleService {
 	private boolean isArticleDeleted(Article article) {
 		return articleRepository.getReferenceById(article.getId()).getDeletedYn().equals("Y");
 	}
+
+
 }
