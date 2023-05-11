@@ -10,12 +10,4 @@ public class UserNotFoundException extends PetkpetkServerException {
     public UserNotFoundException(){
         super(statusCode);
     }
-
-    public UserNotFoundException(StatusCode statusCode) {
-        super(statusCode);
-    }
-
-    public UserNotFoundException(StatusCode statusCode, String detailMessage) {
-        super(statusCode, detailMessage);
-    }
 }

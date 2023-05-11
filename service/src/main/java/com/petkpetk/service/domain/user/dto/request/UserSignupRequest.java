@@ -28,31 +28,18 @@ public class UserSignupRequest {
 
 	private Long id;
 
-	@Email(message = "이메일 형식으로 입력해주세요")
-	@NotBlank(message = "이메일을 입력해주세요.")
 	private String email;
 
-	@Length(min = 8, max = 16, message = "비밀번호는 8자 이상 16자 이하로 입력해주세요")
-	@NotBlank(message = "비밀번호를 입력해주세요.")
 	private String password;
-	@NotBlank(message = "이름을 입력해주세요.")
 	private String name;
-	@NotBlank(message = "닉네임을 입력해주세요.")
 	private String nickname;
 
 	private MultipartFile profileImage;
-	@Valid
-	@NotNull
-	@NotBlank(message = "주소를 입력해주세요.")
 	private Address address;
 	private OAuth2ProviderInfo OAuth2ProviderInfo;
 	private Set<RoleType> roles;
-
-
 	private String phoneNumber;
-
 	private String businessName;
-
 	private String businessNumber;
 
 	public UserAccount toEntity() {
@@ -64,6 +51,4 @@ public class UserSignupRequest {
 		userAccount.addImage(profileImage);
 		return userAccount;
 	}
-
-
 }

@@ -10,12 +10,4 @@ public class UserDuplicateException extends PetkpetkServerException {
     public UserDuplicateException() {
         super(statusCode);
     }
-
-    public UserDuplicateException(StatusCode statusCode) {
-        super(statusCode);
-    }
-
-    public UserDuplicateException(StatusCode statusCode, String detailMessage) {
-        super(statusCode, detailMessage);
-    }
 }

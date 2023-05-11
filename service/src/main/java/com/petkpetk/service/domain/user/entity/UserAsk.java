@@ -46,8 +46,6 @@ public class UserAsk extends AuditingFields {
 	@ToString.Exclude
 	private UserAccount userAccount;
 
-	// private AdminAskAnswer adminAskAnswer;  //Todo:: 관리자가 답변하면 여기에 그 답변 정보를 담아준다.
-
 	@Column(nullable = false)
 	private String content;
 	private String phoneNumber;
@@ -56,7 +54,7 @@ public class UserAsk extends AuditingFields {
 	private String qnaCategory;
 
 	@Enumerated(EnumType.STRING)
-	private AnswerStatus answerStatus = AnswerStatus.ANSWERING; //Todo:: 관리자가 답변하면 AnswerStatus.ANSWERED 로 바꿔줘야한다.
+	private AnswerStatus answerStatus = AnswerStatus.ANSWERING;
 
 	public void mapUserAccount(UserAccount userAccount) {
 		if (userAccount.getRoles().stream().anyMatch(roleType -> roleType.equals(RoleType.ANONYMOUS))){

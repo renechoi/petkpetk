@@ -23,8 +23,8 @@
         </div>
 
         <div th:unless="${userAccount.profileImage != null}" style="display: flex; align-items: flex-end;margin-bottom: 50px;">
-            <input type="hidden" id="originalProfile" value="/images/basicProfile.png">
-            <div class="bigImageBox"><img th:src="@{/images/basicProfile.png}" id="userProfileImage" class="userOriginalProfile"></div>
+            <input type="hidden" id="originalProfile" value="/images/defaultProfile.png">
+            <div class="bigImageBox"><img th:src="@{/images/defaultProfile.png}" id="userProfileImage" class="userOriginalProfile"></div>
         </div>
     <!--  유저 정보 확인 div  -->
         <div id="originalInformation" class="originalInformation" style="display: block">

@@ -3,7 +3,7 @@ if ($("img.userProfile").attr("src") != $("#userProfileImage").attr("src")) {
 
 }
 
-if ($("#userProfileImage").attr("src") != "/images/basicProfile.png") {
+if ($("#userProfileImage").attr("src") != "/images/defaultProfile.png") {
     $.ajax({
         url:"/api/setUserPrincipalProfile",
         success: function () {
@@ -289,6 +289,6 @@ function deleteProfile() {
     var userProfileImage = document.getElementById("userProfileImage");
     $("#isProfileDeleted").val(true);
 
-    userProfileImage.setAttribute("src", "/images/basicProfile.png");
+    userProfileImage.setAttribute("src", "/images/defaultProfile.png");
 
 }

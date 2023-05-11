@@ -25,8 +25,7 @@ public class UserAskDto {
 	private LocalDateTime createdAt;
 
 	public static UserAskDto from(UserAsk userAsk) {
-		UserAskDto userAskDto = EntityAndDtoConverter.convertToDto(userAsk, UserAskDto.class);
-		return userAskDto;
+		return EntityAndDtoConverter.convertToDto(userAsk, UserAskDto.class);
 	}
 
 }
