@@ -31,10 +31,6 @@ public class CheckoutPriceInfo {
 
 	private static Long calculateFinalPaymentPrice(Long totalPrice, Long deliveryPrice, Long couponDiscount,
 		Long pointDiscount) {
-
 		return totalPrice + deliveryPrice - couponDiscount - pointDiscount;
-
 	}
-
-
 }

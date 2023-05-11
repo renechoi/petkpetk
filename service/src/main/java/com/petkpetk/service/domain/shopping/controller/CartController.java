@@ -30,7 +30,6 @@ public class CartController {
 
 	private final CartService cartService;
 
-
 	@GetMapping("")
 	public String cartItems(@AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal, Model model) {
 		CartItemResponse cartItemResponse = cartService.getCartItems(userAccountPrincipal.getEmail());
@@ -58,16 +57,4 @@ public class CartController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("잠시 후 다시 시도해주세요.");
 		}
 	}
-
-
-
-
-	private ResponseEntity<?> okResponse(Object body) {
-		return ResponseEntity.ok().body(body);
-	}
-
-	private ResponseEntity<?> forbiddenResponse(String message) {
-		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(message);
-	}
-
 }

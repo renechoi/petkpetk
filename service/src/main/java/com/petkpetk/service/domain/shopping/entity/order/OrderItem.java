@@ -42,9 +42,9 @@ public class OrderItem extends AuditingFields {
 	@ToString.Exclude
 	private Order order;
 
-	private Long orderPrice; // 주문가격
+	private Long orderPrice;
 
-	private Long orderCount; // 주문수량
+	private Long orderCount;
 
 	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;
@@ -67,26 +67,12 @@ public class OrderItem extends AuditingFields {
 		return orderItem;
 	}
 
-	/** 주문상품 전체 가격 조회 */
 	public Long getTotalPrice() {
 		return getOrderPrice() * getOrderCount();
 	}
 
-	public Long getTotalPrice(Item item) {
-		return (long)((getOrderPrice() * getOrderCount()) / (item.getDiscountRate()));
-	}
-
-	/** 주문 취소 */
 	public void cancel() {
 		this.getItem().addStock(orderCount);
 	}
 
-	public static OrderItem createOrderItem(Item item, Long stockAmount, OrderStatus orderStatus) {
-		OrderItem orderItem = OrderItem.of(item, null, item.getPrice(), stockAmount, OrderStatus.ORDER);
-		item.removeStock(stockAmount);
-		return orderItem;
-	}
-
 }
-
-

@@ -26,11 +26,7 @@ public class CartItemResponse {
 		return new CartItemResponse(cartItemDto, itemPriceInfo);
 	}
 
-
 	public boolean isCartEmpty() {
 		return this.items.isEmpty();
 	}
-
-
-
 }

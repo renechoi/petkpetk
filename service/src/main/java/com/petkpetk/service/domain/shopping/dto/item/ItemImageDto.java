@@ -20,9 +20,6 @@ public class ItemImageDto {
 
 	private String representativeImageYn;
 
-
-
-
 	public ItemImageDto(String uniqueName, String originalName,String imageUrl, String representativeImageYn) {
 		this.uniqueName = uniqueName;
 		this.originalName = originalName;
@@ -48,9 +45,6 @@ public class ItemImageDto {
 	public static ItemImageDto of(ItemImage itemImage){
 		return ItemImageDto.of(itemImage.getUniqueName(), itemImage.getOriginalName(), itemImage.getImageUrl(), itemImage.getRepresentativeImageYn());
 	}
-
-
-
 
 	public static ItemImageDto of(String imageName, String originalImageName, String imageUrl, String representativeImageYn){
 		return new ItemImageDto(imageName,originalImageName,imageUrl,representativeImageYn);

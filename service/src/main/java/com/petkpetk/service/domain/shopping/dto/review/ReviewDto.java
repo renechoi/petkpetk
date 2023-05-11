@@ -80,10 +80,4 @@ public class ReviewDto {
 			reviewRegisterRequest.getRating()
 		);
 	}
-
-
-
-
-
-
 }

@@ -11,7 +11,6 @@ import com.petkpetk.service.domain.shopping.entity.item.ItemImage;
 public interface ItemImageRepository extends JpaRepository<ItemImage, Long>,
 	QuerydslPredicateExecutor<ItemImage> {
 	List<ItemImage> findByItemIdOrderByIdAsc(Long itemId);
-	List<ItemImage> findByOriginalName(String originalName);
 	ItemImage findByUniqueName(String originalName);
 
 	@Query("select iti from ItemImage iti where iti.item.id = ?1 and iti.representativeImageYn = 'Y'")

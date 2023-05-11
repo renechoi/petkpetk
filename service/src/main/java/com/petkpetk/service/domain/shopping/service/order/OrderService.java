@@ -43,77 +43,31 @@ import lombok.RequiredArgsConstructor;
 public class OrderService {
 
 	private final OrderRepository orderRepository;
-
-	private final ItemRepository itemRepository;
 	private final ItemService itemService;
 	private final ItemImageRepository itemImageRepository;
 	private final UserAccountRepository userAccountRepository;
 
-	// TODO : 주문하기, 주문수정(부분), 주문취소
-
-
-	/** 주문 */
 	public Long createOrder(OrderRequest orderRequest, String email) {
-		// 엔티티 조회
 		Item item = itemService.getItem(orderRequest.getItemId());
 		UserAccount userAccount = userAccountRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
 
-		// 주문상품 생성
 		List<OrderItem> orderItems = Collections.singletonList(OrderItem.from(item, item.getItemAmount()));
 
-		// 주문 생성
 		Order order = Order.from(userAccount, orderItems);
 		order.createDelivery(new Delivery(userAccount.getAddress()));
 
-		// 주문 저장
-		Order savedOrder = orderRepository.save(order);
-
-		return savedOrder.getId();
+		return orderRepository.save(order).getId();
 	}
 
-	public Long createOrders(List<OrderDto> orderDtoList, String email) {
-		UserAccount userAccount = findUserAccountByEmail(email);
-		List<OrderItem> orderItems = createOrderItems(orderDtoList, OrderStatus.ORDER);
-
-		Order order = Order.createOrder(userAccount,new Delivery(Address.of("123","서울시","금천구","가산동")), orderItems);
-		Order savedOrder = orderRepository.save(order);
-		return savedOrder.getId();
-	}
-
-	private List<OrderItem> createOrderItems(List<OrderDto> orderDtoList, OrderStatus orderStatus) {
-		return orderDtoList.stream()
-			.map(orderDto -> {
-				Item item = itemRepository.findById(orderDto.getItemId())
-					.orElseThrow(EntityNotFoundException::new);
-				return OrderItem.createOrderItem(item, orderDto.getOrderCount(),  OrderStatus.ORDER);
-
-			})
-			.collect(Collectors.toList());
-	}
-
-	/** 주문 취소 */
-	public void cancelOrder(Order order, Delivery delivery ) {
-		// TODO : 주문취소 ... => 영속화된 주문을 n 으로 바꿔주기 + 연관관계 매핑된 애들도 n으로 바꿔주기
-		// orderstatus -> cancel로 변경
+	public void cancelOrder(Order order, Delivery delivery) {
 
 		if (order.isDeliveryInProcess()) {
 			throw new OrderAlreadyInProcessException();
 		}
 		order.cancel();
 		delivery.cancelDelivery();
-
 	}
 
-	/** 주문 검색 **/
-	public List<OrderDto> searchOrders(String userAccountName, LocalDateTime startDate, LocalDateTime endDate, OrderStatus status) {
-		List<Order> orders = orderRepository.searchOrders(userAccountName, startDate, endDate, status);
-
-		return orders.stream()
-			.map(OrderDto::fromEntity)
-			.collect(Collectors.toList());
-	}
-
-	/** 주문 유효성 검사 */
 	@Transactional(readOnly = true)
 	public boolean validateOrder(Long orderId, String email) {
 		UserAccount currentUser = findUserAccountByEmail(email);
@@ -128,8 +82,6 @@ public class OrderService {
 	}
 
 
-
-	/** order history 관련 */
 	public Page<OrderHistoryDto> getOrders(String email, Pageable pageable) {
 		List<OrderHistoryDto> orderHistoryDtos =
 			orderRepository.findOrders(email, pageable).stream()
@@ -154,18 +106,17 @@ public class OrderService {
 	}
 
 	private OrderItemDto createOrderItemDto(OrderItem orderItem) {
-		ItemImage itemImage = itemImageRepository.findByItemIdAndRepresentativeImageYn(orderItem.getItem().getId(), "Y");
+		ItemImage itemImage = itemImageRepository.findByItemIdAndRepresentativeImageYn(orderItem.getItem().getId(),
+			"Y");
 		String imageUrl = itemImage.getImageUrl();
 		return new OrderItemDto(orderItem, imageUrl);
 	}
 
 	public CheckoutResponse createCheckOut(CheckoutRequest checkoutRequest) {
 		checkoutRequest.getCheckoutDtos()
-			.forEach(checkoutDto -> checkoutDto.update(itemService.searchItemWithItemImageIsRepresentative(checkoutDto.getItemId())));
+			.forEach(checkoutDto -> checkoutDto.update(
+				itemService.searchItemWithItemImageIsRepresentative(checkoutDto.getItemId())));
 
 		return CheckoutResponse.of(checkoutRequest.getCheckoutDtos(), CheckoutPriceInfo.of(checkoutRequest));
 	}
-
-
-
 }

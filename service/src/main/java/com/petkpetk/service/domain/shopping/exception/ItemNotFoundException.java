@@ -10,14 +10,4 @@ public class ItemNotFoundException extends  PetkpetkServerException{
 	public ItemNotFoundException(){
 		super(statusCode);
 	}
-
-	public ItemNotFoundException(StatusCode statusCode) {
-		super(statusCode);
-	}
-
-	public ItemNotFoundException(StatusCode statusCode, String detailMessage) {
-		super(statusCode, detailMessage);
-	}
-
-
 }

@@ -8,8 +8,4 @@ public class OrderAlreadyInProcessException extends PetkpetkServerException {
 	public OrderAlreadyInProcessException() {
 		super(StatusCode.ORDER_ALREADY_IN_PROCESS);
 	}
-
-	public OrderAlreadyInProcessException(StatusCode statusCode) {
-		super(statusCode);
-	}
 }

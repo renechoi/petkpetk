@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OrderItemDto {
 
-
 	private Long Id;
 	private String itemName;
 	private Long orderCount;
@@ -23,14 +22,10 @@ public class OrderItemDto {
 	private Long productId;
 	private OrderStatus orderStatus;
 
-
-
-
 	public OrderItemDto(OrderItem orderItem, String imageUrl){
 		this.itemName = orderItem.getItem().getItemName();
 		this.orderCount = orderItem.getOrderCount();
 		this.orderPrice = orderItem.getOrderPrice();
 		this.imageUrl = imageUrl;
 	}
-
 }

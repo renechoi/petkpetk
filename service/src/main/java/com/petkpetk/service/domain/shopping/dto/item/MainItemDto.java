@@ -28,7 +28,7 @@ public class MainItemDto {
         this.itemStatus = itemStatus;
         this.imageUrl = imageUrl;
         this.originalPrice = originalPrice;
-        this.discountRate = (long)(discountRate*100); // 0.1 할인이면 => 10% 할인
+        this.discountRate = (long)(discountRate*100);
         this.price = price;
         this.reviewCount = reviewCount;
         this.totalRating = totalRating;

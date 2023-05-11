@@ -15,16 +15,6 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
 	Optional<CartItem> findByCartIdAndItemId(Long cartId, Long itemId);
 
-	List<CartItem> findByCartId(Long id);
-
-	@Query("SELECT ci FROM CartItem ci JOIN ci.item i JOIN i.images img WHERE ci.cart.id = :cartId AND img.representativeImageYn = :representativeImageYn")
-	List<CartItem> findByCartIdAndItem_Images_RepresentativeImageYn(Long cartId, String representativeImageYn);
-
-	@Query("SELECT ci FROM CartItem ci JOIN ci.item i JOIN i.images ii WHERE ci.cart.id = :cartId AND ii.representativeImageYn = :yn")
-	List<CartItem> findByCartIdAndItemImagesRepresentativeImageYn(Long cartId, String yn);
-
-	List<CartItem> findByCartAndItem_Images_RepresentativeImageYn(Cart cart, String representativeImageYn);
-
 	/**
 	 * CartItem 조회시 ItemImage가 representativeYn='Y'만 조회하도록 하는 Jpql 쿼리를 작성하는 부분에 있어서 처음 시도한 방식인
 	 * // @Query("SELECT ci FROM CartItem ci JOIN ci.item i JOIN i.images ii WHERE ci.cart.id =
@@ -39,6 +29,4 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 	 */
 	@Query("SELECT ci FROM CartItem ci JOIN FETCH ci.item i JOIN FETCH i.images ii WHERE ci.cart.id = :cartId AND ii.representativeImageYn = 'Y'")
 	List<CartItem> findCartItemsByCartIdWithRepresentativeItemImage(@Param("cartId") Long cartId);
-
-
 }

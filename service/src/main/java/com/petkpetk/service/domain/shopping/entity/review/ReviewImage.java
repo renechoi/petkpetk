@@ -56,12 +56,6 @@ public class ReviewImage extends AuditingFields implements PetkpetkImage {
 	@ToString.Exclude
 	private Review review;
 
-	public ReviewImage(String uniqueName, String originalName, String imageUrl) {
-		this.uniqueName = uniqueName;
-		this.originalName = originalName;
-		this.imageUrl = imageUrl;
-	}
-
 	public ReviewImage(String originalName, String uniqueName) {
 		this.uniqueName = uniqueName;
 		this.originalName = originalName;

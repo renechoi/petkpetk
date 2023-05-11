@@ -16,10 +16,6 @@ import com.petkpetk.service.domain.shopping.repository.querydsl.order.OrderRepos
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long>, QuerydslPredicateExecutor<Order>, OrderRepositoryCustom {
 
-
-	Page<Order> findByUserAccountEmailOrderByCreatedAtDesc(String email, Pageable pageable);
-	Long countOrderByUserAccountEmail(String email);
-
 	@Query("select o from Order o where o.userAccount.email = :email order by o.createdAt desc")
 	List<Order> findOrders(@Param("email") String email, Pageable pageable);
 

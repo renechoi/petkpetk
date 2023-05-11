@@ -98,12 +98,6 @@ public class Item extends AuditingFields implements Serializable {
 		images.forEach(image -> image.mapWith(this));
 	}
 
-
-	public void addImage(ItemImage image){
-		image.mapWith(this);
-		this.images.add(image);
-	}
-
 	private Item(String itemName,Long originalPrice, Double discountRate, Long price, Long itemAmount, String itemDetail,
 		ItemStatus itemStatus, List<ItemImage> images, UserAccount userAccount, Double totalRating) {
 		this.itemName = itemName;
@@ -145,16 +139,6 @@ public class Item extends AuditingFields implements Serializable {
 		this.itemAmount = itemUpdateRequest.getItemAmount();
 		this.itemDetail = itemUpdateRequest.getItemDetail();
 		this.itemStatus = itemUpdateRequest.getItemStatus();
-	}
-
-	public void updateItem(ItemResponse itemResponse){
-		this.itemName = itemResponse.getItemName();
-		this.originalPrice = itemResponse.getOriginalPrice();
-		this.discountRate = itemResponse.getDiscountRate();
-		this.price = (long)(itemResponse.getOriginalPrice() - itemResponse.getOriginalPrice()*itemResponse.getDiscountRate());
-		this.itemAmount = itemResponse.getItemAmount();
-		this.itemDetail = itemResponse.getItemDetail();
-		this.itemStatus = itemResponse.getItemStatus();
 	}
 
 	public void removeStock(Long itemAmount) {

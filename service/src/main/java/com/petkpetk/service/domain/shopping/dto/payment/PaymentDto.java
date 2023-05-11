@@ -16,6 +16,6 @@ public class PaymentDto {
 
 	private Long productId;
 	private Long totalCost;
-	private String payToken; // *****
-	private String payApp; // *****
+	private String payToken;
+	private String payApp;
 }

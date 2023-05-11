@@ -17,21 +17,7 @@ public class DeliveryService {
 
 	private final DeliveryRepository deliveryRepository;
 
-	public List<Delivery> getAllDeliveries() {
-		return deliveryRepository.findAll();
-	}
-
 	public Optional<Delivery> getDeliveryById(Long id) {
 		return deliveryRepository.findById(id);
 	}
-
-	public void updateDeliveryStatus(Long id, DeliveryStatus deliveryStatus) {
-		Optional<Delivery> optionalDelivery = deliveryRepository.findById(id);
-
-		optionalDelivery.ifPresent(delivery -> {
-			delivery.setDeliveryStatus(deliveryStatus);
-			deliveryRepository.save(delivery);
-		});
-	}
-
 }

@@ -25,20 +25,16 @@ import lombok.NoArgsConstructor;
 public class ItemRegisterRequest {
 	private Long id;
 
-	@NotBlank(message = "상품명을 입력해주세요.")
 	private String itemName;
 
 	private Long originalPrice;
 
 	private Double discountRate;
 
-	@NotNull(message = "가격을 입력해주세요.")
 	private Long price;
 
-	@NotNull(message = "재고량을 입력해주세요.")
 	private Long itemAmount;
 
-	@NotBlank(message = "상품 정보를 입력해주세요.")
 	private String itemDetail;
 
 	private ItemStatus itemStatus;

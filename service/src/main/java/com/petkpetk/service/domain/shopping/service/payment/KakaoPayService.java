@@ -29,7 +29,6 @@ public class KakaoPayService {
 
 	public KakaoReadyResponse kakaoPayReady(PaymentRequest paymentRequest) {
 
-		// 카카오페이 요청 양식
 		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
 		parameters.add("cid", cid);
 		parameters.add("partner_order_id", "가맹점 주문 번호");
@@ -42,26 +41,17 @@ public class KakaoPayService {
 		parameters.add("cancel_url", LocalProperty.getInstance().getLocalServerPort() +"/payment/cancel");
 		parameters.add("fail_url", LocalProperty.getInstance().getLocalServerPort() + "/payment/fail");
 
-		// 파라미터, 헤더
 		HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, this.getHeaders());
 
-		// 외부에 보낼 url
 		kakaoReady = restTemplate.postForObject(
 			"https://kapi.kakao.com/v1/payment/ready", requestEntity, KakaoReadyResponse.class);
-
-		// todo : 결제 엔티티 db에 저장 - kakaoPayment
 
 		return kakaoReady;
 
 	}
 
-
-	/**
-	 * 결제 완료 승인
-	 */
 	public KakaoApproveResponse approveResponse(String pgToken) {
 
-		// 카카오 요청
 		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
 		parameters.add("cid", cid);
 		parameters.add("tid", kakaoReady.getTid());
@@ -69,54 +59,34 @@ public class KakaoPayService {
 		parameters.add("partner_user_id", "가맹점 회원 ID");
 		parameters.add("pg_token", pgToken);
 
-		// 파라미터, 헤더
 		HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, this.getHeaders());
 
-		// 외부에 보낼 url
 		RestTemplate restTemplate = new RestTemplate();
 
-		KakaoApproveResponse approveResponse = restTemplate.postForObject(
+		return restTemplate.postForObject(
 			"https://kapi.kakao.com/v1/payment/approve",
 			requestEntity,
 			KakaoApproveResponse.class);
-
-		return approveResponse;
 	}
 
-	/**
-	 * 결제 환불
-	 */
 	public KakaoCancelResponse kakaoCancel() {
 
-		// 카카오페이 요청
 		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
 		parameters.add("cid", cid);
 		parameters.add("tid", "환불할 결제 고유 번호");
 		parameters.add("cancel_amount", "환불 금액");
 		parameters.add("cancel_tax_free_amount", "환불 비과세 금액");
 
-
-		// 파라미터, 헤더
 		HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, this.getHeaders());
 
-		// 외부에 보낼 url
 		RestTemplate restTemplate = new RestTemplate();
 
-		KakaoCancelResponse cancelResponse = restTemplate.postForObject(
+		return restTemplate.postForObject(
 			"https://kapi.kakao.com/v1/payment/cancel",
 			requestEntity,
 			KakaoCancelResponse.class);
-
-		return cancelResponse;
 	}
 
-
-
-
-
-	/**
-	 * 카카오 요구 헤더값
-	 */
 	private HttpHeaders getHeaders() {
 		HttpHeaders httpHeaders = new HttpHeaders();
 

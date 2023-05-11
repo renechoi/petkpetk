@@ -67,11 +67,6 @@ public class Review extends AuditingFields {
 		return images;
 	}
 
-	public void addImage(List<ReviewImage> reviewImages){
-		reviewImages.forEach(image->image.mapWith(this));
-		this.images= reviewImages;
-	}
-
 	public void mapImages(List<ReviewImage> images) {
 		images.forEach(image -> image.mapWith(this));
 	}
@@ -89,15 +84,5 @@ public class Review extends AuditingFields {
 	public static Review of(Item item, UserAccountDto userAccountDto, String content, Long likes, List<ReviewImage> images, Double rating) {
 		return new Review(item, userAccountDto.toEntity(), content, likes, images, rating);
 	}
-
-	public void updateReview(ReviewResponse reviewResponse) {
-		this.item = reviewResponse.getItem();
-		this.content = reviewResponse.getContent();
-		this.userAccount = reviewResponse.getUserAccountDto().toEntity();
-		this.likes = reviewResponse.getLikes();
-	}
-
-
-
 }
 

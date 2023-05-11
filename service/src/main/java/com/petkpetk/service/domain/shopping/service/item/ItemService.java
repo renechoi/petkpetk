@@ -37,7 +37,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ItemService {
 	private final ItemRepository itemRepository;
-	private final ReviewRepository reviewRepository;
 	private final ItemImageRepository itemImageRepository;
 	private final ImageLocalRepository<ItemImage> imageLocalRepository;
 
@@ -65,10 +64,8 @@ public class ItemService {
 		List<ItemImage> images = ImageConverter.of(ItemImage::from)
 			.convertToImages(itemDto.getRawImages());
 
-		// 영속화 
 		itemRepository.save(itemDto.toEntity(images));
 
-		// local 저장
 		IntStream.range(0, images.size())
 			.forEach(image -> imageLocalRepository.save(images.get(image),
 				itemDto.getRawImages().get(image)));
@@ -97,7 +94,6 @@ public class ItemService {
 				newlyAddedImages.stream())
 			.collect(Collectors.toList());
 
-		// todo : itemImages(DB) 중에서 allRequestedImages 없으면 삭제 대상.
 		List<ItemImage> imagesToDelete = itemImages.stream()
 			.filter(itemImage -> !allRequestedImages.contains(itemImage))
 			.collect(Collectors.toList());
@@ -108,10 +104,8 @@ public class ItemService {
 			.forEach(image -> imageLocalRepository.save(newlyAddedImages.get(image),
 				itemUpdateRequest.getImages().get(image)));
 
-		// todo: db에서 가져온 itemImages 중에 notModifiedImages에 해당하는 itemImage가 없으면 삭제 대상
 		itemImages.removeIf(itemImage -> !notModifiedImages.contains(itemImage));
 
-		// todo : newlyAddedImages 는 itemImages에 추가
 		itemImages.addAll(newlyAddedImages);
 		item.mapImages(itemImages);
 
@@ -137,15 +131,6 @@ public class ItemService {
 		return itemRepository.findById(itemId).orElseThrow(ItemNotFoundException::new);
 	}
 
-
-	private List<ItemImage> findByItemIdOrderByIdAsc(Long id) {
-		return itemImageRepository.findByItemIdOrderByIdAsc(id);
-	}
-
-	public ItemDto searchItem(Long itemId) {
-		return itemRepository.findById(itemId).map(ItemDto::from).orElseThrow(ItemNotFoundException::new);
-	}
-
 	public ItemDto searchItemWithItemImageIsRepresentative(Long itemId) {
 		return itemRepository.findItemWithRepresentativeImageById(itemId)
 			.map(ItemDto::from)
@@ -154,25 +139,6 @@ public class ItemService {
 
 	public Item getItem(Long itemId) {
 		return itemRepository.findById(itemId).orElseThrow(ItemNotFoundException::new);
-	}
-
-	public List<Item> getReviewItemList(List<Review> reviewList) {
-
-		List<Item> itemList = new ArrayList<>();
-		reviewList.forEach(
-			review -> itemList.add(itemRepository.findById(review.getItem().getId()).get()));
-
-		return itemList;
-	}
-
-	public List<ItemImage> findItemImageUrls(List<Long> itemIds) {
-		List<ItemImage> itemImages = new ArrayList<>();
-		IntStream.range(0, (itemIds.size()))
-			.forEach( i ->
-				itemImages.add(itemImageRepository.findAllByItem_Id(itemIds.get(i)))
-			);
-
-		return itemImages;
 	}
 
 	public Long getItemCount() {

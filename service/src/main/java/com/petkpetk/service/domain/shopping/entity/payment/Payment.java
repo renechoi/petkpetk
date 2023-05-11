@@ -45,8 +45,8 @@ public class Payment extends AuditingFields {
 	@JoinColumn(name = "item_id")
 	private Item item;
 	private Long totalCost;
-	private String payToken; // ***** 결제토큰
-	private String payApp; // ***** 결제 방식
+	private String payToken;
+	private String payApp;
 
 	public Payment(Long orderId, UserAccount userAccount, Item item, Long totalCost, String payToken, String payApp) {
 		this.orderId = orderId;
@@ -60,6 +60,4 @@ public class Payment extends AuditingFields {
 	public static Payment of(Long orderId, UserAccount userAccount, Item item, Long totalCost, String payToken, String payApp) {
 		return new Payment(orderId, userAccount, item, totalCost,payToken,payApp);
 	}
-
-
 }

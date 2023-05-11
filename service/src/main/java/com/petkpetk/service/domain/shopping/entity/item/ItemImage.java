@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.petkpetk.service.common.AuditingFields;
 import com.petkpetk.service.common.PetkpetkImage;
+import com.petkpetk.service.config.properties.ServerProperty;
 import com.petkpetk.service.domain.shopping.dto.item.ItemImageDto;
 import com.petkpetk.service.domain.user.dto.security.UserAccountPrincipal;
 
@@ -79,8 +80,6 @@ public class ItemImage extends AuditingFields implements PetkpetkImage {
 	}
 
 	public static ItemImage from(ItemImageDto itemImageDto) {
-
-
 		return new ItemImage(itemImageDto.getOriginalName(), itemImageDto.getUniqueName());
 	}
 
@@ -91,7 +90,7 @@ public class ItemImage extends AuditingFields implements PetkpetkImage {
 	}
 
 	private String createImageUrl() {
-		return "/images/item/" + uniqueName;
+		return ServerProperty.IMAGE_SERVER_LOCATION.getServerLocation() + uniqueName;
 	}
 
 	private static String createUniqueName(MultipartFile rawImage) {

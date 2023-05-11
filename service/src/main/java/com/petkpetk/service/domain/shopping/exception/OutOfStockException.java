@@ -7,21 +7,8 @@ public class OutOfStockException extends  PetkpetkServerException{
 
 	private static final StatusCode statusCode = StatusCode.OUT_OF_STOCK;
 
-	public OutOfStockException(){
-		super(statusCode);
-	}
-
-	public OutOfStockException(StatusCode statusCode) {
-		super(statusCode);
-	}
-
 	public OutOfStockException(String message) {
 		super(statusCode);
 	}
-
-	public OutOfStockException(StatusCode statusCode, String detailMessage) {
-		super(statusCode, detailMessage);
-	}
-
 
 }

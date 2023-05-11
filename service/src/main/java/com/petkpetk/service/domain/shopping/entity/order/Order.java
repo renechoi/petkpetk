@@ -144,26 +144,4 @@ public class Order extends AuditingFields {
 	public boolean isDeliveryInProcess(){
 		return delivery.getDeliveryStatus() == DeliveryStatus.DELIVERING || delivery.getDeliveryStatus() == DeliveryStatus.DELIVERY_COMPLETED;
 	}
-
-	public static Order createOrder(UserAccount userAccount,Delivery delivery, List<OrderItem> orderItems) {
-		Order order = new Order();
-		order.setUserAccount(userAccount);
-		order.setOrderStatus(OrderStatus.ORDER);
-		order.setCreatedAt(LocalDateTime.now());
-		order.setDelivery(delivery);
-
-		orderItems.forEach(order::addOrderItem);
-		return order;
-	}
-
-		// public void cancelOrder(){
-		// 	if (delivery.getDeliveryStatus() == DeliveryStatus.DELIVERY_COMPLETED) {
-		// 		throw new RuntimeException("이미 배송완료된 상품은 취소가 불가능합니다.");
-		// 	}
-		// 	this.orderStatus = OrderStatus.CANCEL;
-		// 	orderItems.forEach(OrderItem::cancel);
-		//
-		// }
-
-
 }

@@ -11,17 +11,4 @@ public class StockAlreadyInCartException extends  PetkpetkServerException{
 		super(statusCode);
 	}
 
-	public StockAlreadyInCartException(StatusCode statusCode) {
-		super(statusCode);
-	}
-
-	public StockAlreadyInCartException(String message) {
-		super(statusCode);
-	}
-
-	public StockAlreadyInCartException(StatusCode statusCode, String detailMessage) {
-		super(statusCode, detailMessage);
-	}
-
-
 }

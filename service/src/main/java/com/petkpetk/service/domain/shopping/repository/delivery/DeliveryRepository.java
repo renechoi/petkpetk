@@ -9,6 +9,4 @@ import com.petkpetk.service.domain.shopping.entity.delivery.Delivery;
 
 @Repository
 public interface DeliveryRepository extends JpaRepository<Delivery, Long> {
-
-
 }

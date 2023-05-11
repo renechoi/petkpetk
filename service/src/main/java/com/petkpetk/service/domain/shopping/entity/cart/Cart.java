@@ -44,11 +44,4 @@ public class Cart  extends AuditingFields {
 	public static Cart of(UserAccountDto userAccountDto) {
 		return new Cart(userAccountDto.toEntity());
 	}
-
-
-
-
-
-
-
 }

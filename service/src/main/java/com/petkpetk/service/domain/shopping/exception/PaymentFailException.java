@@ -7,16 +7,7 @@ public class PaymentFailException extends PetkpetkServerException {
 
 	private static final StatusCode statusCode = StatusCode.PAY_FAILED;
 
-	public PaymentFailException(){
-		super(statusCode);
-	}
-
 	public PaymentFailException(StatusCode statusCode) {
 		super(statusCode);
 	}
-
-	public PaymentFailException(StatusCode statusCode, String detailMessage) {
-		super(statusCode, detailMessage);
-	}
-
 }

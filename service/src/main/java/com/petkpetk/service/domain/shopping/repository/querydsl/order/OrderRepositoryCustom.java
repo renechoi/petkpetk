@@ -14,10 +14,6 @@ import org.springframework.stereotype.Repository;
 public interface OrderRepositoryCustom {
 	List<Order> searchOrders(String userAccountName, LocalDateTime startDate, LocalDateTime endDate, OrderStatus status);
 
-//	List<Order> findAllOrdersByUserAccount(UserAccount userAccount);
-
-//	List<Order> findAllOrdersByUserAccount(UserAccount userAccount, OrderStatus orderStatus);
-
 	List<Order> findAllOrdersByUserAccountAndOrderStatus(UserAccount userAccount, OrderStatus orderStatus);
 
 }

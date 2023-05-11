@@ -36,6 +36,4 @@ public class DeliveryController {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
 	}
-
-
 }

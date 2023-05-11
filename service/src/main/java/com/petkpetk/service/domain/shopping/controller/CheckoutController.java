@@ -24,11 +24,9 @@ import lombok.RequiredArgsConstructor;
 public class CheckoutController {
 
 	private final OrderService orderService;
-	private final UserAccountService userAccountService;
 
 	@PostMapping()
 	public String checkout(@Valid CheckoutRequest checkoutRequest, Model model, @AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal){
-
 		CheckoutResponse checkoutResponse = orderService.createCheckOut(checkoutRequest);
 		model.addAttribute("item", checkoutResponse);
 		model.addAttribute("payment", new PaymentRequest());
@@ -36,5 +34,4 @@ public class CheckoutController {
 
 		return "order/checkout";
 	}
-
 }

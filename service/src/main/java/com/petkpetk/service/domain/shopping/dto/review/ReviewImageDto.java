@@ -49,7 +49,6 @@ public class ReviewImageDto {
 	public static ReviewImageDto of( String originalName, String uniqueName) {
 		return new ReviewImageDto(originalName, uniqueName);
 	}
-
 }
 
 

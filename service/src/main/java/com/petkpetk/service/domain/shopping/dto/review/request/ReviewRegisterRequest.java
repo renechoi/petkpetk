@@ -42,13 +42,6 @@ public class ReviewRegisterRequest {
 		);
 	}
 
-	public ReviewRegisterRequest(String content, Long likes, Item item, UserAccountDto userAccountDto) {
-		this.content = content;
-		this.likes = likes;
-		this.item = item;
-		this.userAccountDto = userAccountDto;
-	}
-
 	public static ReviewRegisterRequest of(String content, Long likes, Item item,
 		UserAccount userAccount, Double rating) {
 		return ReviewRegisterRequest.of(content, likes, item, userAccount, rating);

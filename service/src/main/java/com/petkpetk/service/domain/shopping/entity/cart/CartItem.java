@@ -49,13 +49,7 @@ public class CartItem {
         this.cartItemCount = cartItemCount;
     }
 
-     public void updateCount(Long cartItemCount){
-         this.cartItemCount = cartItemCount;
-     }
-
     public static CartItem of(Cart cart, Item item, Long cartItemCount) {
         return new CartItem(cart, item, cartItemCount);
     }
-
-
 }

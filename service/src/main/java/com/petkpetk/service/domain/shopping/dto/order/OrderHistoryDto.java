@@ -36,17 +36,4 @@ public class OrderHistoryDto {
 		this.orderStatus = order.getOrderStatus();
 		this.createdAt = order.getCreatedAt();
 	}
-
-	public OrderHistoryDto(Order order, List<OrderItemDto> orderItemDtos) {
-		this.orderId = order.getId();
-		this.orderStatus = order.getOrderStatus();
-		this.orderItemDtos = orderItemDtos;
-		this.createdAt = order.getCreatedAt();
-	}
-
-	public void addOrderItemDto(OrderItemDto orderItemDto){
-		orderItemDtos.add(orderItemDto);
-	}
-
-
 }

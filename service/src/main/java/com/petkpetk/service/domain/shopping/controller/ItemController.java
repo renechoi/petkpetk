@@ -53,14 +53,12 @@ public class ItemController {
 		return "my-page/seller/sellerMyPage";
 	}
 
-	// 상품 등록 페이지
 	@GetMapping("/new")
 	public String registerItem(Model model) {
 		model.addAttribute("item", new ItemRegisterRequest());
 		return "item/itemApply";
 	}
 
-	// 상품 등록
 	@PostMapping("/new")
 	public String registerItem(@Valid ItemRegisterRequest itemRegisterRequest,
 		@AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal) {
@@ -70,7 +68,6 @@ public class ItemController {
 		return "redirect:/";
 	}
 
-	// 해당 상품 상세 페이지
 	@GetMapping("/{itemId}")
 	public String itemDetail(Model model, @PathVariable("itemId") Long itemId, Authentication authentication) {
 		ItemResponse itemResponse = itemService.getItemDetail(itemId);
@@ -97,7 +94,6 @@ public class ItemController {
 
 	}
 
-	// 해당 상품 수정 페이지 이동
 	@GetMapping("/modify/{itemId}")
 	public String modifyItem(@PathVariable("itemId") Long itemId, Model model) {
 		ItemResponse itemResponse = itemService.getItemDetail(itemId);
@@ -105,7 +101,6 @@ public class ItemController {
 		return "item/itemApply";
 	}
 
-	// 상품 수정
 	@PostMapping("/modify/{itemId}")
 	public String modifyItem(
 		ItemRegisterRequest itemUpdateRequest,
@@ -141,7 +136,6 @@ public class ItemController {
 		return "redirect:/item/" + itemUpdateRequest.getId();
 	}
 
-	// 상품 삭제
 	@GetMapping("/delete/{itemId}")
 	public String deleteItem(@PathVariable("itemId") Long itemId) {
 		itemService.deleteItem(itemId);
