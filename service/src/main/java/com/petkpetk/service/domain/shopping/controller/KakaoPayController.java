@@ -8,14 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.petkpetk.service.common.StatusCode;
 import com.petkpetk.service.domain.shopping.dto.payment.KakaoApproveResponse;
 import com.petkpetk.service.domain.shopping.dto.payment.KakaoCancelResponse;
 import com.petkpetk.service.domain.shopping.dto.payment.PaymentRequest;
-import com.petkpetk.service.domain.shopping.exception.CancellationInProgressException;
-import com.petkpetk.service.domain.shopping.exception.PaymentFailException;
 import com.petkpetk.service.domain.shopping.service.payment.KakaoPayService;
 
 import lombok.RequiredArgsConstructor;
@@ -43,7 +39,7 @@ public class KakaoPayController {
 	public String afterPayRequest(@RequestParam("pg_token") String pgToken, Model model) {
 		KakaoApproveResponse kakaoApprove = kakaoPayService.approveResponse(pgToken);
 		model.addAttribute("kakao", kakaoApprove);
-		return "order/kakao-pay/sucess";
+		return "order/kakao-pay/success";
 	}
 
 	@GetMapping("/cancel")
