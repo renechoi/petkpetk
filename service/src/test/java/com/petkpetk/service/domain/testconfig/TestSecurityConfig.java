@@ -3,7 +3,6 @@ package com.petkpetk.service.domain.testconfig;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.*;
 
-import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,7 +12,7 @@ import org.springframework.test.context.event.annotation.BeforeTestMethod;
 
 import com.petkpetk.service.config.security.OAuth2Config;
 import com.petkpetk.service.config.security.SecurityConfig;
-import com.petkpetk.service.common.RoleType;
+import com.petkpetk.service.domain.user.constant.RoleType;
 import com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.dto.request.UserSignupRequest;

@@ -2,7 +2,6 @@ package com.petkpetk.service.domain.user.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Optional;
 import java.util.Set;
 
 import org.junit.jupiter.api.DisplayName;
@@ -14,14 +13,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.petkpetk.service.common.RoleType;
+import com.petkpetk.service.domain.user.constant.RoleType;
 import com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.dto.request.UserSignupRequest;
 import com.petkpetk.service.domain.user.dto.request.UserUpdateRequest;
 import com.petkpetk.service.domain.user.entity.ProfileImage;
 import com.petkpetk.service.domain.user.entity.embedded.Address;
-import com.petkpetk.service.domain.user.entity.UserAccount;
 import com.petkpetk.service.domain.user.exception.UserDuplicateException;
 import com.petkpetk.service.domain.user.repository.UserAccountRepository;
 

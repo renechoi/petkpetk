@@ -8,7 +8,7 @@ import java.util.UUID;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.petkpetk.service.common.CategoryType;
+import com.petkpetk.service.domain.community.constatnt.CategoryType;
 import com.petkpetk.service.domain.community.entity.Article;
 import com.petkpetk.service.domain.community.entity.ArticleComment;
 import com.petkpetk.service.domain.community.entity.ArticleImage;

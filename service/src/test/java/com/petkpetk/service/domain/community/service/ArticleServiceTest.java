@@ -13,7 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.petkpetk.service.common.CategoryType;
+import com.petkpetk.service.domain.community.constatnt.CategoryType;
 import com.petkpetk.service.config.file.ImageLocalRepository;
 import com.petkpetk.service.domain.community.dto.ArticleDto;
 import com.petkpetk.service.domain.community.entity.Article;

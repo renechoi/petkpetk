@@ -9,7 +9,7 @@
 // import org.springframework.test.context.ActiveProfiles;
 // import org.springframework.transaction.annotation.Transactional;
 //
-// import com.petkpetk.service.common.RoleType;
+// import com.petkpetk.service.domain.user.constant.RoleType;
 // import com.petkpetk.service.domain.shopping.constant.ItemStatus;
 // import com.petkpetk.service.domain.shopping.entity.item.Item;
 // import com.petkpetk.service.domain.shopping.repository.cart.CartRepository;
