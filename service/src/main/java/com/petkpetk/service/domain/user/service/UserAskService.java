@@ -29,10 +29,6 @@ public class UserAskService {
 	}
 
 	public List<UserAskDto> getUserAskList(UserAccountPrincipal userAccountPrincipal) {
-		if (userAccountPrincipal != null) {
-			return userAskRepository.findAllByUserAccountId(userAccountPrincipal.getId());
-		}
-
-		return null;
+		return userAskRepository.findAllByUserAccountId(userAccountPrincipal.getId());
 	}
 }

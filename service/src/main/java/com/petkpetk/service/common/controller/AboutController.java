@@ -30,13 +30,15 @@ public class AboutController {
 
 	@GetMapping("/ask")
 	public String askView(Model model, @AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal) {
-		model.addAttribute("ask", userAskService.getUserAskList(userAccountPrincipal));
+		model.addAttribute("ask",
+			userAccountPrincipal == null ? null : userAskService.getUserAskList(userAccountPrincipal));
 		model.addAttribute("askRequest", new UserAskRequest());
 		return "about/ask";
 	}
 
 	@PostMapping("/askPost")
-	public String askPost(UserAskRequest userAskRequest, @AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal) {
+	public String askPost(UserAskRequest userAskRequest,
+		@AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal) {
 		userAskService.saveAsk(userAskRequest, UserAccountDto.from(userAccountPrincipal));
 		return "redirect:/about/ask";
 	}
