@@ -177,7 +177,7 @@
         <div id="getMoreBtn" onclick="getMoreArticles()" style="display: none;">더보기</div>
     </div>
 
-    <div sec:authorize="hasAnyAuthority('ROLE_USER')">
+    <div sec:authorize="hasAnyAuthority('ROLE_USER') or #authentication.principal instanceof T(com.petkpetk.service.domain.user.dto.security.OAuth2UserAccountPrincipal)">
         <img id="postCat" src="/images/postCat.png" style="display: none;">
         <a th:href="@{/community/articles/post}" title="글쓰기"><div id="postBtn"><img src="/images/HyeJin.png" onmouseover="showPost()" onmouseout="showPost()"></div></a>
     </div>

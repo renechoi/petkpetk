@@ -21,12 +21,14 @@
 
 <div th:if="${#authentication.principal}">
     <p th:if="${#authentication.principal instanceof T(org.springframework.security.core.userdetails.UserDetails)}">일반 유저로 로그인: <span th:text="${#authentication.principal.username}"></span></p>
-    <p th:if="${#authentication.principal instanceof T(org.springframework.security.oauth2.core.user.DefaultOAuth2User)}">소셜 유저로 로그인: <span th:text="${#authentication.principal.getName()}"></span></p>
+    <p th:if="${#authentication.principal instanceof T(com.petkpetk.service.domain.user.dto.security.OAuth2UserAccountPrincipal)}">소셜 유저로 로그인: <span th:text="${#authentication.principal.getName()}"></span></p>
     <p th:if="${#authentication.principal == 'anonymousUser'}">로그인 되어 있지 않은 익명 유저</p>
 </div>
 
 
-
+<div class="logIn" sec:authorize="hasAnyAuthority('ROLE_USER')">
+    ROLE_USER 로그인 된 상태
+</div>
 
 
 

@@ -36,7 +36,8 @@
 
             <!----------------------------------------------------------------------->
             <!---------------------------- if user != null --------------------------->
-            <div class="logIn" sec:authorize="hasAnyAuthority('ROLE_USER')">
+            <div class="logIn" sec:authorize="hasAnyAuthority('ROLE_USER') or #authentication.principal instanceof T(com.petkpetk.service.domain.user.dto.security.OAuth2UserAccountPrincipal)">
+
                 <ul class="flex justifyContent topList">
                     <a th:href="@{/logout}"><li class="log">로그아웃</li></a>
                     <li >

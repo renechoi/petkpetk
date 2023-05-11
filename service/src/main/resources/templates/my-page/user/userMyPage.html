@@ -59,15 +59,15 @@
           <span class="informations" th:text="${userAccount.nickname}" id="nickName">유저 닉네임</span>
         </div>
 
-        <div class="infos">
+        <div th:if="${userAccount.address != null} and ${userAccount.address.zipCode != null} and ${userAccount.address.address1 != null} and ${userAccount.address.address2 != null} and ${userAccount.address.addressEtc != null}" class="infos">
           <div class="infoTitle">Address</div>
           <span class="informations" th:text="${'('+userAccount.address.zipCode+') '+userAccount.address.address1+' '+userAccount.address.address2+' '+userAccount.address.addressEtc}">유저 주소</span>
         </div>
 
-        <input type="hidden" id="zip" th:value="${userAccount.address.zipCode}">
-        <input type="hidden" id="addr1" th:value="${userAccount.address.address1}">
-        <input type="hidden" id="addr2" th:value="${userAccount.address.address2}">
-        <input type="hidden" id="addrEtc" th:value="${userAccount.address.addressEtc}">
+        <input type="hidden" id="zip"  th:if="${userAccount.address.zipCode != null}" th:value="${userAccount.address.zipCode}">
+        <input type="hidden" id="addr1" th:if="${userAccount.address.address1 != null}" th:value="${userAccount.address.address1}">
+        <input type="hidden" id="addr2" th:if="${userAccount.address.address2 != null}" th:value="${userAccount.address.address2}">
+        <input type="hidden" id="addrEtc" th:if="${userAccount.address.addressEtc != null}" th:value="${userAccount.address.addressEtc}">
 
         <input id="modifyInfo" type="button" value="수정하기" onclick="openNewInfoBox()">
         <br>
