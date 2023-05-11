@@ -76,7 +76,7 @@ tr.table_head {
 }
 
 .hoverClass {
-    background-color: #fff3f3;
+    background-color: #fff7f7;
 }
 
 tr {
@@ -96,6 +96,15 @@ tr {
 td.articleFirstImage {
     display: flex;
     align-items: center;
+}
+
+.commentContent {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 

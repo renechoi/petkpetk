@@ -7,9 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class TestController {
 
 	@GetMapping("/test")
-	public String home(){
+	public String home() {
 		return "/index2";
 	}
 
-
+	@GetMapping("/test/error")
+	public String error() {
+		new RuntimeException();
+		return "";
+	}
 }
