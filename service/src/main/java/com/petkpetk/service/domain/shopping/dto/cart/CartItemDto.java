@@ -18,6 +18,8 @@ public class CartItemDto {
 	private Long itemId;
 	private String itemName;
 	private List<ItemImage> images;;
+	private Long originalPrice;
+	private int discountRate;
 	private Long price;
 	private Long cartItemCount;
 
@@ -27,6 +29,8 @@ public class CartItemDto {
 			cartItem.getItem().getId(),
 			cartItem.getItem().getItemName(),
 			cartItem.getItem().getImages(),
+			cartItem.getItem().getOriginalPrice(),
+			(int)(cartItem.getItem().getDiscountRate() * 100),
 			cartItem.getItem().getPrice(),
 			cartItem.getCartItemCount()
 		);
