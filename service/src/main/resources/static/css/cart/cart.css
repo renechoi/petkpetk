@@ -85,7 +85,7 @@ input[type="checkbox"] {
 
 .amountBtn {
     width: 30px;
-    border: 2px solid #ff8686;
+    border: 1px solid #ff5050;
     background-color: #ff8686;
     color: #ffffff;
     cursor: pointer;
