@@ -14,7 +14,7 @@ import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import com.petkpetk.service.common.RoleType;
+import com.petkpetk.service.domain.user.constant.RoleType;
 import com.petkpetk.service.config.converter.EntityAndDtoConverter;
 import com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo;
 import com.petkpetk.service.domain.user.entity.ProfileImage;

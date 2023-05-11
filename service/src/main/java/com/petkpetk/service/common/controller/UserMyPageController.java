@@ -1,4 +1,4 @@
-package com.petkpetk.service.common.controller.user;
+package com.petkpetk.service.common.controller;
 
 import java.util.List;
 import java.util.stream.IntStream;

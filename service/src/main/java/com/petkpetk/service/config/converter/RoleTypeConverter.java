@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-import com.petkpetk.service.common.RoleType;
+import com.petkpetk.service.domain.user.constant.RoleType;
 
 @Converter
 public class RoleTypeConverter implements AttributeConverter<Set<RoleType>, String> {

@@ -1,4 +1,4 @@
-package com.petkpetk.service.common;
+package com.petkpetk.service.common.controller;
 
 import java.util.HashMap;
 import java.util.Map;

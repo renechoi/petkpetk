@@ -3,7 +3,7 @@ package com.petkpetk.service.domain.user.dto;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import com.petkpetk.service.common.RoleType;
+import com.petkpetk.service.domain.user.constant.RoleType;
 import com.petkpetk.service.config.converter.EntityAndDtoConverter;
 import com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo;
 import com.petkpetk.service.domain.user.dto.security.UserAccountPrincipal;

@@ -1,4 +1,4 @@
-package com.petkpetk.service.common.controller.seller;
+package com.petkpetk.service.common.controller;
 
 import java.util.Optional;
 

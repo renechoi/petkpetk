@@ -10,11 +10,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.petkpetk.service.common.AuditingFields;
-import com.petkpetk.service.common.RoleType;
+import com.petkpetk.service.domain.user.constant.RoleType;
 import com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.entity.ProfileImage;
-import com.petkpetk.service.domain.user.entity.embedded.Address;
 import com.petkpetk.service.domain.user.entity.embedded.AddressClaim;
 
 import lombok.Data;

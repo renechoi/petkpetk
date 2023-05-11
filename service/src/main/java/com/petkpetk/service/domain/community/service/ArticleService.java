@@ -15,7 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.petkpetk.service.common.CategoryType;
+import com.petkpetk.service.domain.community.constatnt.CategoryType;
 import com.petkpetk.service.domain.community.constatnt.SearchType;
 import com.petkpetk.service.domain.community.dto.ArticleDto;
 import com.petkpetk.service.domain.community.entity.Article;

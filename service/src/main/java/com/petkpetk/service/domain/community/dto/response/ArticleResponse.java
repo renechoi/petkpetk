@@ -9,11 +9,10 @@ import java.util.stream.Collectors;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.petkpetk.service.common.CategoryType;
+import com.petkpetk.service.domain.community.constatnt.CategoryType;
 import com.petkpetk.service.config.converter.EntityAndDtoConverter;
 import com.petkpetk.service.domain.community.dto.ArticleDto;
 import com.petkpetk.service.domain.community.dto.HashtagDto;
-import com.petkpetk.service.domain.user.dto.UserAccountDto;
 
 import lombok.Data;
 

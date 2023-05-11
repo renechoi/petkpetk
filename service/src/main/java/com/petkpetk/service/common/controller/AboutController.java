@@ -1,4 +1,4 @@
-package com.petkpetk.service.common;
+package com.petkpetk.service.common.controller;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;

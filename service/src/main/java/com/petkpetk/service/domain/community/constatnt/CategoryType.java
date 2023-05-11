@@ -1,4 +1,4 @@
-package com.petkpetk.service.common;
+package com.petkpetk.service.domain.community.constatnt;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

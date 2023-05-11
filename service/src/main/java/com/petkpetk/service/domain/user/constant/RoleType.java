@@ -1,4 +1,4 @@
-package com.petkpetk.service.common;
+package com.petkpetk.service.domain.user.constant;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

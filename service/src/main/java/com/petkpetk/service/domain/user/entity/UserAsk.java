@@ -1,11 +1,9 @@
 package com.petkpetk.service.domain.user.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,9 +18,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.petkpetk.service.common.AuditingFields;
-import com.petkpetk.service.common.RoleType;
+import com.petkpetk.service.domain.user.constant.RoleType;
 import com.petkpetk.service.domain.user.constant.AnswerStatus;
-import com.petkpetk.service.domain.user.constant.QnACategory;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

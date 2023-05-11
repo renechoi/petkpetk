@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.petkpetk.service.common.RoleType;
+import com.petkpetk.service.domain.user.constant.RoleType;
 import com.petkpetk.service.config.converter.EntityAndDtoConverter;
 import com.petkpetk.service.config.security.oauth2.OAuth2ProviderInfo;
 import com.petkpetk.service.domain.user.entity.ProfileImage;

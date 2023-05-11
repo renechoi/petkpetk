@@ -26,7 +26,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Where;
 
 import com.petkpetk.service.common.AuditingFields;
-import com.petkpetk.service.common.CategoryType;
+import com.petkpetk.service.domain.community.constatnt.CategoryType;
 import com.petkpetk.service.domain.user.entity.UserAccount;
 
 import lombok.Getter;

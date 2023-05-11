@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.petkpetk.service.common.CategoryType;
+import com.petkpetk.service.domain.community.constatnt.CategoryType;
 
 import lombok.Data;
 
