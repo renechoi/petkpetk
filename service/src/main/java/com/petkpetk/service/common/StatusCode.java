@@ -55,8 +55,8 @@ public enum StatusCode {
 
 	// 커뮤니티
 
-	ARTICLE_NOT_FOUND("게시글을 조회할 수 없습니다")
-		;
+	ARTICLE_NOT_FOUND("게시글을 조회할 수 없습니다"),
+	THYMELEAF_RENDERING_FAILED("뷰 렌더링에 실패하였습니다.");
 
 	private final String message;
 }
