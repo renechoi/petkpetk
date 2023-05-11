@@ -4,5 +4,11 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum ItemStatus {
-	SELL, SOLD_OUT
+	SELL("판매중"),
+	SOLD_OUT("판매종료")
+
+	;
+
+
+	private final String description;
 }
