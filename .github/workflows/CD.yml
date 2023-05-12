@@ -61,13 +61,27 @@ jobs:
       - name: Upload to S3
         run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
 
-      - name: Replace secrets in application-prod.yml
+      - name: Replace secrets in application.yml
         run: |
-          sed -i "s/\${AWS_DB_USERNAME}/${AWS_DB_USERNAME}/g" admin/src/main/resources/application-prod.yml
-          sed -i "s/\${AWS_DB_PASSWORD}/${AWS_DB_PASSWORD}/g" admin/src/main/resources/application-prod.yml
-          sed -i "s/\${GOOGLE_SMTP_USERNAME}/${GOOGLE_SMTP_USERNAME}/g" admin/src/main/resources/application-prod.yml
-          sed -i "s/\${GOOGLE_SMTP_PASSWORD}/${GOOGLE_SMTP_PASSWORD}/g" admin/src/main/resources/application-prod.yml
+          sed -i "s/\${AWS_DB_USERNAME}/${AWS_DB_USERNAME}/g" admin/src/main/resources/application.yml
+          sed -i "s/\${AWS_DB_PASSWORD}/${AWS_DB_PASSWORD}/g" admin/src/main/resources/application.yml
+          sed -i "s/\${GOOGLE_SMTP_USERNAME}/${GOOGLE_SMTP_USERNAME}/g" admin/src/main/resources/application.yml
+          sed -i "s/\${GOOGLE_SMTP_PASSWORD}/${GOOGLE_SMTP_PASSWORD}/g" admin/src/main/resources/application.yml
         shell: bash
+
+        # Deploy
+      - name: Deploy
+        run: |
+          aws deploy create-deployment \
+          --application-name petkpetk \
+          --deployment-config-name CodeDeployDefault.AllAtOnce \
+          --deployment-group-name petkpetk-prod \
+          --file-exists-behavior OVERWRITE \
+          --s3-location bucket=petkpetk-bucket,bundleType=zip,key=petkpetk/$GITHUB_SHA.zip \
+          --region ap-northeast-2 \   
+        
+        
+        
 
   service-build:
     name: service build
@@ -110,14 +124,3 @@ jobs:
       - name: Upload to S3
         run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
 
-
-          # Deploy
-      - name: Deploy
-        run: |
-          aws deploy create-deployment \
-          --application-name petkpetk \
-          --deployment-config-name CodeDeployDefault.AllAtOnce \
-          --deployment-group-name petkpetk-prod \
-          --file-exists-behavior OVERWRITE \
-          --s3-location bucket=petkpetk-bucket,bundleType=zip,key=petkpetk/$GITHUB_SHA.zip \
-          --region ap-northeast-2 \
