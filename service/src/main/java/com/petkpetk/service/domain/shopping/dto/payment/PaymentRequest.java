@@ -11,6 +11,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class PaymentRequest {
 
-	private String ItemName;
-	private String FinalPaymentPrice;
+	private String itemName;
+	private String finalPaymentPrice;
+
 }
