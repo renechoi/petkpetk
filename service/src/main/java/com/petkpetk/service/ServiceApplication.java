@@ -19,5 +19,4 @@ public class ServiceApplication {
 			throw new ThymeleafRenderingException(StatusCode.THYMELEAF_RENDERING_FAILED, e.getMessage());
 		}
 	}
-
 }
