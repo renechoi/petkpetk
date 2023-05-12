@@ -1,5 +1,0 @@
-create database petkpetk;
-
-grant all on `petkpetk`.* to 'rene'@'localhost';
-
-flush PRIVILEGES ;
