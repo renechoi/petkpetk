@@ -4,6 +4,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -40,6 +41,12 @@ public class AboutController {
 	public String askPost(UserAskRequest userAskRequest,
 		@AuthenticationPrincipal UserAccountPrincipal userAccountPrincipal) {
 		userAskService.saveAsk(userAskRequest, UserAccountDto.from(userAccountPrincipal));
+		return "redirect:/about/ask";
+	}
+
+	@PostMapping("/ask/delete/{askId}")
+	public String askDelete(@PathVariable("askId") Long askId) {
+		userAskService.deleteAsk(askId);
 		return "redirect:/about/ask";
 	}
 

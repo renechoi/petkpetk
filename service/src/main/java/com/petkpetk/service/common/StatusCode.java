@@ -52,6 +52,10 @@ public enum StatusCode {
 
 	ORDER_ALREADY_IN_PROCESS("이미 배송 처리중입니다."),
 
+	// 1:1 질문
+
+	NOT_FOUND_ASK("존재하지 않는 질문입니다."),
+
 
 	// 커뮤니티
 
