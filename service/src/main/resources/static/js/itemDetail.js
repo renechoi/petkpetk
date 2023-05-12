@@ -439,3 +439,11 @@ $(document).keyup(function(e) {
     }
 });
 
+function showImageDetail(e) {
+    $("#itemRepresentativeImageDetail").attr("src", e.getAttribute("src"));
+    $("#itemImagesDetailBox").css("display", "block");
+}
+
+function closeItemImageDetail() {
+    $("#itemImagesDetailBox").css("display", "none");
+}

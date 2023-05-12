@@ -944,3 +944,44 @@ div#cart-result-modal {
     display: flex;
     justify-content: flex-end;
 }
+
+img.itemImagesDetailList {
+    width: 100px;
+    margin: 2px 0;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+img#itemRepresentativeImageDetail {
+    height: 500px;
+}
+
+
+div#itemImagesDetailBox {
+    z-index: 400;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #00000070;
+}
+
+div#itemImageDetailBox {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 150px;
+}
+
+#otherImagesList{
+    display: flex;
+    flex-direction: column;
+    margin: 0 50px;
+}
+
+div#otherImages {
+    margin-left: 100px;
+}

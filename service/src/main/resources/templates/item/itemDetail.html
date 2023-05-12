@@ -39,6 +39,23 @@
     <div id="itemDetailContainer" class="itemDetailContainer">
 
 
+        <input type="hidden" id="itemImages" th:value="${item.itemImageDtos}">
+        <div style="display:none;" id="itemImagesDetailBox" th:object="${item}" onclick="closeItemImageDetail()">
+            <div id="itemImageDetailBox">
+                <div id="choosingImage">
+                    <img id="itemRepresentativeImageDetail" src="">
+                </div>
+                <div id="otherImages">
+                    <div id="otherImagesList">
+                        <img th:class="'itemImagesDetailList showImage'+${num}" th:each="image , num : *{itemImageDtos}" th:with="num = ${num.index}" th:src="${image.imageUrl}">
+                    </div>
+                </div>
+            </div>
+            <div id="background">
+
+            </div>
+        </div>
+
         <form id="orderForm" class="orderForm" role="form" method="post" th:action="@{/checkout}">
             <input type="hidden" id="itemId" th:value="${item.id}">
             <input type="hidden" id="orderItems" th:field="*{order.checkoutDtos[0].itemId}" th:value="${item.id}">
@@ -49,7 +66,8 @@
                     <img th:each="itemImg : ${item.itemImageDtos}" th:if="${itemImg.representativeImageYn.equals('Y')}"
                          id="itemDetailMainImg" th:src="${itemImg.imageUrl}"
                          class="rounded repImg "
-                         th:alt="${itemImg.getUniqueName}">
+                         th:alt="${itemImg.getUniqueName}"
+                         onclick="showImageDetail(this)">
                 </div>
                 <div class="wd50">
                     <div class="SellStatus_ItemName">
