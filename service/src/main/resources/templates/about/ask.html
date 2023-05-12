@@ -24,27 +24,39 @@
             </div>
 
             <div id="AskBox" th:if="${not #lists.isEmpty(ask)}">
-                <div id="askOneBox" th:each="asking, status :  ${ask}" th:with="num = ${status.index}">
+                <div id="askOneBox" th:each="asking, status :  ${ask}" th:with="num = ${status.index}" th:onclick="'openAsk(' + ${asking.id} + '); changeArrow(' + ${asking.id} + ')'">
+
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div style="display: flex; align-items: flex-start;">
+                        <div style="display: flex; align-items: center;">
                             <input type="hidden" class="createdAt" th:value="${asking.createdAt}">
                             <div class="askContentBox">
-                                <span class="askContent" th:text="${asking.content}"></span>
+                                <span th:class="'askContent askContent'+${asking.id}+' hideOverFlow'" th:text="${asking.content}"></span>
                             </div>
                             <span th:id="'askCreatedAt'+${num}" class="askCreatedAt"></span>
                         </div>
                         <div style="display: flex;">
+                            <form th:id="'deleteAskForm'+${asking.id}" th:action="'/about/ask/delete/'+${asking.id}" method="post">
+                                <input class="deleteAskBtn" type="submit" value="삭제">
+                            </form>
                             <span class="askAnswerStatus" th:if="${asking.answerStatus eq T(com.petkpetk.service.domain.user.constant.AnswerStatus).ANSWERING}" style="color: #c59999;" th:text="${asking.answerStatus.description}"></span>
                             <span class="askAnswerStatus" th:if="${asking.answerStatus eq T(com.petkpetk.service.domain.user.constant.AnswerStatus).ANSWERED}" style="color: #ff5a5a; font-weight: bold;" th:text="${asking.answerStatus.description}"></span>
-                            <img src="/images/underArrow.png" style="width: 17px; cursor: pointer; margin-left: 10px;">
+                            <img src="/images/underArrow.png" th:class="'ask'+${asking.id}" style="width: 17px; cursor: pointer; margin-left: 10px; transition: all ease 1s;">
                         </div>
                     </div>
-<!--                    <div>-->
-<!--       만약 관리자의 답변이 있다면 불러 올 div            -->
-<!--                    </div>-->
+
+                    <div>
+                    <!--       만약 관리자의 답변이 있다면 불러 올 div            -->
+                    </div>
+
                 </div>
             </div>
         </div>
+
+
+
+    <!------------------------------------------------------------------------------- 새로운 문의 내용 ----------------------------------------------------------------------------------------------------->
+
+
 
         <div id="newAskBox" style="display: none;">
             <form id="newAskForm" method="post" th:action="@{/about/askPost}" th:object="${askRequest}">

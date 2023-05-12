@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserAskDto {
+	private Long id;
 	private UserAccount userAccount;
 	private QnACategory qnACategory;
 	private AnswerStatus answerStatus;

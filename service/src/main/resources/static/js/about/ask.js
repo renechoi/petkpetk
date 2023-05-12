@@ -111,3 +111,20 @@ for (let i = 0; i < createAtList.length; i++) {
     $('#askCreatedAt'+i).text(dateDiffText);
 
 }
+
+
+function openAsk(askId) {
+
+}
+
+function changeArrow(askId) {
+
+    if (!$(".ask" + askId).hasClass("openAsk")) {
+        $(".ask" + askId).addClass("openAsk");
+        $(".askContent" + askId).removeClass("hideOverFlow");
+    } else {
+        $(".ask" + askId).removeClass("openAsk");
+        $(".askContent" + askId).addClass("hideOverFlow");
+    }
+
+}

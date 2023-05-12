@@ -246,4 +246,44 @@ div#askOneBox {
 .askCreatedAt {
     color: #d8bbbb;
     font-size: 15px;
+    min-width: 35px;
+    max-width: 100px;
+}
+
+input.deleteAskBtn {
+    width: 34px;
+    height: 19px;
+    font-size: 12px;
+    margin-right: 9px;
+    border: 1px solid #f9d7d7;
+    background-color: white;
+    color: #f5c6c6;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: 0.3s;
+}
+
+input.deleteAskBtn:hover {
+    border: 1px solid #f8b3b3;
+    background-color: white;
+    color: #f59b9b;
+}
+
+.openAsk {
+    transform: rotate( -90deg );
+}
+
+.askAnswerStatus {
+    min-width: 60px;
+    text-align: center;
+}
+
+.hideOverFlow {
+    white-space: pre-line;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
