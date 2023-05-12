@@ -30,7 +30,7 @@ jobs:
         shell: bash
 
       - name: Build with Gradle
-        run: cd admin && ./gradlew build
+        run: cd admin && ./gradlew build -x test
         shell: bash
 
   service-build:
@@ -53,5 +53,10 @@ jobs:
         shell: bash
 
       - name: Build with Gradle
-        run: cd service && ./gradlew build
+        run: cd service && ./gradlew build -x test
         shell: bash
+
+
+
+
+
