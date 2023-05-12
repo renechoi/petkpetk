@@ -29,6 +29,6 @@ DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
 
 export
  SPRING_PROFILES_ACTIVE=prod
-nohup java -jar $DEPLOY_JAR --spring.config.location=/home/ec2-user/action/admin/src/main/resources/appication-prod.yml
+nohup java -jar $DEPLOY_JAR --spring.config.location=/home/ec2-user/action/admin/src/main/resources/application-prod.yml
 
-#nohup java -jar $DEPLOY_JAR -Dspring.profiles.active=prod /home/ec2-user/action/admin/src/main/resources/application-prod.yml
+#java -jar -Dspring.profiles.active=prod /home/ec2-user/action/admin/src/main/resources/appication-prod.yml
