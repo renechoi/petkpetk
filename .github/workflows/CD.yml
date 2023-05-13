@@ -49,9 +49,9 @@ jobs:
       - name: Deploy
         run: |
           aws deploy create-deployment \
-          --application-name petkpetk-service \
+          --application-name petkpetk \
           --deployment-config-name CodeDeployDefault.AllAtOnce \
-          --deployment-group-name petkpetk-service-prod \
+          --deployment-group-name petkpetk-prod \
           --file-exists-behavior OVERWRITE \
           --s3-location bucket=petkpetk-service-bucket,bundleType=zip,key=petkpetk/$GITHUB_SHA.zip \
           --region ap-northeast-2 \
