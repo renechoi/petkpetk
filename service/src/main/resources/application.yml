@@ -3,7 +3,7 @@ server:
 
 local:
   server:
-    port: "http://localhost:${SERVER_PORT}"
+    port: "${BASE_URL}${SERVER_PORT}"
 
 
 management:
@@ -21,9 +21,9 @@ logging:
 
 spring:
   datasource:
-    url: ${AWS_DB_URL}
-    username: ${AWS_DB_USERNAME}
-    password: ${AWS_DB_PASSWORD}
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
   jpa:
     defer-datasource-initialization: true
@@ -100,8 +100,8 @@ spring:
 
 
 
-itemImageLocation: ${AWS_ITEM_IMAGE_STORAGE}
-uploadPath: ${AWS_ITEM_IMAGE_UPLOAD_PATH}
+itemImageLocation: ${ITEM_IMAGE_STORAGE}
+uploadPath: ${ITEM_IMAGE_UPLOAD_PATH}
 
 
 kakaoPaymentTestCid: "TC0ONETIME"
