@@ -24,5 +24,5 @@ DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
 echo "> DEPLOY_JAR 배포"    >> /home/ec2-user/action/service/deploy.log
 nohup java -jar $DEPLOY_JAR >> /home/ec2-user/service/deploy/deploy.log 2>/home/ec2-user/action/service/deploy_err.log &
 
-#nohup java -Dspring.profiles.active=prod -jar $DEPLOY_JAR >> /home/ec2-user/action/service/deploy.log 2>/home/ec2-user/action/admin/deploy_err.log &
+#nohup java -Dspring.profiles.active=prod -jar $DEPLOY_JAR >> /home/ec2-user/action/service/deploy.log 2>/home/ec2-user/action/service/deploy_err.log &
 
