@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 @Component
 @Getter
 @RequiredArgsConstructor
-@PropertySource(value = "classpath:application-dev.yml")
+@PropertySource(value = "classpath:application.yml")
 public class LocalProperty {
 
 	@Value("${imgurClientId}")
