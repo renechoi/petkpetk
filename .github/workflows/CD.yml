@@ -49,7 +49,7 @@ jobs:
       - name: Deploy
         run: |
           aws deploy create-deployment \
-          --application-name petkpetk \
+          --application-name petkpetk-service \
           --deployment-config-name CodeDeployDefault.AllAtOnce \
           --deployment-group-name petkpetk-prod \
           --file-exists-behavior OVERWRITE \
