@@ -76,7 +76,7 @@ public class AdminAccountController {
 		}
 		adminAccountService.save(adminSignupRequest);
 
-		return "redirect:/";
+		return "redirect:login/";
 	}
 
 	@GetMapping("/approve-register")
