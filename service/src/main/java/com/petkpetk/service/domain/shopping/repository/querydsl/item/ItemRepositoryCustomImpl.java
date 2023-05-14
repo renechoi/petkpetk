@@ -4,7 +4,9 @@ import static com.petkpetk.service.domain.shopping.entity.item.QItemImage.*;
 import static java.time.LocalDateTime.*;
 
 import java.time.LocalDateTime;
+import java.util.AbstractMap;
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.persistence.EntityManager;
 
@@ -58,24 +60,39 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 		return QItem.item.createdAt.after(dateTime);
 	}
 
-	private BooleanExpression searchByLike(String searchBy, String searchQuery) {
+	// private BooleanExpression searchByLike(String searchBy, String searchQuery) {
+	//
+	// 	if (StringUtils.equals("itemName", searchBy)) {
+	//
+	// 		if (searchQuery == null || searchQuery.equals("")) {
+	//
+	// 		} else {
+	// 			return QItem.item.itemName.like("%" + searchQuery + "%");
+	// 		}
+	// 	} else if (StringUtils.equals("createdBy", searchBy)) {
+	// 		if (searchQuery == null || searchQuery.equals("")) {
+	//
+	// 		} else {
+	// 			return QItem.item.createdBy.like("%" + searchQuery + "%");
+	// 		}
+	// 	}
+	//
+	// 	return null;
+	// }
 
-		if (StringUtils.equals("itemName", searchBy)) {
+	private BooleanExpression searchByLike(String searchBy, String searchValue) {
+		return Stream.of(
+				new AbstractMap.SimpleImmutableEntry<>("itemName", QItem.item.itemName),
+				new AbstractMap.SimpleImmutableEntry<>("createdBy", QItem.item.createdBy))
+			.filter(entry -> StringUtils.equals(entry.getKey(), searchBy) && !isValueEmpty(searchValue))
+			.findFirst()
+			.map(entry -> entry.getValue().like("%" + searchValue + "%"))
+			.orElse(null);
+	}
 
-			if (searchQuery == null || searchQuery.equals("")) {
 
-			} else {
-				return QItem.item.itemName.like("%" + searchQuery + "%");
-			}
-		} else if (StringUtils.equals("createdBy", searchBy)) {
-			if (searchQuery == null || searchQuery.equals("")) {
-
-			} else {
-				return QItem.item.createdBy.like("%" + searchQuery + "%");
-			}
-		}
-
-		return null;
+	private boolean isValueEmpty(String searchQuery) {
+		return searchQuery == null || searchQuery.equals("");
 	}
 
 	@Override
