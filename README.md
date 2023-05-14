@@ -2,8 +2,20 @@
 
 ![image](https://github.com/10geukbok/petkpetk/assets/110523580/0655560e-a42d-47a7-9c98-2b4d0a9a6dff)
 
+## 📎 프로젝트 소개
+<br><br>
+## 🧑‍🤝‍🧑 팀원 소개
+
+<br><br>
+
+## 🗂️ Architecture
+
+## 💾 ERD 구조
+
 
 ## 🛠️ 기술 스택
+
+<br><br>
 ### Front-End
 
 
@@ -23,3 +35,92 @@
 <br>
 
 <img src="https://img.shields.io/badge/intellijidea-000000?style=for-the-badge&logo=intellijidea&logoColor=white"> 
+
+
+<br><br>
+
+## 📱Demo
+
+<br/>
+
+
+## 👍 특장점 기술 
+<details>
+<summary>
+<h3>✨ </h3>
+</summary>
+<div markdown="1">
+
+- 
+    -
+- 
+    - 
+</div>
+</details>
+  
+<details>
+<summary>
+<h3>✨ </h3>
+</summary>
+<div markdown="2">
+  
+  - 
+</div>
+</details>
+
+<details>
+<summary>
+<h3>✨ </h3>
+</summary>
+<div markdown="2">
+  
+  - 
+</div>
+</details>
+  
+<br/>
+
+## 🚀 트러블 슈팅
+
+### 🧑🏻‍💻 프론트
+<details>
+<summary>
+<h3>🛠 </h3>
+</summary>
+<div markdown="5">
+
+- **Problem**
+    - 
+- **Reason**
+  - 
+- **To Solve**
+  - 
+  -
+    - 
+</div>
+</details>
+<br>
+
+### 🧑🏻‍💻 백엔드
+<details>
+<summary>
+<h3>🛠 </h3>
+</summary>
+<div markdown="5">
+
+- **Problem**
+    - 
+- **Reason**
+  - 
+- **To Solve**
+  - 
+  -
+    - 
+</div>
+</details>
+<br>
+
+<br><br>
+  
+
+
