@@ -110,7 +110,7 @@ public class UserAccountService {
 
 	public void updatePassword(UserUpdateRequest userUpdateRequest) {
 		UserAccount userAccount = findByEmail(userUpdateRequest.getEmail()).orElseThrow(UserNotFoundException::new);
-		userAccount.setPassword(userAccount.getPassword());
+		userAccount.setPassword(userUpdateRequest.getPassword());
 		userAccount.encodePassword(passwordEncoder);
 	}
 
