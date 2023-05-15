@@ -75,22 +75,30 @@
 ## 📱Demo
 |                   🚀 회원가입과 로그인                  |                   🔍 메인 조회                  | 
 | :----------------------------------------------------------: | :----------------------------------------------------------: | 
-| <img src="https://github.com/10geukbok/petkpetk/assets/110523580/f03ef4fe-7fd5-4dae-8d9e-7ca1e7dfe443" alt="회원가입과 로그인" width=80%> | <img src="" alt="메인 조회" width=80%> | 
+| <img src="https://github.com/10geukbok/petkpetk/assets/110523580/c03a371b-e99c-41c5-a9d4-81697f2ed2cd" alt="회원가입과 로그인" width=80%> | <img src="https://github.com/10geukbok/petkpetk/assets/110523580/b06fa9fa-37ed-4152-affb-e32b491b963b" alt="메인 조회" width=80%> | 
 
 |                   🧑🏻‍💻 상품조회                  |                  🚀 상품 바로 결제                 | 
 | :----------------------------------------------------------: | :----------------------------------------------------------: | 
-| <img src="" alt="게시글 등록 / 수정" width=80%> | <img src="https://github.com/10geukbok/petkpetk/assets/110523580/3b6f0a35-accb-4947-be22-8fb1de166f6b" alt="게시글 조회" width=80%> | 
+| <img src="" alt="상품조회" width=80%> | <img src="https://github.com/10geukbok/petkpetk/assets/110523580/fdff50ef-562d-43bb-8744-969b0653e307" alt="상품 바로 결제" width=80%> | 
 
-|                   💵 결제              |                   📝 리뷰 작성 / 수정                | 
+|                   💵 장바구니 결제              |                   📝 리뷰 작성 / 수정                | 
 | :----------------------------------------------------------: | :----------------------------------------------------------: | 
-| <img src="" alt="결제" width=80%> | <img src="" alt="리뷰 작성" width=80%> | 
+| <img src="https://github.com/10geukbok/petkpetk/assets/110523580/9213dffc-56b8-42e6-9536-83b7525a37f9" alt="장바구니 결제" width=80%> | <img src="https://github.com/10geukbok/petkpetk/assets/110523580/4b3b01bb-e5fb-435e-a346-99aa7c5ceebb" alt="리뷰 작성" width=80%> | 
 
 
-|                   ✅ 게시글 등록 / 수정                  |                  ✅ 게시글 조회                 | 
+|                   ✅ 게시글 등록 / 수정                  |                  ✅ 게시글, 댓글 조회                 | 
 | :----------------------------------------------------------: | :----------------------------------------------------------: | 
-| <img src="" alt="게시글 등록 / 수정" width=80%> | <img src="" alt="게시글 조회" width=80%> | 
+| <img src="" alt="게시글 등록 / 수정" width=80%> | <img src="https://github.com/10geukbok/petkpetk/assets/110523580/fa3acf24-44f8-4bc8-ac16-761778cc7590" alt="게시글, 댓글 조회" width=80%> | 
 
 
+|                   🚀 관리자 회원가입                  |                   🔍 관리자 승인                  | 
+| :----------------------------------------------------------: | :----------------------------------------------------------: | 
+| <img src="" alt="관리자 회원가입" width=80%> | <img src="https://github.com/10geukbok/petkpetk/assets/110523580/e0809fae-2b45-4f0c-8e70-e8cdee259a82" alt="관리자 승인" width=80%> | 
+
+
+|                   🚀 관리자 로그인                  |                   🔍 관리자 비밀번호 찾기                  | 
+| :----------------------------------------------------------: | :----------------------------------------------------------: | 
+| <img src="https://github.com/10geukbok/petkpetk/assets/110523580/cdb855b9-7ffc-4b8e-a9f6-0295e3e22eeb" alt="관리자 로그인" width=80%> | <img src="https://github.com/10geukbok/petkpetk/assets/110523580/133a96ea-6c61-4ee1-86d6-133d1328071c" alt="관리자 비밀번호 찾기" width=80%> | 
 
 <br/>
 
