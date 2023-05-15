@@ -46,6 +46,7 @@ public class SecurityConfig {
 				.failureHandler((request, response, exception) -> {
 						request.setAttribute("errorMessage", "이메일 혹은 비밀번호가 일치하지 않습니다.");
 						request.setAttribute("email", request.getParameter("email"));
+						request.setAttribute("password", request.getParameter("password"));
 						request.getRequestDispatcher("/login").forward(request, response);
 					}
 				))
