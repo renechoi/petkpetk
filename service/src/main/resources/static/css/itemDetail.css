@@ -950,10 +950,13 @@ img.itemImagesDetailList {
     margin: 2px 0;
     border-radius: 3px;
     cursor: pointer;
+    border: 2px solid white;
 }
 
 img#itemRepresentativeImageDetail {
     height: 500px;
+    border-radius: 5px;
+    border: 2px solid white;
 }
 
 
@@ -976,12 +979,45 @@ div#itemImageDetailBox {
     padding: 150px;
 }
 
-#otherImagesList{
+#otherImagesList {
+    padding: 8px 20px 8px;
     display: flex;
     flex-direction: column;
     margin: 0 50px;
+    max-height: 650px;
+    overflow: overlay;
+}
+
+#otherImagesList::-webkit-scrollbar {
+    width: 15px;
+}
+
+#otherImagesList::-webkit-scrollbar-thumb {
+    background-color: #ff8585; /*스크롤바의 색상*/
+    background-clip: padding-box;
+    border: 4px solid transparent;
+    border-radius: 15px;
+}
+
+#otherImagesList::-webkit-scrollbar-track {
+    background-color: #ffffffd9; /*스크롤바 트랙 색상*/
 }
 
 div#otherImages {
     margin-left: 100px;
+    z-index: 400;
+}
+
+.choosedImage {
+    box-shadow: 0px 0px 8px 1px white;
+}
+div#choosingImage {
+    z-index: 400;
+}
+
+#background{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 350;
 }
