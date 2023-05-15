@@ -19,6 +19,9 @@ public class LocalProperty {
 	@Value("${itemImageLocation}")
 	private String itemLocalStorage;
 
+	@Value("${uploadPath}")
+	private String itemLocalUploadPath;
+
 	@Value("${kakaoPaymentTestCid}")
 	private String kakaoPaymentCid;
 
