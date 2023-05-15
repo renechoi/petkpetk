@@ -39,7 +39,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @Table(indexes = {@Index(columnList = "title"), @Index(columnList = "createdAt"), @Index(columnList = "createdBy")})
-@Where(clause = "deleted_yn='N'")
+@Where(clause = "deleted_yn='N' AND user_account_id IN (SELECT user_account_id FROM user_account WHERE deleted_yn='N')")
 @Entity
 public class Article extends AuditingFields {
 
