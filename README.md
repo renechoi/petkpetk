@@ -17,7 +17,8 @@
 <br><br>
 
 ## 🗂️ Architecture
-![petkpetk_architecture](https://github.com/10geukbok/petkpetk/assets/110523580/4e7fda6f-8582-415f-8fed-a2b6d938edc2)
+![architecture](https://github.com/10geukbok/petkpetk/assets/110523580/e16ec898-e71d-41d9-a503-f2427f075bda)
+
 
 ## 💾 ERD 구조
 ![image](https://github.com/10geukbok/petkpetk/assets/110523580/32983907-7282-4bb8-8b58-83c3b123dfed)
@@ -114,16 +115,20 @@
     
 
 - 하나의 메서드가 하나의 기능에 충실하도록 구현 (SRP)
-    ![image](https://github.com/10geukbok/petkpetk/assets/110523580/bd58b4c9-88ca-42cd-839c-27c838dbd4ae)
+   ![SRP](https://github.com/10geukbok/petkpetk/assets/110523580/6e0af18c-27c3-4150-8fea-ddb357375bcf)
+
     
 - 객체 스스로 처리할 수 있는 부분에 대한 책임 부여 (캡슐화)
-    ![image](https://github.com/10geukbok/petkpetk/assets/110523580/1f55aeba-cb9e-477d-9a53-19ba568a3315)
+![캡슐화](https://github.com/10geukbok/petkpetk/assets/110523580/5129e5b7-df57-4670-bb6e-7cea48b1090f)
+
     
 - 함수형 인터페이스와 람다식을 이용한 책임과 역할 분리 (OCP, ISP)
-    ![image](https://github.com/10geukbok/petkpetk/assets/110523580/1ba2ac0c-d4c5-4144-adef-5fc07c8f6677)
+ ![OCP, ISP](https://github.com/10geukbok/petkpetk/assets/110523580/eedd5120-7199-48c7-9c46-3b9945d7b952)
+
     
 - 스트림 API 적극 이용, if분기문과 for반복문 지양
-    ![image](https://github.com/10geukbok/petkpetk/assets/110523580/238850c1-154b-459d-93fe-3a791b603ce0)
+![반복문 지양](https://github.com/10geukbok/petkpetk/assets/110523580/ca954f1f-41a1-4d6f-ad81-2f4801a489af)
+
 
 
 
@@ -137,12 +142,12 @@
 <div markdown="1">
     
   - 쿼리 메서드를 활용한 가독성 좋고 유연한 쿼리 작성
-![image](https://github.com/10geukbok/petkpetk/assets/110523580/129f7603-b873-4981-b876-5a542387e9e0)
+![유연한 쿼리 작성](https://github.com/10geukbok/petkpetk/assets/110523580/993bd234-b04f-462d-a7bb-2f4bf7306f6b)
+
 
   - 쿼리 Dsl 활용한 동적 쿼리 작성 및 쿼리 최적화 
-![image](https://github.com/10geukbok/petkpetk/assets/110523580/7b56a05b-d326-44f2-9d1e-b892e80804fb)
-![image](https://github.com/10geukbok/petkpetk/assets/110523580/84dd7baa-fb03-4c1b-a329-4415e3ee205e)
-
+![쿼리 최적화1](https://github.com/10geukbok/petkpetk/assets/110523580/66f6865c-2302-45cd-bd90-1334e932ebe8)
+![쿼리 최적화2](https://github.com/10geukbok/petkpetk/assets/110523580/21f6b9c0-b159-48db-b87f-8ad66303694d)
 </div>
 </details>
 
