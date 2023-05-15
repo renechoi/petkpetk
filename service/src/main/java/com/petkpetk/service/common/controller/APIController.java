@@ -28,8 +28,10 @@ import com.petkpetk.service.domain.shopping.service.item.ItemService;
 import com.petkpetk.service.domain.shopping.service.review.ReviewService;
 import com.petkpetk.service.domain.shopping.service.review.likes.ReviewLikesService;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
+import com.petkpetk.service.domain.user.dto.UserAskDto;
 import com.petkpetk.service.domain.user.dto.security.UserAccountPrincipal;
 import com.petkpetk.service.domain.user.service.UserAccountService;
+import com.petkpetk.service.domain.user.service.UserAskService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +47,7 @@ public class APIController {
 	private final ReviewService reviewService;
 	private final ReviewLikesService reviewLikesService;
 	private final ArticleService articleService;
+	private final UserAskService userAskService;
 
 	@RequestMapping(value = "/review/like", method = RequestMethod.POST)
 	public Boolean like(Long num, Long reviewId, Long likeNum, String userEmail) {
@@ -137,6 +140,13 @@ public class APIController {
 	@PostMapping("/user/delete")
 	public ResponseEntity<Void> delete(UserAccountDto userAccountDto) {
 		userAccountService.delete(userAccountDto);
+		return ResponseEntity.ok().build();
+	}
+
+	@ResponseBody
+	@PostMapping("/qna/answer")
+	public ResponseEntity<Void> qnaAnswer(UserAskDto userAskDto) {
+		userAskService.reflectAnswerStatus(userAskDto);
 		return ResponseEntity.ok().build();
 	}
 }

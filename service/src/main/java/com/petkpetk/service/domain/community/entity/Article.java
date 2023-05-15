@@ -53,7 +53,6 @@ public class Article extends AuditingFields {
 	@ManyToOne
 	@JoinColumn(name = "user_account_id")
 	@Where(clause = "deleted_yn = 'N'")
-	@NotFound(action = NotFoundAction.IGNORE)
 	private UserAccount userAccount;
 
 	@Column(length = 30)
