@@ -20,10 +20,10 @@
         <p th:if="${errorMessage}" class="error-message" th:text="${errorMessage}"></p>
     </div>
     <form role="form" method="post" action="/login/process">
-        <input name="email" th:value="${email}" type="text" placeholder="Type your email" autocomplete="off">
+        <input name="email" id="email" th:value="${email}" type="text" placeholder="Type your email" autocomplete="off">
         <br>
         <div style="display: flex;justify-content: center;">
-            <input name="password" id="password" type="password" placeholder="Type your password" autocomplete="off">
+            <input name="password" id="password" th:value="${password}" type="password" placeholder="Type your password" autocomplete="off">
             <img  id="PassToggle" class="toggleImg" th:src="@{/images/passwordShow.png}" onclick="togglePass()">
         </div>
         <input id="loginBtn" type="submit" value="로그인">
