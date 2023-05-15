@@ -9,7 +9,7 @@
 
 <br><br>
 ## 🧑‍🤝‍🧑 팀원 소개
-| <img src = https://github.com/10geukbok/petkpetk/assets/110523580/10f82cea-b54b-412f-b3b0-8539b7c89498 width="200" height="165"> | <img src = https://github.com/10geukbok/petkpetk/assets/110523580/a3df8755-1820-4b9c-bf61-f12e3d51ac5e width="220" height="200"> | <img src = https://github.com/10geukbok/petkpetk/assets/110523580/f1012a67-2f37-4416-b518-4cce563c7eba width="230" height="210"> |  
+| <img src = https://github.com/10geukbok/petkpetk/assets/110523580/10f82cea-b54b-412f-b3b0-8539b7c89498 width="220" height="200"> | <img src = https://github.com/10geukbok/petkpetk/assets/110523580/a3df8755-1820-4b9c-bf61-f12e3d51ac5e width="220" height="200"> | <img src = https://github.com/10geukbok/petkpetk/assets/110523580/f1012a67-2f37-4416-b518-4cce563c7eba width="220" height="200"> |  
 |:------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------:|
 |                                                                 팀장                                                                 |                                                                 개발 리더                                                                 |                                                                  디자인 리더                                                                  |
 |                                                     [최병호](https://github.com/renechoi)                                                     |                                                   [김혜진](https://github.com/hyejin0662)                                                    |                                                    [강예은](https://github.com/KangCuty)                                                     |
@@ -74,7 +74,7 @@
 ## 📱Demo
 |                   🚀 회원가입과 로그인                  |                   🔍 메인 조회                  | 
 | :----------------------------------------------------------: | :----------------------------------------------------------: | 
-| <img src="" alt="회원가입과 로그인" width=80%> | <img src="" alt="메인 조회" width=80%> | 
+| <img src="https://github.com/10geukbok/petkpetk/assets/110523580/f03ef4fe-7fd5-4dae-8d9e-7ca1e7dfe443" alt="회원가입과 로그인" width=80%> | <img src="" alt="메인 조회" width=80%> | 
 
 |                   💵 결제              |                   📝 리뷰 작성 / 수정                | 
 | :----------------------------------------------------------: | :----------------------------------------------------------: | 
