@@ -27,12 +27,11 @@ public class ShoppingNoticeController extends ApiController {
 		return "main/management/shopping-notice-registerform";
 	}
 
-	@ResponseBody
 	@PostMapping("/register")
-	public ResponseDTO<Void> registerNotice(ShoppingNoticeRegisterRequest shoppingNoticeRegisterRequest){
+	public String registerNotice(ShoppingNoticeRegisterRequest shoppingNoticeRegisterRequest){
 		// todo : 이미지 등록 추후 구현
 		shoppingNoticeService.registerNotice(ShoppingNoticeDto.from(shoppingNoticeRegisterRequest));
-		return ok();
+		return "redirect:/management/shopping-notice";
 	}
 
 	@GetMapping
@@ -40,6 +39,4 @@ public class ShoppingNoticeController extends ApiController {
 		model.addAttribute("notices", shoppingNoticeService.notices());
 		return "main/management/shopping-notice";
 	}
-
-
 }

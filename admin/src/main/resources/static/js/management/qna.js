@@ -6,7 +6,7 @@ $(document).ready(function () {
     $('#dataTable tbody').on('click', 'tr', function () {
         var url = $(this).data('url');
         $.get(url, function (data) {
-            $('#qnaIdModal').text($('#qnaId').text());
+            $('#qnaIdModal').text(data.id);
             $('#qnaCategoryModal').text($('#qnaCategory').text());
             $('#qnaContentModal').text($('#qnaContent').text());
             $('#qnaPhoneNumberModal').text($('#qnaPhoneNumber').text());
@@ -18,7 +18,7 @@ $(document).ready(function () {
                 $.ajax({
                     url: '/management/qna/register',
                     type: 'POST',
-                    data: {"answer": answer, "userAskId":$('#qnaId').text()},
+                    data: {"answer": answer, "userAskId":data.id},
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader(csrfHeader, csrfToken);
                     },
