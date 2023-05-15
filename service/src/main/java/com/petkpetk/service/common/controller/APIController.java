@@ -9,9 +9,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +27,7 @@ import com.petkpetk.service.domain.shopping.dto.item.MainItemDto;
 import com.petkpetk.service.domain.shopping.service.item.ItemService;
 import com.petkpetk.service.domain.shopping.service.review.ReviewService;
 import com.petkpetk.service.domain.shopping.service.review.likes.ReviewLikesService;
+import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.dto.security.UserAccountPrincipal;
 import com.petkpetk.service.domain.user.service.UserAccountService;
 
@@ -130,4 +133,10 @@ public class APIController {
 		 return true;
 	}
 
+	@ResponseBody
+	@PostMapping("/user/delete")
+	public ResponseEntity<Void> delete(UserAccountDto userAccountDto) {
+		userAccountService.delete(userAccountDto);
+		return ResponseEntity.ok().build();
+	}
 }
