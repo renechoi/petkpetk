@@ -90,6 +90,10 @@
 | :----------------------------------------------------------: | :----------------------------------------------------------: | 
 | <img src="" alt="게시글 등록 / 수정" width=80%> | <img src="https://github.com/10geukbok/petkpetk/assets/110523580/fa3acf24-44f8-4bc8-ac16-761778cc7590" alt="게시글, 댓글 조회" width=80%> | 
 
+|                   🚀 1대1 질문 등록, 삭제                  |
+| :----------------------------------------------------------: |
+| <img src="https://github.com/10geukbok/petkpetk/assets/110523580/318bd0bd-4bc1-4802-a8bd-61f8d1b2b934" alt="1대1 질문 등록, 삭제" width=80%> |
+
 
 |                   🚀 관리자 회원가입                  |                   🔍 관리자 승인                  | 
 | :----------------------------------------------------------: | :----------------------------------------------------------: | 
@@ -98,11 +102,19 @@
 
 |                   🚀 관리자 로그인                  |                   🔍 관리자 비밀번호 찾기                  | 
 | :----------------------------------------------------------: | :----------------------------------------------------------: | 
-| <img src="https://github.com/10geukbok/petkpetk/assets/110523580/cdb855b9-7ffc-4b8e-a9f6-0295e3e22eeb" alt="관리자 로그인" width=80%> | <img src="https://github.com/10geukbok/petkpetk/assets/110523580/133a96ea-6c61-4ee1-86d6-133d1328071c" alt="관리자 비밀번호 찾기" width=80%> | 
+| <img src="https://github.com/10geukbok/petkpetk/assets/110523580/ffa71864-81b7-4a00-99c2-b44ef46c7479" alt="관리자 로그인" width=80%> | <img src="https://github.com/10geukbok/petkpetk/assets/110523580/826ddc02-d3f2-4150-a07c-6ff9db9cf53e" alt="관리자 비밀번호 찾기" width=80%> | 
 
-|                   🚀 1대1 질문 등록, 삭제                  |
-| :----------------------------------------------------------: |
-| <img src="https://github.com/10geukbok/petkpetk/assets/110523580/318bd0bd-4bc1-4802-a8bd-61f8d1b2b934" alt="1대1 질문 등록, 삭제" width=80%> |
+
+
+
+|                   🚀 관리자 qna 관리                  |                   🔍 관리자 공지사항 관리                  | 
+| :----------------------------------------------------------: | :----------------------------------------------------------: | 
+| <img src="https://github.com/10geukbok/petkpetk/assets/110523580/6e1e7b96-6574-4d72-b416-4a988fb36b65" alt="관리자 qna 관리" width=80%> | <img src="https://github.com/10geukbok/petkpetk/assets/110523580/1a6a2f54-a1c2-4588-9643-dde3d43ba5ba" alt="관리자 공지사항 관리" width=80%> | 
+
+
+|                   🚀 관리자 faq 관리                  |                   🔍 관리자 회원,아이템,게시글 관리                  | 
+| :----------------------------------------------------------: | :----------------------------------------------------------: | 
+| <img src="https://github.com/10geukbok/petkpetk/assets/110523580/fc03e73e-dcf7-4f14-bb2c-013b273fdfac" alt="관리자 faq 관리" width=80%> | <img src="https://github.com/10geukbok/petkpetk/assets/110523580/fa4ecea5-708d-4982-8d41-89f2f9df2af5" alt="관리자 회원,아이템,게시글 관리" width=80%> | 
 
 
 <br/>
