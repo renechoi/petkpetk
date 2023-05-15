@@ -23,6 +23,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Where;
 
 import com.petkpetk.service.common.AuditingFields;
@@ -39,7 +41,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @Table(indexes = {@Index(columnList = "title"), @Index(columnList = "createdAt"), @Index(columnList = "createdBy")})
-@Where(clause = "deleted_yn='N' AND user_account_id IN (SELECT user_account_id FROM user_account WHERE deleted_yn='N')")
+@Where(clause = "deleted_yn = 'N'")
 @Entity
 public class Article extends AuditingFields {
 
@@ -50,6 +52,8 @@ public class Article extends AuditingFields {
 
 	@ManyToOne
 	@JoinColumn(name = "user_account_id")
+	@Where(clause = "deleted_yn = 'N'")
+	@NotFound(action = NotFoundAction.IGNORE)
 	private UserAccount userAccount;
 
 	@Column(length = 30)
@@ -118,3 +122,4 @@ public class Article extends AuditingFields {
 		return Objects.hash(id);
 	}
 }
+
