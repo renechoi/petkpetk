@@ -445,5 +445,17 @@ function showImageDetail(e) {
 }
 
 function closeItemImageDetail() {
+    var itemImagesDetailList = document.getElementsByClassName("itemImagesDetailList");
     $("#itemImagesDetailBox").css("display", "none");
+    var choosedImage = document.querySelector(".choosedImage");
+    choosedImage.classList.remove("choosedImage");
+    itemImagesDetailList.item(0).classList.add("choosedImage");
+}
+
+function chooseImage(e) {
+    var choosedImage = document.querySelector(".choosedImage");
+
+    choosedImage.classList.remove("choosedImage");
+    e.classList.add("choosedImage");
+    $("#itemRepresentativeImageDetail").attr("src", e.getAttribute("src"));
 }
