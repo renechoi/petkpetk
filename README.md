@@ -79,7 +79,7 @@
 
 |                   🧑🏻‍💻 상품조회                  |                  🚀 상품 바로 결제                 | 
 | :----------------------------------------------------------: | :----------------------------------------------------------: | 
-| <img src="" alt="상품조회" width=80%> | <img src="https://github.com/10geukbok/petkpetk/assets/110523580/fdff50ef-562d-43bb-8744-969b0653e307" alt="상품 바로 결제" width=80%> | 
+| <img src="https://github.com/10geukbok/petkpetk/blob/main/demo/service/%EC%84%9C%EB%B9%84%EC%8A%A4%20%EC%83%81%ED%92%88%20%EC%A1%B0%ED%9A%8C.gif" alt="상품조회" width=80%> | <img src="https://github.com/10geukbok/petkpetk/assets/110523580/fdff50ef-562d-43bb-8744-969b0653e307" alt="상품 바로 결제" width=80%> | 
 
 |                   💵 장바구니 결제              |                   📝 리뷰 작성 / 수정                | 
 | :----------------------------------------------------------: | :----------------------------------------------------------: | 
@@ -88,7 +88,7 @@
 
 |                   ✅ 게시글 등록 / 수정                  |                  ✅ 게시글, 댓글 조회                 | 
 | :----------------------------------------------------------: | :----------------------------------------------------------: | 
-| <img src="" alt="게시글 등록 / 수정" width=80%> | <img src="https://github.com/10geukbok/petkpetk/assets/110523580/fa3acf24-44f8-4bc8-ac16-761778cc7590" alt="게시글, 댓글 조회" width=80%> | 
+| <img src="https://github.com/10geukbok/petkpetk/blob/main/demo/service/%EC%84%9C%EB%B9%84%EC%8A%A4%20%EA%B2%8C%EC%8B%9C%EA%B8%80%20%EA%B2%80%EC%83%89%20%EB%93%B1%EB%A1%9D%20%EC%A1%B0%ED%9A%8C.gif" alt="게시글 등록 / 수정" width=80%> | <img src="https://github.com/10geukbok/petkpetk/assets/110523580/fa3acf24-44f8-4bc8-ac16-761778cc7590" alt="게시글, 댓글 조회" width=80%> | 
 
 |                   🚀 1대1 질문 등록, 삭제                  |
 | :----------------------------------------------------------: |
@@ -97,7 +97,7 @@
 
 |                   🚀 관리자 회원가입                  |                   🔍 관리자 승인                  | 
 | :----------------------------------------------------------: | :----------------------------------------------------------: | 
-| <img src="" alt="관리자 회원가입" width=80%> | <img src="https://github.com/10geukbok/petkpetk/assets/110523580/e0809fae-2b45-4f0c-8e70-e8cdee259a82" alt="관리자 승인" width=80%> | 
+| <img src="https://github.com/10geukbok/petkpetk/blob/main/demo/admin/%EA%B4%80%EB%A6%AC%EC%9E%90%20%ED%9A%8C%EC%9B%9D%EA%B0%80%EC%9E%85.gif" alt="관리자 회원가입" width=80%> | <img src="https://github.com/10geukbok/petkpetk/assets/110523580/e0809fae-2b45-4f0c-8e70-e8cdee259a82" alt="관리자 승인" width=80%> | 
 
 
 |                   🚀 관리자 로그인                  |                   🔍 관리자 비밀번호 찾기                  | 
