@@ -116,7 +116,7 @@
             <div class="itemOneBox" th:each="itemInfo : ${item.checkoutDtos}">
                 <div style="display: flex">
                     <div class="itemImageBox">
-                        <img class="itemImage" src="/images/HyeJin.png">
+                        <img class="itemImage" th:src="${itemInfo.itemImageDtos.get(0).imageUrl}">
                     </div>
                     <div class="itemDetailBox">
                         <div class="itemName" th:text="${itemInfo.itemName}"></div>

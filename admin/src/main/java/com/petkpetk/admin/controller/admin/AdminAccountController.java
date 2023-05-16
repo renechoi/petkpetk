@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,6 +39,17 @@ public class AdminAccountController {
 	public String admin() {
 		return "main/admin-account/login";
 	}
+
+	@PostMapping("/login/failure")
+	public String loginFailure(HttpServletRequest request, Model model, @RequestParam(name = "cause", required = false) String cause){
+		if (cause!=null && cause.equals("bad-credential")){
+			model.addAttribute("loginFailureMessage", "이메일 혹은 비밀번호가 일치하지 않습니다.");
+			return "main/admin-account/login";
+		}
+		model.addAttribute("loginFailureMessage", adminAccountService.handleLoginFailure(request.getParameter("email")));
+		return "main/admin-account/login";
+	}
+
 
 	@GetMapping("/logout")
 	public String logout(HttpServletRequest request, HttpServletResponse response) {
@@ -64,7 +76,7 @@ public class AdminAccountController {
 		}
 		adminAccountService.save(adminSignupRequest);
 
-		return "redirect:/";
+		return "redirect:login/";
 	}
 
 	@GetMapping("/approve-register")

@@ -5,6 +5,11 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -12,6 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.petkpetk.admin.config.properties.ProjectProperties;
 import com.petkpetk.admin.dto.UserAccountDto;
 import com.petkpetk.admin.dto.response.UserAccountApiResponse;
+import com.petkpetk.admin.exception.UserAccountDeleteFailureException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,7 +34,9 @@ public class UserAccountManagementService {
 			.toUri();
 
 		return Optional.ofNullable(restTemplate.getForObject(uri, UserAccountApiResponse.class))
-			.orElseGet(UserAccountApiResponse::empty).get_embedded().getUserAccounts();
+			.orElseGet(UserAccountApiResponse::empty)
+			.get_embedded()
+			.getUserAccounts();
 	}
 
 	public UserAccountDto getUserAccount(String id) {
@@ -36,17 +44,18 @@ public class UserAccountManagementService {
 			.build()
 			.toUri();
 
-		return Optional.ofNullable(
-				restTemplate.getForObject(uri, UserAccountDto.class))
+		return Optional.ofNullable(restTemplate.getForObject(uri, UserAccountDto.class))
 			.orElseThrow(() -> new NoSuchElementException("게시글이 없습니다 - userId: " + id));
 	}
 
 	public void deleteUserAccount(String userId) {
-		URI uri = UriComponentsBuilder.fromHttpUrl(projectProperties.getPetkPetk().getUrl() + "/api/userAccounts/" + userId)
-			.build()
-			.toUri();
-		restTemplate.delete(uri);
+		String url = projectProperties.getPetkPetk().getUrl() + "/api/user/delete?id=" + userId;
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<Void> entity = new HttpEntity<>(headers);
+		ResponseEntity<Void> response = restTemplate.exchange(url, HttpMethod.POST, entity, Void.class);
+		if (!response.getStatusCode().is2xxSuccessful()) {
+			throw new UserAccountDeleteFailureException();
+		}
 	}
-
 }
-

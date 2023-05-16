@@ -15,6 +15,7 @@
                 <div class="form-group">
                     <input name = "password" type="password" class="form-control form-control-user"
                            id="exampleInputPassword" placeholder="Password">
+                    <div th:if="${loginFailureMessage != null}" class="text-danger" th:text="${loginFailureMessage}"></div>
                 </div>
                 <div class="form-group">
                     <div class="custom-control custom-checkbox small">
@@ -43,3 +44,4 @@
         </div>
     </div>
 </div>
+

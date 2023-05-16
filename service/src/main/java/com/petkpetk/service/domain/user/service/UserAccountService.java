@@ -110,14 +110,13 @@ public class UserAccountService {
 
 	public void updatePassword(UserUpdateRequest userUpdateRequest) {
 		UserAccount userAccount = findByEmail(userUpdateRequest.getEmail()).orElseThrow(UserNotFoundException::new);
-		userAccount.setPassword(userAccount.getPassword());
+		userAccount.setPassword(userUpdateRequest.getPassword());
 		userAccount.encodePassword(passwordEncoder);
 	}
 
 	public void delete(UserAccountDto userAccountDto) {
-		UserAccount userAccount = findByEmail(userAccountDto.getEmail()).orElseThrow(UserNotFoundException::new);
+		UserAccount userAccount = userAccountRepository.findById(userAccountDto.getId()).orElseThrow(UserNotFoundException::new);
 		userAccount.setDeletedYn("Y");
-		// TODO: 유저 삭제시 타 관련 정보들 전부 삭제 필요
 	}
 
 	public UserAccountDto searchUserDto(String email) {

@@ -29,4 +29,6 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 	 */
 	@Query("SELECT ci FROM CartItem ci JOIN FETCH ci.item i JOIN FETCH i.images ii WHERE ci.cart.id = :cartId AND ii.representativeImageYn = 'Y'")
 	List<CartItem> findCartItemsByCartIdWithRepresentativeItemImage(@Param("cartId") Long cartId);
+
+	List<CartItem> findByCartId(Long id);
 }

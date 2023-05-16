@@ -10,3 +10,8 @@ function togglePass() {
         PassToggle.setAttribute("src", "/images/passwordShow.png")
     }
 }
+
+if ($("#email").val() != null) {
+    var emailInput = document.getElementById("email");
+    emailInput.focus();
+}

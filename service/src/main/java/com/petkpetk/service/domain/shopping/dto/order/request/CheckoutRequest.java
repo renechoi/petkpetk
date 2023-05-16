@@ -24,7 +24,7 @@ public class CheckoutRequest {
 
 	public CheckoutRequest(CartItemResponse cartItemResponse){
 		this.checkoutDtos = cartItemResponse.getItems().stream()
-			.map(cartItemDto -> CheckoutDto.of(cartItemDto.getId(), cartItemDto.getCartItemCount()))
+			.map(cartItemDto -> CheckoutDto.of(cartItemDto.getItemId(), cartItemDto.getCartItemCount()))
 			.collect(Collectors.toList());
 		this.itemPriceInfo = cartItemResponse.getItemPriceInfo();
 	}
