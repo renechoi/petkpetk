@@ -1,20 +1,13 @@
 package com.petkpetk.admin.config.security;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.petkpetk.admin.dto.security.AdminAccountPrincipal;
@@ -45,14 +38,16 @@ public class SecurityConfig {
 
 			.formLogin(formLogin -> formLogin.loginPage("/login")
 				.loginProcessingUrl("/login/process")
-				.defaultSuccessUrl("/management/user-account")
-				.failureHandler(new AuthenticationFailureHandler() {
-					@Override
-					public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-						AuthenticationException exception) throws IOException, ServletException {
+				.defaultSuccessUrl("/")
+				.failureHandler((request, response, exception) -> {
+					if (BadCredentialsException.class.isAssignableFrom(exception.getClass())) {
+						request.getRequestDispatcher("/login/failure?cause=bad-credential").forward(request, response);
+						return;
 					}
+					request.getRequestDispatcher("/login/failure").forward(request, response);
 				})
-				.failureUrl("/login")
+
+				// .failureUrl("/login/error")
 				.usernameParameter("email")
 				.passwordParameter("password")
 				.permitAll())
@@ -71,5 +66,4 @@ public class SecurityConfig {
 			.map(AdminAccountPrincipal::from)
 			.orElseThrow(() -> new UsernameNotFoundException("회원을 찾을 수 없습니다"));
 	}
-
 }

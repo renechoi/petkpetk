@@ -26,6 +26,7 @@ import com.petkpetk.admin.dto.response.QnaResponse;
 import com.petkpetk.admin.dto.response.UserAccountApiResponse;
 import com.petkpetk.admin.entity.QnaAnswer;
 import com.petkpetk.admin.exception.QnaAnswerStatusNotChangedException;
+import com.petkpetk.admin.exception.UserAccountDeleteFailureException;
 import com.petkpetk.admin.repository.QnaAnswerRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -59,6 +60,15 @@ public class QnaService {
 
 	public void registerQnaAnswer(QnaAnswerDto qnaAnswerDto) {
 		qnaAnswerRepository.save(QnaAnswer.from(qnaAnswerDto));
+
+		String url = projectProperties.getPetkPetk().getUrl() + "/api/qna/answer?id=" + qnaAnswerDto.getUserAskId();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<Void> entity = new HttpEntity<>(headers);
+		ResponseEntity<Void> response = restTemplate.exchange(url, HttpMethod.POST, entity, Void.class);
+		if (!response.getStatusCode().is2xxSuccessful()) {
+			throw new QnaAnswerStatusNotChangedException();
+		}
 	}
 
 }

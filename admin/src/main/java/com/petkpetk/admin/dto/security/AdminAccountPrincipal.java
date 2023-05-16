@@ -35,6 +35,8 @@ public class AdminAccountPrincipal extends AuditingFields implements UserDetails
 
 	private Collection<? extends GrantedAuthority> roles;
 
+	private boolean approved;
+
 	public static AdminAccountPrincipal from(AdminAccountDto dto) {
 		AdminAccountPrincipal principal = EntityAndDtoConverter.convertToDto(dto, AdminAccountPrincipal.class);
 		principal.setRoles(
@@ -73,6 +75,6 @@ public class AdminAccountPrincipal extends AuditingFields implements UserDetails
 
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return this.approved;
 	}
 }

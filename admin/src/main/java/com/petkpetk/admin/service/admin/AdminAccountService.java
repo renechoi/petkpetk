@@ -1,5 +1,7 @@
 package com.petkpetk.admin.service.admin;
 
+import static com.petkpetk.admin.entity.QAdminAccount.*;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -14,6 +16,8 @@ import com.petkpetk.admin.dto.response.AdminAccountWaitingsResponse;
 import com.petkpetk.admin.dto.security.AdminAccountPrincipal;
 import com.petkpetk.admin.entity.AdminAccount;
 import com.petkpetk.admin.exception.AdminAccountNotFoundException;
+import com.petkpetk.admin.exception.AdminNotApprovedException;
+import com.petkpetk.admin.exception.AdminPasswordNotMatchException;
 import com.petkpetk.admin.exception.EmailDuplicateException;
 import com.petkpetk.admin.repository.AdminAccountRepository;
 
@@ -27,6 +31,7 @@ public class AdminAccountService {
 	private final AdminAccountRepository adminAccountRepository;
 
 	private final PasswordEncoder passwordEncoder;
+
 	public Optional<AdminAccountDto> searchAdminDto(String email) {
 		return adminAccountRepository.findByEmail(email).map(AdminAccountDto::fromEntity);
 	}
@@ -41,6 +46,15 @@ public class AdminAccountService {
 		adminAccountRepository.save(adminAccount);
 	}
 
+	public String handleLoginFailure(String email) {
+
+		Optional<AdminAccount> adminAccountOptional = adminAccountRepository.findByEmail(email);
+
+		return adminAccountOptional.map(account -> !account.isApproved() ? "승인 대기중입니다. 승인은 1~2 영업일이 소요됩니다." :
+			"email과 비밀번호를 다시 확인해주세요.").orElse("email을 다시 확인해주세요.");
+
+	}
+
 	public boolean checkEmailDuplicate(String email) {
 		return !adminAccountRepository.existsByEmail(email);
 	}
@@ -49,9 +63,10 @@ public class AdminAccountService {
 		AdminAccount adminAccount = adminAccountRepository.findByEmail(email)
 			.orElseThrow(AdminAccountNotFoundException::new);
 
-		if(!adminAccount.checkPassword(previousPassword, passwordEncoder)){
+		if (!adminAccount.checkPassword(previousPassword, passwordEncoder)) {
 			return false;
-		};
+		}
+		;
 
 		adminAccount.setPassword(newPassword);
 		adminAccount.encodePassword(passwordEncoder);
@@ -74,7 +89,9 @@ public class AdminAccountService {
 	}
 
 	public AdminAccountDto getAdminAccount(Long id) {
-		return adminAccountRepository.findById(id).map(AdminAccountDto::fromEntity).orElseThrow(AdminAccountNotFoundException::new);
+		return adminAccountRepository.findById(id)
+			.map(AdminAccountDto::fromEntity)
+			.orElseThrow(AdminAccountNotFoundException::new);
 	}
 
 	public boolean checkPasswordMatch(String password, AdminAccountPrincipal adminAccountPrincipal) {
@@ -83,7 +100,6 @@ public class AdminAccountService {
 
 		return adminAccount.checkPassword(password, passwordEncoder);
 	}
-
 
 }
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.petkpetk.service.domain.shopping.exception.UserAskNotFountException;
+import com.petkpetk.service.domain.user.constant.AnswerStatus;
 import com.petkpetk.service.domain.user.dto.UserAccountDto;
 import com.petkpetk.service.domain.user.dto.UserAskDto;
 import com.petkpetk.service.domain.user.dto.request.UserAskRequest;
@@ -36,8 +37,18 @@ public class UserAskService {
 	}
 
 	public void deleteAsk(Long askId) {
-		UserAsk userAsk = userAskRepository.findById(askId).orElseThrow(UserAskNotFountException::new);
+		UserAsk userAsk = findById(askId);
 		userAsk.setDeletedYn("Y");
-		userAskRepository.flush();
+	}
+
+
+
+	public void reflectAnswerStatus(UserAskDto userAskDto) {
+		UserAsk userAsk = findById(userAskDto.getId());
+		userAsk.setAnswerStatus(AnswerStatus.ANSWERED);
+	}
+
+	private UserAsk findById(Long askId) {
+		return userAskRepository.findById(askId).orElseThrow(UserAskNotFountException::new);
 	}
 }

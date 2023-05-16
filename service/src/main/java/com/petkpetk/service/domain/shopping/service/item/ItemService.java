@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.petkpetk.service.config.converter.ImageConverter;
 import com.petkpetk.service.config.file.ImageLocalRepository;
+import com.petkpetk.service.config.properties.LocalProperty;
 import com.petkpetk.service.domain.shopping.dto.item.ItemDto;
 import com.petkpetk.service.domain.shopping.dto.item.ItemImageDto;
 import com.petkpetk.service.domain.shopping.dto.item.ItemSearchDto;
@@ -39,10 +40,6 @@ public class ItemService {
 	private final ItemRepository itemRepository;
 	private final ItemImageRepository itemImageRepository;
 	private final ImageLocalRepository<ItemImage> imageLocalRepository;
-
-
-	@Value("${ITEM_IMAGE_UPLOAD_PATH}")
-	private String filePath;
 
 
 	@Transactional(readOnly = true)
@@ -123,7 +120,7 @@ public class ItemService {
 
 		IntStream.range(0, itemImages.size())
 			.forEach(i ->
-				imageLocalRepository.deleteFile(filePath, itemImages.get(i).getUniqueName())
+				imageLocalRepository.deleteFile(LocalProperty.getInstance().getItemLocalUploadPath(), itemImages.get(i).getUniqueName())
 			);
 	}
 

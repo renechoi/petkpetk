@@ -40,19 +40,19 @@
 
 
         <input type="hidden" id="itemImages" th:value="${item.itemImageDtos}">
-        <div style="display:none;" id="itemImagesDetailBox" th:object="${item}" onclick="closeItemImageDetail()">
+        <div style="display:none;" id="itemImagesDetailBox" th:object="${item}">
             <div id="itemImageDetailBox">
                 <div id="choosingImage">
                     <img id="itemRepresentativeImageDetail" src="">
                 </div>
                 <div id="otherImages">
                     <div id="otherImagesList">
-                        <img th:class="'itemImagesDetailList showImage'+${num}" th:each="image , num : *{itemImageDtos}" th:with="num = ${num.index}" th:src="${image.imageUrl}">
+                        <img th:class="'itemImagesDetailList choosedImage showImage'+${num}" th:each="image , status : *{itemImageDtos}" th:with="num = ${status.index}"  th:if="${status.index == 0}" th:src="${image.imageUrl}" onclick="chooseImage(this)">
+                        <img th:class="'itemImagesDetailList showImage'+${num}" th:each="image , status : *{itemImageDtos}" th:with="num = ${status.index}" th:unless="${status.index == 0}" th:src="${image.imageUrl}"  onclick="chooseImage(this)">
                     </div>
                 </div>
-            </div>
-            <div id="background">
-
+                <div id="background"  onclick="closeItemImageDetail()">
+                </div>
             </div>
         </div>
 
@@ -87,12 +87,10 @@
                         <div class="chooseProduct">
                             <div class="h4 text-danger text-left cost">
                                 <input type="hidden" th:value="${item.price}" id="price" name="price">
-                                <span class="OriginalCost" th:text="${item.originalPrice}+'원'">원가격</span><span
-                                    id="discountRate"
-                                    th:text="'('+${#numbers.formatDecimal(item.discountRate*100,0,0)}+'%)'"></span><span
-                                    id="cost" th:text="${item.price}"></span><span
-                                    style="font-size: 20px; position: relative; bottom: 3px; margin-left: 1px;"
-                                    class="won">원</span>
+                                <span class="OriginalCost" th:text="${item.originalPrice}+'원'">원가격</span>
+                                <span id="discountRate" th:if="${item.discountRate != 0}" th:text="'('+${#numbers.formatDecimal(item.discountRate*100,0,0)}+'%)'"></span>
+                                <span id="cost" th:text="${item.price}"></span>
+                                <span style="font-size: 20px; position: relative; bottom: 3px; margin-left: 1px;" class="won">원</span>
                             </div>
                             <div class="input-group w-50 ChooseAmountBox">
                                 <div class="totalFlexBox">

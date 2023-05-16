@@ -33,12 +33,10 @@ public class FaqController extends ApiController {
 		return "main/management/faq-registerform";
 	}
 
-
-	@ResponseBody
 	@PostMapping("/register")
-	public ResponseDTO<Void> registerFaq(FaqRequest faqRequest){
+	public String registerFaq(FaqRequest faqRequest){
 		faqService.registerFaq(FaqDto.from(faqRequest));
-		return ok();
+		return "redirect:/management/faq";
 	}
 
 	@GetMapping
@@ -47,13 +45,9 @@ public class FaqController extends ApiController {
 		return "main/management/faq";
 	}
 
-
-	@ResponseBody
 	@PostMapping("/category/register")
-	public ResponseDTO<Void> registerFaqCategory(FaqCategoryRequest faqCategoryRequest){
+	public String registerFaqCategory(FaqCategoryRequest faqCategoryRequest){
 		faqService.registerFaqCategory(FaqCategoryDto.from(faqCategoryRequest));
-		return ok();
+		return "redirect:/management/faq";
 	}
-
-
 }
