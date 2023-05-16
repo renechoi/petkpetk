@@ -68,7 +68,10 @@ public class Article extends AuditingFields {
 	private Set<ArticleLikes> likes;
 
 	@ToString.Exclude
-	@JoinTable(name = "article_hashtag", joinColumns = @JoinColumn(name = "article_id"), inverseJoinColumns = @JoinColumn(name = "hashtag_id"))
+	@JoinTable(
+		name = "article_hashtag",
+		joinColumns = @JoinColumn(name = "article_id"),
+		inverseJoinColumns = @JoinColumn(name = "hashtag_id"))
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<Hashtag> hashtags = new LinkedHashSet<>();
 

@@ -64,11 +64,11 @@ insert into profile_image(image_url, original_name, representative_image_yn, uni
 INSERT INTO item (created_at,created_by,modified_at,modified_by,deleted_yn, item_name, price, item_amount, item_detail, item_status, original_price, discount_rate, total_rating,  user_account_id) VALUES
 (now(),'페크페크', now(),'페크페크','N','item1', 10000, 10, 'item1 detail', 'SELL', 10000,2,1, 2),
 (now(),'페크페크', now(),'페크페크','N','item2', 11000, 20, 'item2 detail', 'SELL', 20000,2,1.5, 2),
-(now(),'페크페크', now(),'페크페크','N','item3', 12000, 30, 'item3 detail', 'SELL', 30000,2,2, 2),
-(now(),'페크페크', now(),'페크페크','N','item4', 13000, 40, 'item4 detail', 'SELL', 40000,2,2.5, 2),
-(now(),'페크페크', now(),'페크페크','N','item5', 14000, 50, 'item5 detail', 'SELL', 50000,2,3, 2),
-(now(),'페크페크', now(),'페크페크','N','item6', 15000, 60, 'item6 detail', 'SOLD_OUT', 60000,2,3.5, 4),
-(now(),'페크페크', now(),'페크페크','N','item7', 20000, 70, 'item7 detail', 'SOLD_OUT', 70000,2,4, 4),
+(now(),'페크페크', now(),'페크페크','N','[동동댕] 반려동물 증명사진(*퍼스널컬러 테마 배경)', 12000, 30, 'item3 detail', 'SELL', 30000,2,2, 2),
+(now(),'페크페크', now(),'페크페크','N','반려동물 에어팟 버즈케이스Set 케이스+키링 선물', 13000, 40, 'item4 detail', 'SELL', 40000,2,2.5, 2),
+(now(),'페크페크', now(),'페크페크','N','반려동물 에어팟 버즈케이스Set 케이스+키링 선물', 14000, 50, 'item5 detail', 'SELL', 50000,2,3, 2),
+(now(),'페크페크', now(),'페크페크','N','[동동댕] 반려동물 증명사진(*퍼스널컬러 테마 배경)', 15000, 60, 'item6 detail', 'SOLD_OUT', 60000,2,3.5, 4),
+(now(),'페크페크', now(),'페크페크','N','반려동물 에어팟 버즈케이스Set 케이스+키링 선물', 20000, 70, 'item7 detail', 'SOLD_OUT', 70000,2,4, 4),
 (now(),'페크페크', now(),'페크페크','N','item8', 30000, 80, 'item8 detail', 'SOLD_OUT', 80000,2,5, 4),
 (now(),'페크페크', now(),'페크페크','N','item9', 40000, 90, 'item9 detail', 'SOLD_OUT', 90000,2,4, 4),
 (now(),'페크페크', now(),'페크페크','N','item10', 50000, 100, 'item10 detail', 'SOLD_OUT', 100000,2,5, 4);
