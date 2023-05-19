@@ -1,6 +1,5 @@
 # petkpetk
-
-![image](https://github.com/10geukbok/petkpetk/assets/110523580/0655560e-a42d-47a7-9c98-2b4d0a9a6dff)
+<img src = https://github.com/10geukbok/petkpetk/assets/110523580/0655560e-a42d-47a7-9c98-2b4d0a9a6dff width="800" >
 
 ## 📎 프로젝트 소개
 동물 애호가들의 커뮤니티이자	온라인 쇼핑몰을 결합한 멀티 플랫폼
@@ -228,6 +227,13 @@
 </details>
 <br>
 
+## 🎯 프로젝트 컨벤션
+
+### 스크럼 및 코어타임
+ - 데일리 스크럼 AM 10시
+ - 프로젝트 코어 타임 10 ~ 18
+<br><br>
+
 ### 커밋 규칙
 
 - ✨ feat : 새로운 기능 추가, 기존의 기능을 요구 사항에 맞추어 수정
@@ -245,5 +251,14 @@
 
 <br><br>
   
+## 깃허브
+- 브랜치 전략은 git flow 를 사용했습니다.
+- Pull Request 로만, merge 하도록 했습니다.
+<img src="https://github.com/10geukbok/petkpetk/assets/110523580/64f248c1-559c-4ab5-900d-74fa068d1dd3" alt="image" width=80%>
 
+<br><br>
 
+## 코드
+코드 컨벤션은 **naver-intelliJ-formatter** 를 적용했습니다.
+<br>
+코딩 컨벤션을 준수하면 가독성이 좋아지고 성능에 영향을 주거나 오류를 발생시키는 잠재적인 위험 요소를 줄여줘 유지보수 비용을 줄일 수 있기 때문에 Java 에서 대중적인 **'네이버의 자바 컨벤션'** 을 적용하였습니다.
