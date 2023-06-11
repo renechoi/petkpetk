@@ -4,7 +4,10 @@
 ## 📎 프로젝트 소개
 동물 애호가들의 커뮤니티이자	온라인 쇼핑몰을 결합한 멀티 플랫폼
 반려동물을 사랑하는 사람들이 직접 만들어가는 ***”상품 판매 중개 커뮤니티 플랫폼”*** 입니다.
-
+<br>
+- 노션: [바로가기](https://www.notion.so/ae7e9f107bda4982b042bbc1c94783f0#1f3dfe12f657483fad84b2efc4b57637)
+- 발표영상: [바로가기](https://www.youtube.com/watch?v=ZL0O7AvE1s4)
+- 시연영상: [바로가기](https://www.youtube.com/watch?v=D7A8_ZbxHRM)
 
 <br><br>
 ## 🧑‍🤝‍🧑 팀원 소개
