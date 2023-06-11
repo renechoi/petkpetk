@@ -189,42 +189,24 @@
 
 ## 🚀 트러블 슈팅
 
-### 🧑🏻‍💻 프론트
-<details>
-<summary>
-<h3>🛠 </h3>
-</summary>
-<div markdown="5">
-
-- **Problem**
-    - 
-- **Reason**
-  - 
-- **To Solve**
-  - 
-  -
-    - 
-</div>
-</details>
-<br>
-
-### 🧑🏻‍💻 백엔드
-<details>
-<summary>
-<h3>🛠 </h3>
-</summary>
-<div markdown="5">
-
-- **Problem**
-    - 
-- **Reason**
-  - 
-- **To Solve**
-  - 
-  -
-    - 
-</div>
-</details>
+### 🧑🏻‍💻 [노션 페이지로 이동합니다.](https://www.notion.so/ae7e9f107bda4982b042bbc1c94783f0?pvs=4#1f3dfe12f657483fad84b2efc4b57637)
+ 1. UserAccount 엔티티의 RoleType을 어떻게 할까? <br>
+ 2. Address는 뭐가 맞아? 다대일 vs. Embedded <br>
+ 3. 잦은 Entity ↔ Dto 변환, 쉽게 할 수 없을까? <br>
+ 4. 이미지… 어떻게 처리해야 깔끔할까? <br>
+ 5. createdBy에 null이 뜬다고? <br>
+ 6. 소셜 유저… 다 좋은데 Security 인증 객체랑 다르잖아! <br>
+ 7. Google vs. Naver & Kakao 너희들 왜 다르냐 ?! <br>
+ 8. 이메일 인증 코드, 잠깐만 보관해야 하는데…  <br>
+ 9. 서버와 서버를 연결하는 가장 쉬운 방법 <br>
+ 10. 이럴 때도 flushing 이 필요하다고? <br>
+ 11. @ManyToMany 해시태그 구현 완. 그런데… <br>
+ 12. @ManyToMany 를 사용할 수 없다면 ? <br>
+ 13. Security, 대신해줘서 고마운데 이건 내가 할게 <br>
+ 14. 한번은 마주칠 줄 알았지, 윈도우 vs. 맥… <br>
+ 15. 대표 이미지만 가져와줘! <br>
+ 16. 리뷰 별점, 수학의 힘을 빌려보자 <br>
+ 17.  @ResponseBody 너 하나로 충분했구나? <br>
 <br>
 
 ## 🎯 프로젝트 컨벤션
